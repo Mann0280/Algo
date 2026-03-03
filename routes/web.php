@@ -27,11 +27,14 @@ Route::post('/contact', [HomeController::class, 'storeContact']);
 Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
 Route::match(['get', 'post'], '/subscribe', [HomeController::class, 'handlePayment'])->middleware('auth')->name('subscribe');
 
+Route::get('/signals', [TerminalController::class, 'liveTips'])->name('live-tips')->middleware('auth');
+
 Route::prefix('terminal')->name('terminal.')->middleware('auth')->group(function () {
     Route::get('/', [TerminalController::class, 'index'])->name('index');
-    Route::get('/free', [TerminalController::class, 'free'])->name('free');
-    Route::get('/premium-tips', [TerminalController::class, 'premiumTips'])->name('elite');
-    Route::redirect('/elite', '/terminal/premium-tips');
+    // Route::get('/free', [TerminalController::class, 'free'])->name('free');
+    // Route::get('/premium', [TerminalController::class, 'premiumTips'])->name('premium');
+    // Route::redirect('/premium-tips', '/terminal/premium');
+    // Route::redirect('/elite', '/terminal/premium');
     Route::get('/charts', [TerminalController::class, 'charts'])->name('charts');
 });
 

@@ -221,7 +221,7 @@ class TerminalController extends Controller
             ['title' => 'Patience Pays', 'tip' => 'Wait for your setup. The best traders spend 90% of their time waiting and 10% executing.', 'icon' => 'clock'],
         ];
 
-        return view('terminal.premium_tips', compact(
+        return view('terminal.premium', compact(
             'user', 'isPremium', 'tips', 'performance', 'node_logs', 'sentiment',
             'market_movers', 'news', 'trade_history', 'watchlist_stocks', 'sectors', 'market_stats',
             'indicators', 'portfolio', 'calendar', 'options', 'trading_tips'
@@ -239,5 +239,18 @@ class TerminalController extends Controller
         $isPremium = $user->role === 'premium' || $user->role === 'admin';
         
         return view('terminal.charts', compact('user', 'isPremium'));
+    }
+
+    /**
+     * Show live breakeven tips.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function liveTips()
+    {
+        $user = Auth::user();
+        $isPremium = $user->role === 'premium' || $user->role === 'admin';
+        
+        return view('terminal.live_tips', compact('user', 'isPremium'));
     }
 }

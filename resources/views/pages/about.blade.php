@@ -357,11 +357,11 @@
                 Ready to <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Trade Smarter</span>?
             </h2>
             <p class="text-slate-400 max-w-2xl mx-auto mb-12 text-sm leading-relaxed">
-                Join thousands of traders already leveraging AlgoTrade AI's neural prediction engine. Start with free signals and upgrade when you're ready.
+                Join thousands of traders already leveraging AlgoTrade AI's neural prediction engine. Start your journey and upgrade to premium features.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-6">
                 <a href="{{ url('/register') }}" class="px-12 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-widest rounded-2xl hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all uppercase">
-                    Get Started Free
+                    Initialize Terminal
                 </a>
                 <a href="{{ url('/contact') }}" class="px-12 py-5 glass-panel border border-white/10 text-white font-black orbitron text-[10px] tracking-widest rounded-2xl hover:bg-white/5 transition-all uppercase">
                     Contact Us

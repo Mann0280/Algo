@@ -218,7 +218,7 @@
                 <p class="text-slate-400 text-sm mb-8 max-w-lg mx-auto italic">Full data terminal access is reserved for Premium King members only. Precision levels and real-time execution alerts currently blurred.</p>
                 <div class="flex justify-center gap-4">
                     <a href="{{ url('/pricing') }}" class="bg-amber-400 text-black font-black py-4 px-10 rounded-2xl text-[10px] orbitron hover:scale-105 transition-all shadow-lg shadow-amber-400/20 uppercase">Unlock Terminal</a>
-                    <a href="{{ url('/register') }}" class="glass-panel text-white font-bold py-4 px-10 rounded-2xl text-[10px] orbitron hover:bg-white/10 transition-all uppercase">Enroll Free</a>
+                    <a href="{{ url('/register') }}" class="glass-panel text-white font-bold py-4 px-10 rounded-2xl text-[10px] orbitron hover:bg-white/10 transition-all uppercase">Initialize Terminal</a>
                 </div>
             </div>
         </div>
@@ -535,7 +535,7 @@
                             Get Premium Access
                         </a>
                         <a href="{{ url('/register') }}" class="glass-panel border border-white/10 text-white font-black py-5 px-14 rounded-2xl text-[10px] uppercase orbitron tracking-[0.2em] hover:bg-white/5 transition-all transform hover:-translate-y-1">
-                            Explore Free
+                            Initialize Terminal
                         </a>
                     </div>
 

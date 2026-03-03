@@ -108,23 +108,22 @@
                             <tbody class="divide-y divide-white/5">
                                 @forelse($signals as $signal)
                                 @php 
-                                    $signal = (array)$signal;
-                                    $locked = !$isPremium && $signal['is_premium'];
-                                    $type = ($signal['risk_level'] == 'Low' ? 'VIP' : ($signal['risk_level'] == 'Medium' ? 'PRO' : 'HIGH'));
+                                    $locked = !$isPremium && $signal->is_premium;
+                                    $type = ($signal->risk_level == 'Low' ? 'VIP' : ($signal->risk_level == 'Medium' ? 'PRO' : 'HIGH'));
                                 @endphp
                                 <tr class="group hover:bg-white/[0.02] transition-all">
-                                    <td class="px-6 py-5 font-bold orbitron text-white italic truncate max-w-[120px]">{{ $signal['stock_symbol'] }}</td>
+                                    <td class="px-6 py-5 font-bold orbitron text-white italic truncate max-w-[120px]">{{ $signal->stock_symbol }}</td>
                                     <td class="px-6 py-5">
                                         <span class="text-[9px] font-black px-2 py-0.5 rounded border {{ $type == 'VIP' ? 'border-amber-500/50 text-amber-500' : ($type == 'PRO' ? 'border-purple-500/50 text-purple-500' : 'border-blue-500/50 text-blue-500') }}">
                                             {{ $type }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-5 font-mono text-xs {{ $locked ? 'blur-sm select-none' : '' }}">₹{{ $signal['entry_price'] }}</td>
-                                    <td class="px-6 py-5 font-mono text-xs text-slate-500 {{ $locked ? 'blur-sm select-none' : '' }}">₹{{ $signal['stop_loss'] }}</td>
-                                    <td class="px-6 py-5 font-mono text-xs text-slate-300 {{ $locked ? 'blur-sm select-none' : '' }}">₹{{ $signal['target_1'] }}</td>
-                                    <td class="px-6 py-5 font-mono text-xs text-slate-300 {{ $locked ? 'blur-sm select-none' : '' }}">₹{{ $signal['target_2'] }}</td>
-                                    <td class="px-6 py-5 font-bold text-purple-400 text-xs text-center">{{ $signal['confidence_level'] }}%</td>
-                                    <td class="px-6 py-5 text-xs text-slate-500">{{ date('H:i', strtotime($signal['created_at'])) }}</td>
+                                    <td class="px-6 py-5 font-mono text-xs {{ $locked ? 'blur-sm select-none' : '' }}">₹{{ number_format($signal->entry_price, 2) }}</td>
+                                    <td class="px-6 py-5 font-mono text-xs text-slate-500 {{ $locked ? 'blur-sm select-none' : '' }}">₹{{ number_format($signal->stop_loss, 2) }}</td>
+                                    <td class="px-6 py-5 font-mono text-xs text-slate-300 {{ $locked ? 'blur-sm select-none' : '' }}">₹{{ number_format($signal->target_1, 2) }}</td>
+                                    <td class="px-6 py-5 font-mono text-xs text-slate-300 {{ $locked ? 'blur-sm select-none' : '' }}">₹{{ number_format($signal->target_2, 2) }}</td>
+                                    <td class="px-6 py-5 font-bold text-purple-400 text-xs text-center">{{ $signal->confidence_level }}%</td>
+                                    <td class="px-6 py-5 text-xs text-slate-500">{{ $signal->created_at->format('H:i') }}</td>
                                     <td class="px-6 py-5">
                                         <div class="flex items-center gap-2">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
@@ -160,8 +159,7 @@
                         <span class="text-purple-500 cursor-pointer">+</span>
                     </h2>
                     <div class="space-y-4">
-                        @php $watchlist = $watchlist->toArray(); @endphp
-                        @if (empty($watchlist))
+                        @if ($watchlist->isEmpty())
                             @php 
                                 $placeholders = [['s'=>'RELIANCE', 'p'=>'2,854.20', 'c'=>'+1.45%'], ['s'=>'HDFC BANK', 'p'=>'1,620.00', 'c'=>'-0.8%']];
                             @endphp
@@ -173,9 +171,8 @@
                             @endforeach
                         @else
                             @foreach($watchlist as $item)
-                            @php $item = (array)$item; @endphp
                             <div class="flex justify-between items-center p-3 rounded-xl hover:bg-white/5 transition-all">
-                                <div class="font-bold text-sm text-white">{{ $item['stock_symbol'] }}</div>
+                                <div class="font-bold text-sm text-white">{{ $item->stock_symbol }}</div>
                                 <div class="text-xs font-mono text-emerald-400">+2.45%</div>
                             </div>
                             @endforeach

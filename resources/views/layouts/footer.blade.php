@@ -13,7 +13,7 @@
             <div class="flex justify-center flex-wrap gap-10 text-[10px] font-bold orbitron text-slate-500 tracking-widest">
                 <a href="{{ url('/') }}" class="hover:text-white transition-colors uppercase">Home</a>
                 @auth
-                    <a href="{{ url('/terminal/free') }}" class="hover:text-white transition-colors uppercase">Signals</a>
+                {{-- <a href="{{ url('/terminal/free') }}" class="hover:text-white transition-colors uppercase">Signals</a> --}}
                     <a href="{{ url('/terminal') }}" class="hover:text-white transition-colors uppercase">Dashboard</a>
                 @else
                     <a href="{{ url('/login') }}" class="hover:text-white transition-colors uppercase">Login</a>

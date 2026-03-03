@@ -11,7 +11,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">
         <!-- Normal Plan -->
-        <div class="glass-panel p-10 rounded-[3rem] border border-white/5 opacity-60">
+        {{-- <div class="glass-panel p-10 rounded-[3rem] border border-white/5 opacity-60">
             <h2 class="orbitron text-xl font-bold mb-2 text-white">TRADING BASIC</h2>
             <div class="text-4xl font-black mb-8 text-white">FREE</div>
             <ul class="space-y-4 text-sm text-gray-400 mb-10 not-italic normal-case">
@@ -20,7 +20,7 @@
                 <li class="flex items-center gap-3 text-gray-700"><i data-lucide="x" class="w-5 h-5"></i> Locked AI Signals</li>
             </ul>
             <button disabled class="w-full py-4 rounded-2xl bg-white/5 text-gray-500 font-bold tracking-widest text-xs uppercase">Current Plan</button>
-        </div>
+        </div> --}}
 
         <!-- Premium Plan -->
         <div class="glass-panel p-10 rounded-[3rem] border border-white/10 relative overflow-hidden {{ !$isPremium ? 'premium-glow scale-105' : '' }}">

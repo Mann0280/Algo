@@ -23,12 +23,15 @@
                 <a href="{{ url('/contact') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
                     <i data-lucide="mail" class="w-3.5 h-3.5"></i> Contact Us
                 </a>
-                <a href="{{ url('/terminal/free') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
+                <a href="{{ url('/signals') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
+                    <i data-lucide="activity" class="w-3.5 h-3.5"></i> Signals
+                </a>
+                {{-- <a href="{{ url('/terminal/free') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
                     <i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i> Free Signals
-                </a>
-                <a href="{{ url('/terminal/premium-tips') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
+                </a> --}}
+                {{-- <a href="{{ url('/terminal/premium') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
                     <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> Premium Tips
-                </a>
+                </a> --}}
             </div>
 
             <!-- Right Actions -->
@@ -36,9 +39,9 @@
                 @auth
                     <!-- Terminal Access -->
                     @if(Auth::user()->role === 'premium' || Auth::user()->role === 'admin')
-                    <a href="{{ url('/terminal/premium') }}" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-900/40 border border-purple-500/30 text-purple-200 font-bold orbitron text-[10px] tracking-wider hover:bg-purple-800/40 transition-all">
+                    {{-- <a href="{{ url('/terminal/premium') }}" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-900/40 border border-purple-500/30 text-purple-200 font-bold orbitron text-[10px] tracking-wider hover:bg-purple-800/40 transition-all">
                         <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-500"></i> Premium Terminal
-                    </a>
+                    </a> --}}
                     @else
                     <a href="{{ url('/pricing') }}" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-500 font-bold orbitron text-[10px] tracking-wider hover:bg-amber-500/20 transition-all group">
                         <i data-lucide="zap" class="w-3.5 h-3.5 group-hover:animate-pulse"></i> Upgrade

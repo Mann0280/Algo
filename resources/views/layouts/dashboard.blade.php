@@ -147,11 +147,11 @@
             <nav class="flex-1 flex flex-col gap-1">
                 @php
                     $navItems = [
-                        ['icon' => 'layout-dashboard', 'label' => 'Terminal', 'url' => url('/terminal')],
-                        ['icon' => 'pie-chart', 'label' => 'Portfolio', 'url' => '#'],
-                        ['icon' => 'activity', 'label' => 'Signals', 'url' => url('/terminal/free')],
-                        ['icon' => 'arrow-left-right', 'label' => 'Wallet', 'url' => '#'],
-                        ['icon' => 'settings', 'label' => 'Settings', 'url' => route('account.profile'), 'active' => true],
+                        ['icon' => 'layout-dashboard', 'label' => 'Terminal', 'url' => url('/terminal'), 'active' => Request::is('terminal*')],
+                        ['icon' => 'activity', 'label' => 'Signals', 'url' => url('/signals'), 'active' => Request::is('signals*')],
+                        ['icon' => 'pie-chart', 'label' => 'Portfolio', 'url' => '#', 'active' => false],
+                        ['icon' => 'arrow-left-right', 'label' => 'Wallet', 'url' => '#', 'active' => false],
+                        ['icon' => 'settings', 'label' => 'Settings', 'url' => route('account.profile'), 'active' => Request::is('account/profile*')],
                     ];
                 @endphp
 
@@ -183,12 +183,12 @@
                     <a href="{{ url('/about') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
                         <i data-lucide="info" class="w-3.5 h-3.5 group-hover:text-purple-500 transition-colors"></i> About
                     </a>
-                    <a href="{{ url('/terminal/free') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
+                    {{-- <a href="{{ url('/terminal/free') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
                         <i data-lucide="bar-chart-2" class="w-3.5 h-3.5 group-hover:text-purple-500 transition-colors"></i> Signals
-                    </a>
-                    <a href="{{ url('/terminal/premium-tips') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
+                    </a> --}}
+                    {{-- <a href="{{ url('/terminal/premium') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
                         <i data-lucide="trending-up" class="w-3.5 h-3.5 group-hover:text-purple-500 transition-colors"></i> Tips
-                    </a>
+                    </a> --}}
                 </div>
 
                 <div class="relative max-w-md w-full group">
