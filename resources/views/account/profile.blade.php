@@ -20,21 +20,21 @@
                 <span class="px-3 py-1 bg-purple-600/10 border border-purple-500/20 text-purple-400 text-[8px] font-black orbitron tracking-[0.3em] uppercase rounded-full">Settings Control</span>
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             </div>
-            <h1 class="text-5xl font-black orbitron text-white uppercase italic tracking-tighter mb-4 leading-none">Neural Hub</h1>
+            <h1 class="text-5xl font-black orbitron uppercase italic tracking-tighter mb-4 leading-none" style="color: var(--text-white)">Neural Hub</h1>
             <p class="text-gray-500 text-sm font-medium tracking-wide max-w-xl">Configure your institutional identity, security protocols, and algorithmic execution parameters across the AlgoTrade neural network.</p>
         </div>
         <div class="flex items-center gap-4">
             <div class="text-right hidden md:block">
                 <p class="text-[9px] font-bold orbitron text-gray-600 uppercase tracking-widest mb-1">Last Protocol Sync</p>
-                <p class="text-xs font-black text-white orbitron">06:42:18 UTC</p>
+                <p class="text-xs font-black orbitron" style="color: var(--text-white)">06:42:18 UTC</p>
             </div>
             <div class="w-px h-10 bg-white/[0.05]"></div>
-            <button id="save-changes-btn" class="px-8 py-4 bg-white text-black rounded-2xl text-[10px] font-black orbitron uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all">Save Changes</button>
+            <button id="save-changes-btn" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl text-[10px] font-black orbitron uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all">Save Changes</button>
         </div>
     </div>
 
     <!-- SETTINGS NAVIGATION (HORIZONTAL) -->
-    <div class="sticky top-0 z-50 bg-[#020105]/80 backdrop-blur-xl border-b border-white/[0.05] -mx-12 px-12 mb-12">
+    <div class="sticky top-0 z-50 backdrop-blur-xl border-b border-white/[0.05] -mx-12 px-12 mb-12" style="background: var(--nav-sticky-bg)">
         <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-4" id="settings-nav">
             @php
                 $tabs = [
@@ -51,7 +51,8 @@
 
             @foreach($tabs as $index => $tab)
             <button onclick="switchTab('{{ $tab['id'] }}')" 
-                    class="tab-trigger flex items-center gap-3 px-6 py-3 rounded-xl transition-all group outline-none shrink-0 {{ $index === 0 ? 'bg-white/[0.04] text-white border border-white/[0.1] shadow-xl' : 'text-gray-500 hover:text-gray-300' }}"
+                    class="tab-trigger flex items-center gap-3 px-6 py-3 rounded-xl transition-all group outline-none shrink-0 {{ $index === 0 ? 'bg-white/[0.04] border border-white/[0.1] shadow-xl' : 'text-gray-500 hover:text-gray-300' }}"
+                    style="{{ $index === 0 ? 'color: var(--text-white)' : '' }}"
                     data-tab="{{ $tab['id'] }}">
                 <i data-lucide="{{ $tab['icon'] }}" class="w-4 h-4 group-hover:scale-110 transition-transform {{ $index === 0 ? 'text-purple-500' : '' }}"></i>
                 <span class="text-[9px] font-black orbitron uppercase tracking-[0.2em]">{{ $tab['label'] }}</span>
@@ -74,38 +75,90 @@
                     <div class="relative z-10">
                         <div class="flex items-center gap-4 mb-10">
                             <i data-lucide="fingerprint" class="w-6 h-6 text-purple-500"></i>
-                            <h3 class="text-xl font-black orbitron text-white uppercase italic tracking-wider">Identity Protocol</h3>
+                            <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Identity Protocol</h3>
                         </div>
 
-                        <div class="flex flex-col xl:flex-row gap-16 items-start">
-                            <div class="relative">
-                                <div class="w-40 h-40 rounded-[3rem] bg-[#0a0514] border border-white/[0.05] flex items-center justify-center relative overflow-hidden group/avatar shadow-2xl">
-                                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600 to-purple-600 opacity-20 group-hover/avatar:opacity-40 transition-opacity"></div>
-                                    <span class="text-6xl font-black orbitron text-white italic z-10">{{ strtoupper(substr(Auth::user()->username, 0, 1)) }}</span>
-                                    <div class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/avatar:opacity-100 transition-all cursor-pointer">
-                                        <i data-lucide="upload-cloud" class="w-8 h-8 text-white"></i>
+                        <div class="flex flex-col lg:flex-row gap-8 xl:gap-12 items-center lg:items-start">
+                            <!-- Avatar Section -->
+                            <div class="relative shrink-0">
+                                <div class="w-44 h-44 rounded-[3.5rem] border border-white/[0.08] flex items-center justify-center relative overflow-hidden group/avatar shadow-[0_20px_50px_rgba(0,0,0,0.5)]" style="background: var(--card-inner-bg)">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/30 to-purple-600/30 opacity-40 group-hover/avatar:opacity-60 transition-opacity duration-500"></div>
+                                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(147,51,234,0.15),transparent_70%)]"></div>
+                                    
+                                    <div id="avatar-container" class="absolute inset-0 z-10 flex items-center justify-center">
+                                        @if(Auth::user()->profile_photo)
+                                            <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="Profile" class="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" id="avatar-image">
+                                        @else
+                                            <span class="text-7xl font-black orbitron italic select-none tracking-tighter" id="avatar-initial" style="color: var(--text-white); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2))">{{ strtoupper(substr(Auth::user()->username, 0, 1)) }}</span>
+                                        @endif
                                     </div>
+                                    
+                                    <!-- Hover Upload Overlay -->
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 group-hover/avatar:opacity-100 transition-all duration-500 cursor-pointer z-20" onclick="document.getElementById('profile_photo_input').click()">
+                                        <i data-lucide="camera" class="w-8 h-8 text-white mb-2 transform translate-y-2 group-hover/avatar:translate-y-0 transition-transform"></i>
+                                        <span class="text-[8px] font-black orbitron text-white uppercase tracking-widest opacity-0 group-hover/avatar:opacity-100 transition-opacity">Update Node</span>
+                                    </div>
+                                    <input type="file" id="profile_photo_input" class="hidden" accept="image/*">
                                 </div>
-                                <div class="absolute -bottom-2 -right-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                                    <p class="text-[8px] font-black orbitron text-emerald-500 uppercase tracking-widest">Verified Node</p>
+                                <!-- Enhanced Badge -->
+                                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-5 py-2.5 bg-[#05020a] border border-emerald-500/30 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.1)] z-30">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></span>
+                                        <p class="text-[8px] font-black orbitron text-emerald-500 uppercase tracking-[0.2em] whitespace-nowrap">Verified Node</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1 w-full">
-                                <div class="space-y-3">
-                                    <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] ml-2">Username Handle</label>
-                                    <input type="text" value="{{ Auth::user()->username }}" class="perfect-input w-full rounded-2xl px-6 py-4.5 text-white text-sm outline-none">
-                                </div>
-                                <div class="space-y-3">
-                                    <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] ml-2">Neural Email</label>
-                                    <input type="email" value="{{ Auth::user()->email }}" class="perfect-input w-full rounded-2xl px-6 py-4.5 text-white text-sm outline-none">
-                                </div>
-                                <div class="space-y-3">
-                                    <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] ml-2">Access PIN</label>
-                                    <input type="password" value="********" class="perfect-input w-full rounded-2xl px-6 py-4.5 text-white text-sm outline-none">
-                                </div>
-                                <div class="flex items-end">
-                                    <button class="w-full py-4.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] text-[10px] font-black orbitron text-white uppercase tracking-[0.2em] hover:bg-white/[0.06] transition-all">Reset Access Credentials</button>
+                            <!-- Data Grid -->
+                            <div class="flex-1 w-full mt-4 lg:mt-0">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                                    <!-- Field: Username -->
+                                    <div class="space-y-3.5">
+                                        <div class="flex justify-between items-center px-2">
+                                            <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Username Handle</label>
+                                            <span class="text-[8px] font-bold orbitron text-purple-500/50 uppercase tracking-widest">Public</span>
+                                        </div>
+                                        <div class="relative group/field">
+                                            <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                            <input type="text" name="username" value="{{ Auth::user()->username }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-[var(--text-white)] text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
+                                        </div>
+                                    </div>
+
+                                    <!-- Field: Email -->
+                                    <div class="space-y-3.5">
+                                        <div class="flex justify-between items-center px-2">
+                                            <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Neural Email</label>
+                                            <span class="text-[8px] font-bold orbitron text-emerald-500/50 uppercase tracking-widest">Active</span>
+                                        </div>
+                                        <div class="relative group/field">
+                                            <i data-lucide="mail" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                            <input type="email" name="email" value="{{ Auth::user()->email }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-[var(--text-white)] text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
+                                        </div>
+                                    </div>
+
+                                    <!-- Field: PIN -->
+                                    <div class="space-y-3.5">
+                                        <div class="flex justify-between items-center px-2">
+                                            <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Access PIN</label>
+                                            <span class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">Hidden</span>
+                                        </div>
+                                        <div class="relative group/field">
+                                            <i data-lucide="lock" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                            <input type="password" value="********" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-[var(--text-white)] text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
+                                        </div>
+                                    </div>
+
+                                    <!-- Reset Button Callout -->
+                                    <div class="flex items-end">
+                                        <div class="w-full p-1 bg-white/[0.02] border border-white/[0.05] rounded-2xl">
+                                            <button class="w-full py-3.5 rounded-xl bg-white/[0.03] border border-white/[0.1] text-[9px] font-black orbitron uppercase tracking-[0.25em] hover:bg-purple-600 hover:text-white hover:border-purple-500 transition-all duration-300 group/btn shadow-lg">
+                                                <div class="flex items-center justify-center gap-3">
+                                                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5 group-hover/btn:rotate-180 transition-transform duration-500"></i>
+                                                    Reset Access Credentials
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -118,26 +171,32 @@
                 <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05]">
                     <div class="flex items-center gap-4 mb-12">
                         <i data-lucide="shield-check" class="w-6 h-6 text-purple-500"></i>
-                        <h3 class="text-xl font-black orbitron text-white uppercase italic tracking-wider">Active Secure Sessions</h3>
+                        <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Active Secure Sessions</h3>
                     </div>
 
                     <div class="grid gap-6">
                         @for($i=1; $i<=2; $i++)
-                        <div class="session-card flex items-center justify-between p-8 bg-white/[0.02] border border-white/[0.04] rounded-3xl group hover:border-purple-500/20 transition-all">
-                            <div class="flex items-center gap-6">
-                                <div class="w-14 h-14 rounded-2xl bg-[#0a0514] border border-white/[0.05] flex items-center justify-center text-purple-400">
-                                    <i data-lucide="{{ $i == 1 ? 'monitor' : 'smartphone' }}" class="w-7 h-7"></i>
+                        <div class="session-card flex flex-col sm:flex-row items-center justify-between p-8 bg-white/[0.02] border border-white/[0.04] rounded-3xl group hover:border-purple-500/20 hover:bg-white/[0.04] transition-all duration-300">
+                            <div class="flex items-center gap-6 mb-6 sm:mb-0">
+                                <div class="w-16 h-16 rounded-2xl border border-white/[0.05] flex items-center justify-center text-purple-400 relative overflow-hidden group-hover:scale-105 transition-transform" style="background: var(--card-inner-bg)">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
+                                    <i data-lucide="{{ $i == 1 ? 'monitor' : 'smartphone' }}" class="w-8 h-8 relative z-10"></i>
                                 </div>
-                                <div>
-                                    <h4 class="text-sm font-bold text-white uppercase tracking-tight">{{ $i == 1 ? 'Windows Desktop Protocol' : 'Neural Mobile ID' }}</h4>
-                                    <div class="flex items-center gap-3 mt-1.5">
-                                        <span class="text-[9px] font-black orbitron text-emerald-500 uppercase tracking-[0.2em]">Active Now</span>
-                                        <span class="w-px h-2.5 bg-white/[0.1]"></span>
-                                        <span class="text-[9px] font-medium text-gray-600 uppercase tracking-widest">124.81.19.{{ rand(10,99) }} · New Delhi, IN</span>
+                                <div class="space-y-1">
+                                    <h4 class="text-sm font-black orbitron uppercase tracking-tight" style="color: var(--text-white)">{{ $i == 1 ? 'Windows Desktop Protocol' : 'Neural Mobile ID' }}</h4>
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="w-1 h-1 rounded-full bg-emerald-500 shadow-[0_0_5px_#10b981]"></span>
+                                            <span class="text-[9px] font-black orbitron text-emerald-500 uppercase tracking-[0.2em]">Active Now</span>
+                                        </div>
+                                        <span class="w-px h-3 bg-white/[0.1] hidden sm:block"></span>
+                                        <span class="text-[9px] font-medium text-gray-600 uppercase tracking-[0.1em] italic">124.81.19.{{ rand(10,99) }} · New Delhi, IN</span>
                                     </div>
                                 </div>
                             </div>
-                            <button class="kill-session-btn px-6 py-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-[9px] font-black orbitron text-rose-500 uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all">Kill Session</button>
+                            <div class="w-full sm:w-auto p-1 bg-white/[0.02] border border-white/[0.05] rounded-xl">
+                                <button class="w-full sm:w-auto px-6 py-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-[9px] font-black orbitron text-rose-500 uppercase tracking-[0.2em] hover:bg-rose-500 hover:text-white transition-all duration-300">Kill Session</button>
+                            </div>
                         </div>
                         @endfor
                     </div>
@@ -149,32 +208,38 @@
                 <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05]">
                     <div class="flex items-center gap-4 mb-12">
                         <i data-lucide="bar-chart-3" class="w-6 h-6 text-purple-500"></i>
-                        <h3 class="text-xl font-black orbitron text-white uppercase italic tracking-wider">Execution Parameters</h3>
+                        <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Execution Parameters</h3>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                         <div class="space-y-4">
                             <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] ml-2">Risk Strategy</label>
+                            <input type="hidden" name="risk_strategy" id="risk_strategy" value="{{ Auth::user()->risk_strategy }}">
                             <div class="grid grid-cols-2 gap-3">
-                                <button class="p-4 rounded-xl bg-purple-500/10 border border-purple-500/30 text-[10px] font-black orbitron text-purple-400 uppercase">Aggressive</button>
-                                <button class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] text-[10px] font-black orbitron text-gray-500 uppercase hover:text-gray-300">Balanced</button>
+                                <button type="button" onclick="setRiskStrategy('Aggressive')" 
+                                        class="risk-btn p-4 rounded-xl border {{ Auth::user()->risk_strategy == 'Aggressive' ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-white/[0.02] border-white/[0.05] text-[var(--text-muted)]' }} text-[10px] font-black orbitron uppercase transition-all" 
+                                        data-strategy="Aggressive">Aggressive</button>
+                                <button type="button" onclick="setRiskStrategy('Balanced')" 
+                                        class="risk-btn p-4 rounded-xl border {{ Auth::user()->risk_strategy == 'Balanced' ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-white/[0.02] border-white/[0.05] text-[var(--text-muted)]' }} text-[10px] font-black orbitron uppercase transition-all" 
+                                        data-strategy="Balanced">Balanced</button>
                             </div>
                         </div>
                         <div class="space-y-4">
                             <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] ml-2">Default Allocation</label>
-                            <div class="relative">
-                                <input type="text" value="₹ 50,000" class="perfect-input w-full rounded-2xl px-6 py-4.5 text-white font-black orbitron italic text-sm outline-none">
+                            <div class="relative group/field">
+                                <i data-lucide="wallet" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                <input type="text" name="default_allocation" value="{{ Auth::user()->default_allocation }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-20 py-4.5 text-[var(--text-white)] font-black orbitron italic text-sm focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner uppercase tracking-wider">
                                 <span class="absolute right-6 top-1/2 -translate-y-1/2 text-[9px] font-black orbitron text-purple-500 uppercase italic">INR</span>
                             </div>
                         </div>
                         <div class="space-y-4 md:col-span-2">
                             <div class="flex justify-between items-center mb-4">
                                 <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] ml-2">Stop Loss Threshold</label>
-                                <span id="sl-value" class="text-xs font-black orbitron text-rose-500 italic">2.45%</span>
+                                <span id="sl-value" class="text-xs font-black orbitron text-rose-500 italic">{{ Auth::user()->sl_threshold }}%</span>
                             </div>
                             <div class="relative h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
-                                <div id="sl-bar" class="absolute inset-y-0 left-0 w-[24.5%] bg-gradient-to-r from-purple-600 to-rose-500 rounded-full shadow-[0_0_15px_rgba(244,63,94,0.3)]"></div>
-                                <input type="range" id="sl-range" min="0" max="100" value="24.5" class="absolute inset-0 opacity-0 cursor-pointer w-full">
+                                <div id="sl-bar" class="absolute inset-y-0 left-0 w-[{{ Auth::user()->sl_threshold }}%] bg-gradient-to-r from-purple-600 to-rose-500 rounded-full shadow-[0_0_15px_rgba(244,63,94,0.3)]"></div>
+                                <input type="range" name="sl_threshold" id="sl-range" min="0" max="100" step="0.01" value="{{ Auth::user()->sl_threshold }}" class="absolute inset-0 opacity-0 cursor-pointer w-full">
                             </div>
                         </div>
                     </div>
@@ -187,7 +252,7 @@
                     <div class="flex items-center justify-between mb-16">
                         <div class="flex items-center gap-4">
                             <i data-lucide="brain-circuit" class="w-6 h-6 text-purple-500"></i>
-                            <h3 class="text-xl font-black orbitron text-white uppercase italic tracking-wider">Neural Tuning</h3>
+                            <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Neural Tuning</h3>
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="text-[9px] font-black orbitron text-purple-500 uppercase italic">Power State:</span>
@@ -199,26 +264,33 @@
                         <div class="space-y-8">
                             <div class="flex justify-between items-end">
                                 <div>
-                                    <h4 class="text-xs font-black orbitron text-white uppercase tracking-widest mb-1">Signal Sensitivity</h4>
+                                    <h4 class="text-xs font-black orbitron uppercase tracking-widest mb-1" style="color: var(--text-white)">Signal Sensitivity</h4>
                                     <p class="text-[10px] font-medium text-gray-600 uppercase tracking-[0.1em]">Adjust neural filter density</p>
                                 </div>
-                                <span id="alpha-value" class="text-4xl font-black orbitron text-purple-500 italic tracking-tighter">0.82 <span class="text-sm font-bold text-gray-700 not-italic uppercase ml-2">ALPHA</span></span>
+                                <span id="alpha-value" class="text-4xl font-black orbitron text-purple-500 italic tracking-tighter">{{ Auth::user()->signal_sensitivity }} <span class="text-sm font-bold text-gray-700 not-italic uppercase ml-2">ALPHA</span></span>
                             </div>
-                            <input type="range" id="alpha-range" min="0" max="1" step="0.01" value="0.82" class="w-full h-1.5 bg-white/[0.05] rounded-full appearance-none cursor-pointer accent-purple-600 border border-white/[0.1]">
+                            <input type="range" name="signal_sensitivity" id="alpha-range" min="0" max="1" step="0.01" value="{{ Auth::user()->signal_sensitivity }}" class="w-full h-1.5 bg-white/[0.05] rounded-full appearance-none cursor-pointer accent-purple-600 border border-white/[0.1]">
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            @foreach([
-                                ['label' => 'Neural Confidence', 'value' => '75%', 'sub' => 'MIN THRESHOLD'],
-                                ['label' => 'Learning Rate', 'value' => '0.005', 'sub' => 'DELTA ADAPT'],
-                                ['label' => 'Pattern Depth', 'value' => 'V4.2', 'sub' => 'MATRIX CORE'],
-                            ] as $stat)
-                            <div class="p-8 bg-black/20 border border-white/[0.05] rounded-3xl text-center group hover:border-purple-500/30 transition-all">
-                                <p class="text-[9px] font-black orbitron text-gray-600 uppercase tracking-[0.2em] mb-4 group-hover:text-purple-500 transition-colors">{{ $stat['label'] }}</p>
-                                <p class="text-2xl font-black orbitron text-white italic mb-1">{{ $stat['value'] }}</p>
-                                <p class="text-[8px] font-bold orbitron text-gray-700 uppercase tracking-widest">{{ $stat['sub'] }}</p>
+                            <div class="p-8 border border-white/[0.05] rounded-3xl text-center group hover:border-purple-500/30 transition-all" style="background: var(--card-inner-bg)">
+                                <p class="text-[9px] font-black orbitron text-gray-600 uppercase tracking-[0.2em] mb-4 group-hover:text-purple-500 transition-colors">Neural Confidence</p>
+                                <div class="flex items-center justify-center gap-1">
+                                    <input type="number" name="neural_confidence" value="{{ Auth::user()->neural_confidence }}" class="w-16 bg-transparent border-none text-2xl font-black orbitron italic text-center focus:outline-none" style="color: var(--text-white)">
+                                    <span class="text-2xl font-black orbitron italic" style="color: var(--text-white)">%</span>
+                                </div>
+                                <p class="text-[8px] font-bold orbitron text-gray-700 uppercase tracking-widest">MIN THRESHOLD</p>
                             </div>
-                            @endforeach
+                            <div class="p-8 border border-white/[0.05] rounded-3xl text-center group hover:border-purple-500/30 transition-all" style="background: var(--card-inner-bg)">
+                                <p class="text-[9px] font-black orbitron text-gray-600 uppercase tracking-[0.2em] mb-4 group-hover:text-purple-500 transition-colors">Learning Rate</p>
+                                <input type="number" name="learning_rate" value="{{ Auth::user()->learning_rate }}" step="0.0001" class="w-full bg-transparent border-none text-2xl font-black orbitron italic text-center focus:outline-none" style="color: var(--text-white)">
+                                <p class="text-[8px] font-bold orbitron text-gray-700 uppercase tracking-widest">DELTA ADAPT</p>
+                            </div>
+                            <div class="p-8 border border-white/[0.05] rounded-3xl text-center group hover:border-purple-500/30 transition-all" style="background: var(--card-inner-bg)">
+                                <p class="text-[9px] font-black orbitron text-gray-600 uppercase tracking-[0.2em] mb-4 group-hover:text-purple-500 transition-colors">Pattern Depth</p>
+                                <input type="text" name="pattern_depth" value="{{ Auth::user()->pattern_depth }}" class="w-full bg-transparent border-none text-2xl font-black orbitron italic text-center focus:outline-none" style="color: var(--text-white)">
+                                <p class="text-[8px] font-bold orbitron text-gray-700 uppercase tracking-widest">MATRIX CORE</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -229,7 +301,7 @@
                 <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05]">
                     <div class="flex items-center gap-4 mb-12">
                         <i data-lucide="radio" class="w-6 h-6 text-purple-500"></i>
-                        <h3 class="text-xl font-black orbitron text-white uppercase italic tracking-wider">Alert Orchestration</h3>
+                        <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Alert Orchestration</h3>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -241,7 +313,7 @@
                         ] as $notif)
                         <div class="flex items-center justify-between p-8 bg-white/[0.01] border border-white/[0.04] rounded-3xl group hover:bg-white/[0.03] transition-all">
                             <div>
-                                <h4 class="text-sm font-black text-white uppercase tracking-tight">{{ $notif['label'] }}</h4>
+                                <h4 class="text-sm font-black uppercase tracking-tight" style="color: var(--text-white)">{{ $notif['label'] }}</h4>
                                 <p class="text-[9px] font-medium text-gray-600 uppercase tracking-widest mt-1.5">{{ $notif['desc'] }}</p>
                                 <div class="mt-4 flex items-center gap-2">
                                     <div class="w-2 h-2 rounded-full {{ $notif['status'] == 'ACTIVE' ? 'bg-emerald-500 animate-pulse' : 'bg-gray-800' }}"></div>
@@ -259,7 +331,8 @@
 
             {{-- 6. SUBSCRIPTION --}}
             <div id="tab-subscription" class="tab-content space-y-10">
-                <section class="glass-panel rounded-[3rem] p-16 border-white/[0.05] bg-gradient-to-br from-indigo-950/[0.2] to-[#020105] border-indigo-500/20 relative overflow-hidden ring-1 ring-indigo-500/10">
+                <section class="glass-panel rounded-[3rem] p-16 border-indigo-500/20 relative overflow-hidden ring-1 ring-indigo-500/10" 
+                         style="background: linear-gradient(to bottom right, rgba(79, 70, 229, 0.1), var(--bg-deep))">
                     <div class="absolute -top-24 -right-24 w-64 h-64 bg-indigo-600/10 blur-[100px] rounded-full"></div>
                     
                     <div class="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-16">
@@ -268,7 +341,7 @@
                                 <span class="px-4 py-1.5 bg-amber-500 text-black text-[9px] font-black orbitron uppercase tracking-[0.2em] rounded-lg italic shadow-[0_0_20px_rgba(251,191,36,0.2)]">Active Membership</span>
                                 <span class="text-[9px] font-black orbitron text-amber-500 uppercase italic tracking-widest">Premium Tier</span>
                             </div>
-                            <h3 class="text-6xl font-black orbitron text-white uppercase italic tracking-tighter mb-4 leading-none">Neural Elite</h3>
+                            <h3 class="text-6xl font-black orbitron uppercase italic tracking-tighter mb-4 leading-none" style="color: var(--text-white)">Neural Elite</h3>
                             <p class="text-gray-500 text-xs font-medium uppercase tracking-[0.2em] italic">Full Algorithmic Access · Renews in 24 Days</p>
                         </div>
 
@@ -280,21 +353,21 @@
                 </section>
                 
                 <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05]">
-                    <h3 class="text-xl font-black orbitron text-white uppercase italic tracking-wider mb-10">Ledger Protocol</h3>
+                    <h3 class="text-xl font-black orbitron uppercase italic tracking-wider mb-10" style="color: var(--text-white)">Ledger Protocol</h3>
                     <div class="space-y-4">
                         @for($i=1; $i<=3; $i++)
                         <div class="flex items-center justify-between p-8 bg-white/[0.01] border border-white/[0.04] rounded-[2rem] group hover:border-indigo-500/20 transition-all">
                             <div class="flex items-center gap-8">
-                                <div class="w-14 h-14 rounded-2xl bg-[#0a0514] border border-white/[0.05] flex items-center justify-center text-gray-500 group-hover:text-indigo-400 transition-colors">
+                                <div class="w-14 h-14 rounded-2xl border border-white/[0.05] flex items-center justify-center text-gray-500 group-hover:text-indigo-400 transition-colors" style="background: var(--card-inner-bg)">
                                     <i data-lucide="file-check" class="w-7 h-7"></i>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-black text-white uppercase tracking-tight">Invoice #ATX-99{{ $i }}2</p>
+                                    <p class="text-sm font-black uppercase tracking-tight" style="color: var(--text-white)">Invoice #ATX-99{{ $i }}2</p>
                                     <p class="text-[9px] font-black orbitron text-gray-700 uppercase tracking-widest mt-2">MARCH {{ 28 - $i }}, 2026 · NEURAL ELITE CORE</p>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <p class="text-xl font-black orbitron text-white italic mb-1">₹ 9,999</p>
+                                <p class="text-xl font-black orbitron italic mb-1" style="color: var(--text-white)">₹ 9,999</p>
                                 <button class="text-[8px] font-black orbitron text-indigo-500 hover:text-white uppercase tracking-[0.2em] transition-all underline underline-offset-8">Download Registry</button>
                             </div>
                         </div>
@@ -315,7 +388,7 @@
                         <div class="w-20 h-20 bg-purple-600/10 rounded-[2.5rem] flex items-center justify-center text-purple-500 mx-auto mb-8 shadow-2xl">
                             <i data-lucide="unplug" class="w-10 h-10"></i>
                         </div>
-                        <h4 class="text-2xl font-black orbitron text-white uppercase italic tracking-tight mb-4">No Bridge Active</h4>
+                        <h4 class="text-2xl font-black orbitron uppercase italic tracking-tight mb-4" style="color: var(--text-white)">No Bridge Active</h4>
                         <p class="text-gray-500 text-sm font-medium mb-12 max-w-md mx-auto">Establish a secure API connection between AlgoTrade and your brokerage to automate neural signal execution.</p>
                         <button class="px-12 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl text-[11px] font-black orbitron text-white uppercase tracking-[0.3em] hover:scale-105 transition-all shadow-xl shadow-purple-500/20">Establish Bridge</button>
                     </div>
@@ -327,7 +400,7 @@
                 <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05]">
                     <div class="flex items-center gap-4 mb-12">
                         <i data-lucide="eye-off" class="w-6 h-6 text-purple-500"></i>
-                        <h3 class="text-xl font-black orbitron text-white uppercase italic tracking-wider">Visibility Protocols</h3>
+                        <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Visibility Protocols</h3>
                     </div>
 
                     <div class="space-y-6">
@@ -337,7 +410,7 @@
                         ] as $item)
                         <div class="flex items-center justify-between p-8 bg-white/[0.01] border border-white/[0.04] rounded-3xl">
                             <div>
-                                <h4 class="text-sm font-black text-white uppercase tracking-tight">{{ $item['label'] }}</h4>
+                                <h4 class="text-sm font-black uppercase tracking-tight" style="color: var(--text-white)">{{ $item['label'] }}</h4>
                                 <p class="text-[9px] font-medium text-gray-600 uppercase tracking-widest mt-1.5">{{ $item['desc'] }}</p>
                             </div>
                             <div class="neural-toggle relative w-14 h-8 bg-white/5 rounded-full border border-white/[0.05] cursor-pointer">
@@ -355,7 +428,7 @@
                                 <i data-lucide="alert-octagon" class="w-5 h-5 text-rose-500"></i>
                                 <span class="text-[9px] font-black orbitron text-rose-500 uppercase italic tracking-widest">Termination Zone</span>
                             </div>
-                            <h4 class="text-2xl font-black orbitron text-white uppercase italic tracking-tight mb-2">Purge Neural ID</h4>
+                            <h4 class="text-2xl font-black orbitron uppercase italic tracking-tight mb-2" style="color: var(--text-white)">Purge Neural ID</h4>
                             <p class="text-gray-600 text-[10px] font-medium uppercase tracking-widest">Permanently delete terminal data, signal history, and brokerage links.</p>
                         </div>
                         <button onclick="openPurgeModal()" class="px-10 py-5 bg-rose-500/10 border border-rose-500/20 text-[11px] font-black orbitron text-rose-500 uppercase tracking-[0.2em] hover:bg-rose-500 hover:text-white transition-all rounded-2xl">Delete Protocol</button>
@@ -377,7 +450,7 @@
                 <i data-lucide="alert-triangle" class="w-12 h-12"></i>
             </div>
             <div class="space-y-4">
-                <h4 class="text-3xl font-black orbitron text-white uppercase italic tracking-tighter">Triple-Check Required</h4>
+                <h4 class="text-3xl font-black orbitron uppercase italic tracking-tighter" style="color: var(--text-white)">Triple-Check Required</h4>
                 <p class="text-gray-500 text-sm font-medium uppercase tracking-widest">You are about to permanently purge your neural identity. This action is irreversible across all brokerage nodes.</p>
             </div>
             <div class="space-y-4">
@@ -427,15 +500,18 @@
         document.querySelectorAll('.tab-trigger').forEach(btn => {
             btn.classList.remove('bg-white/[0.04]', 'text-white', 'border', 'border-white/[0.1]', 'shadow-xl');
             btn.classList.add('text-gray-500', 'hover:text-gray-300');
-            const icon = btn.querySelector('i');
-            icon.classList.remove('text-purple-500');
+            
+            // Robustly find the icon (can be <i> or <svg> after lucide-icons runs)
+            const icon = btn.querySelector('i, svg');
+            if(icon) icon.classList.remove('text-purple-500');
+            
             const dot = btn.querySelector('.rounded-full');
             if(dot) dot.remove();
 
             if (btn.getAttribute('data-tab') === tabId) {
                 btn.classList.add('bg-white/[0.04]', 'text-white', 'border', 'border-white/[0.1]', 'shadow-xl');
                 btn.classList.remove('text-gray-500', 'hover:text-gray-300');
-                icon.classList.add('text-purple-500');
+                if(icon) icon.classList.add('text-purple-500');
                 const newDot = document.createElement('div');
                 newDot.className = 'w-1 h-1 rounded-full bg-purple-500 shadow-[0_0_8px_#9333ea]';
                 btn.appendChild(newDot);
@@ -447,7 +523,9 @@
             pane.classList.remove('active');
             if (pane.id === `tab-${tabId}`) {
                 pane.classList.add('active');
-                gsap.fromTo(`#tab-${tabId}`, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" });
+                if (typeof gsap !== 'undefined') {
+                    gsap.fromTo(`#tab-${tabId}`, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" });
+                }
             }
         });
     }
@@ -469,9 +547,29 @@
         setTimeout(() => modal.classList.add('pointer-events-none'), 500);
     }
 
+    // Expose functions globally immediately
+    window.switchTab = switchTab;
+    window.openPurgeModal = openPurgeModal;
+    window.closePurgeModal = closePurgeModal;
+
+    function setRiskStrategy(strategy) {
+        document.getElementById('risk_strategy').value = strategy;
+        document.querySelectorAll('.risk-btn').forEach(btn => {
+            if (btn.getAttribute('data-strategy') === strategy) {
+                btn.classList.add('bg-purple-500/10', 'border-purple-500/30', 'text-purple-400');
+                btn.classList.remove('bg-white/[0.02]', 'border-white/[0.05]', 'text-[var(--text-muted)]');
+            } else {
+                btn.classList.remove('bg-purple-500/10', 'border-purple-500/30', 'text-purple-400');
+                btn.classList.add('bg-white/[0.02]', 'border-white/[0.05]', 'text-[var(--text-muted)]');
+            }
+        });
+    }
+    window.setRiskStrategy = setRiskStrategy;
+
     // --- INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', () => {
         lucide.createIcons();
+        // (Rest of the init code)
 
         // 1. Sliders - Realtime Updates
         const alphaRange = document.getElementById('alpha-range');
@@ -503,11 +601,78 @@
                 saveBtn.innerHTML = '<span class="flex items-center gap-2 justify-center"><i data-lucide="loader-2" class="w-3 h-3 animate-spin"></i> SYNCING...</span>';
                 lucide.createIcons();
                 
-                setTimeout(() => {
-                    notify('Neural protocols synchronized successfully', 'success');
+                // Collect all input data using FormData
+                const formData = new FormData();
+                
+                // Text inputs
+                const inputs = document.querySelectorAll('input[name]');
+                inputs.forEach(input => {
+                    formData.append(input.name, input.value);
+                });
+
+                // Profile Photo
+                const photoInput = document.getElementById('profile_photo_input');
+                if (photoInput.files.length > 0) {
+                    formData.append('profile_photo', photoInput.files[0]);
+                }
+
+                fetch("{{ route('account.update') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        notify(result.message, 'success');
+                        // Update UI elements
+                        if (result.user) {
+                            // Update avatar initial if no photo, or update photo
+                            const avatarContainer = document.getElementById('avatar-container');
+                            if (result.user.profile_photo_url) {
+                                avatarContainer.innerHTML = `<img src="${result.user.profile_photo_url}" alt="Profile" class="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" id="avatar-image">`;
+                            } else {
+                                avatarContainer.innerHTML = `<span class="text-7xl font-black orbitron italic select-none tracking-tighter" id="avatar-initial" style="color: var(--text-white); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2))">${result.user.initial}</span>`;
+                            }
+                            
+                            // Update other global profile photos
+                            document.querySelectorAll('.global-user-photo').forEach(img => {
+                                if (result.user.profile_photo_url) {
+                                    img.src = result.user.profile_photo_url;
+                                    img.classList.remove('hidden');
+                                } else {
+                                    img.classList.add('hidden');
+                                }
+                            });
+                            document.querySelectorAll('.global-user-initial').forEach(span => {
+                                if (result.user.profile_photo_url) {
+                                    span.classList.add('hidden');
+                                } else {
+                                    span.textContent = result.user.initial;
+                                    span.classList.remove('hidden');
+                                }
+                            });
+
+                            // Update all username displays
+                            document.querySelectorAll('.global-username').forEach(el => {
+                                el.textContent = result.user.username;
+                            });
+                        }
+                    } else {
+                        notify('Protocol sync failed. Please verify neural link.', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    notify('System error during synchronization.', 'error');
+                })
+                .finally(() => {
                     saveBtn.disabled = false;
                     saveBtn.innerHTML = originalText;
-                }, 2000);
+                    lucide.createIcons();
+                });
             });
         }
 
@@ -560,6 +725,22 @@
                 }
             });
         });
+
+        // 6. Profile Photo Preview
+        const photoInput = document.getElementById('profile_photo_input');
+        if(photoInput) {
+            photoInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const avatarContainer = document.getElementById('avatar-container');
+                        avatarContainer.innerHTML = `<img src="${event.target.result}" alt="Preview" class="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" id="avatar-image">`;
+                        notify('Node telemetry updated. Sync to finalize.', 'info');
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+        }
     });
 
     // Global exposed functions

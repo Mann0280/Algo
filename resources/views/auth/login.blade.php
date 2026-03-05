@@ -32,7 +32,12 @@
             </div>
             <div>
                 <label class="block text-[10px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-2 px-1">Access Phrase</label>
-                <input type="password" name="password" required placeholder="••••••••" class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-purple-500/50 transition-all text-sm font-medium text-white placeholder:text-gray-700">
+                <div class="relative group/pass">
+                    <input type="password" id="password" name="password" required placeholder="••••••••" class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-purple-500/50 transition-all text-sm font-medium text-white placeholder:text-gray-700">
+                    <button type="button" onclick="togglePassword('password', 'eye-icon')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-purple-400 transition-colors focus:outline-none">
+                        <i data-lucide="eye" id="eye-icon" class="w-4 h-4"></i>
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="w-full py-4 rounded-xl bg-purple-600 text-white font-black orbitron text-xs tracking-widest hover:bg-purple-500 hover:shadow-[0_0_20px_rgba(147,51,234,0.4)] transition-all transform active:scale-95 uppercase">
@@ -53,4 +58,20 @@
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
     .animate-shake { animation: shake 0.3s ease-in-out; }
 </style>
+
+<script>
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.setAttribute('data-lucide', 'eye-off');
+        } else {
+            input.type = 'password';
+            icon.setAttribute('data-lucide', 'eye');
+        }
+        lucide.createIcons();
+    }
+</script>
 @endsection

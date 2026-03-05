@@ -30,14 +30,12 @@ class TerminalController extends Controller
         $watchlist = Watchlist::where('user_id', $user->id)->get();
         $signals = Signal::orderBy('created_at', 'desc')->limit(10)->get();
         
-        $stats = [
-            'win_rate' => $this->analytics->calculateWinRate(),
-            'total_signals' => $this->analytics->getTotalSignals(),
-            'active_trades' => $this->analytics->getActiveTrades(),
-            'weekly_pips' => $this->analytics->calculateWeeklyPips(),
+        $settings = [
+            'breakeven_point' => \App\Models\SiteSetting::getValue('breakeven_point', '2500.00'),
+            'breakeven_date' => \App\Models\SiteSetting::getValue('breakeven_date', now()->format('Y-m-d')),
         ];
 
-        return view('terminal.index', compact('user', 'isPremium', 'watchlist', 'signals', 'stats'));
+        return view('terminal.index', compact('user', 'isPremium', 'watchlist', 'signals', 'stats', 'settings'));
     }
 
     /**

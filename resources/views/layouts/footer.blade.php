@@ -14,7 +14,7 @@
                 <a href="{{ url('/') }}" class="hover:text-white transition-colors uppercase">Home</a>
                 @auth
                 {{-- <a href="{{ url('/terminal/free') }}" class="hover:text-white transition-colors uppercase">Signals</a> --}}
-                    <a href="{{ url('/terminal') }}" class="hover:text-white transition-colors uppercase">Dashboard</a>
+                {{-- <a href="{{ url('/terminal') }}" class="hover:text-white transition-colors uppercase">Dashboard</a> --}}
                 @else
                     <a href="{{ url('/login') }}" class="hover:text-white transition-colors uppercase">Login</a>
                 @endauth
@@ -31,7 +31,7 @@
 
         <div class="text-center">
             <p class="text-[9px] font-bold orbitron text-slate-700 tracking-[0.4em] uppercase mb-4">Neural Interface v3.2.0 • Secured by AES-256</p>
-            <p class="text-slate-600 text-[10px] font-medium">&copy; {{ date('Y') }} AlgoTrade AI Terminal. All rights reserved. Registered Digital Asset Protocol.</p>
+            <p class="text-slate-600 text-[10px] font-medium">&copy; {{ date('Y') }} AlgoTrade AI. All rights reserved. Registered Digital Asset Protocol.</p>
         </div>
     </div>
 </footer>

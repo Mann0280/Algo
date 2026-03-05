@@ -22,6 +22,14 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'risk_strategy',
+        'default_allocation',
+        'sl_threshold',
+        'signal_sensitivity',
+        'neural_confidence',
+        'learning_rate',
+        'pattern_depth',
+        'profile_photo',
     ];
 
     /**

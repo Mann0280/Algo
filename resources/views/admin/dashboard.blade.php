@@ -6,11 +6,22 @@
 <div class="space-y-8 max-w-7xl mx-auto">
     <!-- Welcome Header -->
     <div class="flex justify-between items-end">
-        <div>
-            <h1 class="text-3xl font-black orbitron italic uppercase tracking-tighter text-white">
-                CORE <span class="text-purple-500 text-glow">DASHBOARD</span>
-            </h1>
-            <p class="text-gray-400 text-sm font-medium mt-1 uppercase tracking-widest leading-none">Welcome back, Control Center Officer {{ explode(' ', $admin_name)[0] }}</p>
+        <div class="flex items-center gap-6">
+            <div class="w-16 h-16 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-500/20 to-purple-500/20 shadow-2xl relative">
+                <img src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : '' }}" 
+                     alt="Admin" 
+                     class="w-full h-full object-cover global-user-photo {{ !Auth::user()->profile_photo ? 'hidden' : '' }}">
+                
+                <span class="global-user-initial text-2xl font-black orbitron text-white italic {{ Auth::user()->profile_photo ? 'hidden' : '' }}">
+                    {{ Auth::user() ? strtoupper(substr(Auth::user()->username, 0, 1)) : 'A' }}
+                </span>
+            </div>
+            <div>
+                <h1 class="text-3xl font-black orbitron italic uppercase tracking-tighter text-white">
+                    CORE <span class="text-purple-500 text-glow">DASHBOARD</span>
+                </h1>
+                <p class="text-gray-400 text-sm font-medium mt-1 uppercase tracking-widest leading-none">Welcome back, Control Center Officer <span class="global-username">{{ Auth::user() ? Auth::user()->username : 'Officer' }}</span></p>
+            </div>
         </div>
         <div class="flex gap-4">
             <button onclick="toggleModal('broadcastModal')" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-bold text-xs orbitron tracking-widest uppercase transition-all flex items-center gap-2">

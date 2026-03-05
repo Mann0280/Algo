@@ -67,7 +67,7 @@
                 <span id="refresh-counter" class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">REFRESHING IN 5s</span>
                 <span id="last-sync-time" class="text-[9px] font-bold text-slate-600 orbitron uppercase tracking-widest ml-4 opacity-70">LAST SYNC: INITIALIZING...</span>
             </div>
-            <h1 class="orbitron text-4xl font-black italic tracking-tighter text-white uppercase">
+            <h1 class="orbitron text-4xl font-black italic tracking-tighter uppercase" style="color: var(--text-white)">
                 BreakEven <span class="text-purple-500">Live Tips</span>
             </h1>
             <div class="flex flex-wrap items-center gap-6 mt-4">
@@ -77,7 +77,7 @@
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest">Date:</span>
-                    <span id="display-date" class="text-sm font-black text-white orbitron tracking-tighter">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M, Y') }}</span>
+                    <span id="display-date" class="text-sm font-black orbitron tracking-tighter" style="color: var(--text-white)">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M, Y') }}</span>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
             <div class="glass-panel px-6 py-3 rounded-2xl border border-white/5 flex items-center gap-4">
                 <div class="text-right">
                     <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Active Signals</div>
-                    <div id="total-active" class="text-xl font-black text-white orbitron tracking-tighter">00</div>
+                    <div id="total-active" class="text-xl font-black orbitron tracking-tighter" style="color: var(--text-white)">00</div>
                 </div>
                 <div class="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400">
                     <i data-lucide="activity" class="w-5 h-5"></i>
@@ -109,7 +109,7 @@
 
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
-                <thead class="bg-white/[0.03] text-[10px] orbitron font-bold text-slate-500 uppercase tracking-widest">
+                <thead class="text-[10px] orbitron font-bold text-slate-500 uppercase tracking-widest" style="background: var(--nav-hover-bg)">
                     <tr>
                         <th class="px-8 py-6 border-b border-white/5">#</th>
                         <th class="px-8 py-6 border-b border-white/5">Stock Name</th>
@@ -130,7 +130,7 @@
             <div class="w-20 h-20 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-600">
                 <i data-lucide="alert-circle" class="w-10 h-10"></i>
             </div>
-            <h3 class="orbitron font-bold text-xl text-white mb-2 uppercase">No Signals Detected</h3>
+            <h3 class="orbitron font-bold text-xl mb-2 uppercase" style="color: var(--text-white)">No Signals Detected</h3>
             <p class="text-slate-500 text-sm max-w-xs mx-auto italic">Our neural pathways are currently scanning the market. Stay synchronized for new breakouts.</p>
         </div>
     </div>
@@ -219,12 +219,12 @@
                         const hitClass = tip.status === 'HIT TARGET' ? 'bg-emerald-500/5' : (tip.status === 'SL HIT' ? 'bg-rose-500/5' : '');
 
                         rowsHtml += `
-                            <tr class="group hover:bg-white/[0.02] transition-colors ${isHit ? hitClass : ''} ${isNew ? 'new-row-animation' : ''}">
+                            <tr class="group hover:bg-[var(--nav-hover-bg)] transition-colors ${isHit ? hitClass : ''} ${isNew ? 'new-row-animation' : ''}">
                                 <td class="px-8 py-6 font-bold orbitron text-slate-500 text-xs">${index + 1}</td>
                                 <td class="px-8 py-6">
-                                    <div class="font-black orbitron text-white text-sm tracking-tight uppercase">${tip.stock_name}</div>
+                                    <div class="font-black orbitron text-sm tracking-tight uppercase" style="color: var(--text-white)">${tip.stock_name}</div>
                                 </td>
-                                <td class="px-8 py-6 font-mono text-sm text-slate-300 ${priceClass}">₹${parseFloat(tip.entry_price).toLocaleString()}</td>
+                                <td class="px-8 py-6 font-mono text-sm ${priceClass}" style="color: var(--text-muted)">₹${parseFloat(tip.entry_price).toLocaleString()}</td>
                                 <td class="px-8 py-6 font-mono text-xs text-rose-500/70 italic">₹${parseFloat(tip.stop_loss).toLocaleString()}</td>
                                 <td class="px-8 py-6 font-mono text-sm text-emerald-400 font-bold">₹${parseFloat(tip.target_price).toLocaleString()}</td>
                                 <td class="px-8 py-6">

@@ -55,15 +55,22 @@
                     </button>
 
                     <!-- User Profile Badge -->
-                    <a href="{{ url('/account/profile') }}" class="flex items-center gap-3 px-1 pl-1 pr-4 py-1 rounded-full border {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'border-amber-500/50 bg-gradient-to-r from-amber-600/20 to-transparent hover:from-amber-600/30' : 'border-white/10 bg-white/5 hover:bg-white/10' }} transition-all group">
-                        <div class="w-8 h-8 rounded-full {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'bg-amber-500 text-black' : 'bg-purple-600 text-white' }} flex items-center justify-center shadow-lg transition-transform group-hover:scale-105">
-                            <i data-lucide="{{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'crown' : 'user' }}" class="w-4 h-4 {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'fill-black' : '' }}"></i>
+                    <a href="{{ url('/account/profile') }}" class="flex items-center gap-3 px-1 pl-1 pr-4 py-1 rounded-full border {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'border-amber-500/50 bg-gradient-to-r from-amber-600/20 to-transparent hover:from-amber-600/30 hover:border-amber-500/80 hover:shadow-[0_0_20px_rgba(245,158,11,0.1)]' : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(147,51,234,0.1)]' }} transition-all duration-300 group hover:scale-[1.02]">
+                        <div class="w-8 h-8 rounded-full {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'bg-amber-500 text-black' : 'bg-purple-600 text-white shadow-lg shadow-purple-500/20' }} flex items-center justify-center transition-transform group-hover:scale-105 overflow-hidden relative">
+                            <img src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : '' }}" 
+                                 alt="User" 
+                                 class="w-full h-full object-cover global-user-photo {{ !Auth::user()->profile_photo ? 'hidden' : '' }}">
+                                 
+                            <span class="global-user-initial flex items-center justify-center w-full h-full {{ Auth::user()->profile_photo ? 'hidden' : '' }}">
+                                <i data-lucide="{{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'crown' : 'user' }}" 
+                                   class="w-4 h-4 {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'fill-black' : '' }}"></i>
+                            </span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-[8px] font-black orbitron {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'text-amber-500' : 'text-purple-400' }} leading-none tracking-widest uppercase">
-                                {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'Premium Member' : 'Standard Node' }}
+                            <span class="text-[8px] font-black orbitron {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'text-amber-500' : 'text-purple-400' }} leading-none tracking-widest uppercase transition-colors group-hover:text-white">
+                                {{ (Auth::user()->role === 'premium' || Auth::user()->role === 'admin') ? 'Premium Member' : 'Standard Account' }}
                             </span>
-                            <span class="text-[11px] font-bold orbitron text-white leading-tight uppercase">{{ Auth::user()->username }}</span>
+                            <span class="text-[11px] font-bold orbitron text-white leading-tight uppercase global-username">{{ Auth::user()->username }}</span>
                         </div>
                     </a>
 

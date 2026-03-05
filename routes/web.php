@@ -29,17 +29,18 @@ Route::match(['get', 'post'], '/subscribe', [HomeController::class, 'handlePayme
 
 Route::get('/signals', [TerminalController::class, 'liveTips'])->name('live-tips')->middleware('auth');
 
-Route::prefix('terminal')->name('terminal.')->middleware('auth')->group(function () {
-    Route::get('/', [TerminalController::class, 'index'])->name('index');
-    // Route::get('/free', [TerminalController::class, 'free'])->name('free');
-    // Route::get('/premium', [TerminalController::class, 'premiumTips'])->name('premium');
-    // Route::redirect('/premium-tips', '/terminal/premium');
-    // Route::redirect('/elite', '/terminal/premium');
-    Route::get('/charts', [TerminalController::class, 'charts'])->name('charts');
-});
+// Route::prefix('terminal')->name('terminal.')->middleware('auth')->group(function () {
+//     Route::get('/', [TerminalController::class, 'index'])->name('index');
+//     // Route::get('/free', [TerminalController::class, 'free'])->name('free');
+//     // Route::get('/premium', [TerminalController::class, 'premiumTips'])->name('premium');
+//     // Route::redirect('/premium-tips', '/terminal/premium');
+//     // Route::redirect('/elite', '/terminal/premium');
+//     Route::get('/charts', [TerminalController::class, 'charts'])->name('charts');
+// });
 
 Route::prefix('account')->name('account.')->middleware('auth')->group(function () {
     Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
+    Route::post('/profile', [AccountController::class, 'update'])->name('update');
     Route::get('/membership', [AccountController::class, 'membership'])->name('membership');
     Route::get('/notifications', [AccountController::class, 'notifications'])->name('notifications');
 });
