@@ -26,33 +26,32 @@
     <!-- Signal List -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach ($predictions as $signal)
-        @php $signal = (array)$signal; @endphp
         <div class="glass-card p-6 rounded-3xl border border-white/5 relative group transition-all hover:border-purple-500/30">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 class="text-2xl font-black orbitron text-white">{{ $signal['stock_symbol'] }}</h2>
-                    <p class="text-[9px] text-gray-500 orbitron uppercase font-bold tracking-widest leading-none mt-1">{{ $signal['model_used'] }} Engine</p>
+                    <h2 class="text-2xl font-black orbitron text-white">{{ $signal->stock_symbol }}</h2>
+                    <p class="text-[9px] text-gray-500 orbitron uppercase font-bold tracking-widest leading-none mt-1">{{ $signal->risk_level }} Risk</p>
                 </div>
                 <div class="text-right">
                     <p class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-1">Confidence</p>
-                    <p class="text-lg font-black text-purple-400">{{ $signal['confidence_level'] }}%</p>
+                    <p class="text-lg font-black text-purple-400">{{ $signal->confidence_level }}%</p>
                 </div>
             </div>
 
             <div class="space-y-4 py-4 border-t border-white/5">
                 <div class="flex justify-between text-xs">
-                    <span class="text-gray-500 font-medium">Target Price</span>
-                    <span class="text-white font-bold">₹{{ number_format($signal['predicted_price'], 2) }}</span>
+                    <span class="text-gray-500 font-medium">Target 1</span>
+                    <span class="text-white font-bold">₹{{ number_format($signal->target_1, 2) }}</span>
                 </div>
                 <div class="flex justify-between text-xs">
                     <span class="text-gray-500 font-medium">Broadcast Date</span>
-                    <span class="text-gray-400">{{ date('d M, Y', strtotime($signal['created_at'])) }}</span>
+                    <span class="text-gray-400">{{ $signal->created_at->format('d M, Y') }}</span>
                 </div>
             </div>
 
             <div class="mt-4 pt-4 border-t border-white/5 flex gap-2">
                 <button class="flex-1 py-2 rounded-lg bg-white/5 text-[10px] font-bold orbitron uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/10 transition-all">Archive</button>
-                <form action="{{ route('admin.predictions.destroy', $signal['id']) }}" method="POST" onsubmit="return confirm('Terminate signal?')">
+                <form action="{{ route('admin.predictions.destroy', $signal->id) }}" method="POST" onsubmit="return confirm('Terminate signal?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="w-10 h-10 flex items-center justify-center rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all">

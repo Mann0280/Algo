@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            SignalSeeder::class,
+            TradingTipSeeder::class,
+            SiteSettingSeeder::class,
             PremiumTipSeeder::class,
         ]);
 

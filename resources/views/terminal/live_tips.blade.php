@@ -38,6 +38,19 @@
         0% { background: rgba(139, 92, 246, 0.2); }
         100% { background: transparent; }
     }
+
+    .price-flash-up { animation: flashGreen 1s ease-out; }
+    .price-flash-down { animation: flashRed 1s ease-out; }
+
+    @keyframes flashGreen {
+        0% { color: #10b981; text-shadow: 0 0 10px #10b981; }
+        100% { color: inherit; text-shadow: none; }
+    }
+
+    @keyframes flashRed {
+        0% { color: #ef4444; text-shadow: 0 0 10px #ef4444; }
+        100% { color: inherit; text-shadow: none; }
+    }
 </style>
 @endpush
 
@@ -52,10 +65,21 @@
                     LIVE TELEMETRY ACTIVE
                 </span>
                 <span id="refresh-counter" class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">REFRESHING IN 5s</span>
+                <span id="last-sync-time" class="text-[9px] font-bold text-slate-600 orbitron uppercase tracking-widest ml-4 opacity-70">LAST SYNC: INITIALIZING...</span>
             </div>
             <h1 class="orbitron text-4xl font-black italic tracking-tighter text-white uppercase">
                 BreakEven <span class="text-purple-500">Live Tips</span>
             </h1>
+            <div class="flex flex-wrap items-center gap-6 mt-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest">Breakevenpoint :</span>
+                    <span id="display-breakeven" class="text-sm font-black text-purple-400 orbitron tracking-tighter">{{ $settings['breakeven_point'] ?? '2500.00' }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest">Date:</span>
+                    <span id="display-date" class="text-sm font-black text-white orbitron tracking-tighter">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M, Y') }}</span>
+                </div>
+            </div>
         </div>
 
         <div class="flex items-center gap-4">
@@ -115,34 +139,63 @@
 
 @push('scripts')
 <script>
-    let refreshTimer = 5;
-    let refreshInterval;
+    let nextSync = 5;
+    let syncInProgress = false;
     let existingTipIds = new Set();
+    let previousPrices = {}; // Store prices to detect changes
+    let prevBreakeven = null; // Store breakeven to detect changes
 
-    function updateTimer() {
-        const timerEl = document.getElementById('refresh-counter');
-        if (refreshTimer <= 0) {
-            refreshTimer = 5;
-            fetchLiveTips();
-        }
-        if (timerEl) {
-            timerEl.innerText = `REFRESHING IN ${refreshTimer}s`;
-            refreshTimer--;
-        }
-    }
+    async function syncNeuralTelemetry() {
+        if (syncInProgress) return;
+        syncInProgress = true;
 
-    async function fetchLiveTips() {
         const body = document.getElementById('tips-table-body');
         const emptyState = document.getElementById('empty-state');
         const totalActiveEl = document.getElementById('total-active');
+        const lastSyncEl = document.getElementById('last-sync-time');
+        const loader = document.getElementById('table-loader');
+        
+        const breakevenEl = document.getElementById('display-breakeven');
+        const dateEl = document.getElementById('display-date');
 
         try {
-            const response = await fetch('/api/live-tips');
+            console.log("[%cSYNC%c] Contacting Neural Engine...", "color: #9333ea; font-weight: bold", "");
+            
+            const response = await fetch(`/api/live-tips?nocache=${new Date().getTime()}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (!response.ok) throw new Error(`Neural Network Error: ${response.status}`);
+            
             const result = await response.json();
 
             if (result.success) {
                 const tips = result.data;
+                const now = new Date();
+                
+                if (lastSyncEl) lastSyncEl.innerText = `LAST SYNC: ${now.toLocaleTimeString([], { hour12: true })}`;
                 if (totalActiveEl) totalActiveEl.innerText = tips.length.toString().padStart(2, '0');
+
+                if (result.settings) {
+                    if (breakevenEl) {
+                        const newBe = result.settings.breakeven_point;
+                        if (prevBreakeven !== null && prevBreakeven !== newBe) {
+                            const flashClass = parseFloat(newBe) > parseFloat(prevBreakeven) ? 'price-flash-up' : 'price-flash-down';
+                            breakevenEl.classList.remove('price-flash-up', 'price-flash-down');
+                            void breakevenEl.offsetWidth; // Trigger reflow
+                            breakevenEl.classList.add(flashClass);
+                        }
+                        breakevenEl.innerText = newBe;
+                        prevBreakeven = newBe;
+                    }
+                    if (dateEl) {
+                        const d = new Date(result.settings.breakeven_date);
+                        dateEl.innerText = d.toLocaleDateString([], { day: '2-digit', month: 'short', year: 'numeric' });
+                    }
+                }
 
                 if (tips.length === 0) {
                     if (body) body.innerHTML = '';
@@ -153,7 +206,12 @@
                     let rowsHtml = '';
                     tips.forEach((tip, index) => {
                         const isNew = !existingTipIds.has(tip.id);
-                        existingTipIds.add(tip.id);
+                        if (isNew) existingTipIds.add(tip.id);
+
+                        // Price change detection
+                        const prevPrice = previousPrices[tip.id] || tip.entry_price;
+                        const priceClass = tip.entry_price > prevPrice ? 'price-flash-up' : (tip.entry_price < prevPrice ? 'price-flash-down' : '');
+                        previousPrices[tip.id] = tip.entry_price;
 
                         const statusClass = `status-${tip.status.toLowerCase().replace(' ', '_')}`;
                         const statusLabel = tip.status;
@@ -166,7 +224,7 @@
                                 <td class="px-8 py-6">
                                     <div class="font-black orbitron text-white text-sm tracking-tight uppercase">${tip.stock_name}</div>
                                 </td>
-                                <td class="px-8 py-6 font-mono text-sm text-slate-300">₹${parseFloat(tip.entry_price).toLocaleString()}</td>
+                                <td class="px-8 py-6 font-mono text-sm text-slate-300 ${priceClass}">₹${parseFloat(tip.entry_price).toLocaleString()}</td>
                                 <td class="px-8 py-6 font-mono text-xs text-rose-500/70 italic">₹${parseFloat(tip.stop_loss).toLocaleString()}</td>
                                 <td class="px-8 py-6 font-mono text-sm text-emerald-400 font-bold">₹${parseFloat(tip.target_price).toLocaleString()}</td>
                                 <td class="px-8 py-6">
@@ -181,18 +239,32 @@
                     
                     if (body) {
                         body.innerHTML = rowsHtml;
-                        lucide.createIcons();
+                        if (window.lucide) lucide.createIcons();
                     }
                 }
+                console.log("[%cSUCCESS%c] Neural Path Re-Synchronized", "color: #10b981; font-weight: bold", "");
             }
         } catch (error) {
-            console.error('Failed to sync with neural engine:', error);
+            console.error('[DATABASE SYNC ERROR]', error);
+            if (lastSyncEl) lastSyncEl.innerHTML = `<span class="text-rose-500">SYNC FAILED: RETRYING...</span>`;
+        } finally {
+            syncInProgress = false;
         }
     }
 
+    function runCountdown() {
+        const timerEl = document.getElementById('refresh-counter');
+        if (nextSync <= 0) {
+            nextSync = 5;
+            syncNeuralTelemetry();
+        }
+        if (timerEl) timerEl.innerText = `REFRESHING IN ${nextSync}s`;
+        nextSync--;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-        fetchLiveTips();
-        refreshInterval = setInterval(updateTimer, 1000);
+        syncNeuralTelemetry();
+        setInterval(runCountdown, 1000);
     });
 </script>
 @endpush

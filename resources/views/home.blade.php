@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <div class="relative z-10 container mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between min-h-screen gap-12 -mt-32">
+    <div class="relative z-10 container mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between py-16 lg:py-20 gap-12">
         <!-- Left Column -->
         <div class="w-full lg:w-5/12 flex flex-col gap-8">
             <div class="relative z-20 space-y-8">
@@ -13,7 +13,7 @@
                     Join 15k+ traders using AI Precision
                 </div>
                 
-                <h1 class="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.95] orbitron uppercase italic">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] orbitron uppercase italic">
                     <span class="block text-gradient hero-stagger opacity-0">TRADE</span>
                     <span class="block text-white hero-stagger opacity-0">SMARTER</span>
                     <span class="block text-purple-600/50 hero-stagger opacity-0">NOT HARDER</span>
@@ -35,7 +35,7 @@
             </div>
 
             <!-- Stats Bar -->
-            <div class="flex gap-12 mt-10 border-t border-white/5 pt-10 hero-stagger opacity-0">
+            <div class="flex gap-12 mt-6 border-t border-white/5 pt-8 hero-stagger opacity-0">
                 <div class="group">
                     <div class="text-3xl font-black text-white orbitron tracking-tighter count-up" data-value="95">0</div>
                     <div class="text-[9px] text-slate-500 font-bold orbitron uppercase tracking-widest mt-2">Win Rate %</div>

@@ -251,6 +251,11 @@ class TerminalController extends Controller
         $user = Auth::user();
         $isPremium = $user->role === 'premium' || $user->role === 'admin';
         
-        return view('terminal.live_tips', compact('user', 'isPremium'));
+        $settings = [
+            'breakeven_point' => \App\Models\SiteSetting::getValue('breakeven_point', '2500.00'),
+            'breakeven_date' => \App\Models\SiteSetting::getValue('breakeven_date', now()->format('Y-m-d')),
+        ];
+        
+        return view('terminal.live_tips', compact('user', 'isPremium', 'settings'));
     }
 }
