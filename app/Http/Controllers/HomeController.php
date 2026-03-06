@@ -17,12 +17,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $isPremium = $user ? ($user->role === 'premium' || $user->role === 'admin') : false;
+
         // Preview signals for the landing page
         $signals = Signal::orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
 
-        return view('home', compact('signals'));
+        return view('home', compact('signals', 'isPremium'));
     }
 
     public function about()
@@ -53,23 +56,36 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $isPremium = $user ? ($user->role === 'premium' || $user->role === 'admin') : false;
-        return view('pages.pricing', compact('isPremium'));
+        $packages = \App\Models\PremiumPackage::where('is_active', true)->orderBy('price', 'asc')->get();
+        return view('pages.pricing', compact('isPremium', 'packages'));
     }
 
-    public function handlePayment()
+    public function handlePayment(Request $request)
     {
         $user = Auth::user();
         if (!$user) {
             return redirect()->route('login');
         }
 
+        $package = \App\Models\PremiumPackage::findOrFail($request->package_id);
+
         // Mock payment success logic
         $user->update([
             'role' => 'premium',
-            'premium_expiry' => now()->addDays(30),
+            'premium_expiry' => now()->addDays($package->duration_days),
         ]);
 
-        return redirect()->route('account.membership')
-            ->with('success', 'Neural upgrade sequence complete. Welcome to ALGO-TRA.');
+        // Record in history
+        \App\Models\SubscriptionHistory::create([
+            'user_id' => $user->id,
+            'plan_name' => $package->name,
+            'amount' => $package->price,
+            'status' => 'Completed',
+            'purchased_at' => now(),
+            'expires_at' => now()->addDays($package->duration_days),
+        ]);
+
+        return redirect()->route('account.subscription-history')
+            ->with('success', 'Neural upgrade sequence complete. Welcome to ALGO-TRADE Elite.');
     }
 }

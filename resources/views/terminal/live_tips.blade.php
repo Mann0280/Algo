@@ -107,24 +107,7 @@
             </div>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead class="text-[10px] orbitron font-bold text-slate-500 uppercase tracking-widest" style="background: var(--nav-hover-bg)">
-                    <tr>
-                        <th class="px-8 py-6 border-b border-white/5">#</th>
-                        <th class="px-8 py-6 border-b border-white/5">Stock Name</th>
-                        <th class="px-8 py-6 border-b border-white/5">Entry Price</th>
-                        <th class="px-8 py-6 border-b border-white/5">Stop Loss</th>
-                        <th class="px-8 py-6 border-b border-white/5 px-8">Target Price</th>
-                        <th class="px-8 py-6 border-b border-white/5">Signal Status</th>
-                        <th class="px-8 py-6 border-b border-white/5 text-right">Last Updated</th>
-                    </tr>
-                </thead>
-                <tbody id="tips-table-body" class="divide-y divide-white/5">
-                    <!-- Data will be injected here via JS -->
-                </tbody>
-            </table>
-        </div>
+        <div id="tips-table"></div>
         
         <div id="empty-state" class="p-20 text-center hidden">
             <div class="w-20 h-20 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-600">
@@ -138,38 +121,65 @@
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+<script src="{{ asset('js/tabulator-global.js') }}"></script>
 <script>
+    let tipsTable;
     let nextSync = 5;
     let syncInProgress = false;
-    let existingTipIds = new Set();
-    let previousPrices = {}; // Store prices to detect changes
-    let prevBreakeven = null; // Store breakeven to detect changes
+    let previousPrices = {}; 
+
+    document.addEventListener('DOMContentLoaded', () => {
+        tipsTable = new Tabulator("#tips-table", {
+            ...TABULATOR_BASE_CONFIG,
+            data: [],
+            columns: [
+                {title: "#", field: "id", width: 80, resizable: false, headerSort: false, formatter: "rownum", cssClass: "font-bold orbitron text-slate-500 text-xs px-8 py-6"},
+                {title: "Stock Name", field: "stock_name", widthGrow: 2, minWidth: 160, resizable: false, sorter: "string", formatter: (cell) => `
+                    <div class="font-black orbitron text-sm tracking-tight uppercase" style="color: var(--text-white)">${cell.getValue()}</div>`
+                },
+                {title: "Entry Price", field: "entry_price", width: 140, sorter: "number", formatter: (cell) => {
+                    const v = parseFloat(cell.getValue());
+                    const prev = previousPrices[cell.getRow().getData().id] || v;
+                    const flash = v > prev ? 'price-flash-up' : (v < prev ? 'price-flash-down' : '');
+                    return `<div class="font-mono text-sm ${flash}" style="color: var(--text-muted)">₹${v.toLocaleString()}</div>`;
+                }},
+                {title: "Stop Loss", field: "stop_loss", width: 120, sorter: "number", formatter: (cell) => `
+                    <div class="font-mono text-xs text-rose-500/70 italic">₹${parseFloat(cell.getValue()).toLocaleString()}</div>`
+                },
+                {title: "Target Price", field: "target_price", width: 140, sorter: "number", formatter: (cell) => `
+                    <div class="font-mono text-sm text-emerald-400 font-bold">₹${parseFloat(cell.getValue()).toLocaleString()}</div>`
+                },
+                {title: "Signal Status", field: "status", width: 150, resizable: false, hozAlign: "center", formatter: (cell) => {
+                    const status = cell.getValue();
+                    const cls = `status-${status.toLowerCase().replace(' ', '_')}`;
+                    return `<span class="status-badge glow-badge orbitron ${cls}">${status}</span>`;
+                }},
+                {title: "Last Updated", field: "updated_at", width: 140, hozAlign: "right", formatter: (cell) => `
+                    <div class="font-mono text-[10px] text-slate-500">
+                        ${new Date(cell.getValue()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                    </div>`
+                },
+            ]
+        });
+
+        syncNeuralTelemetry();
+        setInterval(runCountdown, 1000);
+    });
 
     async function syncNeuralTelemetry() {
-        if (syncInProgress) return;
+        if (syncInProgress || !tipsTable) return;
         syncInProgress = true;
 
-        const body = document.getElementById('tips-table-body');
         const emptyState = document.getElementById('empty-state');
         const totalActiveEl = document.getElementById('total-active');
         const lastSyncEl = document.getElementById('last-sync-time');
-        const loader = document.getElementById('table-loader');
-        
         const breakevenEl = document.getElementById('display-breakeven');
         const dateEl = document.getElementById('display-date');
 
         try {
-            console.log("[%cSYNC%c] Contacting Neural Engine...", "color: #9333ea; font-weight: bold", "");
-            
-            const response = await fetch(`/api/live-tips?nocache=${new Date().getTime()}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            });
-
+            const response = await fetch(`/api/live-tips?nocache=${new Date().getTime()}`);
             if (!response.ok) throw new Error(`Neural Network Error: ${response.status}`);
-            
             const result = await response.json();
 
             if (result.success) {
@@ -180,17 +190,7 @@
                 if (totalActiveEl) totalActiveEl.innerText = tips.length.toString().padStart(2, '0');
 
                 if (result.settings) {
-                    if (breakevenEl) {
-                        const newBe = result.settings.breakeven_point;
-                        if (prevBreakeven !== null && prevBreakeven !== newBe) {
-                            const flashClass = parseFloat(newBe) > parseFloat(prevBreakeven) ? 'price-flash-up' : 'price-flash-down';
-                            breakevenEl.classList.remove('price-flash-up', 'price-flash-down');
-                            void breakevenEl.offsetWidth; // Trigger reflow
-                            breakevenEl.classList.add(flashClass);
-                        }
-                        breakevenEl.innerText = newBe;
-                        prevBreakeven = newBe;
-                    }
+                    if (breakevenEl) breakevenEl.innerText = result.settings.breakeven_point;
                     if (dateEl) {
                         const d = new Date(result.settings.breakeven_date);
                         dateEl.innerText = d.toLocaleDateString([], { day: '2-digit', month: 'short', year: 'numeric' });
@@ -198,55 +198,26 @@
                 }
 
                 if (tips.length === 0) {
-                    if (body) body.innerHTML = '';
+                    tipsTable.setData([]);
                     if (emptyState) emptyState.classList.remove('hidden');
                 } else {
                     if (emptyState) emptyState.classList.add('hidden');
                     
-                    let rowsHtml = '';
-                    tips.forEach((tip, index) => {
-                        const isNew = !existingTipIds.has(tip.id);
-                        if (isNew) existingTipIds.add(tip.id);
-
-                        // Price change detection
-                        const prevPrice = previousPrices[tip.id] || tip.entry_price;
-                        const priceClass = tip.entry_price > prevPrice ? 'price-flash-up' : (tip.entry_price < prevPrice ? 'price-flash-down' : '');
-                        previousPrices[tip.id] = tip.entry_price;
-
-                        const statusClass = `status-${tip.status.toLowerCase().replace(' ', '_')}`;
-                        const statusLabel = tip.status;
-                        const isHit = tip.status === 'HIT TARGET' || tip.status === 'SL HIT';
-                        const hitClass = tip.status === 'HIT TARGET' ? 'bg-emerald-500/5' : (tip.status === 'SL HIT' ? 'bg-rose-500/5' : '');
-
-                        rowsHtml += `
-                            <tr class="group hover:bg-[var(--nav-hover-bg)] transition-colors ${isHit ? hitClass : ''} ${isNew ? 'new-row-animation' : ''}">
-                                <td class="px-8 py-6 font-bold orbitron text-slate-500 text-xs">${index + 1}</td>
-                                <td class="px-8 py-6">
-                                    <div class="font-black orbitron text-sm tracking-tight uppercase" style="color: var(--text-white)">${tip.stock_name}</div>
-                                </td>
-                                <td class="px-8 py-6 font-mono text-sm ${priceClass}" style="color: var(--text-muted)">₹${parseFloat(tip.entry_price).toLocaleString()}</td>
-                                <td class="px-8 py-6 font-mono text-xs text-rose-500/70 italic">₹${parseFloat(tip.stop_loss).toLocaleString()}</td>
-                                <td class="px-8 py-6 font-mono text-sm text-emerald-400 font-bold">₹${parseFloat(tip.target_price).toLocaleString()}</td>
-                                <td class="px-8 py-6">
-                                    <span class="status-badge glow-badge orbitron ${statusClass}">${statusLabel}</span>
-                                </td>
-                                <td class="px-8 py-6 text-right font-mono text-[10px] text-slate-500">
-                                    ${new Date(tip.updated_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                                </td>
-                            </tr>
-                        `;
+                    // Update prices for flashing effect before replacement
+                    tips.forEach(t => {
+                        // Logic for flashing is handled in formatter using previousPrices
                     });
-                    
-                    if (body) {
-                        body.innerHTML = rowsHtml;
-                        if (window.lucide) lucide.createIcons();
-                    }
+
+                    tipsTable.replaceData(tips).then(() => {
+                        // After render, update previousPrices store
+                        tips.forEach(t => {
+                            previousPrices[t.id] = t.entry_price;
+                        });
+                    });
                 }
-                console.log("[%cSUCCESS%c] Neural Path Re-Synchronized", "color: #10b981; font-weight: bold", "");
             }
         } catch (error) {
             console.error('[DATABASE SYNC ERROR]', error);
-            if (lastSyncEl) lastSyncEl.innerHTML = `<span class="text-rose-500">SYNC FAILED: RETRYING...</span>`;
         } finally {
             syncInProgress = false;
         }
@@ -261,11 +232,6 @@
         if (timerEl) timerEl.innerText = `REFRESHING IN ${nextSync}s`;
         nextSync--;
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        syncNeuralTelemetry();
-        setInterval(runCountdown, 1000);
-    });
 </script>
 @endpush
 

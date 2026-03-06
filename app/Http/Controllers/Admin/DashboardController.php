@@ -46,7 +46,7 @@ class DashboardController extends Controller
             'trade_type' => 'required|in:Intraday,Swing,Long Term',
         ]);
 
-        \App\Models\PremiumTip::create([
+        $tip = \App\Models\PremiumTip::create([
             'stock_name' => strtoupper($request->stock_name),
             'entry_price' => $request->entry_price,
             'target_1' => $request->target_1,
@@ -59,6 +59,35 @@ class DashboardController extends Controller
             'status' => 'Active',
         ]);
 
-        return redirect()->back()->with('success', 'Neural signal broadcasted to all elite nodes.');
+        // Trigger Notification for Premium Users
+        \App\Models\Notification::create([
+            'title' => 'New Elite Signal: ' . $tip->stock_name,
+            'message' => "Potential {$tip->trade_type} {$tip->stock_name} opportunity at {$tip->entry_price}.",
+            'targeted_role' => 'premium',
+            'icon' => 'zap',
+            'type' => 'success'
+        ]);
+
+        return redirect()->back()->with('success', 'Neural signal broadcasted and notifications deployed.');
+    }
+
+    public function broadcastNotification(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'message' => 'required|string',
+            'target' => 'required|in:all,premium,admin',
+            'type' => 'required|in:info,success,warning,danger',
+        ]);
+
+        \App\Models\Notification::create([
+            'title' => $request->title,
+            'message' => $request->message,
+            'targeted_role' => $request->target,
+            'type' => $request->type,
+            'icon' => $request->type === 'danger' ? 'alert-triangle' : ($request->type === 'success' ? 'check-circle' : 'bell'),
+        ]);
+
+        return redirect()->back()->with('success', 'Global neural broadcast complete.');
     }
 }

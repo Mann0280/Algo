@@ -11,11 +11,178 @@
         z-index: 1000; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .notification-panel.active { right: 0; }
+    
+    .restricted-overlay {
+        background: linear-gradient(to top, rgba(5, 2, 10, 1) 0%, rgba(5, 2, 10, 0.8) 50%, rgba(5, 2, 10, 0) 100%);
+        pointer-events: none;
+    }
+    .restricted-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        pointer-events: auto;
+    }
+    .blur-data {
+        filter: blur(5px);
+        user-select: none;
+    }
+
+    /* Mobile Neural Pathway (iPhone View) */
+    .mobile-phone-frame {
+        background: #000000;
+        border: 4px solid #1a1a1a;
+        border-radius: 4.5rem;
+        padding: 0.8rem;
+        position: relative;
+        box-shadow: 
+            0 0 0 2px rgba(147, 51, 234, 0.1),
+            0 30px 60px rgba(0,0,0,0.9);
+        overflow: hidden;
+    }
+    .mobile-phone-frame::after {
+        content: '';
+        position: absolute;
+        inset: 0.6rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 3.8rem;
+        pointer-events: none;
+        z-index: 10;
+    }
+    .dynamic-island {
+        width: 120px;
+        height: 35px;
+        background: #000000;
+        border-radius: 20px;
+        margin: 10px auto 25px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        position: relative;
+        z-index: 50;
+    }
+    .island-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #1a1a1a;
+    }
+    .island-sensor {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #1a1a5a 0%, #000 70%);
+        opacity: 0.6;
+    }
+    .neural-card {
+        background: linear-gradient(180deg, #2a0a4e 0%, #0a0514 30%, #05020a 100%);
+        border-radius: 3.2rem;
+        padding: 2.5rem 2rem;
+        position: relative;
+        overflow: hidden;
+        min-height: 580px;
+        border: 1px solid rgba(147, 51, 234, 0.15);
+        box-shadow: inset 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .neural-wave {
+        width: 100%;
+        height: 120px;
+        fill: none;
+        stroke: #9333ea;
+        stroke-width: 3;
+        stroke-linecap: round;
+        filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.5));
+    }
+    .neural-wave-fill {
+        fill: url(#wave-gradient);
+        opacity: 0.3;
+    }
+    @keyframes waveSwim {
+        0% { transform: translateX(0); }
+        50% { transform: translateX(-15px); }
+        100% { transform: translateX(0); }
+    }
+    .animate-wave { animation: waveSwim 4s ease-in-out infinite; }
 </style>
 @endpush
 
 @section('content')
-<div class="space-y-12">
+<div class="space-y-12 pb-20">
+    <!-- MOBILE IPHONE VIEW (Hidden on Desktop) -->
+    @if ($isPremium)
+    <div class="block lg:hidden mb-12">
+        <div class="flex justify-end mb-6">
+            <div class="px-4 py-1.5 bg-black/40 border border-purple-500/30 rounded-full flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_8px_#9333ea]"></span>
+                <span class="orbitron text-[9px] font-bold text-gray-300 uppercase tracking-widest">TERMINAL V2.0 ACTIVE</span>
+            </div>
+        </div>
+
+        <div class="mobile-phone-frame max-w-[400px] mx-auto scale-95 origin-top">
+            <!-- Dynamic Island -->
+            <div class="dynamic-island">
+                <i data-lucide="lock" class="w-3 h-3 text-white/40"></i>
+                <div class="island-sensor"></div>
+                <div class="island-dot"></div>
+            </div>
+
+            <div class="neural-card">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
+                            <i data-lucide="zap" class="w-5 h-5 text-white fill-white"></i>
+                        </div>
+                        <span class="orbitron font-black text-xs italic tracking-tighter text-purple-500">NEURAL PATHWAY</span>
+                    </div>
+                    <div class="flex gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-red-500/40"></span>
+                        <span class="w-2 h-2 rounded-full bg-amber-500/40"></span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-500/40"></span>
+                    </div>
+                </div>
+
+                <!-- Main Display -->
+                <div class="space-y-1">
+                    <p class="orbitron text-[9px] font-bold text-gray-500 uppercase tracking-widest">SCANNING MARKET DEPTH</p>
+                    <div class="flex items-baseline gap-3">
+                        <h2 class="orbitron text-6xl font-black text-white tracking-tighter italic">98.4<span class="text-4xl">%</span></h2>
+                        <span class="text-emerald-400 font-bold text-xs font-mono">+2.45%</span>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="h-px bg-white/5 w-full my-10"></div>
+
+                <!-- Animated Wave Chart -->
+                <div class="relative h-[180px] -mx-8 mt-4">
+                    <svg viewBox="0 0 400 180" class="w-full h-full neural-wave animate-wave">
+                        <defs>
+                            <linearGradient id="wave-gradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#a855f7" stop-opacity="0.6" />
+                                <stop offset="100%" stop-color="#9333ea" stop-opacity="0" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M0,130 C50,120 80,160 140,100 C200,40 280,150 340,70 C370,30 400,100 450,120 L450,180 L0,180 Z" class="neural-wave-fill" />
+                        <path d="M0,130 C50,120 80,160 140,100 C200,40 280,150 340,70 C370,30 400,100 450,120" />
+                        <!-- Tooltip Point -->
+                        <circle cx="340" cy="70" r="4" fill="#fff" class="shadow-lg" />
+                    </svg>
+                </div>
+
+                <!-- Footer -->
+                <div class="flex justify-between items-center mt-6">
+                    <span class="orbitron text-[8px] font-bold text-gray-600 uppercase tracking-widest">EST 2024</span>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                        <span class="orbitron text-[8px] font-bold text-gray-400 uppercase tracking-widest">SYSTEM OPERATIONAL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <!-- Notification Panel Overlay -->
     <div id="notif-panel" class="notification-panel p-8" style="background: var(--nav-sticky-bg)">
         <div class="flex justify-between items-center mb-10">
@@ -82,30 +249,16 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            @if ($isPremium)
             <!-- Active Signals Table -->
             <div class="lg:col-span-2 reveal-section">
-                <div class="glass-panel rounded-3xl overflow-hidden border border-white/5">
+                <div class="glass-panel rounded-3xl overflow-hidden border border-white/5 relative">
                     <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
                         <h2 class="orbitron text-sm font-bold tracking-widest uppercase italic" style="color: var(--text-white)">AI MONITORING TERMINAL</h2>
                         <span class="text-[9px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-1 rounded font-black orbitron animate-pulse">LIVE DATA</span>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead class="text-slate-500 text-[10px] uppercase font-bold bg-white/5 orbitron">
-                                <tr>
-                                    <th class="px-6 py-4 border-b border-white/5">#</th>
-                                    <th class="px-6 py-4 border-b border-white/5">STOCK NAME</th>
-                                    <th class="px-6 py-4 border-b border-white/5">ENTRY PRICE</th>
-                                    <th class="px-6 py-4 border-b border-white/5">STOP LOSS</th>
-                                    <th class="px-6 py-4 border-b border-white/5">TARGET PRICE</th>
-                                    <th class="px-6 py-4 border-b border-white/5">SIGNAL STATUS</th>
-                                    <th class="px-6 py-4 border-b border-white/5 text-right">LAST UPDATED</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tips-table-body" class="divide-y divide-white/5">
-                                <!-- Data will be injected here via JS -->
-                            </tbody>
-                        </table>
+                        <div id="tips-table"></div>
                         <div id="empty-state" class="p-10 text-center hidden">
                             <p class="text-slate-500 text-xs orbitron uppercase">No active signals detected.</p>
                         </div>
@@ -141,6 +294,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>
@@ -154,19 +308,71 @@
     .status-hit_target { background: rgba(234, 179, 8, 0.1); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.3); }
     .status-sl_hit { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 </style>
+<script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+<script src="{{ asset('js/tabulator-global.js') }}"></script>
 <script>
     gsap.from(".reveal-section", { duration: 1, y: 30, opacity: 0, stagger: 0.1, ease: "power3.out" });
     function toggleNotif() { document.getElementById('notif-panel').classList.toggle('active'); }
 
+    let tipsTable;
     let nextSync = 5;
     let syncInProgress = false;
-    let existingTipIds = new Set();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize Tabulator
+        tipsTable = new Tabulator("#tips-table", {
+            ...TABULATOR_BASE_CONFIG,
+            data: [],
+            columns: [
+                {title: "Stock", field: "stock_name", widthGrow: 2, minWidth: 130, resizable: false, sorter: "string", formatter: (cell) => `<span class="font-black orbitron text-xs text-white uppercase tracking-tighter">${cell.getValue()}</span>`},
+                {title: "Type", field: "confidence_percentage", width: 90, resizable: false, hozAlign: "center", formatter: (cell) => {
+                    const badge = cell.getValue() >= 90 ? 'VIP' : 'PRO';
+                    const cls = cell.getValue() >= 90 ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 'bg-purple-500/10 text-purple-500 border-purple-500/20';
+                    return `<span class="px-2 py-0.5 rounded border text-[8px] font-bold orbitron ${cls}">${badge}</span>`;
+                }},
+                {title: "Entry", field: "entry_price", width: 110, hozAlign: "right", sorter: "number", formatter: (cell) => {
+                    const v = cell.getValue();
+                    const isMasked = v === '•••••';
+                    return `<span class="font-mono text-xs text-gray-400 ${isMasked ? 'blur-[5px] select-none opacity-50' : ''}">${isMasked ? '' : '₹'}${v}</span>`;
+                }},
+                {title: "SL", field: "stop_loss", width: 100, hozAlign: "right", sorter: "number", formatter: (cell) => {
+                    const v = cell.getValue();
+                    const isMasked = v === '•••••';
+                    return `<span class="font-mono text-[10px] text-rose-500/60 ${isMasked ? 'blur-[5px] select-none opacity-50' : ''}">${isMasked ? '' : '₹'}${v}</span>`;
+                }},
+                {title: "T1", field: "target_1", width: 100, hozAlign: "right", sorter: "number", formatter: (cell) => {
+                    const v = cell.getValue();
+                    const isMasked = v === '•••••';
+                    return `<span class="font-mono text-xs text-purple-400 ${isMasked ? 'blur-[5px] select-none opacity-50' : ''}">${isMasked ? '' : '₹'}${v}</span>`;
+                }},
+                {title: "T2", field: "target_2", width: 100, hozAlign: "right", sorter: "number", formatter: (cell) => {
+                    const v = cell.getValue();
+                    const isMasked = v === '•••••';
+                    return `<span class="font-mono text-xs text-purple-400 ${isMasked ? 'blur-[5px] select-none opacity-50' : ''}">${v && !isMasked ? '₹' : ''}${v || '---'}</span>`;
+                }},
+                {title: "AI %", field: "confidence_percentage", width: 90, hozAlign: "center", sorter: "number", formatter: (cell) => `<span class="font-black orbitron text-xs text-purple-500">${cell.getValue()}%</span>`},
+                {title: "Time", field: "updated_at", width: 90, hozAlign: "center", formatter: (cell) => {
+                    return `<span class="font-mono text-[10px] text-gray-500">${new Date(cell.getValue()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
+                }},
+                {title: "Status", field: "status", width: 120, resizable: false, hozAlign: "center", formatter: (cell) => `
+                    <div class="flex items-center justify-center gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+                        <span class="text-[9px] font-bold orbitron text-emerald-500 uppercase tracking-widest">ACTIVE</span>
+                    </div>`
+                },
+                {title: "Profit", field: "profit", width: 100, resizable: false, hozAlign: "right", formatter: (cell) => `<span class="font-black orbitron text-[10px] text-emerald-400 italic">PENDING</span>`},
+            ]
+        });
+
+        // Initial Sync
+        syncNeuralTelemetry();
+        setInterval(runCountdown, 1000);
+    });
 
     async function syncNeuralTelemetry() {
-        if (syncInProgress) return;
+        if (syncInProgress || !tipsTable) return;
         syncInProgress = true;
 
-        const body = document.getElementById('tips-table-body');
         const emptyState = document.getElementById('empty-state');
         const totalActiveEl = document.getElementById('total-active');
         const breakevenEl = document.getElementById('display-breakeven');
@@ -190,30 +396,11 @@
                 }
 
                 if (tips.length === 0) {
-                    if (body) body.innerHTML = '';
+                    tipsTable.setData([]);
                     if (emptyState) emptyState.classList.remove('hidden');
                 } else {
                     if (emptyState) emptyState.classList.add('hidden');
-                    let rowsHtml = '';
-                    tips.forEach((tip, index) => {
-                        const statusClass = `status-${tip.status.toLowerCase().replace(' ', '_')}`;
-                        rowsHtml += `
-                            <tr class="group hover:bg-[var(--nav-hover-bg)] transition-colors">
-                                <td class="px-6 py-4 font-bold orbitron text-slate-500 text-[10px]">${index + 1}</td>
-                                <td class="px-6 py-4 font-black orbitron text-xs uppercase" style="color: var(--text-white)">${tip.stock_name}</td>
-                                <td class="px-6 py-4 font-mono text-xs" style="color: var(--text-muted)">₹${parseFloat(tip.entry_price).toLocaleString()}</td>
-                                <td class="px-6 py-4 font-mono text-[10px] text-rose-500/70">₹${parseFloat(tip.stop_loss).toLocaleString()}</td>
-                                <td class="px-6 py-4 font-mono text-xs text-emerald-400">₹${parseFloat(tip.target_price).toLocaleString()}</td>
-                                <td class="px-6 py-4">
-                                    <span class="status-badge orbitron ${statusClass}">${tip.status}</span>
-                                </td>
-                                <td class="px-6 py-4 text-right font-mono text-[9px] text-slate-500">
-                                    ${new Date(tip.updated_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                                </td>
-                            </tr>
-                        `;
-                    });
-                    if (body) body.innerHTML = rowsHtml;
+                    tipsTable.replaceData(tips);
                 }
             }
         } catch (error) {
@@ -232,10 +419,5 @@
         if (timerEl) timerEl.innerText = `REFRESHING IN ${nextSync}s`;
         nextSync--;
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        syncNeuralTelemetry();
-        setInterval(runCountdown, 1000);
-    });
 </script>
 @endpush

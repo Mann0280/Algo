@@ -184,14 +184,13 @@
                     $navItems = [
                         // ['icon' => 'layout-dashboard', 'label' => 'Terminal', 'url' => url('/terminal'), 'active' => Request::is('terminal*')],
                         ['icon' => 'activity', 'label' => 'Signals', 'url' => url('/signals'), 'active' => Request::is('signals*')],
-                        ['icon' => 'pie-chart', 'label' => 'Portfolio', 'url' => '#', 'active' => false],
-                        ['icon' => 'arrow-left-right', 'label' => 'Wallet', 'url' => '#', 'active' => false],
+                        ['icon' => 'credit-card', 'label' => 'Link History', 'url' => route('account.subscription-history'), 'active' => Request::is('account/history*')],
                         ['icon' => 'settings', 'label' => 'Settings', 'url' => route('account.profile'), 'active' => Request::is('account/profile*')],
                     ];
                 @endphp
 
                 @foreach($navItems as $item)
-                <a href="{{ $item['url'] }}" class="nav-link flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-[var(--nav-hover-bg)] group {{ isset($item['active']) ? 'active-link' : '' }}" style="color: var(--nav-text)">
+                <a href="{{ $item['url'] }}" class="nav-link flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-[var(--nav-hover-bg)] group {{ $item['active'] ? 'active-link' : '' }}" style="color: var(--nav-text)">
                     <i data-lucide="{{ $item['icon'] }}" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
                     <span class="text-[10px] font-black orbitron uppercase tracking-[0.15em] sidebar-text whitespace-nowrap">{{ $item['label'] }}</span>
                 </a>

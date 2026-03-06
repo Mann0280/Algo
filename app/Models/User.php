@@ -30,6 +30,7 @@ class User extends Authenticatable
         'learning_rate',
         'pattern_depth',
         'profile_photo',
+        'premium_expiry',
     ];
 
     /**

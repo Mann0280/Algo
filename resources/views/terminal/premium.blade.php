@@ -384,18 +384,10 @@
             </div>
             @endif
 
-            {{-- AI Activity (Premium) --}}
             @if($isPremium)
             <div class="widget">
                 <div class="widget-title orbitron flex items-center gap-2"><i data-lucide="terminal" class="w-3.5 h-3.5 text-purple-400"></i> AI Activity</div>
-                <div class="space-y-0 max-h-[180px] overflow-y-auto" id="activityLog" style="scrollbar-width: thin; scrollbar-color: rgba(147,51,234,0.3) transparent;">
-                    @foreach($node_logs as $log)
-                    <div class="flex items-start gap-2 py-1 border-b border-white/[0.02]">
-                        <span class="text-[9px] font-mono text-purple-400/60 flex-shrink-0">{{ $log['time'] }}</span>
-                        <span class="text-[10px] text-gray-400 leading-snug">{{ $log['msg'] }}</span>
-                    </div>
-                    @endforeach
-                </div>
+                <div id="premium-ai-activity-table"></div>
             </div>
             @endif
         </aside>
@@ -422,33 +414,8 @@
          ══════════════════════════════════════ --}}
     @if($isPremium)
     <div class="mb-5">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-sm font-black orbitron text-gray-400 uppercase tracking-widest flex items-center gap-2"><i data-lucide="history" class="w-4 h-4 text-purple-400"></i> Trade History</h2>
-            <div class="flex items-center gap-2">
-                <button class="px-3 py-1 bg-white/5 border border-white/5 rounded-lg text-[9px] font-bold text-gray-500 hover:text-white transition-all flex items-center gap-1"><i data-lucide="download" class="w-3 h-3"></i> Export</button>
-            </div>
-        </div>
-        <div class="widget overflow-x-auto">
-            <div class="trade-row font-bold text-gray-500 text-[8px] uppercase orbitron tracking-wider">
-                <div>Stock</div><div>Type</div><div>Entry (₹)</div><div>Exit (₹)</div><div>Qty</div><div>P&L (₹)</div><div>Date</div>
-            </div>
-            @foreach($trade_history as $trade)
-            <div class="trade-row">
-                <div class="font-bold text-white">{{ $trade['stock'] }}</div>
-                <div><span class="px-1.5 py-0.5 rounded text-[8px] font-bold orbitron {{ $trade['type'] == 'BUY' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400' }}">{{ $trade['type'] }}</span></div>
-                <div class="text-gray-300 font-bold">{{ number_format($trade['entry'], 2) }}</div>
-                <div class="text-gray-300 font-bold">{{ number_format($trade['exit'], 2) }}</div>
-                <div class="text-gray-400">{{ $trade['qty'] }}</div>
-                <div class="font-black orbitron {{ $trade['pnl'] >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">{{ $trade['pnl'] >= 0 ? '+' : '' }}{{ number_format($trade['pnl'], 2) }}</div>
-                <div class="text-gray-500 text-[10px]">{{ $trade['date'] }}</div>
-            </div>
-            @endforeach
-            <div class="border-t border-white/5 pt-3 mt-2 flex justify-between items-center">
-                <span class="text-[9px] font-bold text-gray-500 uppercase orbitron">Total P&L</span>
-                @php $totalPnl = array_sum(array_column($trade_history, 'pnl')); @endphp
-                <span class="text-lg font-black orbitron {{ $totalPnl >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">{{ $totalPnl >= 0 ? '+' : '' }}₹{{ number_format($totalPnl, 2) }}</span>
-            </div>
-        </div>
+        <h2 class="text-sm font-black orbitron text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><i data-lucide="history" class="w-4 h-4 text-purple-400"></i> Trade History</h2>
+        <div id="premium-trade-history-table"></div>
     </div>
     @else
     <div class="mb-5">
@@ -459,9 +426,10 @@
                 <span class="text-xs font-bold text-gray-400 orbitron uppercase mb-2">Premium Feature</span>
                 <a href="{{ route('pricing') }}" class="px-4 py-1.5 bg-amber-500 text-black font-black text-[9px] orbitron uppercase rounded-lg">Upgrade</a>
             </div>
-            <div class="opacity-20">
-                <div class="trade-row text-gray-600"><div>XXXX</div><div>BUY</div><div>₹0,000</div><div>₹0,000</div><div>--</div><div>+₹0,000</div><div>--</div></div>
-                <div class="trade-row text-gray-600"><div>XXXX</div><div>SELL</div><div>₹0,000</div><div>₹0,000</div><div>--</div><div>-₹0,000</div><div>--</div></div>
+            <div class="opacity-20 flex gap-2" style="min-height: 100px;">
+                <div class="flex-1 bg-white/5 rounded-lg"></div>
+                <div class="flex-1 bg-white/5 rounded-lg"></div>
+                <div class="flex-1 bg-white/5 rounded-lg"></div>
             </div>
         </div>
     </div>
@@ -508,42 +476,22 @@
     </div>
 
     {{-- ══════════════════════════════════════
-         SECTION 6: PORTFOLIO SUMMARY (Premium)
-         ══════════════════════════════════════ --}}
-    @if($isPremium)
-    <div class="mb-5">
-        <h2 class="text-sm font-black orbitron text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><i data-lucide="briefcase" class="w-4 h-4 text-purple-400"></i> Portfolio Summary</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-            <div class="widget text-center"><div class="text-[8px] font-bold text-gray-500 uppercase mb-1">Invested</div><div class="text-lg font-black text-white orbitron">₹{{ number_format($portfolio['invested']) }}</div></div>
-            <div class="widget text-center"><div class="text-[8px] font-bold text-gray-500 uppercase mb-1">Current Value</div><div class="text-lg font-black text-emerald-400 orbitron">₹{{ number_format($portfolio['current']) }}</div></div>
-            <div class="widget text-center"><div class="text-[8px] font-bold text-gray-500 uppercase mb-1">Total P&L</div><div class="text-lg font-black {{ $portfolio['pnl'] >= 0 ? 'text-emerald-400' : 'text-rose-400' }} orbitron">{{ $portfolio['pnl'] >= 0 ? '+' : '' }}₹{{ number_format($portfolio['pnl']) }} <span class="text-xs">({{ $portfolio['pnl_pct'] }}%)</span></div></div>
-            <div class="widget text-center"><div class="text-[8px] font-bold text-gray-500 uppercase mb-1">Today's P&L</div><div class="text-lg font-black {{ $portfolio['today_pnl'] >= 0 ? 'text-emerald-400' : 'text-rose-400' }} orbitron">{{ $portfolio['today_pnl'] >= 0 ? '+' : '' }}₹{{ number_format($portfolio['today_pnl']) }} <span class="text-xs">({{ $portfolio['today_pct'] }}%)</span></div></div>
-        </div>
-        <div class="widget overflow-x-auto">
-            <div class="trade-row font-bold text-gray-500 text-[8px] uppercase orbitron tracking-wider"><div>Stock</div><div>Qty</div><div>Avg (₹)</div><div>LTP (₹)</div><div>P&L (₹)</div><div>Change</div><div>Action</div></div>
-            @foreach($portfolio['holdings'] as $h)
-            @php $chg = round((($h['ltp'] - $h['avg']) / $h['avg']) * 100, 2); @endphp
-            <div class="trade-row">
-                <div class="font-bold text-white">{{ $h['name'] }}</div>
-                <div class="text-gray-400">{{ $h['qty'] }}</div>
-                <div class="text-gray-300 font-bold">{{ number_format($h['avg'], 2) }}</div>
-                <div class="text-gray-300 font-bold">{{ number_format($h['ltp'], 2) }}</div>
-                <div class="font-black orbitron {{ $h['pnl'] >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">{{ $h['pnl'] >= 0 ? '+' : '' }}₹{{ number_format($h['pnl']) }}</div>
-                <div class="font-bold orbitron {{ $chg >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">{{ $chg >= 0 ? '+' : '' }}{{ $chg }}%</div>
-                <div class="flex gap-1"><button class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[8px] font-bold rounded orbitron">BUY</button><button class="px-2 py-0.5 bg-rose-500/10 text-rose-400 text-[8px] font-bold rounded orbitron">SELL</button></div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-    @else
-    <div class="mb-5">
-        <h2 class="text-sm font-black orbitron text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><i data-lucide="briefcase" class="w-4 h-4 text-purple-400"></i> Portfolio Summary</h2>
-        <div class="widget relative overflow-hidden text-center py-8">
-            <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10 flex flex-col items-center justify-center rounded-[1rem]"><i data-lucide="lock" class="w-6 h-6 text-amber-400 mb-2"></i><span class="text-xs font-bold text-gray-400 orbitron uppercase mb-2">Premium Feature</span><a href="{{ route('pricing') }}" class="px-4 py-1.5 bg-amber-500 text-black font-black text-[9px] orbitron uppercase rounded-lg">Upgrade</a></div>
-            <div class="opacity-15 grid grid-cols-4 gap-3"><div class="h-16 bg-white/5 rounded-lg"></div><div class="h-16 bg-white/5 rounded-lg"></div><div class="h-16 bg-white/5 rounded-lg"></div><div class="h-16 bg-white/5 rounded-lg"></div></div>
-        </div>
-    </div>
-    @endif
+480:          SECTION 6: PORTFOLIO SUMMARY (Premium)
+481:          ══════════════════════════════════════ --}}
+482:     {{-- @if($isPremium)
+483:     <div class="mb-5">
+484:         <h2 class="text-sm font-black orbitron text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><i data-lucide="briefcase" class="w-4 h-4 text-purple-400"></i> Portfolio Summary</h2>
+485:         <div id="premium-holdings-table"></div>
+486:     </div>
+487:     @else
+488:     <div class="mb-5">
+489:         <h2 class="text-sm font-black orbitron text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><i data-lucide="briefcase" class="w-4 h-4 text-purple-400"></i> Portfolio Summary</h2>
+490:         <div class="widget relative overflow-hidden text-center py-8">
+491:             <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10 flex flex-col items-center justify-center rounded-[1rem]"><i data-lucide="lock" class="w-6 h-6 text-amber-400 mb-2"></i><span class="text-xs font-bold text-gray-400 orbitron uppercase mb-2">Premium Feature</span><a href="{{ route('pricing') }}" class="px-4 py-1.5 bg-amber-500 text-black font-black text-[9px] orbitron uppercase rounded-lg">Upgrade</a></div>
+492:             <div class="opacity-15 grid grid-cols-4 gap-3"><div class="h-16 bg-white/5 rounded-lg"></div><div class="h-16 bg-white/5 rounded-lg"></div><div class="h-16 bg-white/5 rounded-lg"></div><div class="h-16 bg-white/5 rounded-lg"></div></div>
+493:         </div>
+494:     </div>
+495:     @endif --}}
 
     {{-- ══════════════════════════════════════
          SECTION 7: OPTIONS CHAIN + CALENDAR
@@ -662,7 +610,70 @@
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+<script src="{{ asset('js/tabulator-global.js') }}"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        @if($isPremium)
+        // 1. AI Activity Table
+        new Tabulator("#premium-ai-activity-table", {
+            ...TABULATOR_BASE_CONFIG,
+            data: @json($node_logs),
+            headerVisible: false,
+            columns: [
+                {field: "msg", widthGrow: 1, formatter: (cell) => {
+                    const row = cell.getRow().getData();
+                    return `
+                    <div class="flex items-start gap-2 py-1">
+                        <span class="text-[9px] font-mono text-purple-400/60 flex-shrink-0">${row.time}</span>
+                        <span class="text-[10px] text-gray-400 leading-snug">${row.msg}</span>
+                    </div>`;
+                }},
+            ]
+        });
+
+        // 2. Trade History Table
+        new Tabulator("#premium-trade-history-table", {
+            ...TABULATOR_BASE_CONFIG,
+            data: @json($trade_history),
+            columns: [
+                {title: "Stock", field: "stock", widthGrow: 1, formatter: (cell) => `<span class="font-bold orbitron text-[11px] text-white">${cell.getValue()}</span>`},
+                {title: "Type", field: "type", width: 70, formatter: (cell) => {
+                    const val = cell.getValue();
+                    const cls = val === 'BUY' ? 'text-emerald-400' : 'text-rose-400';
+                    return `<span class="font-black text-[10px] orbitron ${cls}">${val}</span>`;
+                }},
+                {title: "Entry", field: "entry", width: 90, formatter: (cell) => `₹${cell.getValue()}`},
+                {title: "Exit", field: "exit", width: 90, formatter: (cell) => `₹${cell.getValue()}`},
+                {title: "Qty", field: "qty", width: 60},
+                {title: "P&L", field: "pnl", width: 100, formatter: (cell) => {
+                    const val = cell.getValue();
+                    const cls = val >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                    return `<span class="font-black orbitron ${cls}">${val >= 0 ? '+' : ''}₹${val.toLocaleString()}</span>`;
+                }},
+                {title: "Date", field: "date", width: 90},
+            ]
+        });
+
+        // 3. Portfolio Holdings Table
+        new Tabulator("#premium-holdings-table", {
+            ...TABULATOR_BASE_CONFIG,
+            data: @json($portfolio['holdings']),
+            columns: [
+                {title: "Name", field: "name", widthGrow: 1, formatter: (cell) => `<span class="font-bold orbitron text-[11px] text-white">${cell.getValue()}</span>`},
+                {title: "Qty", field: "qty", width: 70},
+                {title: "Avg", field: "avg", width: 90, formatter: (cell) => `₹${cell.getValue()}`},
+                {title: "LTP", field: "ltp", width: 90, formatter: (cell) => `₹${cell.getValue()}`},
+                {title: "P&L", field: "pnl", width: 100, formatter: (cell) => {
+                    const val = cell.getValue();
+                    const cls = val >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                    return `<span class="font-black orbitron ${cls}">${val >= 0 ? '+' : ''}₹${val.toLocaleString()}</span>`;
+                }},
+            ]
+        });
+        @endif
+    });
+</script>
     // ── Clock ──
     function updateSync() { document.getElementById('lastSync').innerText = new Date().toLocaleTimeString(); }
     updateSync(); setInterval(updateSync, 1000);
@@ -722,12 +733,6 @@
         document.getElementById('moverLosers').style.display = type === 'losers' ? 'block' : 'none';
         document.getElementById('tabGainers').className = 'tab-btn orbitron' + (type === 'gainers' ? ' active' : '');
         document.getElementById('tabLosers').className = 'tab-btn orbitron' + (type === 'losers' ? ' active' : '');
-    }
-
-    // ── Strategy Filter ──
-    function filterSignals(type, btn) {
-        document.querySelectorAll('.signal-card').forEach(c => { c.style.display = (type === 'all' || c.dataset.type === type) ? 'block' : 'none'; });
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
     }
 
     // ── Risk-Reward Calculator ──

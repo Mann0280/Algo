@@ -163,54 +163,49 @@
         </div>
 
         <div class="glass-panel rounded-[2.5rem] overflow-hidden reveal-section">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-white/5 text-[10px] orbitron font-bold text-slate-500 uppercase tracking-widest">
-                        <tr>
-                            <th class="px-6 py-5 border-b border-white/5">STOCK <i data-lucide="chevron-down" class="w-3 h-3 inline ml-1 opacity-50"></i></th>
-                            <th class="px-6 py-5 border-b border-white/5">TYPE</th>
-                            <th class="px-6 py-5 border-b border-white/5">ENTRY</th>
-                            <th class="px-6 py-5 border-b border-white/5">SL</th>
-                            <th class="px-6 py-5 border-b border-white/5 text-purple-400">T1</th>
-                            <th class="px-6 py-5 border-b border-white/5 text-purple-400">T2</th>
-                            <th class="px-6 py-5 border-b border-white/5 text-purple-400">AI %</th>
-                            <th class="px-6 py-5 border-b border-white/5">TIME</th>
-                            <th class="px-6 py-5 border-b border-white/5">STATUS</th>
-                            <th class="px-6 py-5 border-b border-white/5 text-right">PROFIT</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-white/5">
-                        @foreach($signals as $s)
-                        <tr class="group hover:bg-white/[0.02] transition-all">
-                            <td class="px-6 py-6 font-bold orbitron text-white">{{ $s->stock_symbol }}</td>
-                            <td class="px-6 py-6">
-                                <span class="text-[9px] font-black px-2 py-0.5 rounded border {{ $s->is_premium ? 'border-amber-500/50 text-amber-500' : 'border-purple-500/50 text-purple-500' }}">
-                                    {{ $s->is_premium ? 'VIP' : 'PRO' }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-6 font-mono text-sm blur-sm">₹{{ $s->entry_price }}</td>
-                            <td class="px-6 py-6 font-mono text-xs text-slate-500 blur-sm">₹{{ $s->stop_loss }}</td>
-                            <td class="px-6 py-6 font-mono text-xs text-slate-300 blur-sm">₹{{ $s->target_1 }}</td>
-                            <td class="px-6 py-6 font-mono text-xs text-slate-300 blur-sm">₹{{ $s->target_2 }}</td>
-                            <td class="px-6 py-6 font-bold text-purple-400 text-sm">{{ $s->confidence_level }}%</td>
-                            <td class="px-6 py-6 text-xs text-slate-500">{{ date('H:i', strtotime($s->created_at)) }}</td>
-                            <td class="px-6 py-6">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
-                                    <span class="text-[9px] font-bold orbitron text-emerald-400 uppercase">
-                                        ACTIVE
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-6 text-right font-bold text-emerald-400 text-sm italic">PENDING</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+            @if($isPremium)
+            <div id="home-signals-table"></div>
+@push('scripts')
+<script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+<script src="{{ asset('js/tabulator-global.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const signalsData = @json($signals);
 
+        new Tabulator("#home-signals-table", {
+            ...TABULATOR_BASE_CONFIG,
+            data: signalsData,
+            columns: [
+                {title: "STOCK", field: "stock_symbol", widthGrow: 1.5, sorter: "string", formatter: (cell) => `<div class="font-bold orbitron text-white uppercase">${cell.getValue()}</div>`},
+                {title: "TYPE", field: "is_premium", width: 70, formatter: (cell) => {
+                    const isPremium = cell.getValue();
+                    const cls = isPremium ? 'border-amber-500/50 text-amber-500' : 'border-purple-500/50 text-purple-500';
+                    return `<span class="text-[9px] font-black px-2 py-0.5 rounded border ${cls}">${isPremium ? 'VIP' : 'PRO'}</span>`;
+                }},
+                {title: "ENTRY", field: "entry_price", width: 100, formatter: (cell) => `<div class="font-mono text-sm text-white">₹${cell.getValue()}</div>`},
+                {title: "SL", field: "stop_loss", width: 80, formatter: (cell) => `<div class="font-mono text-xs text-slate-500">₹${cell.getValue()}</div>`},
+                {title: "T1", field: "target_1", width: 80, color: "#a855f7", formatter: (cell) => `<div class="font-mono text-xs text-slate-300">₹${cell.getValue()}</div>`},
+                {title: "T2", field: "target_2", width: 80, color: "#a855f7", formatter: (cell) => `<div class="font-mono text-xs text-slate-300">₹${cell.getValue()}</div>`},
+                {title: "AI %", field: "confidence_level", width: 80, formatter: (cell) => `<div class="font-bold text-purple-400 text-sm">${cell.getValue()}%</div>`},
+                {title: "TIME", field: "created_at", width: 80, formatter: (cell) => `<div class="text-xs text-slate-500">${new Date(cell.getValue()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>`},
+                {title: "STATUS", field: "status", width: 100, formatter: (cell) => `
+                    <div class="flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
+                        <span class="text-[9px] font-bold orbitron text-emerald-400 uppercase">ACTIVE</span>
+                    </div>`
+                },
+                {title: "PROFIT", field: "profit", hozAlign: "right", widthGrow: 1, formatter: (cell) => `<div class="font-bold text-emerald-400 text-sm italic uppercase">PENDING</div>`},
+            ],
+            renderComplete: () => {
+                if (window.lucide) lucide.createIcons();
+            }
+        });
+    });
+</script>
+@endpush
+            @else
             <!-- Lock Overlay for Landing Page -->
-            <div class="p-12 text-center bg-gradient-to-t from-purple-900/40 to-transparent border-t border-white/5">
+            <div class="p-12 text-center bg-gradient-to-t from-purple-900/40 to-transparent">
                 <div class="w-12 h-12 bg-amber-400 text-black rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl shadow-amber-400/20 animate-bounce">
                     <i data-lucide="lock" class="w-6 h-6"></i>
                 </div>
@@ -221,6 +216,7 @@
                     <a href="{{ url('/register') }}" class="glass-panel text-white font-bold py-4 px-10 rounded-2xl text-[10px] orbitron hover:bg-white/10 transition-all uppercase">Initialize Terminal</a>
                 </div>
             </div>
+            @endif
         </div>
     </section>
 

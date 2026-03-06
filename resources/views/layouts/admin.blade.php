@@ -66,11 +66,15 @@
                     <i data-lucide="zap" class="w-5 h-5"></i>
                     <span class="orbitron text-[10px] font-bold uppercase tracking-widest">Signals</span>
                 </a>
-                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-gray-500 hover:text-white hover:bg-white/5 transition-all group">
+                <a href="{{ route('admin.users.index') }}" class="flex items-center gap-4 px-6 py-4 rounded-2xl {{ request()->routeIs('admin.users.*') ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' : 'text-gray-500 hover:text-white hover:bg-white/5' }} transition-all group">
                     <i data-lucide="users" class="w-5 h-5"></i>
                     <span class="orbitron text-[10px] font-bold uppercase tracking-widest">Users</span>
                 </a>
-                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-gray-500 hover:text-white hover:bg-white/5 transition-all group">
+                <a href="{{ route('admin.premium-packages.index') }}" class="flex items-center gap-4 px-6 py-4 rounded-2xl {{ request()->routeIs('admin.premium-packages.*') ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' : 'text-gray-500 hover:text-white hover:bg-white/5' }} transition-all group">
+                    <i data-lucide="package" class="w-5 h-5"></i>
+                    <span class="orbitron text-[10px] font-bold uppercase tracking-widest">Packages</span>
+                </a>
+                <a href="{{ route('admin.settings') }}" class="flex items-center gap-4 px-6 py-4 rounded-2xl {{ request()->routeIs('admin.settings*') ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' : 'text-gray-500 hover:text-white hover:bg-white/5' }} transition-all group">
                     <i data-lucide="settings" class="w-5 h-5"></i>
                     <span class="orbitron text-[10px] font-bold uppercase tracking-widest">Settings</span>
                 </a>

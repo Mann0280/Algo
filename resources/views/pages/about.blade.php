@@ -108,10 +108,10 @@
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
                         <span class="text-sm text-slate-400">Expand into multi-asset coverage including crypto, commodities, and forex</span>
                     </li>
-                    <li class="flex items-start gap-3">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
-                        <span class="text-sm text-slate-400">Pioneer fully autonomous portfolio management powered by neural networks</span>
-                    </li>
+{{-- <li class="flex items-start gap-3">
+112:                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
+113:                         <span class="text-sm text-slate-400">Pioneer fully autonomous portfolio management powered by neural networks</span>
+114:                     </li> --}}
                 </ul>
             </div>
         </div>
@@ -329,7 +329,7 @@
                         ['year' => '2024 Q2', 'title' => 'Beta Launch', 'desc' => 'Platform launched to 200 beta testers. Real-time signal delivery via dashboard and Telegram integration completed.', 'color' => 'indigo'],
                         ['year' => '2024 Q3', 'title' => 'Public Release', 'desc' => 'Open registration enabled. 1,000 traders onboarded within the first month. Premium subscription tier introduced.', 'color' => 'blue'],
                         ['year' => '2025 Q1', 'title' => 'Scale & Expand', 'desc' => 'Crossed 5,000 active users. Expanded to forex and crypto signals. Partnership program launched for institutional users.', 'color' => 'emerald'],
-                        ['year' => '2026', 'title' => 'The Future', 'desc' => 'Autonomous portfolio management, mobile app, and multi-language support on the roadmap.', 'color' => 'amber'],
+                        ['year' => '2026', 'title' => 'The Future', 'desc' => 'Mobile app and multi-language support on the roadmap.', 'color' => 'amber'],
                     ];
                 @endphp
 

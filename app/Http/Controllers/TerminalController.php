@@ -24,18 +24,18 @@ class TerminalController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $isPremium = $user->role === 'premium' || $user->role === 'admin';
+        $user = Auth::user() ?? Auth::guard('admin')->user();
+        $isPremium = $user && ($user->role === 'premium' || $user->role === 'admin' || get_class($user) === \App\Models\Admin::class);
         
-        $watchlist = Watchlist::where('user_id', $user->id)->get();
-        $signals = Signal::orderBy('created_at', 'desc')->limit(10)->get();
+        $watchlist = $user ? Watchlist::where('user_id', $user->id)->get() : collect();
+        $signals = \App\Models\PremiumTip::orderBy('created_at', 'desc')->limit(10)->get();
         
         $settings = [
             'breakeven_point' => \App\Models\SiteSetting::getValue('breakeven_point', '2500.00'),
             'breakeven_date' => \App\Models\SiteSetting::getValue('breakeven_date', now()->format('Y-m-d')),
         ];
 
-        return view('terminal.index', compact('user', 'isPremium', 'watchlist', 'signals', 'stats', 'settings'));
+        return view('terminal.index', compact('user', 'isPremium', 'watchlist', 'signals', 'settings'));
     }
 
     /**
@@ -45,8 +45,8 @@ class TerminalController extends Controller
      */
     public function free()
     {
-        $user = Auth::user();
-        $isPremium = $user->role === 'premium' || $user->role === 'admin';
+        $user = Auth::user() ?? Auth::guard('admin')->user();
+        $isPremium = $user && ($user->role === 'premium' || $user->role === 'admin' || get_class($user) === \App\Models\Admin::class);
         
         $db_signals = Signal::where('is_premium', 0)
             ->orderBy('created_at', 'desc')
@@ -63,8 +63,8 @@ class TerminalController extends Controller
      */
     public function premiumTips()
     {
-        $user = Auth::user();
-        $isPremium = $user->role === 'premium' || $user->role === 'admin';
+        $user = Auth::user() ?? Auth::guard('admin')->user();
+        $isPremium = $user && ($user->role === 'premium' || $user->role === 'admin' || get_class($user) === \App\Models\Admin::class);
         
         $tips = \App\Models\PremiumTip::orderBy('created_at', 'desc')->get();
         

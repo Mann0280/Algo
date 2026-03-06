@@ -1,0 +1,127 @@
+/* ============================================================
+   ALGOTRADE — Global Tabulator UI Preservation Theme
+   Forces Tabulator to act as a functional layer only, inheriting
+   the exact CSS of the existing HTML tables.
+   ============================================================ */
+
+/* ── Root Container ───────────────────────────────────────── */
+.tabulator-custom-theme {
+    background-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    color: inherit !important;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.tabulator-custom-theme .tabulator-header {
+    background-color: transparent !important;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: inherit !important;
+}
+
+.tabulator-custom-theme .tabulator-header .tabulator-col {
+    background-color: transparent !important;
+    background: transparent !important;
+    border-right: none !important;
+}
+
+.tabulator-custom-theme .tabulator-header .tabulator-col .tabulator-col-content {
+    padding: 12px 16px !important;
+    /* Standard site padding */
+}
+
+.tabulator-custom-theme .tabulator-header .tabulator-col .tabulator-col-title {
+    font-weight: 600 !important;
+    color: #9ca3af !important;
+    /* Tailwind text-gray-400 equivalent for headers */
+    text-transform: uppercase !important;
+    font-size: 0.75rem !important;
+    /* Tailwind text-xs */
+    letter-spacing: 0.05em !important;
+}
+
+/* ── Table Body ───────────────────────────────────────────── */
+.tabulator-custom-theme .tabulator-tableholder {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+.tabulator-custom-theme .tabulator-table {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: inherit !important;
+}
+
+/* ── Rows ─────────────────────────────────────────────────── */
+.tabulator-custom-theme .tabulator-row {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    min-height: 56px !important;
+    transition: background 0.15s ease !important;
+}
+
+.tabulator-custom-theme .tabulator-row.tabulator-row-even {
+    background: rgba(255, 255, 255, 0.01) !important;
+}
+
+.tabulator-custom-theme .tabulator-row:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ── Cells ────────────────────────────────────────────────── */
+.tabulator-custom-theme .tabulator-cell {
+    border: none !important;
+    padding: 16px !important;
+    vertical-align: middle !important;
+    color: inherit !important;
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* ── Footer / Pagination ──────────────────────────────────── */
+.tabulator-custom-theme .tabulator-footer {
+    background-color: transparent !important;
+    background: transparent !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 12px 16px !important;
+    color: #9ca3af !important;
+}
+
+.tabulator-custom-theme .tabulator-footer .tabulator-page-size {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f3f4f6 !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+}
+
+.tabulator-custom-theme .tabulator-footer .tabulator-page {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #9ca3af !important;
+    border-radius: 6px !important;
+    margin: 0 2px !important;
+    padding: 6px 12px !important;
+    transition: all 0.15s ease !important;
+}
+
+.tabulator-custom-theme .tabulator-footer .tabulator-page:not(.active):not([disabled]):hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #f3f4f6 !important;
+}
+
+.tabulator-custom-theme .tabulator-footer .tabulator-page.active {
+    background: #8b5cf6 !important;
+    /* Tailwind violet-500 */
+    border-color: #8b5cf6 !important;
+    color: #ffffff !important;
+}
+
+/* ── Placeholder ──────────────────────────────────────────── */
+.tabulator-custom-theme .tabulator-placeholder {
+    color: #6b7280 !important;
+    font-size: 0.875rem !important;
+}
