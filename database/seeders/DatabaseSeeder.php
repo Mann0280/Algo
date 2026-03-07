@@ -16,16 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            AdminSeeder::class,
             TradingTipSeeder::class,
             SiteSettingSeeder::class,
             PremiumTipSeeder::class,
-        ]);
-
-        User::factory()->create([
-            'username' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'admin',
         ]);
     }
 }
