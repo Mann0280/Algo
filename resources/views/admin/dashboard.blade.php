@@ -24,9 +24,6 @@
             </div>
         </div>
         <div class="flex gap-4">
-            <button onclick="toggleModal('broadcastModal')" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-bold text-xs orbitron tracking-widest uppercase transition-all flex items-center gap-2">
-                <i data-lucide="zap" class="w-4 h-4"></i> Broadcast Elite Signal
-            </button>
             <button onclick="toggleModal('notificationModal')" class="bg-amber-500 hover:bg-amber-600 text-black px-6 py-3 rounded-2xl font-bold text-xs orbitron tracking-widest uppercase transition-all flex items-center gap-2">
                 <i data-lucide="bell" class="w-4 h-4"></i> Send Notification
             </button>
@@ -40,58 +37,6 @@
         </div>
     </div>
 
-    <!-- Broadcast Modal -->
-    <div id="broadcastModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-6 sm:p-0">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="toggleModal('broadcastModal')"></div>
-        <div class="glass-card w-full max-w-2xl rounded-[2.5rem] border border-white/10 relative z-10 overflow-hidden">
-            <div class="p-8 border-b border-white/5 bg-white/5 flex justify-between items-center">
-                <h2 class="orbitron font-black text-white italic tracking-tighter uppercase">Broadcast Neural Signal</h2>
-                <button onclick="toggleModal('broadcastModal')" class="text-gray-500 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
-            </div>
-            <form action="{{ route('admin.broadcast-tip') }}" method="POST" class="p-8 space-y-6">
-                @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-2">Stock Name</label>
-                        <input type="text" name="stock_name" required placeholder="e.g. RELIANCE" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-2">Strategy Type</label>
-                        <select name="trade_type" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition-all">
-                            <option value="Intraday">Intraday</option>
-                            <option value="Swing">Swing</option>
-                            <option value="Long Term">Long Term</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-2">Entry Price</label>
-                        <input type="number" step="0.01" name="entry_price" required placeholder="2845.50" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-2">Target 1</label>
-                        <input type="number" step="0.01" name="target_1" required placeholder="2920.00" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-2">Stop Loss</label>
-                        <input type="number" step="0.01" name="stop_loss" required placeholder="2780.00" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-2">AI Confidence %</label>
-                        <input type="number" name="confidence" required placeholder="92" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-2">Risk Level</label>
-                        <select name="risk_level" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition-all">
-                            <option value="Low">Low</option>
-                            <option value="Medium">Medium</option>
-                            <option value="High">High</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl text-white font-black orbitron uppercase tracking-widest text-xs hover:scale-[1.02] transition-all shadow-xl shadow-purple-500/20 italic">Initial Broadcast Sequence</button>
-            </form>
-        </div>
-    </div>
 
     <!-- Notification Modal -->
     <div id="notificationModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-6 sm:p-0">
@@ -142,7 +87,6 @@
         @php 
         $stats = [
             ['label' => 'Total Users', 'value' => $total_users, 'icon' => 'users', 'color' => 'purple'],
-            ['label' => 'Active Signals', 'value' => $active_signals, 'icon' => 'zap', 'color' => 'blue'],
             ['label' => 'AI Accuracy', 'value' => $ai_accuracy . '%', 'icon' => 'cpu', 'color' => 'emerald'],
             ['label' => 'Net Revenue', 'value' => $net_revenue, 'icon' => 'dollar-sign', 'color' => 'amber'],
         ];
@@ -172,45 +116,13 @@
 
     <!-- Interface Modules -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 glass-card rounded-3xl p-8 border border-white/5 min-h-[400px]">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="orbitron font-bold text-xs tracking-widest text-gray-400 uppercase">Performance Analytics</h3>
-                <div class="flex gap-2">
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] orbitron font-bold text-gray-500 uppercase tracking-tighter">Live Telemetry</span>
-                    <span class="px-3 py-1 bg-purple-500/10 rounded-full text-[9px] orbitron font-bold text-purple-400 uppercase tracking-tighter">94.2% Success</span>
-                </div>
+        <div class="lg:col-span-2 glass-card rounded-3xl p-8 border border-white/5 min-h-[400px] flex flex-col items-center justify-center text-center space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-gray-500">
+                <i data-lucide="bar-chart-3" class="w-8 h-8"></i>
             </div>
-            
-            <div class="space-y-6">
-                <!-- Header -->
-                <div class="grid grid-cols-4 gap-4 pb-4 border-b border-white/5 text-[10px] orbitron font-bold text-gray-500 uppercase tracking-widest">
-                    <div>Sector</div>
-                    <div class="text-center">Signals</div>
-                    <div class="col-span-2">Accuracy</div>
-                </div>
-
-                @php
-                $analytics = [
-                    ['sector' => 'IT', 'signals' => 142, 'accuracy' => 96.5, 'color' => 'emerald'],
-                    ['sector' => 'Banking', 'signals' => 89, 'accuracy' => 92.1, 'color' => 'purple'],
-                    ['sector' => 'Auto', 'signals' => 64, 'accuracy' => 88.4, 'color' => 'amber'],
-                    ['sector' => 'Pharma', 'signals' => 51, 'accuracy' => 94.8, 'color' => 'purple'],
-                    ['sector' => 'Energy', 'signals' => 38, 'accuracy' => 85.2, 'color' => 'amber'],
-                ];
-                @endphp
-
-                @foreach($analytics as $item)
-                <div class="grid grid-cols-4 gap-4 items-center group">
-                    <div class="font-bold text-white orbitron text-[11px] uppercase tracking-wider group-hover:text-purple-400 transition-colors">{{ $item['sector'] }}</div>
-                    <div class="text-center text-gray-400 font-bold text-xs">{{ $item['signals'] }}</div>
-                    <div class="col-span-2 flex items-center gap-3">
-                        <div class="flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden">
-                            <div class="h-full bg-{{ $item['color'] }}-500 rounded-full" style="width: {{ $item['accuracy'] }}%"></div>
-                        </div>
-                        <div class="text-[10px] font-black orbitron text-white min-w-[40px] text-right">{{ $item['accuracy'] }}%</div>
-                    </div>
-                </div>
-                @endforeach
+            <div>
+                <h3 class="orbitron font-bold text-xs tracking-widest text-gray-400 uppercase">System Analytics</h3>
+                <p class="text-[10px] text-gray-600 uppercase tracking-widest mt-2">Additional telemetry modules will be deployed in the next cycle.</p>
             </div>
         </div>
 
@@ -220,10 +132,10 @@
                 @php
                 $logs = [
                     ['msg' => 'Satellite User Connection Established', 'time' => '3 minutes ago'],
-                    ['msg' => 'AI Model v4.2 Weights Synchronized', 'time' => '6 minutes ago'],
-                    ['msg' => 'NSE Real-time Data Feed Active', 'time' => '9 minutes ago'],
-                    ['msg' => 'Premium Signal Broadcasted: RELIANCE', 'time' => '12 minutes ago'],
-                    ['msg' => 'System Guard: Firewall Rule Updated', 'time' => '15 minutes ago'],
+                    ['msg' => 'AI Model Neural Weights Synchronized', 'time' => '6 minutes ago'],
+                    ['msg' => 'Market Real-time Data Feed Active', 'time' => '9 minutes ago'],
+                    ['msg' => 'System Guard: Persistent Firewall Active', 'time' => '12 minutes ago'],
+                    ['msg' => 'Admin Protocol: UI Module Refined', 'time' => '15 minutes ago'],
                 ];
                 @endphp
 

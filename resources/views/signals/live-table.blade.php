@@ -87,11 +87,48 @@
         </table>
     </div>
 
+    {{-- Video Modal --}}
+    <div id="video-modal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[10000] hidden items-center justify-center p-4">
+        <div class="absolute inset-0" onclick="closeVideoModal()"></div>
+        <div class="relative w-full max-w-4xl aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+            <button onclick="closeVideoModal()" class="absolute top-4 right-4 w-10 h-10 rounded-xl bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:bg-rose-500 transition-all z-10">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <iframe id="video-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
 </div>
 
 @push('scripts')
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+    function openVideoModal(url) {
+        const modal = document.getElementById('video-modal');
+        const iframe = document.getElementById('video-iframe');
+        
+        // Handle YouTube/Vimeo/Direct
+        let finalUrl = url;
+        if (url.includes('youtube.com/watch?v=')) {
+            finalUrl = url.replace('watch?v=', 'embed/');
+        } else if (url.includes('youtu.be/')) {
+            finalUrl = 'https://www.youtube.com/embed/' + url.split('/').pop();
+        }
+
+        iframe.src = finalUrl;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideoModal() {
+        const modal = document.getElementById('video-modal');
+        const iframe = document.getElementById('video-iframe');
+        iframe.src = '';
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
     let refreshInterval;
 
     function renderTable(data) {
@@ -163,9 +200,70 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    async function refreshTutorials() {
+        try {
+            const res = await fetch('/api/tutorial-videos', {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-XSRF-TOKEN': decodeURIComponent(document.cookie.match(/XSRF-TOKEN=([^;]*)/)?.[1] || ''),
+                },
+                credentials: 'same-origin',
+            });
+
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+            const json = await res.json();
+            if (json.success && json.data) {
+                renderVideoFeed(json.data);
+            }
+        } catch (err) {
+            console.warn('Tutorial refresh failed:', err);
+        }
+    }
+
+    function renderVideoFeed(videos) {
+        const videoGrid = document.getElementById('video-grid');
+        const videoSection = document.getElementById('video-feed-section');
+        const videoCount = document.getElementById('video-count');
+        
+        if (videos.length === 0) {
+            videoSection.classList.add('hidden');
+            return;
+        }
+
+        videoSection.classList.remove('hidden');
+        videoCount.textContent = `${videos.length} active tutorial${videos.length > 1 ? 's' : ''}`;
+        
+        videoGrid.innerHTML = videos.map(item => {
+            return `
+                <div onclick="openVideoModal('${item.video_url}')" class="glass-card p-4 rounded-3xl border border-white/5 group cursor-pointer transition-all hover:border-purple-500/30 hover:bg-white/[0.02]">
+                    <div class="aspect-video rounded-2xl overflow-hidden bg-black relative mb-4">
+                        <div class="absolute inset-0 flex items-center justify-center bg-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                            <div class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center text-white shadow-xl shadow-purple-600/40">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 flex items-center gap-2">
+                             <div class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></div>
+                             <span class="text-[8px] font-black orbitron text-white uppercase tracking-widest italic">Educational Stream</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="text-sm font-black orbitron text-white italic tracking-tight line-clamp-1">${item.title}</h3>
+                        </div>
+                        <p class="text-[9px] font-medium text-gray-500 uppercase tracking-widest line-clamp-1">${item.description || 'Neural Learning Protocol'}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
     window.refreshData = refreshData;
 
     refreshData();
+    refreshTutorials();
     refreshInterval = setInterval(refreshData, 5000);
 
     document.addEventListener('visibilitychange', () => {

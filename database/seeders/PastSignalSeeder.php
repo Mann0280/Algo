@@ -44,7 +44,7 @@ class PastSignalSeeder extends Seeder
                 'pl' => $pl,
                 'confidence_level' => rand(70, 98),
                 'status' => 'closed',
-                'is_premium' => (rand(0, 1) == 1),
+                'is_premium' => true,
                 'created_at' => $date,
                 'closed_at' => $date->addHours(rand(1, 48)),
             ]);

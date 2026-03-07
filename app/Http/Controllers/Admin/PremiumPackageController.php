@@ -45,15 +45,25 @@ class PremiumPackageController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'upi_id' => 'nullable|string|max:255',
+            'upi_name' => 'nullable|string|max:255',
+            'qr_code' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'payment_info' => 'nullable|string',
             'button_color' => 'nullable|string|max:20',
             'duration_days' => 'required|integer|min:1',
             'features' => 'nullable|array',
             'features.*' => 'nullable|string',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('qr_code');
         $data['features'] = array_filter($request->features ?? []);
         
+        // Process QR code upload
+        if ($request->hasFile('qr_code')) {
+            $imageName = time() . '.' . $request->qr_code->extension();
+            $request->qr_code->move(public_path('uploads/qr_codes'), $imageName);
+            $data['qr_code'] = 'uploads/qr_codes/' . $imageName;
+        }
+
         // Process tags_json
         $tags = [];
         if ($request->has('tag_names')) {
@@ -102,15 +112,30 @@ class PremiumPackageController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'upi_id' => 'nullable|string|max:255',
+            'upi_name' => 'nullable|string|max:255',
+            'qr_code' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'payment_info' => 'nullable|string',
             'button_color' => 'nullable|string|max:20',
             'duration_days' => 'required|integer|min:1',
             'features' => 'nullable|array',
             'features.*' => 'nullable|string',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('qr_code');
         $data['features'] = array_filter($request->features ?? []);
         $data['is_active'] = $request->has('is_active');
+
+        // Process QR code upload
+        if ($request->hasFile('qr_code')) {
+            // Delete old QR code if exists
+            if ($premiumPackage->qr_code && file_exists(public_path($premiumPackage->qr_code))) {
+                @unlink(public_path($premiumPackage->qr_code));
+            }
+
+            $imageName = time() . '.' . $request->qr_code->extension();
+            $request->qr_code->move(public_path('uploads/qr_codes'), $imageName);
+            $data['qr_code'] = 'uploads/qr_codes/' . $imageName;
+        }
         
         // Process tags_json
         $tags = [];

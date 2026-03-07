@@ -58,6 +58,7 @@
         @include('signals.locked-upgrade')
     @else
         @include('signals.live-table')
+        @include('signals.video-feed')
     @endif
 
 </div>

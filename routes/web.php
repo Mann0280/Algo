@@ -33,6 +33,7 @@ Route::match(['get', 'post'], '/subscribe', [HomeController::class, 'handlePayme
 
 Route::get('/signals', [\App\Http\Controllers\SignalsController::class, 'index'])->name('signals');
 Route::get('/api/live-signals', [\App\Http\Controllers\Api\LiveTipsController::class, 'liveSignals'])->middleware('auth')->name('api.live-signals');
+Route::get('/api/tutorial-videos', [\App\Http\Controllers\Api\LiveTipsController::class, 'tutorialVideos'])->middleware('auth')->name('api.tutorial-videos');
 
 // Route::prefix('terminal')->name('terminal.')->middleware('auth')->group(function () {
 //     Route::get('/', [TerminalController::class, 'index'])->name('index');
@@ -78,7 +79,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
         ]);
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+        // Payment Management
+        Route::get('/payments', [\App\Http\Controllers\PaymentController::class, 'adminIndex'])->name('payments.index');
+        Route::post('/payments/{payment}/approve', [\App\Http\Controllers\PaymentController::class, 'approvePayment'])->name('payments.approve');
+        Route::post('/payments/{payment}/reject', [\App\Http\Controllers\PaymentController::class, 'rejectPayment'])->name('payments.reject');
+        // Educational Video Management
+        Route::resource('tutorial-videos', \App\Http\Controllers\Admin\TutorialVideoController::class)->except(['show', 'create', 'edit'])->names([
+            'index' => 'tutorial-videos.index',
+            'store' => 'tutorial-videos.store',
+            'update' => 'tutorial-videos.update',
+            'destroy' => 'tutorial-videos.destroy',
+        ]);
     });
+});
+
+// Manual Payment System Submission
+Route::middleware('auth')->group(function () {
+    Route::post('/payment/submit', [\App\Http\Controllers\PaymentController::class, 'submitPayment'])->name('payment.submit');
 });
 
 // Past Signals Management

@@ -140,6 +140,31 @@
                     </div>
                 </div>
 
+                @if($latestPayment && $latestPayment->status !== 'approved' && !($user->role === 'premium' && $latestPayment->status === 'approved'))
+                    <div class="mb-8 p-6 rounded-3xl border {{ $latestPayment->status === 'pending' ? 'bg-amber-500/5 border-amber-500/20' : 'bg-rose-500/5 border-rose-500/20' }} animate-in fade-in slide-in-from-top-4 duration-700">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl {{ $latestPayment->status === 'pending' ? 'bg-amber-500/10 text-amber-500' : 'bg-rose-500/10 text-rose-500' }} flex items-center justify-center shrink-0">
+                                <i data-lucide="{{ $latestPayment->status === 'pending' ? 'clock' : 'shield-alert' }}" class="w-6 h-6"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-[10px] font-black orbitron {{ $latestPayment->status === 'pending' ? 'text-amber-500' : 'text-rose-500' }} uppercase tracking-[0.2em]">
+                                    Payment {{ ucfirst($latestPayment->status) }}
+                                </h4>
+                                <p class="text-[9px] font-bold orbitron text-gray-400 uppercase tracking-widest mt-1">
+                                    @if($latestPayment->status === 'pending')
+                                        Your requisition for the {{ $latestPayment->package->name ?? 'Premium' }} protocol is under neural verification.
+                                    @else
+                                        Protocol rejected: {{ $latestPayment->rejection_note ?? 'Institutional verification failed.' }}
+                                    @endif
+                                </p>
+                            </div>
+                            @if($latestPayment->status === 'rejected')
+                                <a href="{{ route('pricing') }}" class="px-6 py-2.5 bg-rose-500 text-black rounded-xl text-[8px] font-black orbitron uppercase tracking-widest hover:bg-rose-600 transition-all">Re-initiate Upgrade</a>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+
                 <div class="flex flex-col lg:flex-row justify-between items-center gap-12">
                     <!-- PLAN INFO -->
                     <div class="w-full lg:w-1/2 space-y-6">

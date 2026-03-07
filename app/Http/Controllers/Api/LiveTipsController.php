@@ -111,6 +111,7 @@ class LiveTipsController extends Controller
                 'date'         => now('Asia/Kolkata')->format('d/m/Y'),
                 'status'       => $status,
                 'profit'       => $profitStr,
+                'video_url'    => $tip->video_url,
             ];
         });
 
@@ -118,6 +119,18 @@ class LiveTipsController extends Controller
             'success' => true,
             'count'   => $tips->count(),
             'data'    => $tips->values(),
+        ]);
+    }
+
+    /**
+     * Get tutorial videos for the frontend.
+     */
+    public function tutorialVideos()
+    {
+        $videos = \App\Models\TutorialVideo::orderBy('created_at', 'desc')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $videos
         ]);
     }
 }

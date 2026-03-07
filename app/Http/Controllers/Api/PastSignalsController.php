@@ -11,11 +11,20 @@ use Illuminate\Support\Facades\Auth;
 class PastSignalsController extends Controller
 {
     /**
-     * Render the past signals view.
+     * Render the past signals view based on user state.
      */
     public function webIndex()
     {
-        return view('signals.past');
+        if (!Auth::check()) {
+            return view('signals.past', ['userState' => 'guest']);
+        }
+
+        $user = Auth::user();
+        if (in_array($user->role, ['premium', 'vip', 'admin'])) {
+            return view('signals.past', ['userState' => 'premium']);
+        }
+
+        return view('signals.past', ['userState' => 'free']);
     }
 
     /**
@@ -30,14 +39,16 @@ class PastSignalsController extends Controller
 
         $isPremium = in_array($user->role, ['premium', 'vip', 'admin']);
         
-        $query = Signal::where('status', 'closed');
+        // As per user request: "all tips are the premium user's"
+        // We only show closed signals that were premium signals.
+        $query = Signal::where('status', 'closed')->where('is_premium', true);
 
-        // Tier Access: Free users only see last 7 days
+        // Tier Access: Free users only see last 7 days of archive
         if (!$isPremium) {
             $query->where('created_at', '>=', now()->subDays(7));
         }
 
-        // Filtering
+        // --- Filtering Logic ---
         if ($request->has('startDate') && $request->startDate) {
             $query->whereDate('created_at', '>=', $request->startDate);
         }
@@ -57,16 +68,16 @@ class PastSignalsController extends Controller
         // Sort by most recent
         $query->orderBy('created_at', 'desc');
 
-        // Pagination
+        // --- Pagination ---
         $perPage = (int) $request->get('size', 20);
-        $perPage = min(max($perPage, 1), 100); // Limit between 1 and 100
+        $perPage = min(max($perPage, 1), 100); 
 
         $signals = $query->paginate($perPage);
 
         $data = collect($signals->items())->map(function ($signal) {
             $isToday = $signal->created_at->isToday();
             
-            // Calculate P/L logic
+            // Calculate P/L logic (Hidden for today's past signals as per rule)
             $pl = null;
             if (!$isToday && $signal->close_price && $signal->entry_price) {
                 if ($signal->type === 'BUY') {
@@ -91,17 +102,23 @@ class PastSignalsController extends Controller
             ];
         });
 
-        // Stats Calculation (Based on the filtered set or full set? Usually full history statistics are better)
-        // For production, we'll calculate stats for the entire pool accessible to the user
-        $statsQuery = Signal::where('status', 'closed');
-        if (!$isPremium) {
-            $statsQuery->where('created_at', '>=', now()->subDays(7));
-        }
+        // --- Statistics Calculation ---
         
-        $totalSignals = $statsQuery->count();
-        $wins = (clone $statsQuery)->where('result', 'WIN')->count();
-        $totalPl = (clone $statsQuery)->sum('pl');
-        $totalLoss = (clone $statsQuery)->where('result', 'LOSS')->count(); // Or sum of negative P/L
+        // 1. Global Platform Performance (All-time Master Data)
+        $globalQuery = Signal::where('status', 'closed')->where('is_premium', true);
+        $globalTotal = $globalQuery->count();
+        $globalWins = (clone $globalQuery)->where('result', 'WIN')->count();
+        $globalProfit = (clone $globalQuery)->sum('pl');
+        $globalLossCount = (clone $globalQuery)->where('result', 'LOSS')->count();
+
+        // 2. Filtered Dynamic Stats (Current View)
+        $statsQuery = clone $query;
+        $statsQuery->getQuery()->orders = null; 
+        
+        $filteredTotal = (clone $statsQuery)->count();
+        $filteredWins = (clone $statsQuery)->where('result', 'WIN')->count();
+        $filteredProfit = (clone $statsQuery)->sum('pl');
+        $filteredLossCount = (clone $statsQuery)->where('result', 'LOSS')->count();
 
         return response()->json([
             'success' => true,
@@ -110,10 +127,19 @@ class PastSignalsController extends Controller
             'page' => $signals->currentPage(),
             'last_page' => $signals->lastPage(),
             'stats' => [
-                'total_signals' => $totalSignals,
-                'win_rate' => $totalSignals > 0 ? round(($wins / $totalSignals) * 100, 1) . '%' : '0%',
-                'total_profit' => number_format($totalPl, 2),
-                'total_loss' => $totalLoss
+                // Display Global Master Data initially to impress users
+                'total_signals' => $globalTotal,
+                'win_rate' => $globalTotal > 0 ? round(($globalWins / $globalTotal) * 100, 1) . '%' : '0%',
+                'total_win' => number_format($globalProfit, 2),
+                'total_loss' => $globalLossCount,
+                
+                // Also provide filtered for potential UI toggle/updates
+                'filtered' => [
+                    'total' => $filteredTotal,
+                    'win_rate' => $filteredTotal > 0 ? round(($filteredWins / $filteredTotal) * 100, 1) . '%' : '0%',
+                    'profit' => number_format($filteredProfit, 2),
+                    'loss' => $filteredLossCount,
+                ]
             ]
         ]);
     }

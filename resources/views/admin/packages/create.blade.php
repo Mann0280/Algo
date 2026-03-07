@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <form action="{{ route('admin.premium-packages.store') }}" method="POST" class="space-y-8">
+    <form action="{{ route('admin.premium-packages.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
         @csrf
         <div class="glass-card rounded-[2.5rem] p-10 border border-white/5 space-y-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -58,6 +58,19 @@
                 <div class="space-y-2">
                     <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Recipient UPI ID</label>
                     <input type="text" name="upi_id" placeholder="merchant@upi" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Recipient UPI Name</label>
+                    <input type="text" name="upi_name" placeholder="Business Name" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
+                </div>
+                <div class="space-y-2 md:col-span-2">
+                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">QR Code Image</label>
+                    <input type="file" name="qr_code" accept="image/*" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-[10px] outline-none focus:border-purple-500/50 transition-all">
+                    <p class="text-[9px] text-gray-500 mt-2 ml-1 uppercase tracking-widest italic">Standard format: JPEG, PNG (Max 2MB)</p>
+                </div>
+                <div class="space-y-2 md:col-span-2">
+                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Payment Instructions</label>
+                    <textarea name="payment_info" rows="3" placeholder="Step-by-step payment protocol..." class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-medium text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700"></textarea>
                 </div>
                 <div class="space-y-2 md:col-span-2">
                     <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Duration Protocol</label>

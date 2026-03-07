@@ -46,7 +46,11 @@ class AccountController extends Controller
                 ];
             });
 
-        return view('account.profile', compact('user', 'sessions'));
+        $latestPayment = \App\Models\Payment::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        return view('account.profile', compact('user', 'sessions', 'latestPayment'));
     }
 
     /**

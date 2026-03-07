@@ -84,7 +84,7 @@
                     PAST <span class="text-gradient">SIGNALS</span>
                 </h1>
                 <p class="text-gray-400 max-w-2xl text-lg uppercase tracking-tight">
-                    Historical intelligence performance analytics and verification.
+                    Historical intelligence performance analytics and verification. All signals are premium curated assets.
                 </p>
             </div>
             <div class="flex items-center gap-4">
@@ -96,65 +96,114 @@
 
     <!-- Stats Section -->
     <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div class="stats-card p-6 rounded-3xl">
-            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1">Total Signals</p>
-            <h3 id="stat-total" class="text-3xl font-black text-white orbitron italic">--</h3>
+        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
+            <div class="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
+            <h3 id="stat-total" class="text-4xl font-black text-white orbitron italic relative z-10">--</h3>
         </div>
-        <div class="stats-card p-6 rounded-3xl">
-            <p class="text-[10px] font-bold text-emerald-400 orbitron uppercase tracking-widest mb-1">Win Rate</p>
-            <h3 id="stat-winrate" class="text-3xl font-black text-white orbitron italic">--</h3>
+        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
+            <div class="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <p class="text-[10px] font-bold text-emerald-400 orbitron uppercase tracking-widest mb-1 relative z-10">WIN RATE</p>
+            <h3 id="stat-winrate" class="text-4xl font-black text-white orbitron italic relative z-10">--</h3>
         </div>
-        <div class="stats-card p-6 rounded-3xl">
-            <p class="text-[10px] font-bold text-blue-400 orbitron uppercase tracking-widest mb-1">Total Win</p>
-            <h3 id="stat-wins" class="text-3xl font-black text-white orbitron italic">--</h3>
+        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
+            <div class="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <p class="text-[10px] font-bold text-blue-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL WIN</p>
+            <h3 id="stat-wins" class="text-4xl font-black text-white orbitron italic relative z-10">--</h3>
         </div>
-        <div class="stats-card p-6 rounded-3xl">
-            <p class="text-[10px] font-bold text-rose-400 orbitron uppercase tracking-widest mb-1">Total Loss</p>
-            <h3 id="stat-loss" class="text-3xl font-black text-white orbitron italic">--</h3>
+        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
+            <div class="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <p class="text-[10px] font-bold text-rose-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL LOSS</p>
+            <h3 id="stat-loss" class="text-4xl font-black text-white orbitron italic relative z-10">--</h3>
         </div>
     </div>
 
-    <!-- Filter Panel -->
-    <div class="max-w-7xl mx-auto mb-8">
-        <div class="glass-card p-6 border border-white/5">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Start Date</label>
-                    <input type="date" id="filter-start" class="input-cyber w-full">
+    <div class="max-w-7xl mx-auto relative">
+        <!-- Main Content Area -->
+        <div class="{{ $userState !== 'premium' ? 'blur-md pointer-events-none select-none opacity-40 transition-all duration-700' : '' }}">
+            <!-- Filter Panel -->
+            <div class="mb-8">
+                <div class="glass-card p-6 border border-white/5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Start Date</label>
+                            <input type="date" id="filter-start" class="input-cyber w-full">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">End Date</label>
+                            <input type="date" id="filter-end" class="input-cyber w-full">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Symbol</label>
+                            <input type="text" id="filter-symbol" placeholder="e.g. BTC" class="input-cyber w-full uppercase">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Signal Type</label>
+                            <select id="filter-type" class="input-cyber w-full">
+                                <option value="">ALL TYPES</option>
+                                <option value="BUY">BUY</option>
+                                <option value="SELL">SELL</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Result</label>
+                            <select id="filter-result" class="input-cyber w-full">
+                                <option value="">ALL RESULTS</option>
+                                <option value="WIN">WIN</option>
+                                <option value="LOSS">LOSS</option>
+                                <option value="BREAKEVEN">BREAKEVEN</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end gap-2">
+                            <button onclick="applyFilters()" class="flex-1 px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-black orbitron text-xs uppercase italic tracking-widest rounded-xl transition-all shadow-lg shadow-purple-500/20">
+                                Apply
+                            </button>
+                            <button onclick="resetFilters()" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-gray-400 font-black orbitron text-xs uppercase tracking-widest rounded-xl transition-all">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">End Date</label>
-                    <input type="date" id="filter-end" class="input-cyber w-full">
+            </div>
+
+            <!-- Table Section -->
+            <div class="glass-card border border-white/5 overflow-hidden">
+                <div id="past-signals-table"></div>
+            </div>
+        </div>
+
+        <!-- Locked Overlays -->
+        @if($userState === 'guest')
+        <div class="absolute inset-x-0 top-0 bottom-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-[2rem] border border-white/5">
+            <div class="text-center p-12 glass-card max-w-lg border-purple-500/20 shadow-2xl shadow-purple-500/10 scale-110">
+                <div class="w-20 h-20 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-purple-500/40">
+                    <i data-lucide="lock" class="w-10 h-10 text-white"></i>
                 </div>
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Symbol</label>
-                    <input type="text" id="filter-symbol" placeholder="e.g. BTC" class="input-cyber w-full uppercase">
-                </div>
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Signal Type</label>
-                    <select id="filter-type" class="input-cyber w-full">
-                        <option value="">ALL TYPES</option>
-                        <option value="BUY">BUY</option>
-                        <option value="SELL">SELL</option>
-                    </select>
-                </div>
-                <div class="flex items-end gap-2">
-                    <button onclick="applyFilters()" class="flex-1 px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-black orbitron text-xs uppercase italic tracking-widest rounded-xl transition-all shadow-lg shadow-purple-500/20">
-                        Apply
-                    </button>
-                    <button onclick="resetFilters()" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-gray-400 font-black orbitron text-xs uppercase tracking-widest rounded-xl transition-all">
-                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                    </button>
+                <h2 class="text-3xl font-black orbitron text-white mb-4 italic tracking-tighter">ARCHIVE ENCRYPTED</h2>
+                <p class="text-gray-400 mb-8 leading-relaxed uppercase tracking-tight font-medium">Authentication is required to synchronize with the neural signal history archive.</p>
+                <div class="flex flex-col gap-4">
+                    <a href="{{ route('login') }}" class="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white font-black orbitron text-sm uppercase italic tracking-widest rounded-2xl transition-all shadow-lg shadow-purple-500/30">
+                        Initiate Login
+                    </a>
+                    <a href="{{ route('register') }}" class="text-gray-500 hover:text-white orbitron text-[10px] uppercase tracking-widest transition-colors">Create Neural Identity</a>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Table Section -->
-    <div class="max-w-7xl mx-auto">
-        <div class="glass-card border border-white/5 overflow-hidden">
-            <div id="past-signals-table"></div>
+        @elseif($userState === 'free')
+        <div class="absolute inset-x-0 top-0 bottom-0 z-50 flex items-center justify-center pointer-events-none">
+            <div class="pointer-events-auto text-center p-12 glass-card max-w-lg border-purple-500/20 shadow-2xl shadow-purple-500/20 bg-black/60 relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-600/20 blur-[80px] rounded-full"></div>
+                <div class="w-20 h-20 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-purple-500/40 relative z-10">
+                    <i data-lucide="zap" class="w-10 h-10 text-white fill-white"></i>
+                </div>
+                <h2 class="text-3xl font-black orbitron text-white mb-4 italic tracking-tighter relative z-10 uppercase">PREMIUM ACCESS REQUIRED</h2>
+                <p class="text-gray-400 mb-8 leading-relaxed uppercase tracking-tight font-medium relative z-10">Full signal history and performance verification is restricted to Premium Alpha Nodes.</p>
+                <a href="{{ url('/pricing') }}" class="inline-block px-10 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black orbitron text-sm uppercase italic tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-purple-600/40 relative z-10">
+                    Upgrade to Premium
+                </a>
+            </div>
         </div>
+        @endif
     </div>
 </main>
 @endsection
@@ -163,11 +212,45 @@
 <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 <script>
     let table;
+    const userState = "{{ $userState }}";
 
     document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
 
-        // Initialize Tabulator
+        if (userState === 'premium') {
+            initTable();
+        } else {
+            // Fetch initial stats even for non-premium to show platform performance
+            fetchStats();
+        }
+    });
+
+    function fetchStats() {
+        fetch("/api/past-signals")
+            .then(res => res.json())
+            .then(response => {
+                if (response.stats) {
+                    updateStatsDisplay(response.stats);
+                }
+            });
+    }
+
+    function updateStatsDisplay(stats) {
+        document.getElementById('stat-total').textContent = stats.total_signals;
+        document.getElementById('stat-winrate').textContent = stats.win_rate;
+        document.getElementById('stat-wins').textContent = stats.total_win;
+        document.getElementById('stat-loss').textContent = stats.total_loss;
+        
+        // Count up animation effect (Simple)
+        const elements = ['stat-total', 'stat-winrate', 'stat-wins', 'stat-loss'];
+        elements.forEach(id => {
+            const el = document.getElementById(id);
+            el.classList.add('animate-pulse');
+            setTimeout(() => el.classList.remove('animate-pulse'), 1000);
+        });
+    }
+
+    function initTable() {
         table = new Tabulator("#past-signals-table", {
             ajaxURL: "/api/past-signals",
             ajaxConfig: "GET",
@@ -176,15 +259,11 @@
             paginationSizeSelector: [20, 50, 100],
             layout: "fitColumns",
             responsiveLayout: "collapse",
-            placeholder: "<div class='py-12 text-gray-500 orbitron text-xs uppercase tracking-widest'>Searching Neural Archive...</div>",
+            placeholder: "<div class='py-12 text-gray-500 orbitron text-xs uppercase tracking-widest'>Emptying Archive...</div>",
             
             ajaxResponse: function(url, params, response) {
-                // Update stats
                 if (response.stats) {
-                    document.getElementById('stat-total').textContent = response.stats.total_signals;
-                    document.getElementById('stat-winrate').textContent = response.stats.win_rate;
-                    document.getElementById('stat-wins').textContent = response.stats.total_profit;
-                    document.getElementById('stat-loss').textContent = response.stats.total_loss;
+                    updateStatsDisplay(response.stats);
                 }
                 return {
                     last_page: response.last_page,
@@ -225,23 +304,27 @@
                 {title: "Date", field: "date", hozAlign: "right", width: 120, formatter: (cell) => `<span class="text-gray-500 font-mono text-[10px]">${cell.getValue()}</span>`}
             ],
         });
-    });
+    }
 
     function applyFilters() {
+        if (userState !== 'premium') return;
         const params = {
             startDate: document.getElementById('filter-start').value,
             endDate: document.getElementById('filter-end').value,
             symbol: document.getElementById('filter-symbol').value,
             type: document.getElementById('filter-type').value,
+            result: document.getElementById('filter-result').value,
         };
         table.setData("/api/past-signals", params);
     }
 
     function resetFilters() {
+        if (userState !== 'premium') return;
         document.getElementById('filter-start').value = '';
         document.getElementById('filter-end').value = '';
         document.getElementById('filter-symbol').value = '';
         document.getElementById('filter-type').value = '';
+        document.getElementById('filter-result').value = '';
         table.setData("/api/past-signals");
     }
 </script>
