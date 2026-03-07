@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PaymentRequest extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'package_id',
+        'plan_name',
+        'amount',
+        'utr_number',
+        'payment_screenshot',
+        'status',
+        'rejection_note',
+        'verified_at',
+    ];
+
+    protected $casts = [
+        'verified_at' => 'datetime',
+        'amount' => 'decimal:2',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(PremiumPackage::class, 'package_id');
+    }
+}

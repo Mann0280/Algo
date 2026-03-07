@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\PremiumPackageController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\WalletController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -52,6 +53,13 @@ Route::prefix('account')->name('account.')->middleware('auth')->group(function (
     Route::get('/membership', [AccountController::class, 'membership'])->name('membership');
     Route::get('/history', [AccountController::class, 'subscriptionHistory'])->name('subscription-history');
     Route::get('/notifications', [AccountController::class, 'notifications'])->name('notifications');
+
+    // Wallet Routes
+    Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');
+    Route::post('/wallet/add', [WalletController::class, 'addFunds'])->name('wallet.add');
+    Route::post('/wallet/purchase-premium', [WalletController::class, 'purchasePremium'])->name('wallet.purchase-premium');
+    Route::post('/upgrade-plan', [AccountController::class, 'upgradePlan'])->name('upgrade-plan');
+    Route::post('/payment-request', [AccountController::class, 'submitPaymentRequest'])->name('payment-request');
 });
 
 Route::get('/api/notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -84,6 +92,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/payments', [\App\Http\Controllers\PaymentController::class, 'adminIndex'])->name('payments.index');
         Route::post('/payments/{payment}/approve', [\App\Http\Controllers\PaymentController::class, 'approvePayment'])->name('payments.approve');
         Route::post('/payments/{payment}/reject', [\App\Http\Controllers\PaymentController::class, 'rejectPayment'])->name('payments.reject');
+        
+        // Manual P2P Upgrade Request Routes
+        Route::post('/payments/upgrade/{request}/approve', [\App\Http\Controllers\PaymentController::class, 'approveUpgradeRequest'])->name('payments.upgrade.approve');
+        Route::post('/payments/upgrade/{paymentRequest}/reject', [\App\Http\Controllers\PaymentController::class, 'rejectUpgradeRequest'])->name('payments.upgrade.reject');
+        
         // Educational Video Management
         Route::resource('tutorial-videos', \App\Http\Controllers\Admin\TutorialVideoController::class)->except(['show', 'create', 'edit'])->names([
             'index' => 'tutorial-videos.index',
@@ -91,6 +104,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
             'update' => 'tutorial-videos.update',
             'destroy' => 'tutorial-videos.destroy',
         ]);
+
+        // Wallet & Payment Settings
+        Route::get('/settings/wallet', [\App\Http\Controllers\Admin\WalletSettingsController::class, 'index'])->name('settings.wallet');
+        Route::post('/settings/wallet', [\App\Http\Controllers\Admin\WalletSettingsController::class, 'update'])->name('settings.wallet.update');
+
+        // Wallet Verification
+        Route::post('/wallet/approve/{transaction}', [WalletController::class, 'approveTopup'])->name('wallet.approve');
+        Route::post('/wallet/reject/{transaction}', [WalletController::class, 'rejectTopup'])->name('wallet.reject');
     });
 });
 
@@ -100,5 +121,5 @@ Route::middleware('auth')->group(function () {
 });
 
 // Past Signals Management
-Route::get('/signals/past', [\App\Http\Controllers\Api\PastSignalsController::class, 'webIndex'])->name('signals.past')->middleware('auth');
+Route::get('/signals/past', [\App\Http\Controllers\SignalController::class, 'pastSignals'])->name('signals.past')->middleware('auth');
 Route::get('/api/past-signals', [\App\Http\Controllers\Api\PastSignalsController::class, 'index'])->name('api.past-signals')->middleware(['auth', 'throttle:60,1']);

@@ -66,59 +66,44 @@ class LiveTipsController extends Controller
             ], 403);
         }
 
-        $tips = TradingTip::orderBy('created_at', 'desc')->get()->map(function ($tip) {
-            $originalEntry = $tip->entry_price;
-            $target = $tip->target_price;
-            $sl = $tip->stop_loss;
-            $isBuy = $target > $originalEntry;
+        $today = now()->format('Y-m-d');
+        $tips = \App\Models\StockSignal::where('entry_date', $today)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($signal) {
+                $entry = (float)$signal->entry;
+                $target = (float)$signal->target;
+                $sl = (float)$signal->sl;
+                $isBuy = $signal->signal_type === 'BUY';
 
-            // Simulate live price fluctuation
-            $multiplier = 1 + (rand(-5, 5) / 10000);
-            $currentPrice = round($originalEntry * $multiplier, 2);
+                // Prefer stored result if available, otherwise calculate
+                $status = $signal->result ?: 'LIVE';
+                if (!$signal->result) {
+                    if ($signal->pnl > 0) $status = 'HIT TARGET';
+                    elseif ($signal->pnl < 0) $status = 'SL HIT';
+                    elseif ($signal->pnl == 0 && $signal->pnl !== null) $status = 'RUNNING';
+                }
 
-            // Dynamic status
-            if ($isBuy) {
-                if ($currentPrice >= $target) $status = 'HIT TARGET';
-                elseif ($currentPrice <= $sl) $status = 'SL HIT';
-                elseif ($currentPrice > $originalEntry) $status = 'RUNNING';
-                else $status = 'LIVE';
-            } else {
-                if ($currentPrice <= $target) $status = 'HIT TARGET';
-                elseif ($currentPrice >= $sl) $status = 'SL HIT';
-                elseif ($currentPrice < $originalEntry) $status = 'RUNNING';
-                else $status = 'LIVE';
-            }
-
-            // Calculate profit/loss
-            $diff = $isBuy ? ($currentPrice - $originalEntry) : ($originalEntry - $currentPrice);
-            $pctChange = $originalEntry > 0 ? round(($diff / $originalEntry) * 100, 2) : 0;
-            $profitStr = ($pctChange >= 0 ? '+' : '') . $pctChange . '%';
-
-            // Confidence based on proximity to target
-            $range = abs($target - $sl);
-            $progress = $range > 0 ? abs($currentPrice - $sl) / $range : 0.5;
-            $confidence = min(98, max(60, round($progress * 100)));
-
-            return [
-                'stock_symbol' => $tip->stock_name,
-                'signal_type'  => $isBuy ? 'BUY' : 'SELL',
-                'entry_price'  => $currentPrice,
-                'stop_loss'    => $sl,
-                'target_price' => $target,
-                'target_2'     => round($target + ($target - $originalEntry) * 0.5, 2),
-                'confidence'   => $confidence,
-                'time'         => now('Asia/Kolkata')->format('H:i:s'),
-                'date'         => now('Asia/Kolkata')->format('d/m/Y'),
-                'status'       => $status,
-                'profit'       => $profitStr,
-                'video_url'    => $tip->video_url,
-            ];
-        });
+                return [
+                    'stock_symbol' => $signal->stock_name,
+                    'signal_type'  => $signal->signal_type ?: ($isBuy ? 'BUY' : 'SELL'),
+                    'entry_price'  => $entry,
+                    'stop_loss'    => $sl,
+                    'target_price' => $target,
+                    'target_2'     => (float)$signal->breakeven, 
+                    'confidence'   => 85,
+                    'time'         => $signal->entry_time,
+                    'date'         => $signal->entry_date,
+                    'status'       => $status,
+                    'profit'       => $signal->pnl ? ($signal->pnl > 0 ? '+' : '') . $signal->pnl : '0.00',
+                    'video_url'    => null, 
+                ];
+            });
 
         return response()->json([
             'success' => true,
             'count'   => $tips->count(),
-            'data'    => $tips->values(),
+            'data'    => $tips->values()->all(),
         ]);
     }
 

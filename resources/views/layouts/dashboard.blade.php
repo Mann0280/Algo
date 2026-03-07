@@ -184,6 +184,7 @@
                     $navItems = [
                         // ['icon' => 'layout-dashboard', 'label' => 'Terminal', 'url' => url('/terminal'), 'active' => Request::is('terminal*')],
                         ['icon' => 'activity', 'label' => 'Signals', 'url' => url('/signals'), 'active' => Request::is('signals*')],
+                        ['icon' => 'wallet', 'label' => 'Wallet', 'url' => route('account.wallet.index'), 'active' => Request::is('account/wallet*')],
                         ['icon' => 'credit-card', 'label' => 'Link History', 'url' => route('account.subscription-history'), 'active' => Request::is('account/history*')],
                         ['icon' => 'settings', 'label' => 'Settings', 'url' => route('account.profile'), 'active' => Request::is('account/profile*')],
                     ];

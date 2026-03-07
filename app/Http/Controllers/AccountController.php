@@ -50,7 +50,121 @@ class AccountController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
-        return view('account.profile', compact('user', 'sessions', 'latestPayment'));
+        $walletTransactions = $user->walletTransactions()->orderBy('created_at', 'desc')->get();
+        $paymentRequests = \App\Models\PaymentRequest::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        
+        $currentSubscription = \App\Models\SubscriptionHistory::where('user_id', $user->id)
+            ->where('status', 'Completed')
+            ->orderBy('purchased_at', 'desc')
+            ->first();
+
+        $preciseExpiry = ($currentSubscription && $currentSubscription->expires_at) 
+            ? $currentSubscription->expires_at->format('Y-m-d H:i:s')
+            : ($user->premium_expiry ? $user->premium_expiry . ' 23:59:59' : null);
+            
+        return view('account.profile', compact('user', 'sessions', 'latestPayment', 'walletTransactions', 'currentSubscription', 'preciseExpiry', 'paymentRequests'));
+    }
+
+    /**
+     * Upgrade plan using wallet balance.
+     */
+    public function upgradePlan(Request $request)
+    {
+        $request->validate([
+            'package_id' => 'required|exists:premium_packages,id',
+        ]);
+
+        $user = Auth::user();
+        $package = \App\Models\PremiumPackage::findOrFail($request->package_id);
+        $amount = $package->price;
+
+        if ($user->wallet_balance < $amount) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Insufficient wallet balance. Please submit a P2P payment request.'
+            ], 422);
+        }
+
+        \Illuminate\Support\Facades\DB::beginTransaction();
+        try {
+            // Deduct from wallet
+            $user->decrement('wallet_balance', $amount);
+
+            // Create wallet transaction (Debit)
+            $user->walletTransactions()->create([
+                'type' => 'debit',
+                'amount' => $amount,
+                'description' => 'Premium Plan Upgrade',
+                'status' => 'success',
+            ]);
+
+            // Activate premium
+            $expiry = now()->addDays($package->duration_days);
+            $user->update([
+                'role' => 'premium',
+                'premium_expiry' => $expiry,
+            ]);
+
+            // Record in subscription history
+            \App\Models\SubscriptionHistory::create([
+                'user_id' => $user->id,
+                'plan_name' => $package->name,
+                'amount' => $amount,
+                'status' => 'Completed',
+                'purchased_at' => now(),
+                'expires_at' => $expiry,
+            ]);
+
+            \Illuminate\Support\Facades\DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => 'Premium protocol activated via wallet debit.'
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Sync failure: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Submit a P2P payment request.
+     */
+    public function submitPaymentRequest(Request $request)
+    {
+        $request->validate([
+            'package_id' => 'required|exists:premium_packages,id',
+            'amount' => 'required|numeric',
+            'utr_number' => 'required|string|unique:payment_requests,utr_number',
+            'screenshot' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $user = Auth::user();
+        $package = \App\Models\PremiumPackage::findOrFail($request->package_id);
+        $screenshotPath = null;
+
+        if ($request->hasFile('screenshot')) {
+            $imageName = 'p2p_' . time() . '.' . $request->screenshot->extension();
+            $request->screenshot->move(public_path('uploads/p2p'), $imageName);
+            $screenshotPath = 'uploads/p2p/' . $imageName;
+        }
+
+        \App\Models\PaymentRequest::create([
+            'user_id' => $user->id,
+            'package_id' => $package->id,
+            'plan_name' => $package->name,
+            'amount' => $request->amount,
+            'utr_number' => $request->utr_number,
+            'payment_screenshot' => $screenshotPath,
+            'status' => 'pending',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'P2P protocol request submitted. Pending manual verification.'
+        ]);
     }
 
     /**

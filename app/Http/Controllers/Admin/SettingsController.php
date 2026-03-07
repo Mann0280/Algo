@@ -24,6 +24,8 @@ class SettingsController extends Controller
             'premium_price'    => SiteSetting::getValue('premium_price', '999'),
             'maintenance_mode' => SiteSetting::getValue('maintenance_mode', '0'),
             'registration_open' => SiteSetting::getValue('registration_open', '1'),
+            'subscription_header' => SiteSetting::getValue('subscription_header', 'Subscription Protocol'),
+            'subscription_subheader' => SiteSetting::getValue('subscription_subheader', 'Neural Access Monitoring'),
         ];
 
         return view('admin.settings', compact('settings'));
@@ -38,6 +40,7 @@ class SettingsController extends Controller
             'site_name', 'site_tagline', 'support_email', 'telegram_link',
             'breakeven_point', 'ai_refresh_rate', 'max_free_signals',
             'premium_price', 'maintenance_mode', 'registration_open',
+            'subscription_header', 'subscription_subheader',
         ];
 
         foreach ($keys as $key) {

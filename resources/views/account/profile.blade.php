@@ -135,8 +135,8 @@
             <div class="relative z-10">
                 <div class="mb-10 flex items-center justify-between">
                     <div>
-                        <h3 class="text-2xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Subscription Protocol</h3>
-                        <p class="text-[11px] font-bold orbitron text-gray-500 uppercase tracking-[0.2em] mt-1">Neural Access Monitoring • Link ID: {{ substr(md5($user->id), 0, 8) }}</p>
+                        <h3 class="text-2xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">{{ \App\Models\SiteSetting::getValue('subscription_header', 'Subscription Protocol') }}</h3>
+                        <p class="text-[11px] font-bold orbitron text-gray-500 uppercase tracking-[0.2em] mt-1">{{ \App\Models\SiteSetting::getValue('subscription_subheader', 'Neural Access Monitoring') }} • Link ID: {{ substr(md5($user->id), 0, 8) }}</p>
                     </div>
                 </div>
 
@@ -169,17 +169,25 @@
                     <!-- PLAN INFO -->
                     <div class="w-full lg:w-1/2 space-y-6">
                         <div class="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.05] space-y-5">
+                            @php
+                                $isActive = $preciseExpiry && \Carbon\Carbon::parse($preciseExpiry)->isFuture();
+                                $hasPlan = (bool)$user->premium_expiry;
+                            @endphp
                             <div class="flex items-center justify-between group">
                                 <span class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest">Plan Name</span>
-                                <span class="text-sm font-black orbitron text-white uppercase italic group-hover:text-purple-400 transition-colors">{{ $user->role === 'premium' ? 'Premium Trader' : ($user->role === 'admin' ? 'Institutional Admin' : 'Basic Node') }}</span>
+                                <span class="text-sm font-black orbitron text-white uppercase italic group-hover:text-purple-400 transition-colors">
+                                    @if($user->role === 'admin')
+                                        Institutional Admin
+                                    @elseif($isActive && $currentSubscription)
+                                        {{ $currentSubscription->plan_name }}
+                                    @else
+                                        {{ $user->role === 'premium' ? 'Premium Trader' : 'Basic Node' }}
+                                    @endif
+                                </span>
                             </div>
                             
                             <div class="flex items-center justify-between">
                                 <span class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest">Link Status</span>
-                                @php
-                                    $isActive = $user->premium_expiry && \Carbon\Carbon::parse($user->premium_expiry)->isFuture();
-                                    $hasPlan = (bool)$user->premium_expiry;
-                                @endphp
                                 <span class="px-5 py-1.5 rounded-full {{ $isActive ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-500' : 'bg-rose-500/10 border border-rose-500/20 text-rose-500' }} text-[9px] font-black orbitron uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(244,63,94,0.1)]">
                                     {{ $isActive ? 'Protocol Active' : ($hasPlan ? 'Protocol Expired' : 'Link Offline') }}
                                 </span>
@@ -229,7 +237,7 @@
         @if($user->premium_expiry)
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                const expiry = new Date("{{ $user->premium_expiry }} 23:59:59").getTime();
+                const expiry = new Date("{{ $preciseExpiry }}").getTime();
                 const timerDisplay = document.getElementById('subscription-timer');
                 
                 const updateTimer = () => {
@@ -255,6 +263,156 @@
             });
         </script>
         @endif
+    </div>
+
+    <!-- SECTION: WALLET MANAGEMENT -->
+    <div id="tab-wallet" class="tab-content active space-y-10">
+        <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05] relative overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-br from-amber-600/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+            <div class="relative z-10">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+                    <div class="flex items-center gap-4">
+                        <i data-lucide="wallet" class="w-6 h-6 text-amber-500"></i>
+                        <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Neural Wallet Management</h3>
+                    </div>
+                    <button onclick="document.getElementById('add-funds-modal').classList.remove('hidden')" class="px-8 py-3.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-2xl text-[10px] font-black orbitron uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all">Add Neural Credit</button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                    <!-- Balance Card -->
+                    <div class="lg:col-span-1">
+                        <div class="p-8 rounded-[2.5rem] bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20 relative overflow-hidden group/card h-full flex flex-col justify-center">
+                            <div class="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/20 blur-[60px] rounded-full group-hover/card:scale-150 transition-transform duration-1000"></div>
+                            <p class="text-[10px] font-black orbitron text-amber-500/60 uppercase tracking-[0.3em] mb-4">Current Neural Balance</p>
+                            <h4 class="text-5xl font-black orbitron text-white italic tracking-tighter drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]">
+                                ₹{{ number_format($user->wallet_balance, 2) }}
+                            </h4>
+                            <div class="mt-8 flex items-center gap-3">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="text-[8px] font-black orbitron text-emerald-500/80 uppercase tracking-widest">Secured by Cryptonid Protocol</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction History -->
+                    <div class="lg:col-span-2 space-y-10">
+                        <div class="space-y-4">
+                            <h4 class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] px-2">Recent Signal Logs</h4>
+                            <div class="max-h-[250px] overflow-y-auto pr-2 no-scrollbar space-y-3">
+                                @forelse($walletTransactions as $tx)
+                                <div class="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between hover:bg-white/[0.04] transition-all group/tx">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-xl {{ $tx->type === 'credit' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500' }} flex items-center justify-center shrink-0">
+                                            <i data-lucide="{{ $tx->type === 'credit' ? 'arrow-down-left' : 'arrow-up-right' }}" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] font-black orbitron text-white uppercase tracking-tight">{{ $tx->description }}</p>
+                                            <p class="text-[8px] font-bold orbitron text-gray-500 uppercase mt-0.5">{{ $tx->created_at->format('d M Y, h:i A') }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs font-black orbitron {{ $tx->type === 'credit' ? 'text-emerald-500' : 'text-rose-500' }}">
+                                            {{ $tx->type === 'credit' ? '+' : '-' }}₹{{ number_format($tx->amount, 2) }}
+                                        </p>
+                                        <p class="text-[7px] font-bold orbitron text-gray-600 uppercase mt-0.5 tracking-[0.2em]">{{ strtoupper($tx->status) }}</p>
+                                    </div>
+                                </div>
+                                @empty
+                                <div class="py-8 text-center border border-dashed border-white/10 rounded-3xl">
+                                    <p class="text-[9px] font-bold orbitron text-gray-600 uppercase tracking-widest italic">No transaction frequency detected...</p>
+                                </div>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        <!-- P2P Requests Section -->
+                        <div class="space-y-4 pt-4 border-t border-white/5">
+                            <h4 class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] px-2">Manual Protocol Requisitions</h4>
+                            <div class="overflow-x-auto no-scrollbar">
+                                <table class="w-full text-left border-separate border-spacing-y-2">
+                                    <thead>
+                                        <tr class="text-[8px] font-black orbitron text-gray-700 uppercase tracking-[0.2em]">
+                                            <th class="px-4 pb-2">Plan</th>
+                                            <th class="px-4 pb-2">Amount</th>
+                                            <th class="px-4 pb-2">UTR Code</th>
+                                            <th class="px-4 pb-2">Status</th>
+                                            <th class="px-4 pb-2 text-right">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($paymentRequests as $req)
+                                        <tr class="bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all">
+                                            <td class="px-4 py-4 rounded-l-xl">
+                                                <span class="text-[10px] font-black orbitron text-white uppercase italic tracking-tight">{{ $req->plan_name }}</span>
+                                            </td>
+                                            <td class="px-4 py-4">
+                                                <span class="text-[10px] font-bold orbitron text-gray-400">₹{{ number_format($req->amount, 0) }}</span>
+                                            </td>
+                                            <td class="px-4 py-4">
+                                                <code class="text-[9px] font-mono text-indigo-400/70">{{ $req->utr_number }}</code>
+                                            </td>
+                                            <td class="px-4 py-4">
+                                                <span class="px-3 py-1 rounded-full border text-[7px] font-black orbitron uppercase tracking-widest
+                                                    {{ $req->status === 'pending' ? 'border-amber-500/20 text-amber-500' : ($req->status === 'approved' ? 'border-emerald-500/20 text-emerald-500' : 'border-rose-500/20 text-rose-500') }}">
+                                                    {{ $req->status }}
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-4 rounded-r-xl text-right">
+                                                <span class="text-[8px] font-bold orbitron text-gray-600 uppercase">{{ $req->created_at->format('d M') }}</span>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="5" class="py-8 text-center text-[9px] font-bold orbitron text-gray-700 uppercase tracking-widest italic">No manual protocols initialized.</td>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL: ADD FUNDS -->
+    <div id="add-funds-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
+        <div class="bg-[#0a0514] border border-amber-500/20 rounded-[2.5rem] w-full max-w-md p-10 relative overflow-hidden shadow-2xl shadow-amber-500/10">
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-600/10 blur-[80px] rounded-full"></div>
+            
+            <button onclick="document.getElementById('add-funds-modal').classList.add('hidden')" class="absolute top-8 right-8 text-gray-500 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="plus-circle" class="w-8 h-8 text-amber-500"></i>
+                </div>
+                <h3 class="text-xl font-black orbitron text-white uppercase italic tracking-wider">Initialize Top-up</h3>
+                <p class="text-[9px] font-bold orbitron text-gray-500 uppercase tracking-widest mt-2">Inject neural credits into your wallet</p>
+            </div>
+
+            <form action="{{ route('account.wallet.add') }}" method="POST" class="space-y-6">
+                @csrf
+                <div class="space-y-3">
+                    <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] pl-2">Credit Amount (₹)</label>
+                    <div class="relative group">
+                        <i data-lucide="indian-rupee" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover:text-amber-500 transition-colors"></i>
+                        <input type="number" name="amount" min="1" step="1" required class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-white text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-amber-500/40 focus:bg-white/[0.06] transition-all" placeholder="1000">
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10">
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="shield-info" class="w-4 h-4 text-amber-500 shrink-0 mt-0.5"></i>
+                        <p class="text-[8px] font-bold orbitron text-amber-500/70 uppercase leading-relaxed tracking-widest">Neural credits are instantly finalized and cannot be reversed once synchronized.</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-5 rounded-2xl bg-gradient-to-r from-amber-600 to-orange-600 text-white text-[10px] font-black orbitron uppercase tracking-[0.2em] hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all">Synchronize Credits</button>
+            </form>
+        </div>
     </div>
 
     <!-- SECTION 3 — ACTIVE SECURE SESSIONS -->

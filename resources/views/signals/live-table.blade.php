@@ -57,6 +57,11 @@
             <span class="text-[10px] font-bold orbitron text-emerald-400 uppercase tracking-[0.2em]">Live Feed Active</span>
             <span class="text-gray-600 text-xs">•</span>
             <span id="last-update" class="text-[10px] text-gray-600 font-mono">--:--:--</span>
+            <span class="text-gray-600 text-xs">•</span>
+            <div class="flex items-center gap-1.5 bg-white/[0.03] px-2 py-0.5 rounded-md border border-white/[0.02]">
+                <span class="text-[9px] font-bold orbitron text-gray-500 uppercase tracking-widest">Next Sync in:</span>
+                <span id="countdown-timer" class="text-[10px] font-black orbitron text-purple-400 w-4">05s</span>
+            </div>
         </div>
         <div class="flex items-center gap-3">
             <span id="signal-count" class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest">0 signals</span>
@@ -75,9 +80,9 @@
                     <th style="width: 10%; text-align: center;">Signal</th>
                     <th style="width: 10%; text-align: right;">Entry</th>
                     <th style="width: 10%; text-align: right;">Stop Loss</th>
-                    <th style="width: 10%; text-align: right;">Target 1</th>
-                    <th style="width: 10%; text-align: right;">Target 2</th>
-                    <th style="width: 15%; text-align: center;">Date</th>
+                    <th style="width: 10%; text-align: right;">Target</th>
+                    <th style="width: 10%; text-align: right;">Breakeven</th>
+                    <th style="width: 12%; text-align: center;">Date</th>
                     <th style="width: 10%; text-align: center;">Time</th>
                 </tr>
             </thead>
@@ -150,25 +155,27 @@
             };
             const s = statusMap[status] || statusMap['LIVE'];
 
-            const pl = item.profit || '0%';
-            const plPositive = !pl.startsWith('-');
-            const plColor = plPositive ? '#34d399' : '#f87171';
-            const plPrefix = plPositive && !pl.startsWith('+') ? '+' : '';
-
-            const confidence = parseInt(item.confidence || 0);
-            const confidenceColor = confidence >= 85 ? '#a78bfa' : confidence >= 70 ? '#60a5fa' : '#6b7280';
+            const pl = item.profit || '0.00';
+            const plValue = parseFloat(pl);
+            const plColor = plValue > 0 ? '#34d399' : (plValue < 0 ? '#f87171' : '#94a3b8');
+            const plPrefix = plValue > 0 ? '+' : '';
 
             // MAIN ROW
             const mainRow = document.createElement('tr');
             mainRow.innerHTML = `
-                <td><span style="font-weight:800;color:#f1f5f9;font-size:13px;text-transform:uppercase;">${item.stock_symbol || '—'}</span></td>
+                <td>
+                    <div class="flex flex-col">
+                        <span style="font-weight:800;color:#f1f5f9;font-size:13px;text-transform:uppercase;">${item.stock_symbol || '—'}</span>
+                        <span style="font-size:9px;color:#4b5563;font-family:monospace;letter-spacing:1px;">${item.date || '—'}</span>
+                    </div>
+                </td>
                 <td style="text-align: center;">
                     <span style="display:inline-block;padding:4px 14px;border-radius:8px;font-family:Orbitron,monospace;font-size:9px;font-weight:900;background:${signalBg};color:${signalColor};border:1px solid ${signalBdr};">${(item.signal_type || '').toUpperCase()}</span>
                 </td>
                 <td style="text-align: right; color:#d1d5db; font-weight:600;">₹${parseFloat(item.entry_price || 0).toFixed(2)}</td>
                 <td style="text-align: right; color:#f87171; font-weight:600;">₹${parseFloat(item.stop_loss || 0).toFixed(2)}</td>
                 <td style="text-align: right; color:#34d399; font-weight:600;">₹${parseFloat(item.target_price || 0).toFixed(2)}</td>
-                <td style="text-align: right; color:#34d399; font-weight:600;">${item.target_2 ? '₹' + parseFloat(item.target_2).toFixed(2) : '—'}</td>
+                <td style="text-align: right; color:#60a5fa; font-weight:600;">${item.target_2 ? '₹' + parseFloat(item.target_2).toFixed(2) : '—'}</td>
                 <td style="text-align: center; color:#94a3b8; font-size:11px; font-family:monospace;">${item.date || '—'}</td>
                 <td style="text-align: center; color:#6b7280; font-size:11px; font-family:monospace;">${item.time || '—'}</td>
             `;
@@ -262,16 +269,32 @@
 
     window.refreshData = refreshData;
 
+    let countdownValue = 5;
+    const countdownEl = document.getElementById('countdown-timer');
+
+    function startCountdown() {
+        clearInterval(refreshInterval);
+        refreshInterval = setInterval(() => {
+            countdownValue--;
+            if (countdownValue <= 0) {
+                refreshData();
+                countdownValue = 5;
+            }
+            countdownEl.textContent = `${countdownValue.toString().padStart(2, '0')}s`;
+        }, 1000);
+    }
+
     refreshData();
     refreshTutorials();
-    refreshInterval = setInterval(refreshData, 5000);
+    startCountdown();
 
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             clearInterval(refreshInterval);
         } else {
             refreshData();
-            refreshInterval = setInterval(refreshData, 5000);
+            countdownValue = 5;
+            startCountdown();
         }
     });
 });

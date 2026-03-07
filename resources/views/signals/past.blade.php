@@ -99,22 +99,22 @@
         <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
-            <h3 id="stat-total" class="text-4xl font-black text-white orbitron italic relative z-10">--</h3>
+            <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $totalSignals }}</h3>
         </div>
         <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-emerald-400 orbitron uppercase tracking-widest mb-1 relative z-10">WIN RATE</p>
-            <h3 id="stat-winrate" class="text-4xl font-black text-white orbitron italic relative z-10">--</h3>
+            <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $winRate }}</h3>
         </div>
         <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-blue-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL WIN</p>
-            <h3 id="stat-wins" class="text-4xl font-black text-white orbitron italic relative z-10">--</h3>
+            <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $totalWin }}</h3>
         </div>
         <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-rose-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL LOSS</p>
-            <h3 id="stat-loss" class="text-4xl font-black text-white orbitron italic relative z-10">--</h3>
+            <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $totalLoss }}</h3>
         </div>
     </div>
 
@@ -167,11 +167,51 @@
             </div>
 
             <!-- Table Section -->
-            <div class="glass-card border border-white/5 overflow-hidden">
-                <div id="past-signals-table"></div>
+            <div class="glass-card border border-white/5 overflow-hidden p-6">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-white/10 text-gray-400 orbitron text-[10px] uppercase tracking-widest">
+                            <th class="py-4 px-4 font-black">Stock Name</th>
+                            <th class="py-4 px-4 font-black">Entry Price</th>
+                            <th class="py-4 px-4 font-black">Target Price</th>
+                            <th class="py-4 px-4 font-black">Stop Loss</th>
+                            <th class="py-4 px-4 font-black">Breakeven</th>
+                            <th class="py-4 px-4 font-black">Entry Date</th>
+                            <th class="py-4 px-4 font-black">Entry Time</th>
+                            <th class="py-4 px-4 font-black text-right">PnL</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        @foreach ($signals as $signal)
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="py-4 px-4 font-black text-white orbitron uppercase">{{ $signal->stock_name }}</td>
+                            <td class="py-4 px-4 text-gray-300">₹{{ number_format($signal->entry, 2) }}</td>
+                            <td class="py-4 px-4 text-emerald-400 font-bold">₹{{ number_format($signal->target, 2) }}</td>
+                            <td class="py-4 px-4 text-rose-400 font-bold">₹{{ number_format($signal->sl, 2) }}</td>
+                            <td class="py-4 px-4 text-blue-400">₹{{ number_format($signal->breakeven, 2) }}</td>
+                            <td class="py-4 px-4 text-gray-500 font-mono text-xs">{{ $signal->entry_date }}</td>
+                            <td class="py-4 px-4 text-gray-500 font-mono text-xs">{{ $signal->entry_time }}</td>
+                            <td class="py-4 px-4 text-right">
+                                @if($signal->pnl !== null)
+                                    <span class="font-black {{ $signal->pnl >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">
+                                        {{ $signal->pnl >= 0 ? '+' : '' }}₹{{ number_format($signal->pnl, 2) }}
+                                    </span>
+                                @else
+                                    <span class="text-gray-600">--</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @if($signals->isEmpty())
+                    <div class="py-12 text-center">
+                        <p class="orbitron text-xs text-gray-500 uppercase tracking-widest italic">Neural Archive Empty...</p>
+                    </div>
+                @endif
             </div>
         </div>
-
+        {{-- Overlays kept from previous version as they are part of the UI structure --}}
         <!-- Locked Overlays -->
         @if($userState === 'guest')
         <div class="absolute inset-x-0 top-0 bottom-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-[2rem] border border-white/5">
@@ -209,123 +249,9 @@
 @endsection
 
 @push('scripts')
-<script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 <script>
-    let table;
-    const userState = "{{ $userState }}";
-
     document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
-
-        if (userState === 'premium') {
-            initTable();
-        } else {
-            // Fetch initial stats even for non-premium to show platform performance
-            fetchStats();
-        }
     });
-
-    function fetchStats() {
-        fetch("/api/past-signals")
-            .then(res => res.json())
-            .then(response => {
-                if (response.stats) {
-                    updateStatsDisplay(response.stats);
-                }
-            });
-    }
-
-    function updateStatsDisplay(stats) {
-        document.getElementById('stat-total').textContent = stats.total_signals;
-        document.getElementById('stat-winrate').textContent = stats.win_rate;
-        document.getElementById('stat-wins').textContent = stats.total_win;
-        document.getElementById('stat-loss').textContent = stats.total_loss;
-        
-        // Count up animation effect (Simple)
-        const elements = ['stat-total', 'stat-winrate', 'stat-wins', 'stat-loss'];
-        elements.forEach(id => {
-            const el = document.getElementById(id);
-            el.classList.add('animate-pulse');
-            setTimeout(() => el.classList.remove('animate-pulse'), 1000);
-        });
-    }
-
-    function initTable() {
-        table = new Tabulator("#past-signals-table", {
-            ajaxURL: "/api/past-signals",
-            ajaxConfig: "GET",
-            pagination: "remote",
-            paginationSize: 20,
-            paginationSizeSelector: [20, 50, 100],
-            layout: "fitColumns",
-            responsiveLayout: "collapse",
-            placeholder: "<div class='py-12 text-gray-500 orbitron text-xs uppercase tracking-widest'>Emptying Archive...</div>",
-            
-            ajaxResponse: function(url, params, response) {
-                if (response.stats) {
-                    updateStatsDisplay(response.stats);
-                }
-                return {
-                    last_page: response.last_page,
-                    data: response.data
-                };
-            },
-
-            columns: [
-                {title: "ID", field: "id", width: 70, hozAlign: "center", headerSort: false, formatter: (cell) => `<span class="text-[10px] text-gray-600">#${cell.getValue()}</span>`},
-                {title: "Symbol", field: "symbol", fontStyle: "bold", formatter: (cell) => `<span class="font-black text-white">${cell.getValue()}</span>`},
-                {title: "Type", field: "type", hozAlign: "center", width: 90, formatter: function(cell) {
-                    const val = cell.getValue();
-                    const color = val === 'BUY' ? 'emerald' : 'rose';
-                    return `<span class="px-2 py-0.5 rounded text-[9px] font-black orbitron bg-${color}-500/10 text-${color}-500 border border-${color}-500/20">${val}</span>`;
-                }},
-                {title: "Entry", field: "entry_price", hozAlign: "right", formatter: (cell) => `₹${parseFloat(cell.getValue()).toLocaleString()}`},
-                {title: "TP", field: "tp", hozAlign: "right", formatter: (cell) => `₹${parseFloat(cell.getValue()).toLocaleString()}`},
-                {title: "SL", field: "sl", hozAlign: "right", formatter: (cell) => `<span class="text-rose-400">₹${parseFloat(cell.getValue()).toLocaleString()}</span>`},
-                {title: "Close", field: "close_price", hozAlign: "right", formatter: (cell) => `<span class="text-blue-400 font-bold">₹${cell.getValue() ? parseFloat(cell.getValue()).toLocaleString() : '—'}</span>`},
-                {title: "Result", field: "result", hozAlign: "center", width: 110, formatter: function(cell) {
-                    const val = cell.getValue();
-                    if (!val) return '—';
-                    let bg = 'rgba(255,255,255,0.05)';
-                    let clr = '#94a3b8';
-                    if (val === 'WIN') { bg = 'rgba(16, 185, 129, 0.15)'; clr = '#10b981'; }
-                    if (val === 'LOSS') { bg = 'rgba(244, 63, 94, 0.15)'; clr = '#f43f5e'; }
-                    if (val === 'BREAKEVEN') { bg = 'rgba(234, 179, 8, 0.15)'; clr = '#eab308'; }
-                    return `<span class="px-3 py-1 rounded-full text-[10px] font-black orbitron uppercase tracking-widest" style="background:${bg}; color:${clr}; border: 1px solid ${clr}33">${val}</span>`;
-                }},
-                {title: "P/L", field: "pl", hozAlign: "right", width: 100, formatter: function(cell) {
-                    const val = cell.getValue();
-                    const rowData = cell.getData();
-                    if (rowData.is_today || val === null) return `<span class="text-gray-600">--</span>`;
-                    const color = val >= 0 ? 'text-emerald-400' : 'text-rose-400';
-                    const prefix = val >= 0 ? '+' : '';
-                    return `<span class="${color} font-black">₹${prefix}${parseFloat(val).toLocaleString()}</span>`;
-                }},
-                {title: "Date", field: "date", hozAlign: "right", width: 120, formatter: (cell) => `<span class="text-gray-500 font-mono text-[10px]">${cell.getValue()}</span>`}
-            ],
-        });
-    }
-
-    function applyFilters() {
-        if (userState !== 'premium') return;
-        const params = {
-            startDate: document.getElementById('filter-start').value,
-            endDate: document.getElementById('filter-end').value,
-            symbol: document.getElementById('filter-symbol').value,
-            type: document.getElementById('filter-type').value,
-            result: document.getElementById('filter-result').value,
-        };
-        table.setData("/api/past-signals", params);
-    }
-
-    function resetFilters() {
-        if (userState !== 'premium') return;
-        document.getElementById('filter-start').value = '';
-        document.getElementById('filter-end').value = '';
-        document.getElementById('filter-symbol').value = '';
-        document.getElementById('filter-type').value = '';
-        document.getElementById('filter-result').value = '';
-        table.setData("/api/past-signals");
-    }
 </script>
 @endpush

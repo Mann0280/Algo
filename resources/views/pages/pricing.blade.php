@@ -44,13 +44,18 @@
                 <button disabled class="w-full py-4 rounded-2xl bg-amber-400/20 text-amber-400 font-bold tracking-widest text-xs uppercase italic">Active Subscription</button>
             @else
                 <div class="space-y-4">
-                    @if($package->upi_id)
-                    <div class="p-3 bg-white/5 border border-white/5 rounded-xl flex flex-col items-center gap-1 group/upi cursor-help transition-all hover:bg-white/10" title="Direct Payment Address">
-                        <span class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest">Protocol UPI Gateway</span>
-                        <span class="text-[10px] font-bold text-amber-400 group-hover/upi:text-amber-300 transition-colors lowercase">{{ $package->upi_id }}</span>
-                    </div>
-                    @endif
-                    <button onclick='openPaymentModal(@json($package))' class="w-full py-4 rounded-2xl font-black tracking-widest text-sm hover:scale-105 active:scale-95 transition-all shadow-xl uppercase italic group/btn relative overflow-hidden" style="background-color: {{ $package->button_color ?? '#fbbf24' }}; color: {{ ($package->button_color && $package->button_color != '#fbbf24') ? 'white' : 'black' }};">
+                    <button 
+                        data-id="{{ $package->id }}"
+                        data-name="{{ $package->name }}"
+                        data-price="{{ $package->price }}"
+                        data-upi="{{ $package->upi_id }}"
+                        data-qr="{{ $package->qr_code }}"
+                        data-info="{{ $package->payment_info }}"
+                        data-upi-name="{{ $package->upi_name ?? 'ALGO TRADE' }}"
+                        data-wallet="{{ $walletBalance }}"
+                        onclick='openPaymentModal(this)' 
+                        class="w-full py-4 rounded-2xl font-black tracking-widest text-sm hover:scale-105 active:scale-95 transition-all shadow-xl uppercase italic group/btn relative overflow-hidden" 
+                        style="background-color: {{ $package->button_color ?? '#fbbf24' }}; color: {{ ($package->button_color && $package->button_color != '#fbbf24') ? 'white' : 'black' }};">
                         <span class="relative z-10">Initiate Upgrade</span>
                         <div class="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300"></div>
                     </button>
@@ -65,153 +70,186 @@
         @endforelse
     </div>
 
-    <!-- Redesigned Multi-Step Payment Modal -->
-    <div id="payment-modal" class="fixed inset-0 bg-[#05020a]/95 backdrop-blur-2xl z-[9999] hidden items-center justify-center p-4 sm:p-6 transition-all duration-500 overflow-y-auto">
+    <!-- Wallet-Only Premium Upgrade Modal -->
+    <div id="payment-modal" class="fixed inset-0 z-[999999] hidden items-center justify-center p-4 sm:p-6 transition-all duration-500">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-3xl" onclick="closePaymentModal()"></div>
+        
+        <!-- Ambient glow effects -->
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/8 blur-[150px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-indigo-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+
         <style>
-            .cyber-modal {
-                background: linear-gradient(135deg, rgba(15, 10, 25, 0.8), rgba(5, 2, 10, 0.95));
-                box-shadow: 0 0 50px rgba(147, 51, 234, 0.1), inset 0 0 20px rgba(147, 51, 234, 0.05);
+            .premium-modal-card {
+                background: linear-gradient(170deg, rgba(18, 8, 32, 0.97), rgba(6, 2, 12, 0.99));
+                box-shadow: 
+                    0 0 0 1px rgba(147, 51, 234, 0.15),
+                    0 25px 80px rgba(0, 0, 0, 0.8),
+                    0 0 100px rgba(147, 51, 234, 0.06),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.06);
             }
-            .qr-scanner-container {
-                position: relative;
-                padding: 1.5rem;
-                background: rgba(255, 255, 255, 0.03);
-                border-radius: 2.5rem;
-                border: 1px solid rgba(147, 51, 234, 0.3);
-                overflow: hidden;
-            }
-            .qr-scanner-line {
+            .premium-modal-card::before {
+                content: '';
                 position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
+                top: -1px;
+                left: 20%;
+                right: 20%;
                 height: 2px;
-                background: linear-gradient(90deg, transparent, #9333ea, transparent);
-                box-shadow: 0 0 15px #9333ea;
-                animation: qr-scan 3s ease-in-out infinite;
-                z-index: 10;
+                background: linear-gradient(90deg, transparent, rgba(147,51,234,0.7), rgba(99,102,241,0.5), transparent);
+                border-radius: 2px;
             }
-            @keyframes qr-scan {
-                0%, 100% { top: 0%; opacity: 0; }
-                10%, 90% { opacity: 1; }
-                50% { top: 100%; }
+            .premium-modal-card::after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 30%;
+                right: 30%;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(147,51,234,0.3), transparent);
             }
-            .cyber-input {
-                background: rgba(255, 255, 255, 0.02) !important;
-                border: 1px solid rgba(255, 255, 255, 0.05) !important;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            @keyframes icon-glow {
+                0%, 100% { 
+                    box-shadow: 0 0 25px rgba(147,51,234,0.15), 0 0 50px rgba(147,51,234,0.05);
+                    transform: scale(1);
+                }
+                50% { 
+                    box-shadow: 0 0 40px rgba(147,51,234,0.25), 0 0 80px rgba(147,51,234,0.1);
+                    transform: scale(1.03);
+                }
             }
-            .cyber-input:focus {
-                background: rgba(147, 51, 234, 0.05) !important;
-                border-color: rgba(147, 51, 234, 0.5) !important;
-                box-shadow: 0 0 20px rgba(147, 51, 234, 0.1);
+            @keyframes ring-rotate {
+                from { transform: translate(-50%, -50%) rotate(0deg); }
+                to { transform: translate(-50%, -50%) rotate(360deg); }
             }
-            .cyber-badge {
-                background: repeating-linear-gradient(45deg, rgba(147, 51, 234, 0.1), rgba(147, 51, 234, 0.1) 10px, transparent 10px, transparent 20px);
+            @keyframes ring-rotate-reverse {
+                from { transform: translate(-50%, -50%) rotate(360deg); }
+                to { transform: translate(-50%, -50%) rotate(0deg); }
+            }
+            .modal-pay-btn {
+                background: linear-gradient(135deg, #7c3aed, #6366f1, #8b5cf6);
+                background-size: 200% 200%;
+                animation: gradient-shift 4s ease infinite;
+            }
+            .modal-pay-btn:hover {
+                box-shadow: 0 0 50px rgba(147,51,234,0.35), 0 15px 40px rgba(99,102,241,0.2);
+            }
+            @keyframes gradient-shift {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
             }
         </style>
 
-        <div class="relative max-w-xl w-full cyber-modal border border-white/10 rounded-[3rem] p-8 sm:p-10 animate-in zoom-in-95 duration-500 shadow-2xl">
-            <!-- Close Trigger -->
-            <button onclick="closePaymentModal()" class="absolute top-6 right-6 w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-500 hover:text-white hover:bg-rose-500/20 transition-all border border-white/5 z-20">
-                <i data-lucide="x" class="w-5 h-5"></i>
+        <div class="relative w-full max-w-[420px] premium-modal-card rounded-[2rem] p-8 sm:p-10 animate-in zoom-in-95 fade-in duration-500 z-10">
+            <!-- Close -->
+            <button onclick="closePaymentModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-500 hover:text-white hover:bg-rose-500/20 hover:border-rose-500/30 transition-all z-20 group">
+                <i data-lucide="x" class="w-4 h-4 group-hover:rotate-90 transition-transform duration-300"></i>
             </button>
-            
-            <!-- Step 1: Scan & Pay -->
-            <div id="payment-step-1" class="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div class="text-center space-y-2">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 mx-auto">
-                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
-                        <span class="text-[8px] font-black orbitron text-purple-400 uppercase tracking-[0.3em]">STEP 01: SCAN PROTOCOL</span>
+
+            <input type="hidden" id="form-package-id">
+
+            <div class="space-y-7">
+                <!-- Premium Header with Animated Icon -->
+                <div class="text-center space-y-4 pt-1">
+                    <div class="relative w-20 h-20 mx-auto">
+                        <!-- Outer rotating ring -->
+                        <div class="absolute top-1/2 left-1/2 w-full h-full rounded-full border border-dashed border-purple-500/20" style="animation: ring-rotate 12s linear infinite;"></div>
+                        <!-- Inner counter-rotating ring -->
+                        <div class="absolute top-1/2 left-1/2 w-[70%] h-[70%] rounded-full border border-purple-500/10" style="animation: ring-rotate-reverse 8s linear infinite;"></div>
+                        <!-- Icon center -->
+                        <div class="absolute inset-[15%] rounded-2xl bg-gradient-to-br from-purple-600/25 to-indigo-600/25 border border-purple-500/30 flex items-center justify-center backdrop-blur-sm" style="animation: icon-glow 3s ease-in-out infinite;">
+                            <i data-lucide="zap" class="w-7 h-7 text-purple-400 drop-shadow-[0_0_8px_rgba(147,51,234,0.6)]"></i>
+                        </div>
                     </div>
-                    <h3 class="orbitron text-xl font-black text-white italic uppercase tracking-tighter">INITIATE <span class="text-purple-500">TRANSFER</span></h3>
-                    <p id="modal-package-name" class="text-[9px] font-bold orbitron text-gray-500 uppercase tracking-[0.2em] italic">ELITE TRADER MODULE</p>
+                    <div class="space-y-1.5">
+                        <h3 class="orbitron text-xl font-black text-white italic uppercase tracking-tight">Upgrade <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Protocol</span></h3>
+                        <p id="modal-package-name" class="text-[9px] font-bold orbitron text-purple-400/50 uppercase tracking-[0.3em]">-</p>
+                    </div>
                 </div>
 
-                <div class="flex flex-col items-center gap-6">
-                    <div class="qr-scanner-container w-full max-w-[240px] group">
-                        <div class="qr-scanner-line"></div>
-                        <div class="bg-white rounded-3xl p-4 shadow-2xl overflow-hidden aspect-square flex items-center justify-center border-4 border-black/5">
-                            <img id="modal-qr-code" src="" alt="Payment QR" class="w-full h-full object-contain grayscale-0 group-hover:scale-110 transition-transform duration-700">
-                        </div>
-                    </div>
-
-                    <div class="w-full grid grid-cols-2 gap-4">
-                        <div class="p-4 rounded-2xl bg-white/2 border border-white/5 flex flex-col items-center justify-center text-center">
-                            <span class="text-[7px] font-black orbitron text-gray-500 uppercase tracking-widest mb-1">Requisition</span>
-                            <div id="modal-price" class="text-lg font-black orbitron text-white italic tracking-tighter uppercase">₹ 0</div>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-white/2 border border-white/5 relative group flex flex-col items-center justify-center text-center overflow-hidden">
-                            <span class="text-[7px] font-black orbitron text-gray-500 uppercase tracking-widest mb-1">Neural ID</span>
-                            <div id="modal-upi-id" class="text-[10px] font-bold text-amber-400 lowercase truncate w-full px-2">-</div>
-                            <button onclick="copyUPI(event)" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-amber-400/10 text-amber-500 flex items-center justify-center hover:bg-amber-400 hover:text-black transition-all">
-                                <i data-lucide="copy" class="w-3 h-3"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="modal-instructions" class="cyber-badge w-full p-4 rounded-2xl border border-purple-500/10 text-[9px] font-bold text-gray-500 uppercase tracking-widest leading-loose italic text-center">
-                        SCAN QR • EXECUTE TRANSFER • CLICK NEXT
-                    </div>
-
-                    <div class="w-full flex gap-4 pt-2">
-                        <a id="upi-deep-link" href="#" class="flex-1 py-4 bg-white/5 border border-white/10 rounded-2xl font-black orbitron text-[9px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/10 transition-all">
-                            <i data-lucide="smartphone" class="w-4 h-4 text-purple-500"></i> Neural Pay
-                        </a>
-                        <button onclick="toggleStep(2)" class="flex-[2] py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-2xl font-black orbitron uppercase tracking-[0.3em] text-[10px] transition-all shadow-xl shadow-purple-600/20 italic flex items-center justify-center gap-2">
-                            NEXT: VERIFICATION <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 2: Verification Form -->
-            <div id="payment-step-2" class="hidden space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div class="text-center space-y-2">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 mx-auto">
-                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                        <span class="text-[8px] font-black orbitron text-amber-400 uppercase tracking-[0.3em]">STEP 02: VERIFY UPGRADE</span>
-                    </div>
-                    <h3 class="orbitron text-xl font-black text-white italic uppercase tracking-tighter">DEPLOY <span class="text-amber-500">CREDENTIALS</span></h3>
-                </div>
-
-                <form id="payment-form" onsubmit="handlePaymentSubmit(event)" class="space-y-6">
-                    @csrf
-                    <input type="hidden" name="package_id" id="form-package-id">
-                    <input type="hidden" name="amount" id="form-amount">
-                    
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between px-1">
-                            <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-widest italic">Verification UTR (12-Digit)</label>
-                            <span class="text-[7px] font-bold text-purple-500/50 uppercase tracking-widest">REQUIRED</span>
-                        </div>
-                        <input type="text" name="transaction_id" required placeholder="Enter UPI Reference Number" 
-                            class="cyber-input w-full rounded-2xl px-6 py-4 text-white font-black orbitron text-xs outline-none placeholder:text-gray-800 tracking-widest italic">
-                    </div>
-
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between px-1">
-                            <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-widest italic">Payment Screenshot</label>
-                            <span class="text-[7px] font-bold text-amber-500 uppercase tracking-widest">MANDATORY</span>
-                        </div>
-                        <label class="cyber-input w-full rounded-2xl px-6 py-4 flex items-center gap-4 cursor-pointer group hover:bg-white/5 transition-all">
-                            <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-500 group-hover:text-amber-500 group-hover:bg-amber-500/20 transition-all">
-                                <i data-lucide="upload" class="w-4 h-4"></i>
+                <!-- Balance Summary Card -->
+                <div class="rounded-[1.25rem] bg-white/[0.015] border border-white/[0.06] overflow-hidden backdrop-blur-sm">
+                    <!-- Wallet Balance -->
+                    <div class="px-5 py-4 flex items-center justify-between border-b border-white/[0.04] group hover:bg-white/[0.02] transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500/15 to-emerald-600/5 border border-emerald-500/10 flex items-center justify-center group-hover:border-emerald-500/25 transition-colors">
+                                <i data-lucide="wallet" class="w-4 h-4 text-emerald-500"></i>
                             </div>
-                            <span class="text-[9px] font-bold orbitron text-gray-600 group-hover:text-gray-300 uppercase tracking-widest truncate">Upload Transfer Proof...</span>
-                            <input type="file" name="screenshot" accept="image/*" required class="hidden" onchange="this.previousElementSibling.innerText = this.files[0].name; this.previousElementSibling.classList.add('text-amber-400')">
-                        </label>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] font-bold orbitron text-gray-300 uppercase tracking-widest">Wallet Balance</span>
+                                <span class="text-[7px] font-medium text-gray-600 uppercase tracking-wider">Available Credits</span>
+                            </div>
+                        </div>
+                        <span class="text-sm font-black orbitron text-emerald-400">₹ <span id="modal-wallet-balance">0</span></span>
                     </div>
 
-                    <div class="flex gap-4 pt-2">
-                        <button type="button" onclick="toggleStep(1)" class="flex-1 py-4 rounded-2xl border border-white/5 bg-white/2 text-gray-500 font-black orbitron uppercase tracking-widest text-[9px] hover:bg-white/5 transition-all flex items-center justify-center gap-2">
-                             <i data-lucide="chevron-left" class="w-4 h-4"></i> BACK
-                        </button>
-                        <button type="submit" id="submit-btn" class="flex-[2] py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-[1.02] text-white rounded-2xl font-black orbitron uppercase tracking-[0.3em] text-[10px] transition-all shadow-xl shadow-purple-600/20 italic group relative overflow-hidden">
-                            <span class="relative z-10">AUTHORIZE UPGRADE</span>
-                        </button>
+                    <!-- Plan Price -->
+                    <div class="px-5 py-4 flex items-center justify-between border-b border-white/[0.04] group hover:bg-white/[0.02] transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500/15 to-purple-600/5 border border-purple-500/10 flex items-center justify-center group-hover:border-purple-500/25 transition-colors">
+                                <i data-lucide="tag" class="w-4 h-4 text-purple-400"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] font-bold orbitron text-gray-300 uppercase tracking-widest">Plan Price</span>
+                                <span class="text-[7px] font-medium text-gray-600 uppercase tracking-wider">One-time Debit</span>
+                            </div>
+                        </div>
+                        <span class="text-sm font-black orbitron text-white">₹ <span id="modal-package-price">0</span></span>
                     </div>
-                </form>
+
+                    <!-- Remaining Balance -->
+                    <div class="px-5 py-4 flex items-center justify-between bg-gradient-to-r from-white/[0.01] to-transparent group hover:from-white/[0.03] transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500/15 to-indigo-600/5 border border-indigo-500/10 flex items-center justify-center group-hover:border-indigo-500/25 transition-colors">
+                                <i data-lucide="arrow-right-left" class="w-4 h-4 text-indigo-400"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] font-bold orbitron text-gray-300 uppercase tracking-widest">After Upgrade</span>
+                                <span class="text-[7px] font-medium text-gray-600 uppercase tracking-wider">Remaining Balance</span>
+                            </div>
+                        </div>
+                        <span id="modal-remaining" class="text-sm font-black orbitron text-emerald-400">₹ 0</span>
+                    </div>
+                </div>
+
+                <!-- Action Area -->
+                <div class="space-y-4">
+                    <!-- Premium Pay Button -->
+                    <button id="wallet-pay-btn" onclick="handleWalletUpgrade()" class="modal-pay-btn w-full py-5 text-white rounded-2xl font-black orbitron uppercase tracking-[0.2em] text-[11px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] italic flex items-center justify-center gap-3 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        <i data-lucide="wallet" class="w-4.5 h-4.5 relative z-10"></i>
+                        <span class="relative z-10">Pay Using Wallet</span>
+                    </button>
+
+                    <!-- Insufficient Balance Warning -->
+                    <div id="wallet-insufficient-msg" class="hidden space-y-3">
+                        <div class="p-4 rounded-xl bg-rose-500/[0.05] border border-rose-500/15 text-center space-y-2">
+                            <div class="flex items-center justify-center gap-2">
+                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-rose-500"></i>
+                                <p class="text-[9px] font-black orbitron text-rose-400 uppercase tracking-widest">Insufficient Balance</p>
+                            </div>
+                            <p class="text-[8px] font-medium text-rose-400/50 normal-case not-italic tracking-normal leading-relaxed">Your wallet doesn't have enough funds for this plan. Please add credits to proceed.</p>
+                        </div>
+                        <a href="{{ route('account.profile') }}#tab-wallet" class="block w-full py-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-center text-[9px] font-black orbitron text-gray-300 uppercase tracking-widest hover:bg-purple-500/10 hover:border-purple-500/20 hover:text-white transition-all duration-300 group">
+                            <span class="flex items-center justify-center gap-2.5">
+                                <i data-lucide="plus-circle" class="w-4 h-4 text-purple-500 group-hover:scale-110 transition-transform"></i>
+                                Add Funds to Wallet
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Security Footer -->
+                <div class="flex items-center justify-center gap-2.5 pt-1">
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="shield-check" class="w-3 h-3 text-emerald-500/50"></i>
+                        <span class="text-[7px] font-bold orbitron text-gray-600 uppercase tracking-[0.15em]">256-bit Encrypted</span>
+                    </div>
+                    <span class="text-gray-800">•</span>
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="lock" class="w-2.5 h-2.5 text-emerald-500/50"></i>
+                        <span class="text-[7px] font-bold orbitron text-gray-600 uppercase tracking-[0.15em]">Secure Transaction</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -219,52 +257,57 @@
 
 @push('scripts')
 <script>
-    function toggleStep(step) {
-        const s1 = document.getElementById('payment-step-1');
-        const s2 = document.getElementById('payment-step-2');
-        
-        if(step === 2) {
-            s1.classList.add('hidden');
-            s2.classList.remove('hidden');
+    function openPaymentModal(btn) {
+        const pkg = {
+            id: btn.getAttribute('data-id'),
+            name: btn.getAttribute('data-name'),
+            price: Number(btn.getAttribute('data-price')),
+            wallet_balance: Number(btn.getAttribute('data-wallet'))
+        };
+
+        document.getElementById('modal-package-name').innerText = pkg.name;
+        document.getElementById('modal-package-price').innerText = pkg.price.toLocaleString('en-IN');
+        document.getElementById('modal-wallet-balance').innerText = pkg.wallet_balance.toLocaleString('en-IN');
+        document.getElementById('form-package-id').value = pkg.id;
+
+        // Calculate remaining balance
+        const remaining = pkg.wallet_balance - pkg.price;
+        const remainEl = document.getElementById('modal-remaining');
+        remainEl.innerText = '₹ ' + Math.max(0, remaining).toLocaleString('en-IN');
+        remainEl.className = remaining >= 0
+            ? 'text-sm font-black orbitron text-emerald-400'
+            : 'text-sm font-black orbitron text-rose-500';
+
+        // Wallet sufficient check
+        const walletBtn = document.getElementById('wallet-pay-btn');
+        const insufficientMsg = document.getElementById('wallet-insufficient-msg');
+
+        if (pkg.wallet_balance >= pkg.price) {
+            walletBtn.disabled = false;
+            walletBtn.classList.remove('opacity-40', 'grayscale', 'cursor-not-allowed', 'pointer-events-none');
+            insufficientMsg.classList.add('hidden');
         } else {
-            s2.classList.add('hidden');
-            s1.classList.remove('hidden');
-        }
-    }
-
-    function openPaymentModal(package) {
-        document.getElementById('modal-package-name').innerText = package.name + ' MODULE';
-        document.getElementById('modal-price').innerText = '₹ ' + Number(package.price).toLocaleString();
-        document.getElementById('modal-upi-id').innerText = package.upi_id;
-        document.getElementById('modal-qr-code').src = package.qr_code ? '/' + package.qr_code : '/assets/img/default-qr.png';
-        
-        // Reset state
-        toggleStep(1);
-        document.getElementById('payment-form').reset();
-        const uploadLabel = document.querySelector('label.cyber-input span');
-        if(uploadLabel) {
-            uploadLabel.innerText = "Neural Snapshot Sequence...";
-            uploadLabel.classList.remove('text-amber-400');
+            walletBtn.disabled = true;
+            walletBtn.classList.add('opacity-40', 'grayscale', 'cursor-not-allowed', 'pointer-events-none');
+            insufficientMsg.classList.remove('hidden');
         }
 
-        // Populate inputs
-        document.getElementById('form-package-id').value = package.id;
-        document.getElementById('form-amount').value = package.price;
-        
-        // UPI Deep Link
-        const upiName = package.upi_name || 'ALGO TRADE';
-        const deepLink = `upi://pay?pa=${package.upi_id}&pn=${encodeURIComponent(upiName)}&am=${package.price}&cu=INR`;
-        document.getElementById('upi-deep-link').href = deepLink;
-
-        // Custom Instructions
-        if (package.payment_info) {
-            document.getElementById('modal-instructions').innerHTML = package.payment_info.replace(/\n/g, '<br>');
-        }
+        // Hide navbar so it doesn't overlap
+        const nav = document.getElementById('main-nav');
+        if (nav) nav.style.display = 'none';
 
         const modal = document.getElementById('payment-modal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
+
+        // Full scroll lock
         document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${window.scrollY}px`;
+        document.body.dataset.scrollY = window.scrollY;
+
         lucide.createIcons();
     }
 
@@ -272,70 +315,61 @@
         const modal = document.getElementById('payment-modal');
         modal.classList.add('hidden');
         modal.classList.remove('flex');
-        document.body.style.overflow = 'auto';
+
+        // Restore scroll
+        const scrollY = document.body.dataset.scrollY || 0;
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY));
+
+        // Show navbar again
+        const nav = document.getElementById('main-nav');
+        if (nav) nav.style.display = '';
     }
 
-    function copyUPI(event) {
-        const upi = document.getElementById('modal-upi-id').innerText;
-        navigator.clipboard.writeText(upi).then(() => {
-            const btn = event.currentTarget || event.target.closest('button');
-            const icon = btn.querySelector('i');
-            lucide.createIcons({
-                attrs: { 'data-lucide': 'check' },
-                name: 'check',
-                element: icon
-            });
-            setTimeout(() => {
-                lucide.createIcons({
-                    attrs: { 'data-lucide': 'copy' },
-                    name: 'copy',
-                    element: icon
-                });
-            }, 2000);
-        });
-    }
+    async function handleWalletUpgrade() {
+        const pkgId = document.getElementById('form-package-id').value;
+        const btn = document.getElementById('wallet-pay-btn');
+        const originalHTML = btn.innerHTML;
 
-    async function handlePaymentSubmit(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submit-btn');
-        const span = btn.querySelector('span');
-        const originalText = span.innerText;
-        
+        if (!confirm('Authorize instant upgrade using your neural wallet balance?')) return;
+
         btn.disabled = true;
-        span.innerText = 'EXECUTING VERIFICATION...';
-        btn.classList.add('opacity-50', 'cursor-not-allowed');
-
-        const formData = new FormData(e.target);
+        btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span class="relative z-10">Processing...</span>';
+        lucide.createIcons();
 
         try {
-            const response = await fetch('{{ route("payment.submit") }}', {
+            const response = await fetch('{{ route("account.upgrade-plan") }}', {
                 method: 'POST',
-                body: formData,
                 headers: {
+                    'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
+                },
+                body: JSON.stringify({ package_id: pkgId })
             });
 
             const result = await response.json();
 
             if (result.success) {
-                span.innerText = 'PROTOCOL ACTIVATED';
-                btn.classList.add('bg-emerald-500');
-                setTimeout(() => {
-                    window.location.href = '{{ route("account.profile") }}';
-                }, 1500);
+                btn.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i> <span class="relative z-10">Upgrade Complete!</span>';
+                btn.classList.add('!bg-emerald-600');
+                btn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                lucide.createIcons();
+                setTimeout(() => window.location.href = '{{ route("account.profile") }}', 1200);
             } else {
-                alert(result.message || 'Verification failed. Please check your data.');
+                alert(result.message || 'Upgrade failed. Please try again.');
                 btn.disabled = false;
-                span.innerText = originalText;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.innerHTML = originalHTML;
+                lucide.createIcons();
             }
         } catch (error) {
-            console.error('Payment error:', error);
-            alert('A neural connection error occurred. Please try again.');
+            alert('A connection error occurred. Please try again.');
             btn.disabled = false;
-            span.innerText = originalText;
-            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            btn.innerHTML = originalHTML;
+            lucide.createIcons();
         }
     }
 </script>

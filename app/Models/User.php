@@ -31,6 +31,7 @@ class User extends Authenticatable
         'pattern_depth',
         'profile_photo',
         'premium_expiry',
+        'wallet_balance',
     ];
 
     /**
@@ -59,5 +60,10 @@ class User extends Authenticatable
     public function watchlist()
     {
         return $this->hasMany(Watchlist::class);
+    }
+
+    public function walletTransactions()
+    {
+        return $this->hasMany(WalletTransaction::class);
     }
 }

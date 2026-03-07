@@ -56,12 +56,19 @@ class PaymentController extends Controller
     }
 
     /**
-     * Admin: List all payments.
+     * Admin: List all payments and upgrade requests.
      */
     public function adminIndex()
     {
-        $payments = Payment::with(['user', 'package'])->orderBy('created_at', 'desc')->paginate(20);
-        return view('admin.payments.index', compact('payments'));
+        $payments = Payment::with(['user', 'package'])->orderBy('created_at', 'desc')->paginate(10, ['*'], 'payments_page');
+        $upgradeRequests = \App\Models\PaymentRequest::with(['user', 'package'])->orderBy('created_at', 'desc')->paginate(10, ['*'], 'upgrades_page');
+        
+        $walletTransactions = \App\Models\WalletTransaction::with('user')
+            ->where('type', 'credit')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return view('admin.payments.index', compact('payments', 'walletTransactions', 'upgradeRequests'));
     }
 
     /**
@@ -89,8 +96,17 @@ class PaymentController extends Controller
             // Set expiry date
             $expiry = now()->addDays($package->duration_days);
             $user->premium_expiry = $expiry;
-            
             $user->save();
+
+            // Record in subscription history
+            \App\Models\SubscriptionHistory::create([
+                'user_id' => $user->id,
+                'plan_name' => $package->name,
+                'amount' => $payment->amount,
+                'status' => 'Completed',
+                'purchased_at' => now(),
+                'expires_at' => $expiry,
+            ]);
 
             DB::commit();
             return back()->with('success', "Payment approved. Premium activated for {$user->username} until " . $expiry->format('d M Y'));
@@ -120,5 +136,80 @@ class PaymentController extends Controller
         ]);
 
         return back()->with('success', 'Payment request rejected.');
+    }
+
+    /**
+     * Admin: Approve P2P Upgrade Request.
+     */
+    public function approveUpgradeRequest(\App\Models\PaymentRequest $request)
+    {
+        if ($request->status !== 'pending') {
+            return back()->with('error', 'Request already processed.');
+        }
+
+        DB::beginTransaction();
+        try {
+            $user = $request->user;
+            $package = $request->package;
+
+            // 1. Approve Request
+            $request->update([
+                'status' => 'approved',
+                'verified_at' => now()
+            ]);
+
+            // 2. Activate Premium
+            $expiry = now()->addDays($package->duration_days);
+            $user->update([
+                'role' => 'premium',
+                'premium_expiry' => $expiry
+            ]);
+
+            // 3. Create Wallet Transaction (Manual Payment Debit Log)
+            $user->walletTransactions()->create([
+                'type' => 'debit',
+                'amount' => $request->amount,
+                'description' => 'Premium Plan Upgrade (Manual P2P Verification)',
+                'status' => 'success'
+            ]);
+
+            // 4. Record Subscription History
+            \App\Models\SubscriptionHistory::create([
+                'user_id' => $user->id,
+                'plan_name' => $package->name,
+                'amount' => $request->amount,
+                'status' => 'Completed',
+                'purchased_at' => now(),
+                'expires_at' => $expiry
+            ]);
+
+            DB::commit();
+            return back()->with('success', "Upgrade approved for {$user->username}. Premium protocol activated.");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Upgrade sync failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Admin: Reject P2P Upgrade Request.
+     */
+    public function rejectUpgradeRequest(Request $httpRequest, \App\Models\PaymentRequest $paymentRequest)
+    {
+        $httpRequest->validate([
+            'rejection_note' => 'required|string|max:500',
+        ]);
+
+        if ($paymentRequest->status !== 'pending') {
+            return back()->with('error', 'Request already processed.');
+        }
+
+        $paymentRequest->update([
+            'status' => 'rejected',
+            'rejection_note' => $httpRequest->rejection_note,
+            'verified_at' => now()
+        ]);
+
+        return back()->with('success', 'Upgrade request rejected.');
     }
 }

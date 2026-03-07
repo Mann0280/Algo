@@ -56,8 +56,9 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $isPremium = $user ? ($user->role === 'premium' || $user->role === 'admin') : false;
+        $walletBalance = $user ? $user->wallet_balance : 0;
         $packages = \App\Models\PremiumPackage::where('is_active', true)->orderBy('price', 'asc')->get();
-        return view('pages.pricing', compact('isPremium', 'packages'));
+        return view('pages.pricing', compact('isPremium', 'packages', 'walletBalance'));
     }
 
     public function handlePayment(Request $request)

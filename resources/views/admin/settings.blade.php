@@ -99,6 +99,16 @@
                         <input type="number" name="premium_price" value="{{ $settings['premium_price'] }}" class="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 focus:outline-none focus:border-purple-500/40 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm text-white">
                     </div>
                 </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div>
+                        <label class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest block mb-2">Protocol Header</label>
+                        <input type="text" name="subscription_header" value="{{ $settings['subscription_header'] }}" class="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 focus:outline-none focus:border-purple-500/40 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm text-white placeholder:text-gray-700">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest block mb-2">Protocol Sub-header</label>
+                        <input type="text" name="subscription_subheader" value="{{ $settings['subscription_subheader'] }}" class="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 focus:outline-none focus:border-purple-500/40 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm text-white placeholder:text-gray-700">
+                    </div>
+                </div>
             </div>
         </div>
 
