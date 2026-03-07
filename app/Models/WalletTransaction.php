@@ -15,6 +15,7 @@ class WalletTransaction extends Model
         'payment_method',
         'payment_reference',
         'screenshot',
+        'source',
     ];
 
     public function user()

@@ -35,6 +35,10 @@
                 <input type="email" name="email" value="{{ old('email') }}" required placeholder="name@domain.com" class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-purple-500/50 transition-all text-sm font-medium text-white placeholder:text-gray-700">
             </div>
             <div>
+                <label class="block text-[10px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-2 px-1">Referral Code (Optional)</label>
+                <input type="text" name="referral_code" id="referral_code" value="{{ request('ref') ?? old('referral_code') }}" placeholder="REF123456" class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-purple-500/50 transition-all text-sm font-medium text-white placeholder:text-gray-700">
+            </div>
+            <div>
                 <label class="block text-[10px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-2 px-1">Signal Access Phrase</label>
                 <div class="relative group/pass mb-3">
                     <input type="password" id="password" name="password" placeholder="Create Phrase" required class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-purple-500/50 transition-all text-sm font-medium text-white placeholder:text-gray-700">
@@ -83,5 +87,19 @@
         }
         lucide.createIcons();
     }
+
+    // Auto-fill referral code from URL parameter
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref');
+        if (ref) {
+            const refInput = document.getElementById('referral_code');
+            if (refInput) {
+                refInput.value = ref;
+                // Visual feedback
+                refInput.classList.add('border-purple-500/50', 'bg-purple-500/5');
+            }
+        }
+    });
 </script>
 @endsection

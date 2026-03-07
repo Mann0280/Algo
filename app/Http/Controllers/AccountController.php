@@ -213,6 +213,124 @@ class AccountController extends Controller
     }
 
     /**
+     * Initialize Wallet Top-Up (Creates Pending Request)
+     */
+    public function initWalletTopup(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:100|max:50000',
+        ]);
+
+        $user = Auth::user();
+
+        // Create a pending topup request
+        $paymentRequest = \App\Models\PaymentRequest::create([
+            'user_id' => $user->id,
+            'type' => 'topup',
+            'amount' => $request->amount,
+            'status' => 'pending',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'payment_request_id' => $paymentRequest->id,
+            'amount' => $request->amount,
+        ]);
+    }
+
+    /**
+     * Verify UTR Amount for Wallet Top-Up (Step 3)
+     */
+    public function verifyTopupAmount(Request $request)
+    {
+        $request->validate([
+            'payment_request_id' => 'required|exists:payment_requests,id',
+            'utr_number' => 'required|string|unique:payment_requests,utr_number',
+        ]);
+
+        $user = Auth::user();
+
+        // Find existing request
+        $paymentRequest = \App\Models\PaymentRequest::where('id', $request->payment_request_id)
+                            ->where('user_id', $user->id)
+                            ->where('type', 'topup')
+                            ->first();
+
+        if (!$paymentRequest) {
+            return response()->json(['success' => false, 'message' => 'Invalid payment request.']);
+        }
+
+        // Mock Bank API Check
+        // In a real scenario, this would call an external API with the UTR and get the paid amount
+        $isVerified = $this->mockBankApiCheck($request->utr_number, $paymentRequest->amount);
+
+        if (!$isVerified) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment amount validation failed. The UTR does not correspond to the requested amount.',
+            ]);
+        }
+
+        // Verification successful, save UTR
+        $paymentRequest->update([
+            'utr_number' => $request->utr_number
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment amount verified successfully.',
+        ]);
+    }
+
+    /**
+     * Mock Bank API to verify the amount based on UTR.
+     * For demonstration, we'll assume any UTR starting with 'ERROR' or length < 12 fails.
+     */
+    private function mockBankApiCheck($utr, $expectedAmount)
+    {
+        if (strlen($utr) < 12 || strtoupper(substr($utr, 0, 5)) === 'ERROR') {
+            return false;
+        }
+        // Assume valid and amount matches
+        return true;
+    }
+
+    /**
+     * Submit Proof for Wallet Top-Up (Step 4)
+     */
+    public function submitWalletTopup(Request $request)
+    {
+        $request->validate([
+            'payment_request_id' => 'required|exists:payment_requests,id',
+            'payment_method' => 'required|string',
+            'screenshot' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $user = Auth::user();
+        
+        // Find existing request
+        $paymentRequest = \App\Models\PaymentRequest::where('id', $request->payment_request_id)
+                            ->where('user_id', $user->id)
+                            ->where('type', 'topup')
+                            ->whereNotNull('utr_number')
+                            ->firstOrFail();
+
+        $screenshotPath = null;
+        if ($request->hasFile('screenshot')) {
+            $imageName = 'topup_' . time() . '.' . $request->screenshot->extension();
+            $request->screenshot->move(public_path('uploads/topups'), $imageName);
+            $screenshotPath = 'uploads/topups/' . $imageName;
+        }
+
+        $paymentRequest->update([
+            'payment_method' => $request->payment_method,
+            'payment_screenshot' => $screenshotPath,
+        ]);
+
+        return back()->with('success', 'Wallet top-up proof submitted! Awaiting admin verification.');
+    }
+
+    /**
      * Show the subscription history.
      *
      * @return \Illuminate\View\View
@@ -356,5 +474,26 @@ class AccountController extends Controller
                 'profile_photo_url' => $user->profile_photo ? asset('storage/' . $user->profile_photo) : null
             ]
         ]);
+    }
+
+    /**
+     * Show the referral dashboard.
+     */
+    public function referral()
+    {
+        $user = Auth::user();
+        
+        $totalReferrals = $user->referrals()->count();
+        $totalEarnings = \App\Models\WalletTransaction::where('user_id', $user->id)
+            ->where('source', 'referral_reward')
+            ->where('status', 'success')
+            ->sum('amount');
+
+        $referralList = \App\Models\Referral::with('referredUser')
+            ->where('referrer_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('account.referral', compact('user', 'totalReferrals', 'totalEarnings', 'referralList'));
     }
 }

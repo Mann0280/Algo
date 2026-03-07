@@ -53,6 +53,7 @@ Route::prefix('account')->name('account.')->middleware('auth')->group(function (
     Route::get('/membership', [AccountController::class, 'membership'])->name('membership');
     Route::get('/history', [AccountController::class, 'subscriptionHistory'])->name('subscription-history');
     Route::get('/notifications', [AccountController::class, 'notifications'])->name('notifications');
+    Route::get('/referral', [AccountController::class, 'referral'])->name('referral');
 
     // Wallet Routes
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');
@@ -60,6 +61,9 @@ Route::prefix('account')->name('account.')->middleware('auth')->group(function (
     Route::post('/wallet/purchase-premium', [WalletController::class, 'purchasePremium'])->name('wallet.purchase-premium');
     Route::post('/upgrade-plan', [AccountController::class, 'upgradePlan'])->name('upgrade-plan');
     Route::post('/payment-request', [AccountController::class, 'submitPaymentRequest'])->name('payment-request');
+    Route::post('/wallet/topup/init', [AccountController::class, 'initWalletTopup'])->name('wallet.topup.init');
+    Route::post('/wallet/topup/verify', [AccountController::class, 'verifyTopupAmount'])->name('wallet.topup.verify');
+    Route::post('/wallet/topup/submit', [AccountController::class, 'submitWalletTopup'])->name('wallet.topup.submit');
 });
 
 Route::get('/api/notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -112,6 +116,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Wallet Verification
         Route::post('/wallet/approve/{transaction}', [WalletController::class, 'approveTopup'])->name('wallet.approve');
         Route::post('/wallet/reject/{transaction}', [WalletController::class, 'rejectTopup'])->name('wallet.reject');
+
+        // Referral Management
+        Route::get('/referrals', [\App\Http\Controllers\Admin\ReferralController::class, 'index'])->name('referrals.index');
     });
 });
 

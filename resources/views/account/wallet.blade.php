@@ -33,7 +33,7 @@
                         <div class="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/20 blur-[60px] rounded-full group-hover/card:scale-150 transition-transform duration-1000"></div>
                         <p class="text-[10px] font-black orbitron text-amber-500/60 uppercase tracking-[0.3em] mb-4">Current Neural Balance</p>
                         <h4 class="text-5xl font-black orbitron text-white italic tracking-tighter drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]">
-                            ₹{{ number_format($user->wallet_balance, 2) }}
+                            &#8377;{{ number_format($user->wallet_balance, 2) }}
                         </h4>
                         <div class="mt-8 flex items-center gap-3">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="text-right">
                                     <p class="text-xs font-black orbitron {{ $tx->type === 'credit' ? 'text-emerald-500' : 'text-rose-500' }}">
-                                        {{ $tx->type === 'credit' ? '+' : '-' }}₹{{ number_format($tx->amount, 2) }}
+                                        {{ $tx->type === 'credit' ? '+' : '-' }}&#8377;{{ number_format($tx->amount, 2) }}
                                     </p>
                                     @php
                                         $statusColor = match($tx->status) {
@@ -172,31 +172,81 @@
             <i data-lucide="x" class="w-4 h-4 group-hover:rotate-90 transition-transform duration-300"></i>
         </button>
 
-        <!-- Step Indicators -->
+        <!-- Step Indicators (4 steps) -->
         <div class="flex items-center justify-center gap-0 mb-8 pt-1">
-            <div id="step-ind-1" class="step-indicator active w-8 h-8 rounded-full flex items-center justify-center text-[9px] font-black orbitron border border-transparent">1</div>
-            <div id="step-conn-1" class="step-connector w-12 h-[2px] bg-white/10 rounded-full"></div>
-            <div id="step-ind-2" class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-[9px] font-black orbitron bg-white/5 border border-white/10 text-gray-500">2</div>
-            <div id="step-conn-2" class="step-connector w-12 h-[2px] bg-white/10 rounded-full"></div>
-            <div id="step-ind-3" class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-[9px] font-black orbitron bg-white/5 border border-white/10 text-gray-500">3</div>
+            <div id="step-ind-1" class="step-indicator active w-7 h-7 rounded-full flex items-center justify-center text-[8px] font-black orbitron border border-transparent">1</div>
+            <div id="step-conn-1" class="step-connector w-8 h-[2px] bg-white/10 rounded-full"></div>
+            <div id="step-ind-2" class="step-indicator w-7 h-7 rounded-full flex items-center justify-center text-[8px] font-black orbitron bg-white/5 border border-white/10 text-gray-500">2</div>
+            <div id="step-conn-2" class="step-connector w-8 h-[2px] bg-white/10 rounded-full"></div>
+            <div id="step-ind-3" class="step-indicator w-7 h-7 rounded-full flex items-center justify-center text-[8px] font-black orbitron bg-white/5 border border-white/10 text-gray-500">3</div>
+            <div id="step-conn-3" class="step-connector w-8 h-[2px] bg-white/10 rounded-full"></div>
+            <div id="step-ind-4" class="step-indicator w-7 h-7 rounded-full flex items-center justify-center text-[8px] font-black orbitron bg-white/5 border border-white/10 text-gray-500">4</div>
         </div>
 
-        <form id="funds-form" action="{{ route('account.wallet.add') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <!-- qrcode.js CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-            <!-- ==================== STEP 1: QR + UPI + AMOUNT ==================== -->
+        <form id="funds-form" action="{{ route('account.wallet.topup.submit') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="payment_request_id" id="payment_request_id" value="">
+
+            <!-- ==================== STEP 1: CREDIT AMOUNT ==================== -->
             <div id="fund-step-1" class="space-y-6">
                 <div class="text-center space-y-2">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-amber-500/15 to-orange-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
+                        <i data-lucide="indian-rupee" class="w-7 h-7 text-amber-500"></i>
+                    </div>
+                    <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Enter <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Amount</span></h3>
+                    <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">How much would you like to add to your wallet?</p>
+                </div>
+
+                <!-- Amount Input -->
+                <div class="space-y-2.5">
+                    <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-[0.2em] pl-1">Credit Amount (&#8377;)</label>
+                    <div class="relative group">
+                        <div class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center group-focus-within:bg-amber-500/20 transition-colors">
+                            <span class="text-amber-500 font-black orbitron text-lg">&#8377;</span>
+                        </div>
+                        <input type="number" name="amount" id="fund-amount" min="100" step="1" required 
+                            class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl pl-18 pr-6 py-5 text-white text-lg font-black orbitron tracking-tight focus:outline-none focus:border-amber-500/40 focus:bg-white/[0.04] transition-all placeholder:text-gray-700 text-center" 
+                            placeholder="1,000" style="padding-left: 4.5rem;">
+                    </div>
+                    <p class="text-[7px] font-medium text-gray-700 uppercase tracking-wider text-center">Minimum: &#8377;100</p>
+                </div>
+
+                <!-- Quick Amount Buttons -->
+                <div class="grid grid-cols-4 gap-2">
+                    <button type="button" onclick="document.getElementById('fund-amount').value=500" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[9px] font-bold orbitron text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;500</button>
+                    <button type="button" onclick="document.getElementById('fund-amount').value=1000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[9px] font-bold orbitron text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;1,000</button>
+                    <button type="button" onclick="document.getElementById('fund-amount').value=2000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[9px] font-bold orbitron text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;2,000</button>
+                    <button type="button" onclick="document.getElementById('fund-amount').value=5000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[9px] font-bold orbitron text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;5,000</button>
+                </div>
+
+                <!-- Next Button -->
+                <button type="button" onclick="goToStep(2)" class="w-full py-4.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.25)] active:scale-[0.98] italic flex items-center justify-center gap-2.5 group">
+                    <span>Continue to Payment</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+
+            <!-- ==================== STEP 2: QR CODE + UPI ID ==================== -->
+            <div id="fund-step-2" class="hidden space-y-6">
+                <div class="text-center space-y-2">
                     <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Scan & <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Transfer</span></h3>
-                    <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">Scan the QR code or use UPI to transfer</p>
+                    <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">Scan the QR code or use UPI to send payment</p>
+                </div>
+
+                <!-- Amount Display -->
+                <div class="flex items-center justify-center gap-2 py-2">
+                    <span class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest">Transfer Amount:</span>
+                    <span id="step2-amount" class="text-sm font-black orbitron text-amber-400">&#8377; 0</span>
                 </div>
 
                 <!-- QR Code + UPI Section -->
                 @if(!empty($walletSettings['qr_code']) || !empty($walletSettings['upi_id']))
                 <div class="flex flex-col items-center gap-5">
-                    @if(!empty($walletSettings['qr_code']))
+                    @if(!empty($walletSettings['upi_id']))
                     <div class="relative">
-                        <!-- QR Container -->
                         <div class="relative w-44 h-44 p-3 bg-white/[0.03] rounded-[1.75rem] border border-amber-500/20 overflow-hidden group/qr">
                             <!-- Scan line -->
                             <div class="absolute left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent z-10" style="animation: scan-line 2.5s ease-in-out infinite;"></div>
@@ -205,15 +255,17 @@
                             <div class="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-amber-500/40 rounded-tr-lg"></div>
                             <div class="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-amber-500/40 rounded-bl-lg"></div>
                             <div class="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-amber-500/40 rounded-br-lg"></div>
-                            <!-- QR Image -->
-                            <div class="bg-white rounded-2xl p-2 h-full overflow-hidden">
-                                <img src="{{ asset('storage/' . $walletSettings['qr_code']) }}" alt="Payment QR" class="w-full h-full object-contain">
+                            <div class="bg-white rounded-2xl p-2 h-full overflow-hidden flex items-center justify-center">
+                                <div id="dynamic-qrcode"></div>
                             </div>
                         </div>
                     </div>
+                    @else
+                    <div class="w-full p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-center">
+                        <p class="text-[8px] font-black orbitron text-rose-500 uppercase tracking-widest">Admin has not configured UPI yet.</p>
+                    </div>
                     @endif
 
-                    <!-- UPI Info Card -->
                     @if(!empty($walletSettings['upi_id']))
                     <div class="w-full p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-3">
                         <div class="flex items-center justify-between">
@@ -236,80 +288,74 @@
                 </div>
                 @endif
 
-                <!-- Amount Input -->
-                <div class="space-y-2.5">
-                    <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-[0.2em] pl-1">Credit Amount (₹)</label>
-                    <div class="relative group">
-                        <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center group-focus-within:bg-amber-500/20 transition-colors">
-                            <i data-lucide="indian-rupee" class="w-3.5 h-3.5 text-amber-500"></i>
-                        </div>
-                        <input type="number" name="amount" id="fund-amount" min="100" step="1" required 
-                            class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl pl-16 pr-6 py-4 text-white text-sm font-black orbitron tracking-tight focus:outline-none focus:border-amber-500/40 focus:bg-white/[0.04] transition-all placeholder:text-gray-700" 
-                            placeholder="Enter amount">
-                    </div>
+                <!-- Navigation -->
+                <div class="flex gap-3">
+                    <button type="button" onclick="goToStep(1)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-black orbitron uppercase text-[9px] tracking-widest hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
+                    </button>
+                    <button type="button" onclick="goToStep(3)" class="flex-[2] py-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.25)] italic flex items-center justify-center gap-2.5 group">
+                        <span>I Have Transferred</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
                 </div>
-
-                <!-- Next Button -->
-                <button type="button" onclick="goToStep(2)" class="w-full py-4.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.25)] active:scale-[0.98] italic flex items-center justify-center gap-2.5 group">
-                    <span>I Have Transferred</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                </button>
             </div>
 
-            <!-- ==================== STEP 2: QR SCAN CONFIRMATION ==================== -->
-            <div id="fund-step-2" class="hidden space-y-6">
+            <!-- ==================== STEP 3: TRANSFER CONFIRMED ==================== -->
+            <div id="fund-step-3" class="hidden space-y-6">
                 <div class="text-center space-y-6 py-4">
-                    <!-- Success Animation -->
-                    <div class="relative w-24 h-24 mx-auto">
-                        <!-- Pulse rings -->
-                        <div class="absolute inset-0 rounded-full border-2 border-emerald-500/30" style="animation: pulse-ring 2s ease-out infinite;"></div>
-                        <div class="absolute inset-0 rounded-full border-2 border-emerald-500/20" style="animation: pulse-ring 2s ease-out infinite 0.5s;"></div>
-                        <!-- Main circle -->
-                        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border-2 border-emerald-500/40 flex items-center justify-center" style="animation: circle-fill 0.6s ease-out forwards;">
-                            <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none">
-                                <path d="M5 13l4 4L19 7" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray: 50; animation: checkmark-draw 0.6s ease-out 0.4s forwards; stroke-dashoffset: 50;"/>
-                            </svg>
-                        </div>
-                    </div>
-
                     <div class="space-y-2">
-                        <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Payment <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Confirmed</span></h3>
-                        <p class="text-[8px] font-bold orbitron text-gray-500 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">Your transfer has been initiated. Please provide verification details in the next step.</p>
+                        <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Verify <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Payment</span></h3>
+                        <p class="text-[8px] font-bold orbitron text-gray-500 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">Please verify the transferred amount against the UTR to proceed.</p>
                     </div>
 
                     <!-- Transfer Summary -->
                     <div class="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5 text-left space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest">Amount Transferred</span>
-                            <span id="confirm-amount" class="text-sm font-black orbitron text-emerald-400">₹ 0</span>
+                            <span id="confirm-amount" class="text-sm font-black orbitron text-emerald-400">&#8377; 0</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest">Status</span>
-                            <span class="text-[9px] font-black orbitron text-amber-500 uppercase tracking-wider flex items-center gap-1.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                                Awaiting Verification
+                            <span class="text-[9px] font-black orbitron text-amber-500 uppercase tracking-wider flex items-center gap-1.5" id="utr-status">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse border-indicator"></span>
+                                Waiting for UTR
                             </span>
                         </div>
+                    </div>
+
+                    <!-- UTR Input Module -->
+                    <div class="space-y-2.5 text-left">
+                        <div class="flex items-center justify-between pl-1 pr-1">
+                            <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">UTR / Reference ID</label>
+                            <span class="text-[7px] font-bold text-rose-500/70 uppercase tracking-widest">Required</span>
+                        </div>
+                        <div class="relative group">
+                            <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center group-focus-within:bg-emerald-500/20 transition-colors">
+                                <i data-lucide="hash" class="w-3.5 h-3.5 text-emerald-400"></i>
+                            </div>
+                            <input type="text" id="verify_utr_input" class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl pl-16 pr-6 py-4 text-white text-xs font-bold orbitron tracking-wider outline-none focus:border-emerald-500/40 focus:bg-white/[0.04] transition-all placeholder:text-gray-700" placeholder="Enter 12-digit UTR number" required>
+                        </div>
+                        <p id="utr-error" class="hidden text-[8px] font-black orbitron text-rose-500 uppercase tracking-widest text-center mt-2"></p>
                     </div>
                 </div>
 
                 <!-- Navigation -->
                 <div class="flex gap-3">
-                    <button type="button" onclick="goToStep(1)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-black orbitron uppercase text-[9px] tracking-widest hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
+                    <button type="button" onclick="goToStep(2)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-black orbitron uppercase text-[9px] tracking-widest hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
                     </button>
-                    <button type="button" onclick="goToStep(3)" class="flex-[2] py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(16,185,129,0.25)] italic flex items-center justify-center gap-2 group">
-                        <span>Continue Verification</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    <button type="button" onclick="verifyUtr()" id="verify-utr-btn" class="flex-[2] py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(16,185,129,0.25)] italic flex items-center justify-center gap-2 group">
+                        <span>Check & Verify</span>
+                        <i data-lucide="check-circle" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- ==================== STEP 3: UTR + SCREENSHOT ==================== -->
-            <div id="fund-step-3" class="hidden space-y-6">
+            <!-- ==================== STEP 4: SCREENSHOT ==================== -->
+            <div id="fund-step-4" class="hidden space-y-6">
                 <div class="text-center space-y-2">
-                    <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Submit <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Proof</span></h3>
-                    <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">Provide your UTR & screenshot for admin verification</p>
+                    <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Upload <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Proof</span></h3>
+                    <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">Provide a payment screenshot for manual review</p>
                 </div>
 
                 <!-- Payment Method -->
@@ -320,22 +366,6 @@
                         <option value="Bank Transfer" class="bg-[#0a0514]">Bank Transfer (IMPS/NEFT)</option>
                         <option value="QR Scan" class="bg-[#0a0514]">QR Code Scan</option>
                     </select>
-                </div>
-
-                <!-- UTR Input -->
-                <div class="space-y-2.5">
-                    <div class="flex items-center justify-between pl-1 pr-1">
-                        <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">UTR / Reference ID</label>
-                        <span class="text-[7px] font-bold text-rose-500/70 uppercase tracking-widest">Required</span>
-                    </div>
-                    <div class="relative group">
-                        <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center group-focus-within:bg-purple-500/20 transition-colors">
-                            <i data-lucide="hash" class="w-3.5 h-3.5 text-purple-400"></i>
-                        </div>
-                        <input type="text" name="payment_reference" required 
-                            class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl pl-16 pr-6 py-4 text-white text-xs font-bold orbitron tracking-wider outline-none focus:border-purple-500/40 focus:bg-white/[0.04] transition-all placeholder:text-gray-700" 
-                            placeholder="Enter 12-digit UTR number">
-                    </div>
                 </div>
 
                 <!-- Screenshot Upload -->
@@ -364,7 +394,7 @@
 
                 <!-- Navigation -->
                 <div class="flex gap-3">
-                    <button type="button" onclick="goToStep(2)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-black orbitron uppercase text-[9px] tracking-widest hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
+                    <button type="button" onclick="goToStep(3)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-black orbitron uppercase text-[9px] tracking-widest hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
                     </button>
                     <button type="submit" id="submit-funds-btn" class="flex-[2] py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.25)] italic flex items-center justify-center gap-2.5 relative overflow-hidden group">
@@ -410,9 +440,10 @@
 
 <script>
     let currentFundStep = 1;
+    const TOTAL_STEPS = 4;
+    let qrCodeInstance = null;
 
     function openFundsModal() {
-        // Hide navbar
         const nav = document.getElementById('main-nav');
         if (nav) nav.style.display = 'none';
 
@@ -420,7 +451,6 @@
         modal.classList.remove('hidden');
         modal.classList.add('flex');
 
-        // Scroll lock
         document.body.style.overflow = 'hidden';
         document.documentElement.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
@@ -428,7 +458,6 @@
         document.body.style.top = `-${window.scrollY}px`;
         document.body.dataset.scrollY = window.scrollY;
 
-        // Reset to step 1
         goToStep(1);
         lucide.createIcons();
     }
@@ -438,7 +467,6 @@
         modal.classList.add('hidden');
         modal.classList.remove('flex');
 
-        // Restore scroll
         const scrollY = document.body.dataset.scrollY || 0;
         document.body.style.overflow = '';
         document.documentElement.style.overflow = '';
@@ -447,48 +475,93 @@
         document.body.style.top = '';
         window.scrollTo(0, parseInt(scrollY));
 
-        // Show navbar
         const nav = document.getElementById('main-nav');
         if (nav) nav.style.display = '';
     }
 
-    function goToStep(step) {
-        // Validate before leaving step 1
+    async function goToStep(step) {
+        // Validate step 1 → 2: amount required
         if (currentFundStep === 1 && step === 2) {
             const amountInput = document.getElementById('fund-amount');
-            if (!amountInput.value || Number(amountInput.value) < 100) {
+            const amount = Number(amountInput.value);
+            if (!amountInput.value || amount < 100 || amount > 50000) {
                 amountInput.focus();
                 amountInput.classList.add('border-rose-500/50');
                 setTimeout(() => amountInput.classList.remove('border-rose-500/50'), 2000);
                 return;
             }
-            // Update confirmation amount
-            document.getElementById('confirm-amount').innerText = '₹ ' + Number(amountInput.value).toLocaleString('en-IN');
+
+            // Initialize top-up request
+            try {
+                const response = await fetch("{{ route('account.wallet.topup.init') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ amount: amount })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('payment_request_id').value = data.payment_request_id;
+                    
+                    // Generate dynamic QR code
+                    const upiId = '{{ $walletSettings["upi_id"] ?? "" }}';
+                    const receiverName = '{{ urlencode($walletSettings["upi_name"] ?? "Merchant") }}';
+                    
+                    if (upiId) {
+                        const upiString = `upi://pay?pa=${upiId}&pn=${receiverName}&am=${amount}&cu=INR`;
+                        const qrContainer = document.getElementById('dynamic-qrcode');
+                        qrContainer.innerHTML = '';
+                        qrCodeInstance = new QRCode(qrContainer, {
+                            text: upiString,
+                            width: 140,
+                            height: 140,
+                            colorDark : "#000000",
+                            colorLight : "#ffffff",
+                            correctLevel : QRCode.CorrectLevel.H
+                        });
+                    }
+
+                } else {
+                    alert(data.message || 'Error initiating top-up request.');
+                    return;
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Network error initiating top-up request.');
+                return;
+            }
+
+            // Show amount on step 2 and step 3
+            const formattedAmt = '&#8377; ' + amount.toLocaleString('en-IN');
+            document.getElementById('step2-amount').innerText = formattedAmt;
+            document.getElementById('confirm-amount').innerText = formattedAmt;
         }
 
         currentFundStep = step;
 
         // Hide all steps
-        document.getElementById('fund-step-1').classList.add('hidden');
-        document.getElementById('fund-step-2').classList.add('hidden');
-        document.getElementById('fund-step-3').classList.add('hidden');
-
-        // Show current step
-        document.getElementById('fund-step-' + step).classList.remove('hidden');
+        for (let i = 1; i <= TOTAL_STEPS; i++) {
+            const el = document.getElementById('fund-step-' + i);
+            if(el) el.classList.add('hidden');
+        }
+        const currentEl = document.getElementById('fund-step-' + step);
+        if(currentEl) currentEl.classList.remove('hidden');
 
         // Update indicators
-        for (let i = 1; i <= 3; i++) {
+        for (let i = 1; i <= TOTAL_STEPS; i++) {
             const ind = document.getElementById('step-ind-' + i);
+            if(!ind) continue;
             ind.classList.remove('active', 'completed');
-            ind.className = 'step-indicator w-8 h-8 rounded-full flex items-center justify-center text-[9px] font-black orbitron';
+            ind.className = 'step-indicator w-7 h-7 rounded-full flex items-center justify-center text-[8px] font-black orbitron';
 
             if (i < step) {
-                ind.classList.add('completed');
-                ind.classList.add('border');
-                ind.innerHTML = '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>';
+                ind.classList.add('completed', 'border');
+                ind.innerHTML = '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>';
             } else if (i === step) {
-                ind.classList.add('active');
-                ind.classList.add('border', 'border-transparent');
+                ind.classList.add('active', 'border', 'border-transparent');
                 ind.innerHTML = i;
             } else {
                 ind.classList.add('bg-white/5', 'border', 'border-white/10', 'text-gray-500');
@@ -497,10 +570,10 @@
         }
 
         // Update connectors
-        const conn1 = document.getElementById('step-conn-1');
-        const conn2 = document.getElementById('step-conn-2');
-        conn1.classList.toggle('active', step > 1);
-        conn2.classList.toggle('active', step > 2);
+        for (let i = 1; i < TOTAL_STEPS; i++) {
+            const conn = document.getElementById('step-conn-' + i);
+            if(conn) conn.classList.toggle('active', step > i);
+        }
 
         lucide.createIcons();
     }
@@ -526,6 +599,65 @@
             label.innerText = input.files[0].name;
             label.classList.add('text-amber-400');
             label.classList.remove('text-gray-500');
+        }
+    }
+
+    async function verifyUtr() {
+        const utrInput = document.getElementById('verify_utr_input');
+        const reqId = document.getElementById('payment_request_id').value;
+        const utrVal = utrInput.value.trim();
+        const errorText = document.getElementById('utr-error');
+        const statusSpan = document.getElementById('utr-status');
+        const verifyBtn = document.getElementById('verify-utr-btn');
+
+        if (!utrVal || utrVal.length < 5) {
+            errorText.innerText = "Please enter a valid UTR.";
+            errorText.classList.remove('hidden');
+            return;
+        }
+
+        verifyBtn.disabled = true;
+        verifyBtn.innerHTML = '<span class="flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Verifying...</span>';
+        lucide.createIcons();
+
+        try {
+            const response = await fetch("{{ route('account.wallet.topup.verify') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ payment_request_id: reqId, utr_number: utrVal })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                errorText.classList.add('hidden');
+                statusSpan.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span><span class="text-emerald-500">Amount Verified</span>';
+                
+                // Allow user to proceed to Step 4 after a short delay so they see the success state
+                setTimeout(() => {
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = '<span>Check & Verify</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
+                    goToStep(4);
+                }, 1000);
+
+            } else {
+                errorText.innerText = data.message || "UTR validation failed.";
+                errorText.classList.remove('hidden');
+                statusSpan.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse border-indicator"></span><span class="text-rose-500">Validation Failed</span>';
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = '<span>Check & Verify</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
+                lucide.createIcons();
+            }
+        } catch (err) {
+            console.error('Error verifying UTR:', err);
+            errorText.innerText = "Network error during validation.";
+            errorText.classList.remove('hidden');
+            verifyBtn.disabled = false;
+            verifyBtn.innerHTML = '<span>Check & Verify</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
+            lucide.createIcons();
         }
     }
 </script>

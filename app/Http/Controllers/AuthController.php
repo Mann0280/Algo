@@ -121,14 +121,33 @@ class AuthController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'referral_code' => ['nullable', 'string', 'exists:users,referral_code'],
         ]);
+
+        $referredBy = null;
+        if ($request->referral_code) {
+            $referrer = User::where('referral_code', $request->referral_code)->first();
+            if ($referrer) {
+                $referredBy = $referrer->id;
+            }
+        }
 
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'user',
+            'referred_by' => $referredBy,
         ]);
+
+        if ($referredBy) {
+            \App\Models\Referral::create([
+                'referrer_id' => $referredBy,
+                'referred_user_id' => $user->id,
+                'reward_amount' => 100.00,
+                'status' => 'pending',
+            ]);
+        }
 
         Auth::login($user);
 

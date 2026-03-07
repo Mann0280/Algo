@@ -150,7 +150,6 @@ class PaymentController extends Controller
         DB::beginTransaction();
         try {
             $user = $request->user;
-            $package = $request->package;
 
             // 1. Approve Request
             $request->update([
@@ -158,36 +157,80 @@ class PaymentController extends Controller
                 'verified_at' => now()
             ]);
 
-            // 2. Activate Premium
-            $expiry = now()->addDays($package->duration_days);
-            $user->update([
-                'role' => 'premium',
-                'premium_expiry' => $expiry
-            ]);
+            if ($request->type === 'topup') {
+                // Top-up Request
+                $user->increment('wallet_balance', $request->amount);
 
-            // 3. Create Wallet Transaction (Manual Payment Debit Log)
-            $user->walletTransactions()->create([
-                'type' => 'debit',
-                'amount' => $request->amount,
-                'description' => 'Premium Plan Upgrade (Manual P2P Verification)',
-                'status' => 'success'
-            ]);
+                // Create Wallet Transaction (Credit)
+                $user->walletTransactions()->create([
+                    'type' => 'credit',
+                    'amount' => $request->amount,
+                    'description' => 'Wallet Top-Up (Admin Verified)',
+                    'source' => 'topup',
+                    'status' => 'success'
+                ]);
 
-            // 4. Record Subscription History
-            \App\Models\SubscriptionHistory::create([
-                'user_id' => $user->id,
-                'plan_name' => $package->name,
-                'amount' => $request->amount,
-                'status' => 'Completed',
-                'purchased_at' => now(),
-                'expires_at' => $expiry
-            ]);
+                // Referral Reward Logic
+                $referral = \App\Models\Referral::where('referred_user_id', $user->id)
+                    ->where('status', 'pending')
+                    ->first();
 
-            DB::commit();
-            return back()->with('success', "Upgrade approved for {$user->username}. Premium protocol activated.");
+                if ($referral) {
+                    $referrer = $referral->referrer;
+                    if ($referrer) {
+                        // Credit Referrer
+                        $referrer->increment('wallet_balance', $referral->reward_amount);
+                        
+                        // Log Transaction for Referrer
+                        $referrer->walletTransactions()->create([
+                            'type' => 'credit',
+                            'amount' => $referral->reward_amount,
+                            'description' => "Referral Bonus: Invited {$user->username}",
+                            'source' => 'referral_reward',
+                            'status' => 'success'
+                        ]);
+
+                        // Mark Referral as Rewarded
+                        $referral->update(['status' => 'rewarded']);
+                    }
+                }
+
+                DB::commit();
+                return back()->with('success', "Top-up approved. ₹{$request->amount} credited to {$user->username}'s wallet.");
+            } else {
+                // Plan Upgrade Request
+                $package = $request->package;
+                $expiry = now()->addDays($package->duration_days);
+                
+                $user->update([
+                    'role' => 'premium',
+                    'premium_expiry' => $expiry
+                ]);
+
+                // Create Wallet Transaction (Manual Payment Debit Log)
+                $user->walletTransactions()->create([
+                    'type' => 'debit',
+                    'amount' => $request->amount,
+                    'description' => 'Premium Plan Upgrade (Manual P2P Verification)',
+                    'status' => 'success'
+                ]);
+
+                // Record Subscription History
+                \App\Models\SubscriptionHistory::create([
+                    'user_id' => $user->id,
+                    'plan_name' => $package->name ?? 'Unknown Plan',
+                    'amount' => $request->amount,
+                    'status' => 'Completed',
+                    'purchased_at' => now(),
+                    'expires_at' => $expiry
+                ]);
+
+                DB::commit();
+                return back()->with('success', "Upgrade approved for {$user->username}. Premium protocol activated.");
+            }
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Upgrade sync failed: ' . $e->getMessage());
+            return back()->with('error', 'Sync failed: ' . $e->getMessage());
         }
     }
 

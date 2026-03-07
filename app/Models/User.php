@@ -32,6 +32,8 @@ class User extends Authenticatable
         'profile_photo',
         'premium_expiry',
         'wallet_balance',
+        'referral_code',
+        'referred_by',
     ];
 
     /**
@@ -55,6 +57,45 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            if (!$user->referral_code) {
+                $user->referral_code = static::generateUniqueReferralCode();
+            }
+        });
+    }
+
+    /**
+     * Generate a unique referral code.
+     */
+    public static function generateUniqueReferralCode()
+    {
+        do {
+            $code = 'REF' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        } while (static::where('referral_code', $code)->exists());
+
+        return $code;
+    }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referred_by');
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referred_by');
+    }
+
+    public function referralRewards()
+    {
+        return $this->hasMany(Referral::class, 'referrer_id');
     }
 
     public function watchlist()

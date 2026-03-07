@@ -86,6 +86,10 @@
                     <i data-lucide="wallet-2" class="w-5 h-5"></i>
                     <span class="orbitron text-[10px] font-bold uppercase tracking-widest">Wallet Settings</span>
                 </a>
+                <a href="{{ route('admin.referrals.index') }}" class="flex items-center gap-4 px-6 py-4 rounded-2xl {{ request()->routeIs('admin.referrals.*') ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' : 'text-gray-500 hover:text-white hover:bg-white/5' }} transition-all group">
+                    <i data-lucide="gift" class="w-5 h-5"></i>
+                    <span class="orbitron text-[10px] font-bold uppercase tracking-widest">Referrals</span>
+                </a>
             </nav>
 
             <div class="pt-8 border-t border-white/5">
