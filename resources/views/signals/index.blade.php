@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AI Trading Signals | AlgoTrade')
+@section('title', 'AI Trading Signals | Emperor Stock Predictor')
 
 @push('styles')
 <link href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator_simple.min.css" rel="stylesheet">

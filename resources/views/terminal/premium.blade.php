@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Trading Terminal | AlgoTrade AI')
+@section('title', 'Trading Terminal | Emperor Stock Predictor')
 
 @push('styles')
 <style>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Past Signals | ALGO TRADE AI')
+@section('title', 'Past Signals | Emperor Stock Predictor')
 
 @push('styles')
 <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_midnight.min.css" rel="stylesheet">
@@ -127,31 +127,31 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
                         <div class="space-y-1">
                             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Start Date</label>
-                            <input type="date" id="filter-start" class="input-cyber w-full">
+                            <input type="date" id="filter-start" class="input-cyber w-full" value="{{ request('start_date') }}">
                         </div>
                         <div class="space-y-1">
                             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">End Date</label>
-                            <input type="date" id="filter-end" class="input-cyber w-full">
+                            <input type="date" id="filter-end" class="input-cyber w-full" value="{{ request('end_date') }}">
                         </div>
                         <div class="space-y-1">
                             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Symbol</label>
-                            <input type="text" id="filter-symbol" placeholder="e.g. BTC" class="input-cyber w-full uppercase">
+                            <input type="text" id="filter-symbol" placeholder="E.G. BTC" class="input-cyber w-full uppercase" value="{{ request('symbol') }}">
                         </div>
                         <div class="space-y-1">
                             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Signal Type</label>
                             <select id="filter-type" class="input-cyber w-full">
                                 <option value="">ALL TYPES</option>
-                                <option value="BUY">BUY</option>
-                                <option value="SELL">SELL</option>
+                                <option value="BUY" {{ request('signal_type') == 'BUY' ? 'selected' : '' }}>BUY</option>
+                                <option value="SELL" {{ request('signal_type') == 'SELL' ? 'selected' : '' }}>SELL</option>
                             </select>
                         </div>
                         <div class="space-y-1">
                             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Result</label>
                             <select id="filter-result" class="input-cyber w-full">
                                 <option value="">ALL RESULTS</option>
-                                <option value="WIN">WIN</option>
-                                <option value="LOSS">LOSS</option>
-                                <option value="BREAKEVEN">BREAKEVEN</option>
+                                <option value="WIN" {{ request('result') == 'WIN' ? 'selected' : '' }}>WIN</option>
+                                <option value="LOSS" {{ request('result') == 'LOSS' ? 'selected' : '' }}>LOSS</option>
+                                <option value="BREAKEVEN" {{ request('result') == 'BREAKEVEN' ? 'selected' : '' }}>BREAKEVEN</option>
                             </select>
                         </div>
                         <div class="flex items-end gap-2">
@@ -253,5 +253,26 @@
     document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
     });
+
+    function applyFilters() {
+        const start = document.getElementById('filter-start').value;
+        const end = document.getElementById('filter-end').value;
+        const symbol = document.getElementById('filter-symbol').value;
+        const type = document.getElementById('filter-type').value;
+        const result = document.getElementById('filter-result').value;
+
+        const params = new URLSearchParams();
+        if (start) params.append('start_date', start);
+        if (end) params.append('end_date', end);
+        if (symbol) params.append('symbol', symbol);
+        if (type) params.append('signal_type', type);
+        if (result) params.append('result', result);
+
+        window.location.href = window.location.pathname + '?' + params.toString();
+    }
+
+    function resetFilters() {
+        window.location.href = window.location.pathname;
+    }
 </script>
 @endpush

@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Neural Wallet | AlgoTrade AI')
+@section('title', 'Neural Wallet | Emperor Stock Predictor')
 
 @section('content')
 <div class="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">

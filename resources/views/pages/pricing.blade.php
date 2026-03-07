@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pricing Tiers | ALGO TRADE')
+@section('title', 'Pricing Tiers | Emperor Stock Predictor')
 
 @section('content')
 <main class="min-h-screen flex flex-col items-center justify-center p-6 py-20 relative z-10 font-bold uppercase italic tracking-tighter">
@@ -51,7 +51,7 @@
                         data-upi="{{ $package->upi_id }}"
                         data-qr="{{ $package->qr_code }}"
                         data-info="{{ $package->payment_info }}"
-                        data-upi-name="{{ $package->upi_name ?? 'ALGO TRADE' }}"
+                        data-upi-name="{{ $package->upi_name ?? 'Emperor Stock Predictor' }}"
                         data-wallet="{{ $walletBalance }}"
                         onclick='openPaymentModal(this)' 
                         class="w-full py-4 rounded-2xl font-black tracking-widest text-sm hover:scale-105 active:scale-95 transition-all shadow-xl uppercase italic group/btn relative overflow-hidden" 

@@ -20,13 +20,9 @@ class PremiumPackage extends Model
      */
     protected $fillable = [
         'name',
-        'tag',
         'tags_json',
         'description',
         'price',
-        'upi_id',
-        'upi_name',
-        'qr_code',
         'payment_info',
         'button_color',
         'duration_days',

@@ -41,10 +41,6 @@
                     <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Package Name</label>
                     <input type="text" name="name" required value="{{ $premiumPackage->name }}" placeholder="e.g. ELITE TRADER" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all">
                 </div>
-                <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Legacy Tag (Optional)</label>
-                    <input type="text" name="tag" value="{{ $premiumPackage->tag }}" placeholder="e.g. HOT" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all">
-                </div>
 
                 <!-- Multi-Tags Section -->
                 <div class="space-y-4 md:col-span-2">
@@ -82,38 +78,6 @@
                         <span class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest">Select Visual Theme</span>
                     </div>
                 </div>
-                <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Recipient UPI ID</label>
-                    <input type="text" name="upi_id" value="{{ $premiumPackage->upi_id }}" placeholder="merchant@upi" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all">
-                </div>
-                <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Recipient UPI Name</label>
-                    <input type="text" name="upi_name" value="{{ $premiumPackage->upi_name }}" placeholder="Business Name" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all">
-                </div>
-                
-                <div class="space-y-4 md:col-span-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">QR Code Protocol</label>
-                    <div class="flex flex-col md:flex-row gap-6 p-6 bg-white/2 rounded-[2rem] border border-white/5">
-                        <div class="w-32 h-32 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden flex-shrink-0">
-                            @if($premiumPackage->qr_code)
-                                <img src="{{ asset($premiumPackage->qr_code) }}" alt="QR Code" class="w-full h-full object-cover">
-                            @else
-                                <div class="text-center">
-                                    <i data-lucide="image" class="w-6 h-6 text-gray-700 mx-auto mb-2"></i>
-                                    <span class="text-[8px] orbitron font-bold text-gray-700 uppercase">No QR Image</span>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="flex-1 space-y-4">
-                            <div class="space-y-2">
-                                <label class="block text-[9px] font-black orbitron text-gray-600 uppercase tracking-widest ml-1">Upload New QR Image</label>
-                                <input type="file" name="qr_code" accept="image/*" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-[10px] outline-none focus:border-purple-500/30 transition-all">
-                            </div>
-                            <p class="text-[8px] text-gray-500 uppercase tracking-widest italic leading-relaxed">Uploading a new archive will overwrite the existing visual payment gateway.</p>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="space-y-2 md:col-span-2">
                     <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Payment Instructions</label>
                     <textarea name="payment_info" rows="3" placeholder="Step-by-step payment protocol..." class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-medium text-xs outline-none focus:border-purple-500/50 transition-all">{{ $premiumPackage->payment_info }}</textarea>

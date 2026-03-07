@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Terminal | AlgoTrade AI')</title>
+    <title>@yield('title', 'Terminal | Emperor Stock Predictor')</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -174,7 +174,7 @@
                     <i data-lucide="zap" class="w-6 h-6 text-white fill-white"></i>
                 </div>
                 <div class="orbitron font-black text-xl italic tracking-tighter sidebar-text" style="color: var(--logo-text)">
-                    ALGO<span class="text-purple-500">TRADE</span>
+                    EMPEROR<span class="text-purple-500">PREDICTOR</span>
                 </div>
             </a>
 

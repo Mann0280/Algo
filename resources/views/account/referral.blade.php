@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Refer & Earn | AlgoTrade AI')
+@section('title', 'Refer & Earn | Emperor Stock Predictor')
 
-@section('dashboard-content')
+@section('content')
 <div class="space-y-8 animate-in fade-in slide-in-from-bottom-5 duration-700">
     <!-- Header Section -->
     <div class="relative p-8 rounded-[2rem] overflow-hidden group">

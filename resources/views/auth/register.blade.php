@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Initialize Terminal | AlgoTrade AI')
+@section('title', 'Initialize Terminal | Emperor Stock Predictor')
 
 @section('content')
 <main class="min-h-screen flex items-center justify-center p-6 relative z-10">

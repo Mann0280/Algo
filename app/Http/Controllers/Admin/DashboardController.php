@@ -19,9 +19,10 @@ class DashboardController extends Controller
     {
         $total_users = User::count();
         $active_signals = Signal::count();
-        $ai_accuracy = 94.2;
-        $net_revenue_val = 154200.50;
-        $net_revenue = "₹" . number_format($net_revenue_val, 0);
+        
+        $ai_accuracy = \App\Models\SiteSetting::getValue('ai_accuracy', '94.2');
+        $net_revenue_val = \App\Models\SiteSetting::getValue('net_revenue', '154200.50');
+        $net_revenue = "₹" . number_format((float)$net_revenue_val, 0);
 
         $admin_name = Auth::user() ? Auth::user()->username : 'Admin';
 

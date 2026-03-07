@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Live BreakEven Tips | AlgoTrade AI')
+@section('title', 'Live BreakEven Tips | Emperor Stock Predictor')
 
 @push('styles')
 <style>

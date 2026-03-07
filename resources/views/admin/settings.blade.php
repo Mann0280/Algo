@@ -80,6 +80,14 @@
                         <label class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest block mb-2">Max Free Signals</label>
                         <input type="number" name="max_free_signals" value="{{ $settings['max_free_signals'] }}" min="0" max="50" class="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 focus:outline-none focus:border-purple-500/40 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm text-white">
                     </div>
+                    <div>
+                        <label class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest block mb-2">Net Revenue (₹)</label>
+                        <input type="number" step="0.01" name="net_revenue" value="{{ $settings['net_revenue'] }}" class="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 focus:outline-none focus:border-purple-500/40 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest block mb-2">AI Accuracy (%)</label>
+                        <input type="number" step="0.1" name="ai_accuracy" value="{{ $settings['ai_accuracy'] }}" class="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 focus:outline-none focus:border-purple-500/40 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm text-white">
+                    </div>
                 </div>
             </div>
         </div>

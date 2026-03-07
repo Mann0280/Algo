@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login | AlgoTrade AI Neural Portal')
+@section('title', 'Login | Emperor Stock Predictor Neural Portal')
 
 @section('content')
 <main class="min-h-screen flex items-center justify-center p-6 relative z-10">

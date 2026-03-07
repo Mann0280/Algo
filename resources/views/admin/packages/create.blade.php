@@ -24,10 +24,6 @@
                     <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Package Name</label>
                     <input type="text" name="name" required placeholder="e.g. ELITE TRADER" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
                 </div>
-                <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Legacy Tag (Optional)</label>
-                    <input type="text" name="tag" placeholder="e.g. HOT" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
-                </div>
 
                 <!-- Multi-Tags Section -->
                 <div class="space-y-4 md:col-span-2">
@@ -54,19 +50,6 @@
                         <input type="color" name="button_color" value="#fbbf24" class="w-12 h-12 bg-transparent border-none cursor-pointer">
                         <span class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest">Select Visual Theme</span>
                     </div>
-                </div>
-                <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Recipient UPI ID</label>
-                    <input type="text" name="upi_id" placeholder="merchant@upi" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
-                </div>
-                <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Recipient UPI Name</label>
-                    <input type="text" name="upi_name" placeholder="Business Name" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
-                </div>
-                <div class="space-y-2 md:col-span-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">QR Code Image</label>
-                    <input type="file" name="qr_code" accept="image/*" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-[10px] outline-none focus:border-purple-500/50 transition-all">
-                    <p class="text-[9px] text-gray-500 mt-2 ml-1 uppercase tracking-widest italic">Standard format: JPEG, PNG (Max 2MB)</p>
                 </div>
                 <div class="space-y-2 md:col-span-2">
                     <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Payment Instructions</label>

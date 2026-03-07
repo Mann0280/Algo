@@ -14,9 +14,9 @@ class SettingsController extends Controller
     public function index()
     {
         $settings = [
-            'site_name'        => SiteSetting::getValue('site_name', 'AlgoTrade AI'),
+            'site_name'        => SiteSetting::getValue('site_name', 'Emperor Stock Predictor'),
             'site_tagline'     => SiteSetting::getValue('site_tagline', 'Neural-Powered Trading Intelligence'),
-            'support_email'    => SiteSetting::getValue('support_email', 'support@algotrade.ai'),
+            'support_email'    => SiteSetting::getValue('support_email', 'support@emperorstock.ai'),
             'telegram_link'    => SiteSetting::getValue('telegram_link', ''),
             'breakeven_point'  => SiteSetting::getValue('breakeven_point', '2500.00'),
             'ai_refresh_rate'  => SiteSetting::getValue('ai_refresh_rate', '5'),
@@ -26,6 +26,8 @@ class SettingsController extends Controller
             'registration_open' => SiteSetting::getValue('registration_open', '1'),
             'subscription_header' => SiteSetting::getValue('subscription_header', 'Subscription Protocol'),
             'subscription_subheader' => SiteSetting::getValue('subscription_subheader', 'Neural Access Monitoring'),
+            'net_revenue'      => SiteSetting::getValue('net_revenue', '154200.50'),
+            'ai_accuracy'      => SiteSetting::getValue('ai_accuracy', '94.2'),
         ];
 
         return view('admin.settings', compact('settings'));
@@ -41,6 +43,7 @@ class SettingsController extends Controller
             'breakeven_point', 'ai_refresh_rate', 'max_free_signals',
             'premium_price', 'maintenance_mode', 'registration_open',
             'subscription_header', 'subscription_subheader',
+            'net_revenue', 'ai_accuracy',
         ];
 
         foreach ($keys as $key) {

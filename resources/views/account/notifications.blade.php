@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Notifications | ALGO TRADE')
+@section('title', 'Notifications | Emperor Stock Predictor')
 
 @section('content')
 <main class="relative min-h-screen pt-10 pb-20 px-6">

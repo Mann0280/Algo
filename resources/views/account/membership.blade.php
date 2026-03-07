@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'My Subscription | ALGO TRADE')
+@section('title', 'My Subscription | Emperor Stock Predictor')
 
 @section('content')
 <main class="relative min-h-screen pt-10 pb-20 px-6 font-bold uppercase italic">

@@ -13,7 +13,7 @@ class SignalController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function pastSignals()
+    public function pastSignals(Request $request)
     {
         // Determine User State for tiered access
         $userState = 'guest';
@@ -21,8 +21,30 @@ class SignalController extends Controller
             $userState = in_array(Auth::user()->role, ['premium', 'vip', 'admin']) ? 'premium' : 'free';
         }
 
-        // Step 2: Retrieve all records ordered by newest first
-        $signals = StockSignal::orderBy('id', 'desc')->get();
+        // Retrieve and filter signals
+        $query = StockSignal::query();
+
+        if ($request->filled('start_date')) {
+            $query->where('entry_date', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->where('entry_date', '<=', $request->end_date);
+        }
+
+        if ($request->filled('symbol')) {
+            $query->where('stock_name', 'like', '%' . $request->symbol . '%');
+        }
+
+        if ($request->filled('signal_type')) {
+            $query->where('signal_type', $request->signal_type);
+        }
+
+        if ($request->filled('result')) {
+            $query->where('result', $request->result);
+        }
+
+        $signals = $query->orderBy('id', 'desc')->get();
 
         // Calculate Stats for the UI
         $totalSignals = $signals->count();

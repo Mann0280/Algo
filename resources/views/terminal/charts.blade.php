@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Neural Market Charts | AlgoTrade AI')
+@section('title', 'Neural Market Charts | Emperor Stock Predictor')
 
 @section('content')
 <main class="relative min-h-screen pt-32 pb-20 px-6">

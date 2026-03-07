@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Institutional Settings | AlgoTrade AI')
+@section('title', 'Institutional Settings | Emperor Stock Predictor')
 
 @section('content')
 <style>
@@ -265,6 +265,7 @@
         @endif
     </div>
 
+    {{-- 
     <!-- SECTION: WALLET MANAGEMENT -->
     <div id="tab-wallet" class="tab-content active space-y-10">
         <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05] relative overflow-hidden group">
@@ -375,6 +376,7 @@
             </div>
         </section>
     </div>
+    --}}
 
     <!-- MODAL: ADD FUNDS -->
     <div id="add-funds-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">

@@ -95,7 +95,7 @@
                         <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-purple-500 transition-colors"></i>
                         <input type="email" name="email" required 
                                class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white text-sm outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700"
-                               placeholder="admin@algotrade.ai">
+                               placeholder="admin@emperorstock.ai">
                     </div>
                 </div>
 

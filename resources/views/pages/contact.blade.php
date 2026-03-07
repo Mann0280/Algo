@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us | AlgoTrade AI')
+@section('title', 'Contact Us | Emperor Stock Predictor')
 
 @section('content')
 <main class="relative pt-32 pb-20">
@@ -13,7 +13,7 @@
         <div class="text-center max-w-3xl mx-auto mb-20 fade-in-up">
             <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Uplink Portal</span>
             <h1 class="orbitron text-4xl md:text-6xl font-black italic tracking-tighter mb-6 leading-tight uppercase">
-                <span class="text-white">Get in Touch With</span> <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">AlgoTrade AI</span>
+                <span class="text-white">Get in Touch With</span> <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Emperor Stock Predictor</span>
             </h1>
             <p class="text-gray-400 text-sm md:text-base font-medium leading-relaxed opacity-80">
                 Synchronize with our dedicated support team for technical guidance, institutional partnerships, or platform assistance.
@@ -140,7 +140,7 @@
                             </div>
                             <div>
                                 <div class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-1">Direct Support</div>
-                                <div class="text-sm font-bold text-white tracking-tight">support@algotradeai.com</div>
+                                <div class="text-sm font-bold text-white tracking-tight">support@emperorstock.ai</div>
                             </div>
                         </div>
 

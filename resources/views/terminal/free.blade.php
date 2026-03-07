@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Free Forex Signals | AlgoTrade AI')
+@section('title', 'Free Forex Signals | Emperor Stock Predictor')
 
 @section('content')
 <main class="relative pt-32 pb-20 px-6 min-h-screen overflow-hidden">

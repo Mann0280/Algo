@@ -483,6 +483,12 @@ class AccountController extends Controller
     {
         $user = Auth::user();
         
+        // Safety: Generate code if missing for legacy users
+        if (!$user->referral_code) {
+            $user->referral_code = \App\Models\User::generateUniqueReferralCode();
+            $user->save();
+        }
+        
         $totalReferrals = $user->referrals()->count();
         $totalEarnings = \App\Models\WalletTransaction::where('user_id', $user->id)
             ->where('source', 'referral_reward')

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'About Us | AlgoTrade AI — Algorithmic Excellence')
+@section('title', 'About Us | Emperor Stock Predictor — Algorithmic Excellence')
 
 @section('content')
 <main class="relative pt-32 pb-20">
@@ -23,7 +23,7 @@
                 <span class="text-white">WITH</span> <span class="text-purple-600/50">AI</span>
             </h1>
             <p class="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-                AlgoTrade AI combines advanced neural engines with systematic risk governance to empower retail traders with institutional-grade intelligence.
+                Emperor Stock Predictor combines advanced neural engines with systematic risk governance to empower retail traders with institutional-grade intelligence.
             </p>
         </div>
 
@@ -132,13 +132,13 @@
 
                 <div class="space-y-8 text-slate-300 text-base leading-relaxed">
                     <p>
-                        AlgoTrade AI was born in <strong class="text-white">2024</strong> from a simple frustration: retail traders were losing consistently, not because they lacked intelligence, but because they lacked the tools that institutions had been using for decades.
+                        Emperor Stock Predictor was born in <strong class="text-white">2024</strong> from a simple frustration: retail traders were losing consistently, not because they lacked intelligence, but because they lacked the tools that institutions had been using for decades.
                     </p>
                     <p>
                         Our founding team — a group of quantitative analysts, machine learning engineers, and ex-Wall Street traders — set out to bridge this gap. We built a neural prediction engine trained on over <strong class="text-white">15 years of market microstructure data</strong>, incorporating sentiment analysis from 50+ data feeds, and optimized through reinforcement learning.
                     </p>
                     <p>
-                        Within our first year, the platform processed over <strong class="text-white">2 million data points daily</strong>, generating signals with accuracy rates exceeding 85%. Today, AlgoTrade AI serves thousands of traders across India and beyond, from beginners taking their first trade to seasoned professionals optimizing their alpha.
+                        Within our first year, the platform processed over <strong class="text-white">2 million data points daily</strong>, generating signals with accuracy rates exceeding 85%. Today, Emperor Stock Predictor serves thousands of traders across India and beyond, from beginners taking their first trade to seasoned professionals optimizing their alpha.
                     </p>
                     <p>
                         We believe that the future of trading is not about gut feeling — it's about <strong class="text-white">precision, speed, and data</strong>. And we're just getting started.
@@ -357,7 +357,7 @@
                 Ready to <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Trade Smarter</span>?
             </h2>
             <p class="text-slate-400 max-w-2xl mx-auto mb-12 text-sm leading-relaxed">
-                Join thousands of traders already leveraging AlgoTrade AI's neural prediction engine. Start your journey and upgrade to premium features.
+                Join thousands of traders already leveraging Emperor Stock Predictor's neural prediction engine. Start your journey and update to premium features.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-6">
                 <a href="{{ url('/register') }}" class="px-12 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-widest rounded-2xl hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all uppercase">
