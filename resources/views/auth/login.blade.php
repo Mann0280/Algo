@@ -15,6 +15,7 @@
             </div>
             <p class="text-gray-500 text-[10px] font-bold orbitron uppercase tracking-[0.2em] mt-2">Neural Access Port</p>
         </div>
+        
 
         @if ($errors->any())
             <div class="bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-bold p-3 rounded-xl mb-6 text-center orbitron uppercase tracking-widest animate-shake">
