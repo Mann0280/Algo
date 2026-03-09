@@ -20,6 +20,26 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
+// Email Verification Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', [AuthController::class, 'verificationNotice'])->name('verification.notice');
+    Route::post('/email/verify', [AuthController::class, 'verifyOtp'])->middleware('throttle:6,1')->name('verification.verify');
+    Route::post('/email/verification-notification', [AuthController::class, 'resendVerification'])->middleware('throttle:6,1')->name('verification.send');
+});
+
+Route::get('/test-email', function () {
+    try {
+        \Illuminate\Support\Facades\Mail::raw('Test Email Working', function ($message) {
+            $message->to('yourgmail@gmail.com')
+                    ->subject('Test Mail');
+        });
+        return "Mail Sent Successfully. Check your inbox to confirm.";
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error('Test Email Failed: ' . $e->getMessage());
+        return "Mail Failed: " . $e->getMessage();
+    }
+});
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 use App\Http\Controllers\AccountController;
 
@@ -32,9 +52,9 @@ Route::post('/contact', [HomeController::class, 'storeContact']);
 Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
 Route::match(['get', 'post'], '/subscribe', [HomeController::class, 'handlePayment'])->middleware('auth')->name('subscribe');
 
-Route::get('/signals', [\App\Http\Controllers\SignalsController::class, 'index'])->name('signals');
-Route::get('/api/live-signals', [\App\Http\Controllers\Api\LiveTipsController::class, 'liveSignals'])->middleware('auth')->name('api.live-signals');
-Route::get('/api/tutorial-videos', [\App\Http\Controllers\Api\LiveTipsController::class, 'tutorialVideos'])->middleware('auth')->name('api.tutorial-videos');
+Route::get('/signals', [\App\Http\Controllers\SignalsController::class, 'index'])->name('signals')->middleware(['auth', \App\Http\Middleware\EnsureOtpVerified::class]);
+Route::get('/api/live-signals', [\App\Http\Controllers\Api\LiveTipsController::class, 'liveSignals'])->middleware(['auth', \App\Http\Middleware\EnsureOtpVerified::class])->name('api.live-signals');
+Route::get('/api/tutorial-videos', [\App\Http\Controllers\Api\LiveTipsController::class, 'tutorialVideos'])->middleware(['auth', \App\Http\Middleware\EnsureOtpVerified::class])->name('api.tutorial-videos');
 
 // Route::prefix('terminal')->name('terminal.')->middleware('auth')->group(function () {
 //     Route::get('/', [TerminalController::class, 'index'])->name('index');
@@ -45,7 +65,7 @@ Route::get('/api/tutorial-videos', [\App\Http\Controllers\Api\LiveTipsController
 //     Route::get('/charts', [TerminalController::class, 'charts'])->name('charts');
 // });
 
-Route::prefix('account')->name('account.')->middleware('auth')->group(function () {
+Route::prefix('account')->name('account.')->middleware(['auth', \App\Http\Middleware\EnsureOtpVerified::class])->group(function () {
     Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
     Route::post('/profile', [AccountController::class, 'update'])->name('update');
     Route::post('/profile/password', [AccountController::class, 'updatePassword'])->name('update-password');
