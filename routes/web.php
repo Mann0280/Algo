@@ -20,11 +20,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
-// Email Verification Routes
-Route::middleware('auth')->group(function () {
+// Email Verification Routes (Guest / Pre-Registration Completion)
+Route::middleware('guest')->group(function () {
     Route::get('/email/verify', [AuthController::class, 'verificationNotice'])->name('verification.notice');
     Route::post('/email/verify', [AuthController::class, 'verifyOtp'])->middleware('throttle:6,1')->name('verification.verify');
     Route::post('/email/verification-notification', [AuthController::class, 'resendVerification'])->middleware('throttle:6,1')->name('verification.send');
+    Route::post('/register/cancel', [AuthController::class, 'cancelRegistration'])->name('register.cancel');
 });
 
 Route::get('/test-email', function () {

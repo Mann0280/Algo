@@ -20,9 +20,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'email_verified',
-        'email_otp',
-        'otp_expires_at',
+        'email_verified_at',
         'role',
         'risk_strategy',
         'default_allocation',
@@ -56,8 +54,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified' => 'boolean',
-            'otp_expires_at' => 'datetime',
+            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

@@ -15,7 +15,7 @@ class EnsureOtpVerified
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && !$request->user()->email_verified) {
+        if ($request->user() && is_null($request->user()->email_verified_at)) {
             return redirect()->route('verification.notice');
         }
 

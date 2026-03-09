@@ -85,10 +85,10 @@
                     </button>
                 </form>
 
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('register.cancel') }}">
                     @csrf
-                    <button type="submit" class="text-[9px] font-black orbitron text-gray-700 hover:text-red-400 uppercase tracking-[0.3em] transition-all">
-                        Terminate Session
+                    <button type="submit" class="text-[9px] font-black orbitron text-gray-700 hover:text-red-400 uppercase tracking-[0.3em] transition-all relative z-50">
+                        Cancel Registration
                     </button>
                 </form>
             </div>

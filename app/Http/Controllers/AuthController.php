@@ -136,15 +136,72 @@ class AuthController extends Controller
 
         $otp = (string) random_int(100000, 999999);
 
-        $user = User::create([
+        // Save registration data in session instead of creating the user immediately
+        session(['registration_data' => [
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'referral_code' => $request->referral_code,
+            'otp' => $otp,
+            'expires_at' => now()->addMinutes(5),
+        ]]);
+
+        try {
+            \Illuminate\Support\Facades\Mail::to($request->email)->send(new \App\Mail\OtpVerificationMail($request->username, $otp));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('OTP Email Sending Failed during registration: ' . $e->getMessage());
+        }
+
+        return redirect()->route('verification.notice');
+    }
+
+    /**
+     * Show the email verification notice.
+     */
+    public function verificationNotice()
+    {
+        if (!session()->has('registration_data')) {
+            return redirect()->route('register');
+        }
+        return view('auth.verify-otp');
+    }
+
+    /**
+     * Handle the OTP verification request.
+     */
+    public function verifyOtp(Request $request)
+    {
+        if (!session()->has('registration_data')) {
+            return redirect()->route('register');
+        }
+
+        $request->validate([
+            'otp' => 'required|array|size:6',
+        ]);
+        
+        $otpString = implode('', $request->otp);
+        $data = session('registration_data');
+        
+        if ($data['otp'] !== $otpString || now()->greaterThan($data['expires_at'])) {
+            return back()->withErrors(['otp' => 'Invalid or expired verification code.']);
+        }
+        
+        // Finalize User Creation
+        $referredBy = null;
+        if (!empty($data['referral_code'])) {
+            $referrer = User::where('referral_code', $data['referral_code'])->first();
+            if ($referrer) {
+                $referredBy = $referrer->id;
+            }
+        }
+
+        $user = User::create([
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => $data['password'],
             'role' => 'user',
             'referred_by' => $referredBy,
-            'email_verified' => false,
-            'email_otp' => $otp,
-            'otp_expires_at' => now()->addMinutes(5),
+            'email_verified_at' => now(),
         ]);
 
         if ($referredBy) {
@@ -156,48 +213,10 @@ class AuthController extends Controller
             ]);
         }
 
-        try {
-            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\OtpVerificationMail($user->username, $otp));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('OTP Email Sending Failed during registration: ' . $e->getMessage());
-        }
-
+        session()->forget('registration_data');
         Auth::login($user);
-
-        return redirect()->route('verification.notice');
-    }
-
-    /**
-     * Show the email verification notice.
-     */
-    public function verificationNotice()
-    {
-        return view('auth.verify-otp');
-    }
-
-    /**
-     * Handle the OTP verification request.
-     */
-    public function verifyOtp(Request $request)
-    {
-        $request->validate([
-            'otp' => 'required|array|size:6',
-        ]);
         
-        $otpString = implode('', $request->otp);
-        $user = Auth::user();
-        
-        if ($user->email_otp !== $otpString || now()->greaterThan($user->otp_expires_at)) {
-            return back()->withErrors(['otp' => 'Invalid or expired verification code.']);
-        }
-        
-        $user->update([
-            'email_verified' => true,
-            'email_otp' => null,
-            'otp_expires_at' => null,
-        ]);
-        
-        return redirect()->intended('/?verified=1')->with('success', 'Email verified successfully.');
+        return redirect()->intended('/?verified=1')->with('success', 'Email verified and account created successfully.');
     }
 
     /**
@@ -205,22 +224,34 @@ class AuthController extends Controller
      */
     public function resendVerification(Request $request)
     {
-        $user = Auth::user();
-        
+        if (!session()->has('registration_data')) {
+            return redirect()->route('register');
+        }
+
+        $data = session('registration_data');
         $otp = (string) random_int(100000, 999999);
-        $user->update([
-            'email_otp' => $otp,
-            'otp_expires_at' => now()->addMinutes(5),
-        ]);
+        $data['otp'] = $otp;
+        $data['expires_at'] = now()->addMinutes(5);
+        
+        session(['registration_data' => $data]);
         
         try {
-            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\OtpVerificationMail($user->username, $otp));
+            \Illuminate\Support\Facades\Mail::to($data['email'])->send(new \App\Mail\OtpVerificationMail($data['username'], $otp));
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('OTP Email Resend Failed: ' . $e->getMessage());
             return back()->withErrors(['otp' => 'Failed to send email. Please check SMTP configuration.']);
         }
         
         return back()->with('status', 'New verification code has been sent to your email.');
+    }
+
+    /**
+     * Cancel registration from OTP screen
+     */
+    public function cancelRegistration()
+    {
+        session()->forget('registration_data');
+        return redirect()->route('register');
     }
 
     /**
