@@ -1,86 +1,114 @@
 @extends('layouts.admin')
 
-@section('title', 'Neural Packages')
+@section('title', 'NEURAL PACKAGE PROTOCOLS')
 
 @section('content')
-<div class="space-y-8 max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-    <div class="flex justify-between items-end">
+<div class="space-y-12 max-w-[1200px] mx-auto pb-20 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
-            <h1 class="text-3xl font-black orbitron italic uppercase tracking-tighter text-white">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="w-8 h-[1px] bg-purple-500"></span>
+                <span class="text-[10px] font-black orbitron text-purple-500 uppercase tracking-[0.3em]">SUBSCRIPTION INFRASTRUCTURE</span>
+            </div>
+            <h1 class="text-4xl font-black orbitron italic uppercase tracking-tighter text-white">
                 PACKAGE <span class="text-purple-500 text-glow">PROTOCOLS</span>
             </h1>
-            <p class="text-gray-400 text-sm font-medium mt-1 uppercase tracking-widest leading-none">Subscription management matrix</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Manage Tiered Access and Neural Entitlements</p>
         </div>
-        <a href="{{ route('admin.premium-packages.create') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-bold text-xs orbitron tracking-widest uppercase transition-all flex items-center gap-2">
-            <i data-lucide="plus" class="w-4 h-4"></i> Initialize New Package
+        
+        <a href="{{ route('admin.premium-packages.create') }}" class="group relative px-8 py-4 bg-purple-600 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(147,51,234,0.3)]">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+            <div class="relative flex items-center gap-3">
+                <i data-lucide="plus" class="w-4 h-4 text-white"></i>
+                <span class="text-[10px] font-black orbitron text-white uppercase tracking-[0.2em]">Initialize New Protocol</span>
+            </div>
         </a>
     </div>
 
     @if(session('success'))
-    <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center gap-3 text-emerald-500 text-xs font-bold orbitron uppercase tracking-widest">
-        <i data-lucide="check-circle" class="w-4 h-4"></i>
-        {{ session('success') }}
+    <div class="glass-panel border-emerald-500/20 bg-emerald-500/5 text-emerald-400 p-5 rounded-2xl text-[10px] orbitron font-black uppercase tracking-[0.2em] text-center animate-pulse">
+        <i data-lucide="check-circle" class="w-4 h-4 inline-block mr-2 mb-0.5"></i> {{ session('success') }}
     </div>
     @endif
 
-    <div class="glass-card rounded-[2.5rem] border border-white/5 overflow-hidden">
-        <table class="w-full text-left border-collapse">
-            <thead>
-                <tr class="bg-white/5">
-                    <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">Package Name</th>
-                    <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">Price (INR)</th>
-                    <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">Duration</th>
-                    <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">Status</th>
-                    <th class="px-8 py-5 text-right text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">Action</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-white/5">
-                @forelse($packages as $package)
-                <tr class="hover:bg-white/[0.02] transition-colors group">
-                    <td class="px-8 py-6">
-                        <div class="flex flex-col">
-                            <span class="text-sm font-black orbitron text-white italic group-hover:text-purple-400 transition-all uppercase tracking-tight">{{ $package->name }}</span>
-                            <span class="text-[9px] text-gray-500 mt-1 uppercase tracking-widest truncate max-w-xs">{{ $package->description }}</span>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6 font-bold text-white orbitron text-sm italic">
-                        ₹{{ number_format($package->price, 0) }}
-                    </td>
-                    <td class="px-8 py-6">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest italic">{{ $package->duration_days }} Days</span>
-                    </td>
-                    <td class="px-8 py-6">
-                        <span class="px-4 py-1 rounded-full text-[9px] font-black orbitron uppercase tracking-[0.2em] {{ $package->is_active ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20' }}">
-                            {{ $package->is_active ? 'Active' : 'Offline' }}
-                        </span>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div class="flex justify-end gap-3">
-                            <a href="{{ route('admin.premium-packages.edit', $package) }}" class="p-2.5 rounded-xl bg-white/5 border border-white/5 text-gray-500 hover:text-white hover:bg-purple-600/20 hover:border-purple-500/30 transition-all">
-                                <i data-lucide="edit-3" class="w-4 h-4"></i>
-                            </a>
-                            <form action="{{ route('admin.premium-packages.destroy', $package) }}" method="POST" onsubmit="return confirm('Deconstruct this package protocol?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="p-2.5 rounded-xl bg-white/5 border border-white/5 text-gray-500 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="5" class="px-8 py-20 text-center">
-                        <div class="flex flex-col items-center gap-4 opacity-20">
-                            <i data-lucide="package-search" class="w-12 h-12"></i>
-                            <span class="text-[10px] font-black orbitron uppercase tracking-[0.3em]">No Dynamic Protocols Found</span>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <!-- Packages Container -->
+    <div class="glass-card rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-white/[0.02] border-b border-white/5">
+                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Designation</th>
+                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Exchange Value</th>
+                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Temporal Scope</th>
+                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Status</th>
+                        <th class="px-10 py-8 text-right text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Overrides</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    @forelse($packages as $package)
+                    <tr class="group hover:bg-white/[0.01] transition-all duration-500">
+                        <td class="px-10 py-8">
+                            <div class="flex items-center gap-5">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500/10 to-indigo-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_20px_rgba(147,51,234,0.1)]">
+                                    <i data-lucide="package" class="w-6 h-6"></i>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-black orbitron text-white italic group-hover:text-purple-400 transition-colors uppercase tracking-tight">{{ $package->name }}</span>
+                                    <span class="text-[9px] font-bold text-gray-600 mt-1 uppercase tracking-widest max-w-[200px] truncate">{{ $package->description }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-10 py-8">
+                            <div class="flex flex-col">
+                                <span class="text-lg font-black orbitron text-white italic">₹{{ number_format($package->price, 0) }}</span>
+                                <span class="text-[9px] font-bold text-gray-700 uppercase tracking-widest mt-0.5">Base Transfer</span>
+                            </div>
+                        </td>
+                        <td class="px-10 py-8">
+                            <div class="flex items-center gap-2.5">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-gray-700"></i>
+                                <span class="text-[10px] font-black orbitron text-gray-400 uppercase tracking-widest">{{ $package->duration_days }} Sidereal Days</span>
+                            </div>
+                        </td>
+                        <td class="px-10 py-8">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full {{ $package->is_active ? 'bg-emerald-500 shadow-[0_0_10px_#10b981]' : 'bg-rose-500 shadow-[0_0_10px_#f43f5e]' }}"></span>
+                                <span class="text-[10px] font-black orbitron {{ $package->is_active ? 'text-emerald-400' : 'text-rose-400' }} uppercase tracking-widest">
+                                    {{ $package->is_active ? 'Online' : 'Decommissioned' }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="px-10 py-8">
+                            <div class="flex justify-end gap-3">
+                                <a href="{{ route('admin.premium-packages.edit', $package) }}" class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-gray-500 hover:text-white hover:bg-purple-600/20 hover:border-purple-500/30 transition-all group/btn">
+                                    <i data-lucide="edit-3" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
+                                </a>
+                                <form action="{{ route('admin.premium-packages.destroy', $package) }}" method="POST" onsubmit="return confirm('Deconstruct this package protocol?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-gray-500 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all group/btn">
+                                        <i data-lucide="trash-2" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="px-10 py-32 text-center">
+                            <div class="flex flex-col items-center gap-6 opacity-20">
+                                <div class="w-20 h-20 rounded-[2.5rem] bg-white/5 border border-white/10 flex items-center justify-center">
+                                    <i data-lucide="package-search" class="w-10 h-10 text-white"></i>
+                                </div>
+                                <span class="text-[10px] font-black orbitron uppercase tracking-[0.4em] text-white">Zero Protocol Signatures Detected</span>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection

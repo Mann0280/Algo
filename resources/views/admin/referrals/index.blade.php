@@ -1,65 +1,115 @@
 @extends('layouts.admin')
 
-@section('title', 'Referral Management | Admin')
+@section('title', 'REFERRAL NETWORK PROTOCOL')
 
 @section('content')
-<div class="space-y-6">
-    <div class="flex items-center justify-between">
+<div class="space-y-12 max-w-[1200px] mx-auto pb-20 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-glow-indigo">
         <div>
-            <h1 class="orbitron text-2xl font-black text-white italic uppercase tracking-tight">Referral <span class="text-purple-500">Protocol Monitoring</span></h1>
-            <p class="text-gray-500 text-xs font-bold orbitron uppercase tracking-widest mt-1">Global Network Growth & Rewards Audit</p>
+            <div class="flex items-center gap-2 mb-3">
+                <span class="w-8 h-[1px] bg-purple-500"></span>
+                <span class="text-[10px] font-black orbitron text-purple-500 uppercase tracking-[0.3em]">GROWTH ENGINE MONITORING</span>
+            </div>
+            <h1 class="text-4xl font-black orbitron italic uppercase tracking-tighter text-white">
+                REFERRAL <span class="text-purple-500 text-glow">NETWORK</span>
+            </h1>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Auditing Global Node Expansion and Reward Sequences</p>
+        </div>
+        
+        <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
+            <div class="flex items-center gap-2.5">
+                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse shadow-[0_0_10px_#6366f1]"></span>
+                <span class="text-[10px] font-black orbitron text-indigo-400 uppercase tracking-widest text-glow-sm">EXPANSION ACTIVE</span>
+            </div>
         </div>
     </div>
 
-    <div class="glass-panel rounded-[2rem] border border-white/10 overflow-hidden">
-        <table class="w-full text-left">
-            <thead>
-                <tr class="bg-white/5 border-b border-white/10 text-[9px] font-black orbitron text-gray-400 uppercase tracking-widest">
-                    <th class="px-6 py-4">Date</th>
-                    <th class="px-6 py-4">Referrer</th>
-                    <th class="px-6 py-4">Referred User</th>
-                    <th class="px-6 py-4">Reward Amount</th>
-                    <th class="px-6 py-4">Status</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-white/[0.05]">
-                @foreach($referrals as $referral)
-                <tr class="hover:bg-white/[0.02] transition-all">
-                    <td class="px-6 py-4 text-[10px] text-gray-500 font-bold orbitron">{{ $referral->created_at->format('d M, H:i') }}</td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-[10px] font-black orbitron text-indigo-400 border border-indigo-500/20">
-                                {{ strtoupper(substr($referral->referrer->username, 0, 1)) }}
+    <!-- Referrals Table Container -->
+    <div class="glass-card rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-white/[0.02] border-b border-white/5">
+                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Temporal Trace</th>
+                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Source Node (Referrer)</th>
+                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Target Node (Referred)</th>
+                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Reward Value</th>
+                        <th class="px-10 py-8 text-right text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Protocol Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    @forelse($referrals as $referral)
+                    <tr class="group hover:bg-white/[0.01] transition-all duration-500">
+                        <td class="px-10 py-8">
+                            <div class="flex flex-col">
+                                <span class="text-[10px] font-black orbitron text-white italic tracking-widest uppercase">{{ $referral->created_at->format('d M Y') }}</span>
+                                <span class="text-[8px] font-bold text-gray-700 uppercase tracking-[0.2em] mt-1">{{ $referral->created_at->format('H:i') }} UTC</span>
                             </div>
-                            <span class="text-xs font-bold text-white">{{ $referral->referrer->username }}</span>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-[10px] font-black orbitron text-purple-400 border border-purple-500/20">
-                                {{ strtoupper(substr($referral->referredUser->username, 0, 1)) }}
+                        </td>
+                        <td class="px-10 py-8">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-black orbitron text-xs shadow-[0_0_15px_rgba(99,102,241,0.1)] group-hover:scale-110 transition-transform">
+                                    {{ strtoupper(substr($referral->referrer->username, 0, 1)) }}
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-black orbitron text-white italic group-hover:text-indigo-400 transition-colors uppercase tracking-tight">{{ $referral->referrer->username }}</span>
+                                    <span class="text-[8px] font-bold text-gray-600 uppercase tracking-widest mt-0.5">Origin Node</span>
+                                </div>
                             </div>
-                            <span class="text-xs font-bold text-white">{{ $referral->referredUser->username }}</span>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="text-xs font-black orbitron text-emerald-400">&#8377;{{ number_format($referral->reward_amount, 2) }}</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        @if($referral->status === 'rewarded')
-                        <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[7px] font-black orbitron text-emerald-500 uppercase tracking-widest">REWARDED</span>
-                        @else
-                        <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[7px] font-black orbitron text-amber-500 uppercase tracking-widest transition-pulse animate-pulse">PENDING ACTIVATION</span>
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        </td>
+                        <td class="px-10 py-8">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-400 font-black orbitron text-xs shadow-[0_0_15px_rgba(147,51,234,0.1)] group-hover:scale-110 transition-transform">
+                                    {{ strtoupper(substr($referral->referredUser->username, 0, 1)) }}
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-black orbitron text-white italic group-hover:text-purple-400 transition-colors uppercase tracking-tight">{{ $referral->referredUser->username }}</span>
+                                    <span class="text-[8px] font-bold text-gray-600 uppercase tracking-widest mt-0.5">Affiliate Ingress</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-10 py-8">
+                            <div class="flex flex-col">
+                                <span class="text-lg font-black orbitron text-emerald-400 italic">₹{{ number_format($referral->reward_amount, 2) }}</span>
+                                <span class="text-[8px] font-bold text-emerald-500/40 uppercase tracking-widest mt-0.5">Growth Credit</span>
+                            </div>
+                        </td>
+                        <td class="px-10 py-8 text-right">
+                             @if($referral->status === 'rewarded')
+                            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+                                <span class="text-[9px] font-black orbitron text-emerald-500 uppercase tracking-widest">REWARDED</span>
+                            </div>
+                            @else
+                            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 animate-pulse">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_#f59e0b]"></span>
+                                <span class="text-[9px] font-black orbitron text-amber-500 uppercase tracking-widest leading-none mt-0.5">PENDING_SYNC</span>
+                            </div>
+                            @endif
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="px-10 py-32 text-center">
+                            <div class="flex flex-col items-center gap-6 opacity-20">
+                                <div class="w-20 h-20 rounded-[2.5rem] bg-white/5 border border-white/10 flex items-center justify-center">
+                                    <i data-lucide="share-2" class="w-10 h-10 text-white"></i>
+                                </div>
+                                <span class="text-[10px] font-black orbitron uppercase tracking-[0.4em] text-white">No External Node Links Detected</span>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
         
-        <div class="p-6 border-t border-white/10">
+        @if($referrals->hasPages())
+        <div class="px-10 py-8 border-t border-white/5 bg-white/[0.01]">
             {{ $referrals->links() }}
         </div>
+        @endif
     </div>
 </div>
 @endsection

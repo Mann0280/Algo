@@ -1,33 +1,45 @@
 @extends('layouts.admin')
 
-@section('title', 'Tutorial Video Management')
+@section('title', 'LEARNING RESOURCES')
 
 @section('content')
-<div class="space-y-8 max-w-7xl mx-auto">
-    <div class="flex justify-between items-end">
+<div class="space-y-12 max-w-[1400px] mx-auto pb-20 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-glow-indigo">
         <div>
-            <h1 class="text-3xl font-black orbitron italic uppercase tracking-tighter text-white">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="w-8 h-[1px] bg-purple-500"></span>
+                <span class="text-[10px] font-black orbitron text-purple-500 uppercase tracking-[0.3em]">EDUCATIONAL INFRASTRUCTURE</span>
+            </div>
+            <h1 class="text-4xl font-black orbitron italic uppercase tracking-tighter text-white">
                 LEARNING <span class="text-purple-500 text-glow">RESOURCES</span>
             </h1>
-            <p class="text-gray-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Educational Signal Protocols</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Deploying Neural Signal Training Protocols</p>
         </div>
-        <button onclick="document.getElementById('add-video-modal').classList.remove('hidden')" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 px-6 py-3 rounded-xl font-bold orbitron text-[10px] tracking-widest uppercase flex items-center gap-2 transition-all active:scale-95 shadow-lg shadow-purple-500/20">
-            <i data-lucide="plus" class="w-4 h-4"></i>
-            Inject New Tutorial
+        
+        <button onclick="toggleModal('add-video-modal')" class="group relative px-8 py-4 bg-purple-600 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(147,51,234,0.3)] hover:scale-105 active:scale-95 transition-all text-white italic">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600"></div>
+            <div class="relative flex items-center gap-3">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span class="text-[10px] font-black orbitron uppercase tracking-[0.2em]">Inject New Protocol</span>
+            </div>
         </button>
     </div>
 
     @if (session('success'))
-        <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-4 rounded-xl text-[10px] orbitron font-bold uppercase tracking-wider text-center animate-pulse">
-            {{ session('success') }}
-        </div>
+    <div class="glass-panel border-emerald-500/20 bg-emerald-500/5 text-emerald-400 p-5 rounded-2xl text-[10px] orbitron font-black uppercase tracking-[0.2em] text-center animate-pulse">
+        <i data-lucide="check-circle" class="w-4 h-4 inline-block mr-2 mb-0.5"></i> {{ session('success') }}
+    </div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach($videos as $video)
-        <div class="glass-card p-6 rounded-3xl border border-white/5 relative group transition-all hover:border-purple-500/30 flex flex-col">
-            <!-- Video Preview -->
-            <div class="aspect-video rounded-2xl overflow-hidden bg-black mb-6 relative group/vid">
+    <!-- Video Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        @forelse($videos as $video)
+        <div class="glass-card rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl group transition-all duration-700 hover:border-purple-500/30 flex flex-col relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-purple-600/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            
+            <!-- Video Container -->
+            <div class="aspect-video relative overflow-hidden bg-black">
                 @php
                     $embedUrl = $video->video_url;
                     if (str_contains($embedUrl, 'youtube.com/watch?v=')) {
@@ -37,96 +49,111 @@
                         $embedUrl = 'https://www.youtube.com/embed/' . end($parts);
                     }
                 @endphp
-                <iframe class="w-full h-full" src="{{ $embedUrl }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                <iframe class="w-full h-full grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" src="{{ $embedUrl }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0c0518] to-transparent pointer-events-none opacity-60 group-hover:opacity-20 transition-opacity"></div>
             </div>
 
-            <!-- Info -->
-            <div class="flex-1 space-y-2">
-                <h3 class="text-xl font-black orbitron text-white italic tracking-tighter line-clamp-1">{{ $video->title }}</h3>
-                <p class="text-[10px] text-gray-500 line-clamp-2 leading-relaxed">{{ $video->description ?? 'No protocol description available.' }}</p>
-            </div>
+            <div class="p-8 flex-1 flex flex-col relative z-10">
+                <div class="flex-1 space-y-3">
+                    <h3 class="text-xl font-black orbitron text-white italic tracking-tighter line-clamp-1 group-hover:text-purple-400 transition-colors uppercase">{{ $video->title }}</h3>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest leading-relaxed line-clamp-3 italic opacity-60 group-hover:opacity-100 transition-opacity">{{ $video->description ?: 'NO_DESCRIPTION_TRACE_DETECTED' }}</p>
+                </div>
 
-            <!-- Actions -->
-            <div class="mt-6 pt-6 border-t border-white/5 flex gap-2">
-                <button onclick='openEditModal(@json($video))' class="flex-1 py-2 rounded-lg bg-white/5 text-[10px] font-bold orbitron uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/10 transition-all">Edit Protocol</button>
-                <form action="{{ route('admin.tutorial-videos.destroy', $video->id) }}" method="POST" onsubmit="return confirm('Terminate this video protocol?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="w-10 h-10 flex items-center justify-center rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <div class="mt-8 pt-8 border-t border-white/5 flex gap-3">
+                    <button onclick='openEditModal(@json($video))' class="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[9px] font-black orbitron uppercase tracking-[0.2em] text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all italic">
+                        Configure Protocol
                     </button>
-                </form>
+                    <form action="{{ route('admin.tutorial-videos.destroy', $video->id) }}" method="POST" onsubmit="return confirm('Terminate this video protocol?')" class="flex shrink-0">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="w-12 h-12 flex items-center justify-center rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 hover:bg-rose-500 hover:text-white transition-all group/btn">
+                            <i data-lucide="trash-2" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-        @endforeach
+        @empty
+        <div class="col-span-full py-32 text-center opacity-20">
+            <div class="w-24 h-24 mx-auto mb-6 rounded-[2.5rem] bg-white/5 border border-white/10 flex items-center justify-center">
+                 <i data-lucide="video-off" class="w-12 h-12 text-white"></i>
+            </div>
+            <span class="text-[10px] font-black orbitron uppercase tracking-[0.4em] text-white">Zero Educational Nodes Detected</span>
+        </div>
+        @endforelse
     </div>
 </div>
 
 <!-- Add Modal -->
-<div id="add-video-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center hidden p-6">
-    <div class="w-full max-w-lg glass-card p-8 rounded-3xl border border-white/10">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="orbitron font-black text-xl italic uppercase tracking-tighter text-white">New <span class="text-purple-500 text-glow">Tutorial</span></h2>
-            <button onclick="document.getElementById('add-video-modal').classList.add('hidden')" class="text-gray-400 hover:text-white">
-                <i data-lucide="x" class="w-6 h-6"></i>
+<div id="add-video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-3xl z-[200] hidden items-center justify-center p-6 transition-all duration-500">
+    <div class="w-full max-w-xl glass-card p-12 rounded-[3rem] border border-white/10 shadow-2xl animate-in zoom-in duration-500">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex flex-col">
+                <h2 class="orbitron font-black text-2xl italic uppercase tracking-tighter text-white leading-none">NEW <span class="text-purple-500 text-glow">TUTORIAL</span></h2>
+                <span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest mt-2">Injecting digital training assets into the network</span>
+            </div>
+            <button onclick="document.getElementById('add-video-modal').classList.add('hidden')" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
 
-        <form action="{{ route('admin.tutorial-videos.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.tutorial-videos.store') }}" method="POST" class="space-y-8">
             @csrf
-            <div class="space-y-2">
-                <label class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest pl-1">Protocol Title</label>
-                <input type="text" name="title" required placeholder="How to use Neural Indicators" class="w-full bg-white/5 border border-white/5 focus:border-purple-600/50 rounded-xl py-3 px-4 outline-none transition-all text-sm text-white">
+            <div class="space-y-4">
+                <label class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest ml-1">Protocol Title</label>
+                <input type="text" name="title" required placeholder="Mastering Neural Scalping" class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-[11px] font-bold tracking-tight text-white placeholder:text-gray-800">
             </div>
 
-            <div class="space-y-2">
-                <label class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest pl-1">Video URL (YouTube/Vimeo)</label>
-                <input type="url" name="video_url" required placeholder="https://youtube.com/..." class="w-full bg-white/5 border border-white/5 focus:border-purple-600/50 rounded-xl py-3 px-4 outline-none transition-all text-sm text-white">
+            <div class="space-y-4">
+                <label class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest ml-1">Temporal Link (YouTube/Vimeo)</label>
+                <input type="url" name="video_url" required placeholder="https://youtube.com/watch?v=..." class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-[11px] font-bold tracking-tight text-white placeholder:text-gray-800">
             </div>
 
-            <div class="space-y-2">
-                <label class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest pl-1">System Description</label>
-                <textarea name="description" rows="3" class="w-full bg-white/5 border border-white/5 focus:border-purple-600/50 rounded-xl py-3 px-4 outline-none transition-all text-sm text-white resize-none"></textarea>
+            <div class="space-y-4">
+                <label class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest ml-1">System Description</label>
+                <textarea name="description" rows="3" placeholder="Elaborate on the strategic scope of this protocol..." class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-[11px] font-bold tracking-tight text-white resize-none placeholder:text-gray-800"></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 py-4 rounded-xl font-bold orbitron text-[10px] tracking-widest uppercase shadow-xl shadow-purple-500/20 active:scale-95 transition-all text-white">
-                Deploy Tutorial Protocol
+            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 py-5 rounded-2xl font-black orbitron text-[10px] tracking-[0.3em] uppercase shadow-2xl shadow-purple-950/20 hover:scale-[1.02] active:scale-95 transition-all text-white italic">
+                DEPLOY TUTORIAL SEQUENCE
             </button>
         </form>
     </div>
 </div>
 
 <!-- Edit Modal -->
-<div id="edit-video-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center hidden p-6">
-    <div class="w-full max-w-lg glass-card p-8 rounded-3xl border border-white/10">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="orbitron font-black text-xl italic uppercase tracking-tighter text-white">Update <span class="text-purple-500 text-glow">Protocol</span></h2>
-            <button onclick="document.getElementById('edit-video-modal').classList.add('hidden')" class="text-gray-400 hover:text-white">
-                <i data-lucide="x" class="w-6 h-6"></i>
+<div id="edit-video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-3xl z-[200] hidden items-center justify-center p-6 transition-all duration-500">
+    <div class="w-full max-w-xl glass-card p-12 rounded-[3rem] border border-white/10 shadow-2xl animate-in zoom-in duration-500">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex flex-col">
+                <h2 class="orbitron font-black text-2xl italic uppercase tracking-tighter text-white leading-none">UPDATE <span class="text-purple-500 text-glow">PROTOCOL</span></h2>
+                <span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest mt-2">Modifying existing neural training data</span>
+            </div>
+            <button onclick="document.getElementById('edit-video-modal').classList.add('hidden')" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
 
-        <form id="edit-form" method="POST" class="space-y-6">
+        <form id="edit-form" method="POST" class="space-y-8">
             @csrf
             @method('PUT')
-            <div class="space-y-2">
-                <label class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest pl-1">Protocol Title</label>
-                <input type="text" name="title" id="edit-title" required class="w-full bg-white/5 border border-white/5 focus:border-purple-600/50 rounded-xl py-3 px-4 outline-none transition-all text-sm text-white">
+            <div class="space-y-4">
+                <label class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest ml-1">Protocol Designation</label>
+                <input type="text" name="title" id="edit-title" required class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-[11px] font-bold tracking-tight text-white shadow-inner">
             </div>
 
-            <div class="space-y-2">
-                <label class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest pl-1">Video URL</label>
-                <input type="url" name="video_url" id="edit-url" required class="w-full bg-white/5 border border-white/5 focus:border-purple-600/50 rounded-xl py-3 px-4 outline-none transition-all text-sm text-white">
+            <div class="space-y-4">
+                <label class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest ml-1">Video Source Ingress</label>
+                <input type="url" name="video_url" id="edit-url" required class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-[11px] font-bold tracking-tight text-white shadow-inner">
             </div>
 
-            <div class="space-y-2">
-                <label class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest pl-1">System Description</label>
-                <textarea name="description" id="edit-desc" rows="3" class="w-full bg-white/5 border border-white/5 focus:border-purple-600/50 rounded-xl py-3 px-4 outline-none transition-all text-sm text-white resize-none"></textarea>
+            <div class="space-y-4">
+                <label class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest ml-1">Logic Description</label>
+                <textarea name="description" id="edit-desc" rows="3" class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-[11px] font-bold tracking-tight text-white resize-none shadow-inner"></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 py-4 rounded-xl font-bold orbitron text-[10px] tracking-widest uppercase shadow-xl shadow-purple-500/20 active:scale-95 transition-all text-white">
-                Update Video Protocol
+            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 py-5 rounded-2xl font-black orbitron text-[10px] tracking-[0.3em] uppercase shadow-2xl shadow-purple-950/20 hover:scale-[1.02] active:scale-95 transition-all text-white italic">
+                SYNCHRONIZE VIDEO NODE
             </button>
         </form>
     </div>
@@ -134,12 +161,18 @@
 
 @push('scripts')
 <script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.toggle('hidden');
+        modal.classList.toggle('flex');
+    }
+
     function openEditModal(video) {
         document.getElementById('edit-title').value = video.title;
         document.getElementById('edit-url').value = video.video_url;
         document.getElementById('edit-desc').value = video.description || '';
         document.getElementById('edit-form').action = `/admin/tutorial-videos/${video.id}`;
-        document.getElementById('edit-video-modal').classList.remove('hidden');
+        toggleModal('edit-video-modal');
     }
 </script>
 @endpush

@@ -35,6 +35,22 @@ class DashboardController extends Controller
         ));
     }
 
+    public function analytics()
+    {
+        $total_users = User::count();
+        $active_signals = Signal::count();
+        $ai_accuracy = \App\Models\SiteSetting::getValue('ai_accuracy', '94.2');
+        $net_revenue_val = \App\Models\SiteSetting::getValue('net_revenue', '154200.50');
+        $net_revenue = "₹" . number_format((float)$net_revenue_val, 0);
+
+        return view('admin.analytics', compact(
+            'total_users',
+            'active_signals',
+            'ai_accuracy',
+            'net_revenue'
+        ));
+    }
+
     public function broadcastTip(Request $request)
     {
         $request->validate([

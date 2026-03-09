@@ -71,7 +71,7 @@
                             </span>
                         </td>
                         <td class="px-8 py-6">
-                            <button class="p-2.5 rounded-xl bg-white/[0.05] border border-white/[0.05] text-gray-500 hover:text-white hover:bg-purple-600/20 hover:border-purple-500/30 transition-all">
+                            <button onclick='showReceipt(@json($record))' class="p-2.5 rounded-xl bg-white/[0.05] border border-white/[0.05] text-gray-500 hover:text-white hover:bg-purple-600/20 hover:border-purple-500/30 transition-all">
                                 <i data-lucide="download" class="w-4 h-4"></i>
                             </button>
                         </td>
@@ -113,4 +113,70 @@
         </div>
     </div>
 </div>
+
+<!-- Digital Receipt Modal -->
+<div id="receipt-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-6 sm:p-0">
+    <div class="absolute inset-0 bg-[#05020a]/90 backdrop-blur-xl" onclick="toggleModal('receipt-modal')"></div>
+    <div class="glass-panel w-full max-w-md rounded-[2.5rem] border border-white/10 relative z-10 overflow-hidden shadow-[0_0_100px_rgba(147,51,234,0.1)] animate-in zoom-in-95 duration-300">
+        <!-- Receipt Header -->
+        <div class="p-10 border-b border-white/5 bg-white/[0.02] text-center">
+            <div class="w-16 h-16 rounded-3xl bg-purple-600/20 border border-purple-500/20 flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="shield-check" class="w-8 h-8 text-purple-500"></i>
+            </div>
+            <h2 class="orbitron font-black text-xl text-white italic tracking-tighter uppercase mb-2">Neural Receipt</h2>
+            <div id="receipt-id" class="text-[9px] font-black orbitron text-gray-600 tracking-[0.3em] uppercase">TX_ID: LOADING...</div>
+        </div>
+
+        <!-- Receipt Body -->
+        <div class="p-10 space-y-8">
+            <div class="space-y-6">
+                <div class="flex justify-between items-center pb-4 border-b border-white/5">
+                    <span class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Designation</span>
+                    <span id="receipt-plan" class="text-sm font-black orbitron text-white uppercase italic">PREMIUM</span>
+                </div>
+                <div class="flex justify-between items-center pb-4 border-b border-white/5">
+                    <span class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Amount Paid</span>
+                    <span id="receipt-amount" class="text-sm font-black orbitron text-emerald-400">₹3,499</span>
+                </div>
+                <div class="flex justify-between items-center pb-4 border-b border-white/5">
+                    <span class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Protocol Type</span>
+                    <span class="text-[10px] font-black orbitron text-purple-400 uppercase tracking-widest">SYNC_PAYMENT</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Timestamp</span>
+                    <span id="receipt-date" class="text-[11px] font-bold text-gray-400">07 MAR 2026</span>
+                </div>
+            </div>
+
+            <button onclick="window.print()" class="w-full py-5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black orbitron text-white uppercase tracking-[0.25em] hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+                <i data-lucide="printer" class="w-4 h-4"></i> Print Protocol
+            </button>
+        </div>
+        
+        <button onclick="toggleModal('receipt-modal')" class="absolute top-6 right-6 p-3 text-gray-600 hover:text-white transition-all">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.toggle('hidden');
+        modal.classList.toggle('flex');
+    }
+
+    function showReceipt(record) {
+        document.getElementById('receipt-id').textContent = `TX_ID: ${record.transaction_id || 'ESP-' + Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+        document.getElementById('receipt-plan').textContent = record.plan_name;
+        document.getElementById('receipt-amount').textContent = `₹${new Intl.NumberFormat().format(record.amount)}`;
+        document.getElementById('receipt-date').textContent = new Date(record.purchased_at).toLocaleDateString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric'
+        }).toUpperCase();
+        
+        toggleModal('receipt-modal');
+    }
+</script>
+@endpush
 @endsection

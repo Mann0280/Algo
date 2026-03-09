@@ -77,6 +77,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth:admin', 'admin'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/analytics', [DashboardController::class, 'analytics'])->name('analytics');
         Route::post('/broadcast-tip', [DashboardController::class, 'broadcastTip'])->name('broadcast-tip');
         Route::post('/broadcast-notification', [DashboardController::class, 'broadcastNotification'])->name('broadcast-notification');
         Route::resource('predictions', PredictionController::class);
