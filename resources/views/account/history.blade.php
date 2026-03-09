@@ -148,7 +148,7 @@
                 </div>
             </div>
 
-            <button onclick="window.print()" class="w-full py-5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black orbitron text-white uppercase tracking-[0.25em] hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+            <button id="receipt-print-btn" class="w-full py-5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black orbitron text-white uppercase tracking-[0.25em] hover:bg-white/10 transition-all flex items-center justify-center gap-3">
                 <i data-lucide="printer" class="w-4 h-4"></i> Print Protocol
             </button>
         </div>
@@ -168,12 +168,16 @@
     }
 
     function showReceipt(record) {
-        document.getElementById('receipt-id').textContent = `TX_ID: ${record.transaction_id || 'ESP-' + Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+        document.getElementById('receipt-id').textContent = `TX_ID: ${record.transaction_id || 'EPS-' + Math.random().toString(36).substr(2, 9).toUpperCase()}`;
         document.getElementById('receipt-plan').textContent = record.plan_name;
         document.getElementById('receipt-amount').textContent = `₹${new Intl.NumberFormat().format(record.amount)}`;
         document.getElementById('receipt-date').textContent = new Date(record.purchased_at).toLocaleDateString('en-GB', {
             day: '2-digit', month: 'short', year: 'numeric'
         }).toUpperCase();
+        
+        document.getElementById('receipt-print-btn').onclick = function() {
+            window.open(`/account/receipt/${record.id}`, '_blank');
+        };
         
         toggleModal('receipt-modal');
     }

@@ -54,6 +54,7 @@ Route::prefix('account')->name('account.')->middleware('auth')->group(function (
     Route::get('/history', [AccountController::class, 'subscriptionHistory'])->name('subscription-history');
     Route::get('/notifications', [AccountController::class, 'notifications'])->name('notifications');
     Route::get('/referral', [AccountController::class, 'referral'])->name('referral');
+    Route::get('/receipt/{id}', [AccountController::class, 'receiptPrint'])->name('receipt.print');
 
     // Wallet Routes
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');

@@ -502,4 +502,20 @@ class AccountController extends Controller
 
         return view('account.referral', compact('user', 'totalReferrals', 'totalEarnings', 'referralList'));
     }
+
+    /**
+     * Show the printable receipt for a transaction.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function receiptPrint($id)
+    {
+        $user = Auth::user();
+        $record = \App\Models\SubscriptionHistory::where('id', $id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+            
+        return view('account.receipt-print', compact('user', 'record'));
+    }
 }
