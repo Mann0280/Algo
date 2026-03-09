@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Signal;
 use App\Models\User;
+use App\Models\Visitor;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -26,12 +27,19 @@ class DashboardController extends Controller
 
         $admin_name = Auth::user() ? Auth::user()->username : 'Admin';
 
+        $visitor_stats = [
+            'total' => Visitor::count(),
+            'today' => Visitor::where('visit_date', date('Y-m-d'))->count(),
+            'month' => Visitor::whereMonth('visit_date', date('m'))->whereYear('visit_date', date('Y'))->count(),
+        ];
+
         return view('admin.dashboard', compact(
             'total_users',
             'active_signals',
             'ai_accuracy',
             'net_revenue',
-            'admin_name'
+            'admin_name',
+            'visitor_stats'
         ));
     }
 
@@ -43,11 +51,18 @@ class DashboardController extends Controller
         $net_revenue_val = \App\Models\SiteSetting::getValue('net_revenue', '154200.50');
         $net_revenue = "₹" . number_format((float)$net_revenue_val, 0);
 
+        $visitor_stats = [
+            'total' => Visitor::count(),
+            'today' => Visitor::where('visit_date', date('Y-m-d'))->count(),
+            'month' => Visitor::whereMonth('visit_date', date('m'))->whereYear('visit_date', date('Y'))->count(),
+        ];
+
         return view('admin.analytics', compact(
             'total_users',
             'active_signals',
             'ai_accuracy',
-            'net_revenue'
+            'net_revenue',
+            'visitor_stats'
         ));
     }
 

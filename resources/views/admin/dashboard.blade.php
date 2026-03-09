@@ -39,10 +39,10 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         @php 
         $stats = [
-            ['label' => 'Total Signals', 'value' => $total_users * 3, 'icon' => 'zap', 'color' => 'purple', 'trend' => '+12%'],
-            ['label' => 'Active Signals', 'value' => '14', 'icon' => 'activity', 'color' => 'blue', 'trend' => 'Stable'],
-            ['label' => 'AI Accuracy', 'value' => $ai_accuracy . '%', 'icon' => 'cpu', 'color' => 'emerald', 'trend' => '+2.4%'],
-            ['label' => 'Registered Users', 'value' => $total_users, 'icon' => 'users', 'color' => 'amber', 'trend' => '+8%'],
+            ['label' => 'Today\'s Visitors', 'value' => $visitor_stats['today'], 'icon' => 'user-check', 'color' => 'purple', 'trend' => 'Daily'],
+            ['label' => 'Monthly Visitors', 'value' => $visitor_stats['month'], 'icon' => 'users', 'color' => 'blue', 'trend' => '30 Days'],
+            ['label' => 'Total Visitors', 'value' => $visitor_stats['total'], 'icon' => 'globe', 'color' => 'emerald', 'trend' => 'Lifetime'],
+            ['label' => 'Total Users', 'value' => $total_users, 'icon' => 'user-plus', 'color' => 'amber', 'trend' => 'Registered'],
         ];
         $colors = [
             'purple' => 'from-purple-600 to-indigo-600 text-purple-400',
@@ -76,6 +76,7 @@
     <!-- Main Content Area -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Live Market Activity / Placeholder for Chart -->
+        {{-- 
         <div class="lg:col-span-2 glass-card rounded-[2.5rem] p-10 border border-white/5 relative overflow-hidden min-h-[500px] flex flex-col">
             <div class="flex justify-between items-center mb-10 pb-6 border-b border-white/5">
                 <div>
@@ -100,6 +101,14 @@
                     <p class="text-[10px] text-gray-700 uppercase tracking-widest mt-2 max-w-xs mx-auto leading-relaxed">Advanced telemetry visualization will initialize upon first market trigger event.</p>
                 </div>
             </div>
+        </div>
+        --}}
+        <div class="lg:col-span-2 glass-card rounded-[2.5rem] p-10 border border-white/5 flex flex-col items-center justify-center text-center min-h-[500px]">
+            <div class="w-20 h-20 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                <i data-lucide="lock" class="w-8 h-8 text-gray-600"></i>
+            </div>
+            <h3 class="orbitron font-black text-xs tracking-[0.3em] text-gray-500 uppercase">Module Suspended</h3>
+            <p class="text-[10px] text-gray-700 uppercase tracking-widest mt-2">Neural Analytics and Predictive Streams are currently offline.</p>
         </div>
 
         <!-- System Logs -->
