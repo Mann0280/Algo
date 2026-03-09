@@ -29,7 +29,7 @@
 <div class="space-y-12">
     <!-- SECTION: IDENTITY -->
     <div id="tab-profile" class="tab-content active space-y-10">
-        <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05] relative overflow-hidden group">
+        <section class="glass-panel rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-12 border-white/[0.05] relative overflow-hidden group">
             <div class="absolute inset-0 bg-gradient-to-br from-purple-600/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
             <div class="relative z-10">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
@@ -43,7 +43,7 @@
                 <div class="flex flex-col lg:flex-row gap-8 xl:gap-12 items-center lg:items-start">
                     <!-- Avatar Section -->
                     <div class="relative shrink-0">
-                        <div class="w-44 h-44 rounded-[3.5rem] border border-white/[0.08] flex items-center justify-center relative overflow-hidden group/avatar shadow-[0_20px_50px_rgba(0,0,0,0.5)]" style="background: var(--card-inner-bg)">
+                        <div class="w-32 h-32 sm:w-44 sm:h-44 rounded-[2.5rem] sm:rounded-[3.5rem] border border-white/[0.08] flex items-center justify-center relative overflow-hidden group/avatar shadow-[0_20px_50px_rgba(0,0,0,0.5)]" style="background: var(--card-inner-bg)">
                             <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/30 to-purple-600/30 opacity-40 group-hover/avatar:opacity-60 transition-opacity duration-500"></div>
                             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(147,51,234,0.15),transparent_70%)]"></div>
                             
@@ -51,7 +51,7 @@
                                 @if(Auth::user()->profile_photo)
                                     <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="Profile" class="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" id="avatar-image">
                                 @else
-                                    <span class="text-7xl font-black orbitron italic select-none tracking-tighter" id="avatar-initial" style="color: var(--text-white); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2))">{{ strtoupper(substr(Auth::user()->username, 0, 1)) }}</span>
+                                    <span class="text-5xl sm:text-7xl font-black orbitron italic select-none tracking-tighter" id="avatar-initial" style="color: var(--text-white); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2))">{{ strtoupper(substr(Auth::user()->username, 0, 1)) }}</span>
                                 @endif
                             </div>
                             
@@ -72,8 +72,8 @@
                     </div>
 
                     <!-- Data Grid -->
-                    <div class="flex-1 w-full mt-4 lg:mt-0">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                    <div class="flex-1 w-full mt-8 lg:mt-0">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 sm:gap-y-10">
                             <!-- Field: Username -->
                             <div class="space-y-3.5">
                                 <div class="flex justify-between items-center px-2">
@@ -130,7 +130,7 @@
 
     <!-- SECTION 2 — SUBSCRIPTION PROTOCOL -->
     <div id="tab-subscription" class="tab-content active space-y-10">
-        <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05] relative overflow-hidden group">
+        <section class="glass-panel rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-12 border-white/[0.05] relative overflow-hidden group">
             <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
             <div class="relative z-10">
                 <div class="mb-10 flex items-center justify-between">
@@ -168,7 +168,7 @@
                 <div class="flex flex-col lg:flex-row justify-between items-center gap-12">
                     <!-- PLAN INFO -->
                     <div class="w-full lg:w-1/2 space-y-6">
-                        <div class="p-8 rounded-[2rem] bg-white/[0.02] border border-white/[0.05] space-y-5">
+                        <div class="p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] bg-white/[0.02] border border-white/[0.05] space-y-5">
                             @php
                                 $isActive = $preciseExpiry && \Carbon\Carbon::parse($preciseExpiry)->isFuture();
                                 $hasPlan = (bool)$user->premium_expiry;
@@ -212,7 +212,7 @@
                             <div class="h-0.5 w-12 bg-purple-500/30 mx-auto rounded-full"></div>
                         </div>
                         
-                        <div id="subscription-timer" class="text-5xl xl:text-7xl font-black orbitron italic tracking-tighter {{ $isActive ? 'text-purple-500 drop-shadow-[0_0_25px_rgba(147,51,234,0.6)]' : 'text-white/10' }}">
+                        <div id="subscription-timer" class="text-4xl sm:text-5xl xl:text-7xl font-black orbitron italic tracking-tighter {{ $isActive ? 'text-purple-500 drop-shadow-[0_0_25px_rgba(147,51,234,0.6)]' : 'text-white/10' }}">
                             00h 00m 00s
                         </div>
 
@@ -419,7 +419,7 @@
 
     <!-- SECTION 3 — ACTIVE SECURE SESSIONS -->
     <div id="tab-sessions" class="tab-content active space-y-10">
-        <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05] relative overflow-hidden group">
+        <section class="glass-panel rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-12 border-white/[0.05] relative overflow-hidden group">
             <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
             <div class="relative z-10">
                 <div class="flex items-center justify-between gap-6 mb-10">
@@ -488,7 +488,7 @@
 
     <!-- SECTION 4 — PASSWORD SECURITY -->
     <div id="tab-security" class="tab-content active space-y-10">
-        <section class="glass-panel rounded-[2.5rem] p-12 border-white/[0.05] relative overflow-hidden group">
+        <section class="glass-panel rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-12 border-white/[0.05] relative overflow-hidden group">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(139,92,246,0.05),transparent_50%)]"></div>
             <div class="relative z-10">
                 <div class="flex items-center gap-4 mb-10">

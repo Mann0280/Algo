@@ -57,7 +57,7 @@
             background-color: var(--bg-deep);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -67,28 +67,67 @@
         .dashboard-container {
             display: grid;
             grid-template-areas: 
-                "sidebar header"
-                "sidebar main";
-            grid-template-columns: 280px 1fr;
+                "header"
+                "main";
+            grid-template-columns: 1fr;
             grid-template-rows: auto 1fr;
             height: 100vh;
-            width: 100vw;
+            width: 100%;
             transition: grid-template-columns 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .dashboard-container.collapsed {
-            grid-template-columns: 88px 1fr;
+        @media (min-width: 1024px) {
+            .dashboard-container {
+                grid-template-areas: 
+                    "sidebar header"
+                    "sidebar main";
+                grid-template-columns: 280px 1fr;
+            }
+            .dashboard-container.collapsed {
+                grid-template-columns: 88px 1fr;
+            }
         }
 
         /* Sidebar Styling */
         .sidebar {
-            grid-area: sidebar;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 280px;
             background: var(--bg-sidebar);
             backdrop-filter: blur(20px);
             border-right: 1px solid var(--border-glass);
             display: flex;
-            flex-col;
-            z-index: 100;
+            flex-direction: column;
+            z-index: 200;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar.mobile-open {
+            transform: translateX(0);
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                position: relative;
+                grid-area: sidebar;
+                transform: translateX(0);
+            }
+        }
+
+        .mobile-sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 150;
+        }
+
+        .mobile-sidebar-backdrop.active {
+            display: block;
         }
 
         /* Header Styling */
@@ -159,6 +198,10 @@
 
         .sidebar-text { transition: opacity 0.3s ease; }
         .collapsed .sidebar-text { opacity: 0; pointer-events: none; }
+
+        @media (max-width: 1023px) {
+            .collapsed .sidebar-text { opacity: 1; pointer-events: auto; }
+        }
     </style>
     @stack('styles')
 </head>
@@ -166,8 +209,11 @@
 
     <div class="dashboard-container" id="dash-layout">
         
+        <!-- Mobile Sidebar Backdrop -->
+        <div class="mobile-sidebar-backdrop lg:hidden" id="sidebar-backdrop"></div>
+
         <!-- SIDEBAR -->
-        <aside class="sidebar py-8 px-6 flex flex-col gap-12 sticky top-0 overflow-hidden">
+        <aside class="sidebar py-8 px-6 flex flex-col gap-12 overflow-hidden">
             <!-- Logo area -->
             <a href="{{ url('/') }}" class="flex items-center gap-4 px-2 overflow-hidden shrink-0 group">
                 <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
@@ -209,9 +255,13 @@
         </aside>
 
         <!-- HEADER -->
-        <header class="header px-10 py-5 flex items-center justify-between sticky top-0">
+        <header class="header px-4 sm:px-10 py-5 flex items-center justify-between sticky top-0 gap-4">
+            <!-- Mobile sidebar toggle -->
+            <button class="lg:hidden w-10 h-10 rounded-xl border border-white/[0.05] flex items-center justify-center text-gray-400 hover:text-[var(--text-white)] transition-all shrink-0" style="background: var(--input-bg)" id="mobile-sidebar-toggle">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
             <div class="flex items-center gap-10 flex-1">
-                <!-- Global Navigation Integrations -->
+                <!-- Global Navigation Integrations (desktop only) -->
                 <div class="hidden xl:flex items-center gap-7 pr-10 border-r border-white/10">
                     <a href="{{ url('/') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap" style="color: var(--nav-text)">
                         <i data-lucide="home" class="w-3.5 h-3.5 transition-colors"></i> Home
@@ -227,7 +277,7 @@
                     </a> --}}
                 </div>
 
-                <div class="relative max-w-md w-full group">
+                <div class="relative max-w-md w-full group hidden sm:block">
                     <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-purple-500 transition-colors"></i>
                     <input type="text" placeholder="Search parameters, signals, or help..." 
                            class="w-full border border-white/[0.05] rounded-xl py-3 pl-12 pr-4 text-[11px] font-medium focus:outline-none focus:border-purple-500/30 transition-all placeholder:text-gray-600"
@@ -235,7 +285,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-8">
+            <div class="flex items-center gap-3 sm:gap-8">
                 <!-- Theme/Status -->
                 <div class="flex items-center gap-1 p-1 rounded-xl border border-white/[0.05] theme-toggle-container" style="background: var(--input-bg)">
                     <button id="dark-theme-btn" class="w-8 h-8 rounded-lg flex items-center justify-center transition-all bg-purple-600 text-white shadow-lg">
@@ -298,7 +348,7 @@
 
         <!-- MAIN CONTENT -->
         <main class="main-content">
-            <div class="max-w-[1600px] mx-auto p-12">
+            <div class="max-w-[1600px] mx-auto p-4 sm:p-8 lg:p-12">
                 @yield('content')
             </div>
         </main>
@@ -337,16 +387,52 @@
         const savedTheme = localStorage.getItem('theme') || 'dark';
         setTheme(savedTheme);
 
-        // Sidebar Toggle
+        // Desktop Sidebar Toggle
         const dashLayout = document.getElementById('dash-layout');
         const sidebarToggle = document.getElementById('sidebar-toggle');
         const toggleIcon = document.getElementById('toggle-icon');
 
         sidebarToggle.addEventListener('click', () => {
-            dashLayout.classList.toggle('collapsed');
-            const isCollapsed = dashLayout.classList.contains('collapsed');
-            toggleIcon.setAttribute('data-lucide', isCollapsed ? 'chevron-right' : 'chevron-left');
-            lucide.createIcons();
+            if (window.innerWidth >= 1024) {
+                dashLayout.classList.toggle('collapsed');
+                const isCollapsed = dashLayout.classList.contains('collapsed');
+                toggleIcon.setAttribute('data-lucide', isCollapsed ? 'chevron-right' : 'chevron-left');
+                lucide.createIcons();
+            } else {
+                // On mobile, close sidebar
+                const sidebar = document.querySelector('.sidebar');
+                const backdrop = document.getElementById('sidebar-backdrop');
+                sidebar.classList.remove('mobile-open');
+                backdrop.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Mobile Sidebar Toggle
+        const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+        function openMobileSidebar() {
+            sidebar.classList.add('mobile-open');
+            sidebarBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.remove('mobile-open');
+            sidebarBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileSidebarToggle.addEventListener('click', openMobileSidebar);
+        sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+
+        // Close mobile sidebar on nav link click
+        document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 1024) closeMobileSidebar();
+            });
         });
     </script>
     @stack('scripts')

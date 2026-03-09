@@ -72,24 +72,26 @@
     </div>
 
     {{-- Main Table --}}
-    <div class="overflow-x-auto no-scrollbar">
-        <table class="cyber-table">
-            <thead>
-                <tr>
-                    <th style="width: 15%">Stock</th>
-                    <th style="width: 10%; text-align: center;">Signal</th>
-                    <th style="width: 10%; text-align: right;">Entry</th>
-                    <th style="width: 10%; text-align: right;">Stop Loss</th>
-                    <th style="width: 10%; text-align: right;">Target</th>
-                    <th style="width: 10%; text-align: right;">Breakeven</th>
-                    <th style="width: 12%; text-align: center;">Date</th>
-                    <th style="width: 10%; text-align: center;">Time</th>
-                </tr>
-            </thead>
-            <tbody id="signals-tbody">
-                {{-- Dynamic Content --}}
-            </tbody>
-        </table>
+    <div class="overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div class="min-w-[800px]">
+            <table class="cyber-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">Stock</th>
+                        <th style="width: 10%; text-align: center;">Signal</th>
+                        <th style="width: 10%; text-align: right;">Entry</th>
+                        <th style="width: 10%; text-align: right;">Stop Loss</th>
+                        <th style="width: 10%; text-align: right;">Target</th>
+                        <th style="width: 10%; text-align: right;">Breakeven</th>
+                        <th style="width: 12%; text-align: center;">Date</th>
+                        <th style="width: 10%; text-align: center;">Time</th>
+                    </tr>
+                </thead>
+                <tbody id="signals-tbody">
+                    {{-- Dynamic Content --}}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     {{-- Video Modal --}}

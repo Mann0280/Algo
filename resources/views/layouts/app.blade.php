@@ -84,7 +84,7 @@
     </style>
     @stack('styles')
 </head>
-<body class="selection:bg-purple-500 selection:text-white">
+<body class="selection:bg-purple-500 selection:text-white overflow-x-hidden">
     <div class="scroll-progress"></div>
 
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -96,7 +96,7 @@
 
     @include('layouts.navbar')
 
-    <main class="relative z-10 pt-32">
+    <main class="relative z-10 pt-24 sm:pt-32 w-full overflow-x-hidden">
         @yield('content')
     </main>
 

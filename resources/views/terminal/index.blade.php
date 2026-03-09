@@ -184,8 +184,8 @@
     @endif
 
     <!-- Notification Panel Overlay -->
-    <div id="notif-panel" class="notification-panel p-8" style="background: var(--nav-sticky-bg)">
-        <div class="flex justify-between items-center mb-10">
+    <div id="notif-panel" class="notification-panel p-6 sm:p-8 w-full sm:w-[380px] right-[-100%] sm:right-[-400px]" style="background: var(--nav-sticky-bg)">
+        <div class="flex justify-between items-center mb-8">
             <h2 class="orbitron font-bold text-xl uppercase" style="color: var(--text-white)">NOTIFICATIONS</h2>
             <button onclick="toggleNotif()" class="text-gray-500 hover:text-white">
                 <i data-lucide="x" class="w-6 h-6"></i>
@@ -197,54 +197,54 @@
                     <span class="text-[10px] font-bold text-purple-400 orbitron">SYSTEM UPDATE</span>
                     <span class="text-[10px] text-gray-600 uppercase">Just Now</span>
                 </div>
-                <p class="text-xs text-gray-300">AI Neural Engine has successfully scanned 500+ NYSE symbols. New signals generated.</p>
+                <p class="text-xs text-gray-300 leading-relaxed">AI Neural Engine has successfully scanned 500+ NSE symbols. New signals generated.</p>
             </div>
         </div>
     </div>
 
-    <!-- Terminal Layout handles sidebar itself in the original design, but as we are converting, we'll keep it integrated. -->
+    <!-- Terminal Layout -->
     <div class="flex-grow">
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
             <div>
                 <h1 class="orbitron text-2xl font-bold uppercase italic tracking-tighter" style="color: var(--text-white)">TERMINAL <span class="text-purple-500">ACCESS</span></h1>
                 <p class="text-[var(--text-muted)] text-sm">Welcome back, {{ $user->username }}. AI Engine is active.</p>
             </div>
-            <div class="flex flex-wrap gap-4">
+            <div class="flex flex-wrap gap-3 sm:gap-4 w-full md:w-auto">
                 <button onclick="toggleNotif()" class="glass-panel p-3 rounded-2xl relative text-gray-400 hover:text-white transition-all">
                     <i data-lucide="bell" class="w-6 h-6"></i>
                     <span class="absolute top-2 right-2 w-3 h-3 bg-red-500 border-2 border-black rounded-full"></span>
                 </button>
-                <div class="glass-panel px-6 py-3 rounded-2xl flex items-center gap-4">
-                    <div class="text-right">
+                <div class="glass-panel px-4 sm:px-6 py-3 rounded-2xl flex items-center gap-4 flex-grow md:flex-grow-0">
+                    <div class="text-left">
                         <div class="text-[10px] uppercase font-bold" style="color: var(--text-muted)">Account Status</div>
                         <div class="text-sm font-bold {{ $isPremium ? 'text-amber-400' : 'text-purple-400' }}">
-                            {{ $isPremium ? 'PREMIUM ACCESS' : 'LIMITED ACCESS' }}
+                            {{ $isPremium ? 'PREMIUM' : 'LIMITED' }}
                         </div>
                     </div>
                 </div>
                 @if (!$isPremium)
-                    <a href="{{ url('/pricing') }}" class="bg-amber-400 text-black px-6 py-3 rounded-2xl font-bold text-sm shadow-lg shadow-amber-400/20 hover:scale-105 transition-all flex items-center">UPGRADE NOW</a>
+                    <a href="{{ url('/pricing') }}" class="bg-amber-400 text-black px-6 py-3 rounded-2xl font-bold text-sm shadow-lg shadow-amber-400/20 hover:scale-105 transition-all flex items-center flex-grow md:flex-grow-0 justify-center">UPGRADE</a>
                 @endif
             </div>
         </header>
 
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 reveal-section">
-            <div class="glass-panel p-6 rounded-2xl border border-white/5">
-                <div class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Breakeven Point</div>
-                <div id="display-breakeven" class="text-2xl font-bold text-purple-400 orbitron">{{ $settings['breakeven_point'] ?? '2500.00' }}</div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 reveal-section">
+            <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-white/5">
+                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Breakeven</div>
+                <div id="display-breakeven" class="text-xl sm:text-2xl font-bold text-purple-400 orbitron">{{ $settings['breakeven_point'] ?? '2500.00' }}</div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl border border-white/5">
-                <div class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Session Date</div>
-                <div id="display-date" class="text-2xl font-bold orbitron tracking-tighter" style="color: var(--text-white)">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M, Y') }}</div>
+            <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-white/5">
+                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Session Date</div>
+                <div id="display-date" class="text-xl sm:text-2xl font-bold orbitron tracking-tighter" style="color: var(--text-white)">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M') }}</div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl border border-white/5">
-                <div class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Active Signals</div>
-                <div id="total-active" class="text-2xl font-bold text-emerald-400 orbitron">00</div>
+            <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-white/5">
+                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Active</div>
+                <div id="total-active" class="text-xl sm:text-2xl font-bold text-emerald-400 orbitron">00</div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl border border-white/5">
-                <div class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Sync Status</div>
-                <div id="refresh-counter" class="text-xs font-bold text-purple-400 orbitron">SYNCING...</div>
+            <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-white/5">
+                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Sync Status</div>
+                <div id="refresh-counter" class="text-[10px] font-bold text-purple-400 orbitron uppercase">SYNC...</div>
             </div>
         </div>
 

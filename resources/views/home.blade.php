@@ -4,7 +4,8 @@
 
 @section('content')
     <!-- Hero Section -->
-    <div class="relative z-10 container mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between py-16 lg:py-20 gap-12">
+    <div class="relative overflow-x-hidden">
+        <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between py-10 sm:py-16 lg:py-20 gap-8 sm:gap-12">
         <!-- Left Column -->
         <div class="w-full lg:w-5/12 flex flex-col gap-8">
             <div class="relative z-20 space-y-8">
@@ -13,29 +14,29 @@
                     Join 15k+ traders using AI Precision
                 </div>
                 
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] orbitron uppercase italic">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] orbitron uppercase italic">
                     <span class="block text-gradient hero-stagger opacity-0">TRADE</span>
                     <span class="block text-white hero-stagger opacity-0">SMARTER</span>
                     <span class="block text-purple-600/50 hero-stagger opacity-0">NOT HARDER</span>
                 </h1>
 
-                <p class="text-slate-400 text-lg md:text-xl leading-relaxed max-w-xl hero-stagger opacity-0 font-medium">
+                <p class="text-slate-400 text-sm sm:text-lg md:text-xl leading-relaxed max-w-xl hero-stagger opacity-0 font-medium">
                     Real-time market insights with precision entry points and intelligent risk management powered by advanced AI prediction models.
                 </p>
 
-                <div class="flex flex-wrap gap-4 mt-8 hero-stagger opacity-0">
-                    <a href="#signals" class="bg-purple-600 text-white font-black py-5 px-10 rounded-2xl transition-all flex items-center gap-3 hover:shadow-[0_0_40px_rgba(147,51,234,0.4)] transform hover:-translate-y-1 orbitron text-[10px] uppercase tracking-widest">
+                <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8 hero-stagger opacity-0">
+                    <a href="#signals" class="w-full sm:w-auto bg-purple-600 text-white font-black py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(147,51,234,0.4)] transform hover:-translate-y-1 orbitron text-[10px] uppercase tracking-widest">
                         Explore Signals
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
-                    <a href="{{ url('/pricing') }}" class="glass-panel border border-white/10 hover:bg-white/5 text-white font-black py-5 px-10 rounded-2xl transition-all transform hover:-translate-y-1 orbitron text-[10px] uppercase tracking-widest">
+                    <a href="{{ url('/pricing') }}" class="w-full sm:w-auto glass-panel border border-white/10 hover:bg-white/5 text-white font-black py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all transform hover:-translate-y-1 orbitron text-[10px] uppercase tracking-widest text-center">
                         Upgrade To Premium
                     </a>
                 </div>
             </div>
 
             <!-- Stats Bar -->
-            <div class="flex gap-12 mt-6 border-t border-white/5 pt-8 hero-stagger opacity-0">
+            <div class="flex flex-wrap gap-6 sm:gap-12 mt-6 border-t border-white/5 pt-8 hero-stagger opacity-0">
                 <div class="group">
                     <div class="text-3xl font-black text-white orbitron tracking-tighter count-up" data-value="95">0</div>
                     <div class="text-[9px] text-slate-500 font-bold orbitron uppercase tracking-widest mt-2">Win Rate %</div>
@@ -54,82 +55,98 @@
         <!-- Right Column: AI Terminal -->
         <div class="w-full lg:w-6/12 relative flex items-center justify-center">
              <!-- Floating Crypto Assets -->
-             <div class="absolute -top-10 -left-10 w-20 h-20 glass-panel rounded-full flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.2">
+             <div class="absolute -top-10 -left-10 w-20 h-20 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.2">
                 <i data-lucide="bitcoin" class="w-10 h-10 text-amber-500"></i>
              </div>
-             <div class="absolute bottom-10 -right-10 w-16 h-16 glass-panel rounded-full flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.5">
+             <div class="absolute bottom-10 -right-4 w-16 h-16 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.5">
                 <i data-lucide="coins" class="w-8 h-8 text-blue-400"></i>
              </div>
-             <div class="absolute top-1/2 -right-20 w-14 h-14 glass-panel rounded-full flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.8">
+             <div class="absolute top-1/2 -right-12 w-14 h-14 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.8">
                 <i data-lucide="dollar-sign" class="w-6 h-6 text-emerald-400"></i>
              </div>
 
              <!-- Floating Badges -->
-             <div class="absolute top-0 right-10 glass-panel rounded-full py-2 px-4 flex items-center gap-2 z-20 hero-stagger opacity-0 border border-purple-500/30">
+             <div class="absolute top-0 right-10 glass-panel rounded-full py-2 px-4 hidden sm:flex items-center gap-2 z-20 hero-stagger opacity-0 border border-purple-500/30">
                 <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
                 <span class="text-[9px] font-bold text-slate-200 orbitron tracking-widest uppercase">TERMINAL v2.0 ACTIVE</span>
             </div>
 
-            <!-- Terminal -->
-            <div class="relative w-full max-w-[450px] aspect-[4/5] bg-[#0c0518] rounded-[3rem] border border-purple-500/40 terminal-glow shadow-2xl z-10 flex flex-col overflow-hidden hero-terminal opacity-0 scale-95 transition-all duration-700">
-                <div class="w-full h-10 flex justify-center items-center gap-2 mt-4 opacity-30">
-                    <div class="w-20 h-1.5 bg-black/60 rounded-full"></div>
-                </div>
-                
-                <!-- Screen Area -->
-                <div class="flex-1 mx-5 mb-5 bg-[#05020a] rounded-[2.5rem] border border-white/5 relative overflow-hidden flex flex-col p-6">
-                    <div class="flex justify-between items-center mb-10">
-                        <div class="flex items-center gap-2 text-purple-500">
-                            <i data-lucide="zap" class="w-5 h-5 fill-purple-500"></i>
-                            <span class="text-[9px] font-black orbitron tracking-widest">NEURAL PATHWAY</span>
+            <!-- Premium Terminal Device Frame -->
+            <div class="relative w-full max-w-[320px] sm:max-w-[420px] mx-auto hero-terminal opacity-0 scale-95 transition-all duration-1000">
+                <!-- Device Outer Frame (The "Hardware") -->
+                <div class="relative aspect-[4/5] bg-[#0c0518] rounded-[3.5rem] p-2.5 border-[6px] border-[#1a1325] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8),0_0_50px_rgba(147,51,234,0.1)] terminal-frame-glow">
+                    <!-- Subtle Metallic Reflection -->
+                    <div class="absolute inset-0 rounded-[3rem] border border-white/5 pointer-events-none"></div>
+                    
+                    <!-- Hardware Details: Side Button -->
+                    <div class="absolute -right-[8px] top-32 w-[4px] h-16 bg-[#2a1f3d] rounded-r-lg border-r border-white/5"></div>
+                    
+                    <!-- Screen Area -->
+                    <div class="w-full h-full bg-[#05020a] rounded-[3rem] border border-white/10 relative overflow-hidden flex flex-col pt-12 p-6 shadow-inner">
+                        
+                        <!-- Dynamic Island / Hardware Sensors -->
+                        <div class="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full flex items-center justify-center gap-3 border border-white/5 z-30">
+                            <div class="w-2 h-2 rounded-full bg-[#0c0518] border border-white/5"></div>
+                            <div class="w-8 h-1 bg-white/5 rounded-full"></div>
                         </div>
-                        <div class="flex gap-2">
-                             <div class="w-2 h-2 rounded-full bg-rose-500/50"></div>
-                             <div class="w-2 h-2 rounded-full bg-amber-500/50"></div>
-                             <div class="w-2 h-2 rounded-full bg-emerald-500/50"></div>
+
+                        <!-- Gloss/Reflection Layer -->
+                        <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none z-20"></div>
+
+                        <div class="flex justify-between items-center mb-10 relative z-10">
+                            <div class="flex items-center gap-2 text-purple-500">
+                                <i data-lucide="zap" class="w-5 h-5 fill-purple-500"></i>
+                                <span class="text-[9px] font-black orbitron tracking-widest uppercase">NEURAL PATHWAY</span>
+                            </div>
+                            <div class="flex gap-2">
+                                 <div class="w-2 h-2 rounded-full bg-rose-500/50"></div>
+                                 <div class="w-2 h-2 rounded-full bg-amber-500/50"></div>
+                                 <div class="w-2 h-2 rounded-full bg-emerald-500/50"></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mb-10">
-                        <div class="text-slate-500 text-[9px] orbitron tracking-[0.3em] font-bold mb-2">SCANNING MARKET DEPTH</div>
-                        <div class="flex items-end gap-3">
-                             <div class="text-5xl font-black text-white orbitron tracking-tighter" id="accuracy-counter">98.4%</div>
-                             <div class="text-emerald-400 text-[10px] font-bold pb-2">+2.45%</div>
+                        <div class="mb-10 relative z-10">
+                            <div class="text-slate-500 text-[9px] orbitron tracking-[0.3em] font-bold mb-2">SCANNING MARKET DEPTH</div>
+                            <div class="flex items-end gap-3">
+                                 <div class="text-5xl font-black text-white orbitron tracking-tighter" id="accuracy-counter">98.4%</div>
+                                 <div class="text-emerald-400 text-[10px] font-bold pb-2">+2.45%</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Chart SVG -->
-                    <div class="flex-1 relative border-t border-white/5 pt-8 overflow-hidden">
-                        <svg class="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
-                            <defs>
-                                <linearGradient id="chart-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" style="stop-color:rgba(147, 51, 234, 0.4);stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:rgba(147, 51, 234, 0);stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path class="chart-path" d="M0,150 Q50,140 100,160 T200,100 T300,120 T400,80 V200 H0 Z" fill="url(#chart-grad)"></path>
-                            <path class="chart-line" d="M0,150 Q50,140 100,160 T200,100 T300,120 T400,80" fill="none" stroke="#a855f7" stroke-width="4" stroke-linecap="round"></path>
-                            
-                            <!-- Animated Pulse -->
-                            <circle cx="400" cy="80" r="5" fill="#a855f7">
-                                <animate attributeName="r" values="5;8;5" dur="1s" repeatCount="indefinite" />
-                                <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite" />
-                            </circle>
-                        </svg>
-                    </div>
+                        <!-- Chart SVG -->
+                        <div class="flex-1 relative border-t border-white/5 pt-8 overflow-hidden z-10">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="chart-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:rgba(147, 51, 234, 0.4);stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:rgba(147, 51, 234, 0);stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path class="chart-path" d="M0,150 Q50,140 100,160 T200,100 T300,120 T400,80 V200 H0 Z" fill="url(#chart-grad)"></path>
+                                <path class="chart-line" d="M0,150 Q50,140 100,160 T200,100 T300,120 T400,80" fill="none" stroke="#a855f7" stroke-width="4" stroke-linecap="round"></path>
+                                
+                                <!-- Animated Pulse -->
+                                <circle cx="400" cy="80" r="5" fill="#a855f7">
+                                    <animate attributeName="r" values="5;8;5" dur="1s" repeatCount="indefinite" />
+                                    <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite" />
+                                </circle>
+                            </svg>
+                        </div>
 
-                    <div class="mt-6 flex justify-between items-center text-[9px] orbitron font-bold text-slate-600">
-                        <span>EST 2024</span>
-                        <div class="flex items-center gap-2">
-                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                             SYSTEM OPERATIONAL
+                        <div class="mt-6 flex justify-between items-center text-[9px] orbitron font-bold text-slate-600 relative z-10">
+                            <span>EST 2024</span>
+                            <div class="flex items-center gap-2">
+                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                 SYSTEM OPERATIONAL
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Ambient Glows -->
-            <div class="absolute -top-20 -right-20 w-96 h-96 bg-purple-600/20 blur-[150px] -z-10 rounded-full"></div>
-            <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-indigo-600/20 blur-[150px] -z-10 rounded-full"></div>
+            <div class="absolute -top-20 -right-20 w-96 h-96 bg-purple-600/20 blur-[150px] -z-10 rounded-full pointer-events-none"></div>
+            <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-indigo-600/20 blur-[150px] -z-10 rounded-full pointer-events-none"></div>
+        </div>
         </div>
     </div>
 
@@ -150,11 +167,11 @@
     </div>
 
     <!-- Signals Section -->
-    <section id="signals" class="py-32 container mx-auto px-6 relative z-10">
+    <section id="signals" class="py-16 sm:py-32 container mx-auto px-4 sm:px-6 relative z-10">
         <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div class="max-w-2xl">
-                <h2 class="orbitron text-4xl md:text-5xl font-bold mb-6 uppercase">See what our AI is detecting <span class="text-purple-500">right now</span></h2>
-                <p class="text-slate-400 leading-relaxed text-lg">Our intelligent trading engine continuously scans market data to detect high-probability setups.</p>
+                <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6 uppercase">See what our AI is detecting <span class="text-purple-500">right now</span></h2>
+                <p class="text-slate-400 leading-relaxed text-sm sm:text-lg">Our intelligent trading engine continuously scans market data to detect high-probability setups.</p>
             </div>
             <a href="{{ url('/register') }}" class="group flex items-center gap-3 text-purple-400 font-bold orbitron text-xs tracking-widest">
                 EXPLORE ALL SIGNALS 
@@ -162,47 +179,148 @@
             </a>
         </div>
 
-        <div class="glass-panel rounded-[2.5rem] overflow-hidden reveal-section">
+        <div class="glass-panel rounded-[2.5rem] overflow-hidden reveal-section signals-table-container">
             @if($isPremium)
-            <div id="home-signals-table"></div>
-@push('scripts')
-<script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
-<script src="{{ asset('js/tabulator-global.js') }}"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const signalsData = @json($signals);
+            <div class="overflow-x-auto no-scrollbar">
+                <table class="signals-table signals-table-desktop">
+                    <thead>
+                        <tr>
+                            <th onclick="sortSignals('pair')">Pair <i data-lucide="chevron-down" class="w-3 h-3 inline opacity-30"></i></th>
+                            <th class="text-right">Entry</th>
+                            <th class="text-right">SL</th>
+                            <th class="text-right">TP1</th>
+                            <th class="text-right">TP2</th>
+                            <th onclick="sortSignals('confidence')" class="text-center">AI Confidence <i data-lucide="chevron-down" class="w-3 h-3 inline opacity-30"></i></th>
+                            <th onclick="sortSignals('time')" class="text-center">Time <i data-lucide="chevron-down" class="w-3 h-3 inline opacity-30"></i></th>
+                            <th class="text-center">Status</th>
+                            <th class="text-right">Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="signals-tbody">
+                        @forelse($signals->take(5) as $signal)
+                        <tr class="signal-row" 
+                            data-confidence="{{ $signal->confidence_level }}" 
+                            data-time="{{ $signal->created_at->timestamp }}">
+                            <td>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500">
+                                        <i data-lucide="bitcoin" class="w-4 h-4"></i>
+                                    </div>
+                                    <span class="font-black orbitron text-xs text-white uppercase tracking-tighter">{{ $signal->stock_symbol }}</span>
+                                </div>
+                            </td>
+                            <td class="text-right font-mono text-sm text-white">₹{{ number_format($signal->entry_price, 1) }}</td>
+                            <td class="text-right font-mono text-xs text-slate-500">₹{{ number_format($signal->stop_loss, 1) }}</td>
+                            <td class="text-right font-mono text-sm text-purple-400">₹{{ number_format($signal->target_1, 1) }}</td>
+                            <td class="text-right font-mono text-sm text-purple-400">₹{{ number_format($signal->target_2, 1) }}</td>
+                            <td class="text-center">
+                                @php
+                                    $conf = $signal->confidence_level;
+                                    $confClass = $conf >= 80 ? 'conf-high' : ($conf >= 60 ? 'conf-mid' : 'conf-low');
+                                @endphp
+                                <span class="px-3 py-1 rounded-lg text-[10px] font-black orbitron {{ $confClass }}">{{ $conf }}%</span>
+                            </td>
+                            <td class="text-center text-[10px] text-slate-500 font-bold uppercase">{{ $signal->created_at->format('h:i A') }}</td>
+                            <td class="text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
+                                    <span class="text-[9px] font-black orbitron text-emerald-400 uppercase">ACTIVE</span>
+                                </div>
+                            </td>
+                            <td class="text-right font-black orbitron text-[10px] text-cyan-400 italic uppercase">PENDING</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="9" class="py-20 text-center">
+                                <i data-lucide="search-x" class="w-12 h-12 text-slate-700 mx-auto mb-4"></i>
+                                <p class="orbitron text-slate-500 text-xs uppercase font-bold">No AI signals detected right now.</p>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
 
-        new Tabulator("#home-signals-table", {
-            ...TABULATOR_BASE_CONFIG,
-            data: signalsData,
-            columns: [
-                {title: "STOCK", field: "stock_symbol", widthGrow: 1.5, sorter: "string", formatter: (cell) => `<div class="font-bold orbitron text-white uppercase">${cell.getValue()}</div>`},
-                {title: "TYPE", field: "is_premium", width: 70, formatter: (cell) => {
-                    const isPremium = cell.getValue();
-                    const cls = isPremium ? 'border-amber-500/50 text-amber-500' : 'border-purple-500/50 text-purple-500';
-                    return `<span class="text-[9px] font-black px-2 py-0.5 rounded border ${cls}">${isPremium ? 'VIP' : 'PRO'}</span>`;
-                }},
-                {title: "ENTRY", field: "entry_price", width: 100, formatter: (cell) => `<div class="font-mono text-sm text-white">₹${cell.getValue()}</div>`},
-                {title: "SL", field: "stop_loss", width: 80, formatter: (cell) => `<div class="font-mono text-xs text-slate-500">₹${cell.getValue()}</div>`},
-                {title: "T1", field: "target_1", width: 80, color: "#a855f7", formatter: (cell) => `<div class="font-mono text-xs text-slate-300">₹${cell.getValue()}</div>`},
-                {title: "T2", field: "target_2", width: 80, color: "#a855f7", formatter: (cell) => `<div class="font-mono text-xs text-slate-300">₹${cell.getValue()}</div>`},
-                {title: "AI %", field: "confidence_level", width: 80, formatter: (cell) => `<div class="font-bold text-purple-400 text-sm">${cell.getValue()}%</div>`},
-                {title: "TIME", field: "created_at", width: 80, formatter: (cell) => `<div class="text-xs text-slate-500">${new Date(cell.getValue()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>`},
-                {title: "STATUS", field: "status", width: 100, formatter: (cell) => `
-                    <div class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
-                        <span class="text-[9px] font-bold orbitron text-emerald-400 uppercase">ACTIVE</span>
-                    </div>`
-                },
-                {title: "PROFIT", field: "profit", hozAlign: "right", widthGrow: 1, formatter: (cell) => `<div class="font-bold text-emerald-400 text-sm italic uppercase">PENDING</div>`},
-            ],
-            renderComplete: () => {
-                if (window.lucide) lucide.createIcons();
-            }
-        });
-    });
-</script>
-@endpush
+            {{-- Mobile Card Layout --}}
+            <div class="signals-mobile-cards p-4">
+                @foreach($signals->take(5) as $signal)
+                <div class="signal-card space-y-4">
+                    <div class="flex justify-between items-center pb-3 border-b border-white/5">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="bitcoin" class="w-5 h-5 text-orange-400"></i>
+                            <span class="font-black orbitron text-base text-white uppercase">{{ $signal->stock_symbol }}</span>
+                        </div>
+                        @php
+                            $conf = $signal->confidence_level;
+                            $confClass = $conf >= 80 ? 'conf-high' : ($conf >= 60 ? 'conf-mid' : 'conf-low');
+                        @endphp
+                        <span class="px-2 py-0.5 rounded-md text-[9px] font-black orbitron {{ $confClass }}">{{ $conf }}%</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Entry Price</div>
+                            <div class="font-mono text-sm text-white">₹{{ number_format($signal->entry_price, 1) }}</div>
+                        </div>
+                        <div>
+                            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Stop Loss</div>
+                            <div class="font-mono text-sm text-rose-500/80">₹{{ number_format($signal->stop_loss, 1) }}</div>
+                        </div>
+                        <div>
+                            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Targets</div>
+                            <div class="font-mono text-sm text-purple-400">T1: ₹{{ number_format($signal->target_1, 1) }}</div>
+                        </div>
+                        <div>
+                            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Status</div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span class="text-[9px] font-black orbitron text-emerald-400 uppercase">ACTIVE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-3 border-t border-white/5">
+                        <div class="text-[9px] text-slate-500 font-bold uppercase">{{ $signal->created_at->format('h:i A') }}</div>
+                        <div class="font-black orbitron text-[10px] text-cyan-400 italic uppercase">PENDING</div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            <div class="p-6 border-t border-white/5 flex justify-center">
+                <a href="{{ url('/signals') }}" class="group bg-purple-600/10 hover:bg-purple-600 border border-purple-500/30 text-purple-400 hover:text-white px-8 py-3 rounded-xl font-black orbitron text-[10px] tracking-widest transition-all shadow-[0_0_20px_rgba(147,51,234,0.1)] hover:shadow-purple-500/40 uppercase">
+                    Explore All Signals
+                </a>
+            </div>
+
+            @push('scripts')
+            <script>
+                let sortDirections = {};
+                function sortSignals(field) {
+                    const tbody = document.getElementById('signals-tbody');
+                    const rows = Array.from(tbody.querySelectorAll('.signal-row'));
+                    const direction = sortDirections[field] === 'asc' ? 'desc' : 'asc';
+                    sortDirections[field] = direction;
+
+                    rows.sort((a, b) => {
+                        let valA, valB;
+                        if (field === 'confidence') {
+                            valA = parseInt(a.dataset.confidence);
+                            valB = parseInt(b.dataset.confidence);
+                        } else if (field === 'time') {
+                            valA = parseInt(a.dataset.time);
+                            valB = parseInt(b.dataset.time);
+                        } else {
+                            valA = a.cells[0].innerText.trim();
+                            valB = b.cells[0].innerText.trim();
+                        }
+
+                        if (direction === 'asc') return valA > valB ? 1 : -1;
+                        return valA < valB ? 1 : -1;
+                    });
+
+                    rows.forEach(row => tbody.appendChild(row));
+                }
+            </script>
+            @endpush
             @else
             <!-- Lock Overlay for Landing Page -->
             <div class="p-12 text-center bg-gradient-to-t from-purple-900/40 to-transparent">
@@ -253,17 +371,17 @@
     <!-- Alert Feature -->
     <section class="py-32 relative overflow-hidden">
         <div class="container mx-auto px-6">
-            <div class="p-12 md:p-20 rounded-[5rem] bg-[#0c0518] border border-white/5 relative overflow-hidden group shadow-2xl">
+            <div class="p-6 sm:p-12 md:p-20 rounded-[2rem] sm:rounded-[5rem] bg-[#0c0518] border border-white/5 relative overflow-hidden group shadow-2xl">
                 <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-600/10 blur-[130px] -z-10 group-hover:bg-purple-600/15 transition-all duration-700"></div>
                 <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/5 blur-[100px] -z-10"></div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-20 items-center">
                     <div class="reveal-left">
-                        <h2 class="orbitron text-4xl md:text-6xl font-black mb-8 leading-[1.1] uppercase tracking-tighter">
+                        <h2 class="orbitron text-3xl md:text-6xl font-black mb-6 sm:mb-8 leading-[1.1] uppercase tracking-tighter">
                             <span class="text-white block">NEVER MISS AN</span>
                             <span class="bg-gradient-to-r from-purple-500 to-magenta-500 bg-clip-text text-transparent block" style="background-image: linear-gradient(90deg, #9333ea, #d946ef);">OPPORTUNITY</span>
                         </h2>
-                        <p class="text-slate-400 text-lg mb-12 max-w-md font-medium leading-relaxed">Our multi-channel alert system ensures you are always connected to the market pulse.</p>
+                        <p class="text-slate-400 text-sm sm:text-lg mb-8 sm:mb-12 max-w-md font-medium leading-relaxed">Our multi-channel alert system ensures you are always connected to the market pulse.</p>
                         
                         <div class="space-y-5">
                             <div class="flex items-center gap-6 p-5 glass-panel rounded-2xl border border-white/5 border-l-4 border-l-emerald-500 group/item hover:bg-white/10 transition-all cursor-default">
@@ -287,7 +405,7 @@
                         </div>
                     </div>
                     
-                    <div class="relative flex justify-center items-center reveal-right">
+                    <div class="relative flex justify-center items-center reveal-right overflow-hidden">
                         <!-- Floating ambient blobs -->
                         <div class="absolute -top-10 -left-10 w-48 h-24 glass-panel rounded-[2rem] border border-white/10 -rotate-12 blur-[2px] opacity-40"></div>
                         <div class="absolute -bottom-10 -right-10 w-48 h-24 glass-panel rounded-[2rem] border border-white/10 rotate-6 blur-[1px] opacity-40 scale-110"></div>
@@ -372,8 +490,8 @@
             ];
             @endphp
             @foreach($reviews as $i => $r)
-            <div class="glass-panel p-8 rounded-3xl relative border border-white/5 hover:border-purple-500/20 transition-all group">
-                <div class="absolute -top-4 -left-4 w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-purple-600/30">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl sm:rounded-3xl relative border border-white/5 hover:border-purple-500/20 transition-all group overflow-hidden">
+                <div class="absolute -top-4 -left-4 w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-purple-600/30 pointer-events-none">
                     <i data-lucide="quote" class="w-5 h-5 text-white fill-white"></i>
                 </div>
                 <div class="flex gap-1 mb-4 mt-2">
@@ -432,7 +550,7 @@
     <!-- Platform Performance -->
     <section class="py-24 relative">
         <div class="container mx-auto px-6">
-            <div class="glass-panel p-10 md:p-16 rounded-[2.5rem] border border-white/5 relative overflow-hidden">
+            <div class="glass-panel p-6 sm:p-10 md:p-16 rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-600/3 via-transparent to-indigo-600/3 -z-10"></div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -487,7 +605,7 @@
     <!-- Newsletter / Quick CTA -->
     <section class="py-16 relative">
         <div class="container mx-auto px-6">
-            <div class="glass-panel p-8 md:p-12 rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="glass-panel p-6 sm:p-8 md:p-12 rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
                 <div class="flex items-center gap-6">
                     <div class="w-14 h-14 rounded-2xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
                         <i data-lucide="mail" class="w-7 h-7 text-purple-400"></i>
@@ -514,16 +632,16 @@
         <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] -z-10 rounded-full"></div>
 
         <div class="container mx-auto px-6 relative z-10">
-            <div class="glass-panel p-16 md:p-32 rounded-[4rem] text-center border border-white/5 relative overflow-hidden reveal-section">
+            <div class="glass-panel p-8 sm:p-16 md:p-32 rounded-[2rem] sm:rounded-[4rem] text-center border border-white/5 relative overflow-hidden reveal-section">
                 <!-- Particle Background Container -->
                 <div id="cta-particles" class="absolute inset-0 -z-10"></div>
                 
                 <div class="relative z-20">
-                    <h2 class="orbitron text-4xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white uppercase italic">
+                    <h2 class="orbitron text-3xl sm:text-4xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white uppercase italic">
                         STOP GUESSING. <br>
                         START <span class="text-gradient">TRADING</span>.
                     </h2>
-                    <p class="text-slate-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium">
+                    <p class="text-slate-400 text-sm sm:text-lg md:text-xl mb-8 sm:mb-12 max-w-2xl mx-auto font-medium">
                         Join the elite circle of traders using our Neural Prediction Stream to maintain a consistent edge in the market.
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center gap-6">
@@ -536,7 +654,7 @@
                     </div>
 
                     <!-- Trust Indicators -->
-                    <div class="mt-16 pt-16 border-t border-white/5 flex flex-wrap justify-center gap-12 opacity-40">
+                    <div class="mt-10 sm:mt-16 pt-10 sm:pt-16 border-t border-white/5 flex flex-wrap justify-center gap-6 sm:gap-12 opacity-40">
                          <div class="orbitron font-bold text-[9px] tracking-widest uppercase flex items-center gap-2">
                              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
                              ENCRYPTED DATA
@@ -560,6 +678,82 @@
 <style>
     .animate-ticker { animation: ticker 40s linear infinite; }
     @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* AI Signals Table Styles */
+    .signals-table-container {
+        background: rgba(12, 5, 24, 0.4);
+        border: 1px solid rgba(147, 51, 234, 0.1);
+        backdrop-filter: blur(30px);
+    }
+    .signals-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    .signals-table th {
+        padding: 1.5rem 1rem;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.65rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #64748b;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .signals-table th:hover { color: #a855f7; background: rgba(147, 51, 234, 0.02); }
+    .signals-table td {
+        padding: 1.5rem 1rem;
+        vertical-align: middle;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        transition: background 0.3s;
+    }
+    .signals-table tr:last-child td { border-bottom: none; }
+    .signals-table tr:hover td { background: rgba(147, 51, 234, 0.04); }
+
+    /* Confidence Badges */
+    .conf-high { color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); background: rgba(16, 185, 129, 0.05); }
+    .conf-mid { color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.05); }
+    .conf-low { color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); }
+
+    /* Status Badges */
+    .status-active { color: #10b981; }
+    .status-closed { color: #94a3b8; }
+
+    /* Mobile Cards */
+    @media (max-width: 767px) {
+        .signals-table-desktop { display: none; }
+        .signals-mobile-cards { display: block; }
+        .signal-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        .signal-card:hover { transform: translateY(-3px); border-color: rgba(147, 51, 234, 0.3); }
+    }
+    @media (min-width: 768px) {
+        .signals-table-desktop { display: table; }
+        .signals-mobile-cards { display: none; }
+    }
+
+    /* Terminal Frame Enhancements */
+    .terminal-frame-glow {
+        box-shadow: 
+            0 50px 100px -20px rgba(0,0,0,0.8),
+            0 0 50px rgba(147, 51, 234, 0.1),
+            inset 0 0 20px rgba(255, 255, 255, 0.02);
+    }
+    .hero-terminal {
+        perspective: 1000px;
+    }
+    .hero-terminal > div {
+        transform: rotateX(2deg);
+        transform-style: preserve-3d;
+    }
 </style>
 @endpush
 
@@ -592,8 +786,8 @@
 
         // 2. Floating Assets Parallax/Animation
         gsap.to(".floating-asset", {
-            y: "random(-20, 20)",
-            x: "random(-10, 10)",
+            y: "random(-15, 15)",
+            x: "random(-5, 5)",
             rotation: "random(-15, 15)",
             duration: "random(2, 4)",
             repeat: -1,

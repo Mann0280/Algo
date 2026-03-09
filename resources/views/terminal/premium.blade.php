@@ -208,7 +208,7 @@
                         </div>
                         <div class="text-right"><div class="text-[8px] font-bold text-gray-600 uppercase">AI Score</div><div class="text-lg font-black orbitron {{ $tip->confidence_percentage >= 90 ? 'text-emerald-400' : 'text-amber-400' }}">{{ $tip->confidence_percentage }}%</div></div>
                     </div>
-                    <div class="grid grid-cols-5 gap-2 mb-3">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mb-3">
                         <div class="bg-white/[0.03] rounded-lg p-2.5 text-center"><div class="text-[7px] font-bold text-gray-500 uppercase mb-0.5">Entry</div><div class="text-sm font-black text-white">₹{{ number_format($tip->entry_price, 1) }}</div></div>
                         <div class="bg-emerald-500/[0.03] rounded-lg p-2.5 text-center border border-emerald-500/10"><div class="text-[7px] font-bold text-emerald-500/60 uppercase mb-0.5">Target 1</div><div class="text-sm font-black text-emerald-400">₹{{ number_format($tip->target_1, 1) }}</div></div>
                         <div class="bg-emerald-500/[0.03] rounded-lg p-2.5 text-center border border-emerald-500/10"><div class="text-[7px] font-bold text-emerald-500/60 uppercase mb-0.5">Target 2</div><div class="text-sm font-black text-emerald-400">₹{{ number_format($tip->target_2, 1) }}</div></div>
@@ -240,6 +240,7 @@
                 <h3 class="orbitron font-black text-white text-base uppercase mb-1">Unlock All Signals</h3>
                 <p class="text-gray-400 text-xs mb-4 max-w-sm mx-auto">Get unlimited access to AI signals, P&L calculator, trade history, and priority alerts.</p>
                 <a href="{{ route('pricing') }}" class="inline-block px-8 py-2.5 bg-amber-500 text-black font-black text-[10px] orbitron uppercase rounded-xl hover:scale-105 transition-all">Upgrade to Premium</a>
+                </div>
             </div>
             @endif
 
@@ -248,8 +249,10 @@
                 <div class="widget-title orbitron flex items-center gap-2"><i data-lucide="play-circle" class="w-3.5 h-3.5 text-purple-400"></i> Market Analysis — Today's Session</div>
                 <div class="relative rounded-xl overflow-hidden bg-black/40 aspect-video">
                     <iframe class="w-full h-full" src="https://www.youtube.com/embed/Xn7KWR9EOGQ?rel=0&modestbranding=1" title="Market Analysis" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                </div>
+                    </div>
+            </div>
                 <p class="text-[10px] text-gray-500 mt-2 leading-snug"><i data-lucide="info" class="w-3 h-3 inline-block text-gray-600 mr-1"></i>Daily pre-market analysis covering key levels, sector trends, and AI model predictions.</p>
+                </div>
             </div>
 
             {{-- How AI Signals Work --}}
@@ -259,19 +262,25 @@
                     <div class="flex items-start gap-3">
                         <div class="w-7 h-7 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-black text-purple-400 orbitron">1</div>
                         <div><div class="text-xs font-bold text-white mb-0.5">Data Collection</div><p class="text-[10px] text-gray-400 leading-snug">AI scans 500+ stocks across NSE/BSE, analyzing price, volume, OI, and 50+ technical indicators every 30 seconds.</p></div>
-                    </div>
+                        </div>
+            </div>
                     <div class="flex items-start gap-3">
                         <div class="w-7 h-7 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-black text-purple-400 orbitron">2</div>
                         <div><div class="text-xs font-bold text-white mb-0.5">Pattern Recognition</div><p class="text-[10px] text-gray-400 leading-snug">Neural network v4.2 identifies candlestick patterns, Fibonacci levels, divergences, and support/resistance zones with 96.5% accuracy.</p></div>
-                    </div>
+                        </div>
+            </div>
                     <div class="flex items-start gap-3">
                         <div class="w-7 h-7 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-black text-purple-400 orbitron">3</div>
                         <div><div class="text-xs font-bold text-white mb-0.5">Signal Generation</div><p class="text-[10px] text-gray-400 leading-snug">Signals with Entry, 3 Targets, Stop Loss, and Confidence Score are generated only when AI confidence exceeds 85%.</p></div>
-                    </div>
+                        </div>
+            </div>
                     <div class="flex items-start gap-3">
                         <div class="w-7 h-7 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-black text-emerald-400 orbitron">✓</div>
                         <div><div class="text-xs font-bold text-emerald-400 mb-0.5">Real-Time Delivery</div><p class="text-[10px] text-gray-400 leading-snug">Signals are delivered instantly to your terminal, WhatsApp, and email with live tracking and auto stop-loss alerts.</p></div>
+                        </div>
+            </div>
                     </div>
+            </div>
                 </div>
             </div>
 
@@ -283,36 +292,46 @@
                         <div class="text-[7px] font-bold text-gray-500 uppercase mb-0.5">NIFTY 50</div>
                         <div class="text-sm font-black text-white orbitron">22,456.80</div>
                         <div class="text-[9px] font-bold text-emerald-400 orbitron">▲ +276.40 (+1.24%)</div>
-                    </div>
+                        </div>
+            </div>
                     <div class="p-2.5 bg-emerald-500/5 rounded-lg text-center border border-emerald-500/10">
                         <div class="text-[7px] font-bold text-gray-500 uppercase mb-0.5">SENSEX</div>
                         <div class="text-sm font-black text-white orbitron">73,890.20</div>
                         <div class="text-[9px] font-bold text-emerald-400 orbitron">▲ +718.50 (+0.98%)</div>
+                        </div>
+            </div>
                     </div>
-                </div>
+            </div>
                 <div class="grid grid-cols-3 gap-2 mb-3">
                     <div class="p-2 bg-white/[0.02] rounded-lg text-center">
                         <div class="text-[7px] font-bold text-gray-500 uppercase">India VIX</div>
                         <div class="text-xs font-black text-amber-400 orbitron">14.2</div>
                         <div class="text-[8px] text-rose-400">▼ -0.8</div>
-                    </div>
+                        </div>
+            </div>
                     <div class="p-2 bg-white/[0.02] rounded-lg text-center">
                         <div class="text-[7px] font-bold text-gray-500 uppercase">Adv/Dec</div>
                         <div class="text-xs font-black text-emerald-400 orbitron">1842/956</div>
                         <div class="text-[8px] text-emerald-400">Bullish</div>
-                    </div>
+                        </div>
+            </div>
                     <div class="p-2 bg-white/[0.02] rounded-lg text-center">
                         <div class="text-[7px] font-bold text-gray-500 uppercase">Volume</div>
                         <div class="text-xs font-black text-white orbitron">₹42.8K Cr</div>
                         <div class="text-[8px] text-emerald-400">▲ +12%</div>
+                        </div>
+            </div>
                     </div>
-                </div>
+            </div>
                 <div class="p-3 bg-purple-500/5 rounded-lg border border-purple-500/10">
                     <div class="flex items-center gap-2 mb-1.5">
                         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-400"></i>
                         <span class="text-[9px] font-bold text-purple-400 orbitron uppercase">AI Market Outlook</span>
-                    </div>
+                        </div>
+            </div>
                     <p class="text-[10px] text-gray-300 leading-relaxed">Markets are showing <span class="text-emerald-400 font-bold">bullish momentum</span> with strong FII inflows. IT and Auto sectors are leading. Key support at <span class="text-white font-bold">22,200</span>, resistance at <span class="text-white font-bold">22,600</span>. Our AI model suggests a <span class="text-emerald-400 font-bold">75% probability of upside continuation</span> in the next session.</p>
+                    </div>
+            </div>
                 </div>
             </div>
         </div>
@@ -442,7 +461,8 @@
         {{-- Technical Indicators --}}
         <div class="widget md:col-span-2">
             <div class="widget-title orbitron flex items-center gap-2"><i data-lucide="gauge" class="w-3.5 h-3.5 text-purple-400"></i> Technical Indicators — NIFTY 50</div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div class="overflow-x-auto no-scrollbar -mx-2 px-2">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 min-w-[500px] md:min-w-0">
                 @foreach($indicators as $ind)
                 <div class="p-3 bg-white/[0.02] rounded-lg border border-white/[0.03]">
                     <div class="text-[8px] font-bold text-gray-500 uppercase mb-1">{{ $ind['name'] }}</div>
@@ -450,6 +470,7 @@
                     <span class="text-[8px] font-bold px-1.5 py-0.5 rounded bg-{{ $ind['color'] }}-500/10 text-{{ $ind['color'] }}-400 uppercase">{{ $ind['signal'] }}</span>
                 </div>
                 @endforeach
+                </div>
             </div>
             <div class="mt-3 flex items-center gap-2">
                 <span class="text-[8px] font-bold text-gray-500 uppercase">Overall:</span>
@@ -511,16 +532,20 @@
                 <div class="text-center p-2 bg-rose-500/5 rounded-lg"><div class="text-[7px] font-bold text-gray-500 uppercase">Total Put OI</div><div class="text-xs font-black text-rose-400 orbitron">{{ $options['puts_oi'] }}</div></div>
             </div>
             <div class="text-[8px] font-bold text-gray-500 uppercase mb-2">Key Strikes</div>
-            <div class="grid grid-cols-5 gap-1 text-[8px] font-bold text-gray-500 uppercase orbitron mb-1 px-1"><div>Call OI</div><div>Call Chg</div><div class="text-center text-purple-400">Strike</div><div>Put OI</div><div>Put Chg</div></div>
-            @foreach($options['strikes'] as $s)
-            <div class="grid grid-cols-5 gap-1 text-[10px] py-1.5 border-b border-white/[0.02] px-1 items-center">
-                <div class="font-bold text-emerald-400">{{ $s['call_oi'] }}</div>
-                <div class="font-bold {{ str_starts_with($s['call_chg'], '+') ? 'text-emerald-400' : 'text-rose-400' }}">{{ $s['call_chg'] }}</div>
-                <div class="text-center font-black text-white orbitron">{{ number_format($s['strike']) }}</div>
-                <div class="font-bold text-rose-400">{{ $s['put_oi'] }}</div>
-                <div class="font-bold {{ str_starts_with($s['put_chg'], '+') ? 'text-emerald-400' : 'text-rose-400' }}">{{ $s['put_chg'] }}</div>
+            <div class="overflow-x-auto no-scrollbar -mx-2 px-2">
+                <div class="min-w-[400px]">
+                    <div class="grid grid-cols-5 gap-1 text-[8px] font-bold text-gray-500 uppercase orbitron mb-1 px-1"><div>Call OI</div><div>Call Chg</div><div class="text-center text-purple-400">Strike</div><div>Put OI</div><div>Put Chg</div></div>
+                    @foreach($options['strikes'] as $s)
+                    <div class="grid grid-cols-5 gap-1 text-[10px] py-1.5 border-b border-white/[0.02] px-1 items-center">
+                        <div class="font-bold text-emerald-400">{{ $s['call_oi'] }}</div>
+                        <div class="font-bold {{ str_starts_with($s['call_chg'], '+') ? 'text-emerald-400' : 'text-rose-400' }}">{{ $s['call_chg'] }}</div>
+                        <div class="text-center font-black text-white orbitron">{{ number_format($s['strike']) }}</div>
+                        <div class="font-bold text-rose-400">{{ $s['put_oi'] }}</div>
+                        <div class="font-bold {{ str_starts_with($s['put_chg'], '+') ? 'text-emerald-400' : 'text-rose-400' }}">{{ $s['put_chg'] }}</div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
-            @endforeach
             <div class="mt-3 text-center"><span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-[9px] font-bold orbitron uppercase rounded-full">{{ $options['buildup'] }}</span></div>
         </div>
         @else
@@ -537,19 +562,22 @@
             <div class="space-y-0">
                 @foreach($calendar as $ev)
                 @php $impactColors = ['High' => 'rose', 'Medium' => 'amber', 'Low' => 'gray']; $ic = $impactColors[$ev['impact']] ?? 'gray'; @endphp
-                <div class="flex items-center gap-3 py-2 border-b border-white/[0.02]">
-                    <div class="w-12 text-center flex-shrink-0"><div class="text-xs font-black text-white orbitron">{{ $ev['date'] }}</div></div>
-                    <div class="flex-1">
-                        <div class="text-xs font-bold text-gray-300">{{ $ev['event'] }}</div>
-                        <div class="flex items-center gap-2 mt-0.5">
-                            <span class="text-[8px] font-bold text-gray-500 uppercase">{{ $ev['type'] }}</span>
-                            <span class="text-[7px] font-bold px-1.5 py-0.5 rounded bg-{{ $ic }}-500/10 text-{{ $ic }}-400 uppercase">{{ $ev['impact'] }}</span>
+                <div class="flex items-center justify-between gap-3 py-2 border-b border-white/[0.02]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 text-center flex-shrink-0"><div class="text-xs font-black text-white orbitron">{{ $ev['date'] }}</div></div>
+                        <div class="flex-1">
+                            <div class="text-xs font-bold text-gray-300">{{ $ev['event'] }}</div>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <span class="text-[8px] font-bold text-gray-500 uppercase">{{ $ev['type'] }}</span>
+                                <span class="text-[7px] font-bold px-1.5 py-0.5 rounded bg-{{ $ic }}-500/10 text-{{ $ic }}-400 uppercase">{{ $ev['impact'] }}</span>
+                            </div>
                         </div>
                     </div>
                     <i data-lucide="bell" class="w-3.5 h-3.5 text-gray-600 hover:text-purple-400 cursor-pointer transition-colors"></i>
                 </div>
                 @endforeach
             </div>
+        </div>
         </div>
     </div>
 
@@ -561,11 +589,11 @@
         <div class="widget">
             <div class="widget-title orbitron flex items-center gap-2"><i data-lucide="scale" class="w-3.5 h-3.5 text-purple-400"></i> Risk-Reward Calculator</div>
             <div class="grid grid-cols-3 gap-2 mb-3">
-                <div><label class="text-[8px] font-bold text-gray-500 uppercase block mb-0.5">Entry Price</label><input type="number" class="calc-input" id="rrEntry" placeholder="22450"></div>
-                <div><label class="text-[8px] font-bold text-gray-500 uppercase block mb-0.5">Target Price</label><input type="number" class="calc-input" id="rrTarget" placeholder="22700"></div>
-                <div><label class="text-[8px] font-bold text-gray-500 uppercase block mb-0.5">Stop Loss</label><input type="number" class="calc-input" id="rrSL" placeholder="22300"></div>
+                <div><label class="text-[8px] font-bold text-gray-500 uppercase block mb-0.5">Entry</label><input type="number" class="calc-input text-[10px]" id="rrEntry" placeholder="22450"></div>
+                <div><label class="text-[8px] font-bold text-gray-500 uppercase block mb-0.5">Target</label><input type="number" class="calc-input text-[10px]" id="rrTarget" placeholder="22700"></div>
+                <div><label class="text-[8px] font-bold text-gray-500 uppercase block mb-0.5">Stop Loss</label><input type="number" class="calc-input text-[10px]" id="rrSL" placeholder="22300"></div>
             </div>
-            <button onclick="calcRR()" class="w-full py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs orbitron uppercase rounded-lg transition-all mb-3">Analyze Risk-Reward</button>
+            <button onclick="calcRR()" class="w-full py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs orbitron uppercase rounded-lg transition-all mb-3">Analyze R:R</button>
             <div id="rrResult" class="hidden">
                 <div class="grid grid-cols-3 gap-2 mb-3">
                     <div class="text-center p-2 bg-emerald-500/5 rounded-lg"><div class="text-[7px] font-bold text-gray-500 uppercase">Reward</div><div class="text-sm font-black text-emerald-400 orbitron" id="rrReward">0</div></div>
@@ -594,6 +622,7 @@
                 </div>
                 @endforeach
             </div>
+        </div>
         </div>
     </div>
 
@@ -627,7 +656,8 @@
                     <div class="flex items-start gap-2 py-1">
                         <span class="text-[9px] font-mono text-purple-400/60 flex-shrink-0">${row.time}</span>
                         <span class="text-[10px] text-gray-400 leading-snug">${row.msg}</span>
-                    </div>`;
+                        </div>
+            </div>`;
                 }},
             ]
         });

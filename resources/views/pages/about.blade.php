@@ -351,7 +351,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- CTA --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="glass-panel p-12 md:p-20 rounded-[2.5rem] border border-white/5 text-center relative overflow-hidden fade-in-up">
+        <div class="glass-panel p-6 sm:p-12 md:p-20 rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 text-center relative overflow-hidden fade-in-up">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-600/10 blur-[120px] -z-10"></div>
             <h2 class="orbitron text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase mb-6">
                 Ready to <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Trade Smarter</span>?
