@@ -73,15 +73,12 @@
         @endforeach
     </div>
 
-    <!-- Main Content Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Live Market Activity / Placeholder for Chart -->
-        {{-- 
+        <!-- Visitor Traffic Chart -->
         <div class="lg:col-span-2 glass-card rounded-[2.5rem] p-10 border border-white/5 relative overflow-hidden min-h-[500px] flex flex-col">
             <div class="flex justify-between items-center mb-10 pb-6 border-b border-white/5">
                 <div>
-                    <h3 class="orbitron font-black text-xs tracking-[0.3em] text-white uppercase">Neural Growth Analytics</h3>
-                    <p class="text-[10px] text-gray-500 uppercase font-bold mt-1 tracking-widest">REAL-TIME DATA STREAM V4.2</p>
+                    <h3 class="orbitron font-black text-xs tracking-[0.3em] text-white uppercase">Visitor Growth Analytics</h3>
+                    <p class="text-[10px] text-gray-500 uppercase font-bold mt-1 tracking-widest">REAL-TIME TRAFFIC STREAM V4.2</p>
                 </div>
                 <div class="flex gap-2">
                     <button class="px-4 py-2 rounded-lg bg-white/5 text-[9px] font-black orbitron text-gray-400 hover:text-white transition-all">DAILY</button>
@@ -89,26 +86,9 @@
                 </div>
             </div>
             
-            <div class="flex-1 flex flex-col items-center justify-center text-center space-y-6">
-                <div class="relative">
-                    <div class="w-24 h-24 rounded-full border border-purple-500/20 flex items-center justify-center animate-pulse">
-                        <i data-lucide="bar-chart-3" class="w-10 h-10 text-purple-500/40"></i>
-                    </div>
-                    <div class="absolute inset-0 bg-purple-500/5 blur-3xl rounded-full"></div>
-                </div>
-                <div>
-                    <p class="orbitron font-bold text-[10px] tracking-widest text-gray-500 uppercase">Awaiting Data Population</p>
-                    <p class="text-[10px] text-gray-700 uppercase tracking-widest mt-2 max-w-xs mx-auto leading-relaxed">Advanced telemetry visualization will initialize upon first market trigger event.</p>
-                </div>
+            <div class="flex-1 relative">
+                <canvas id="visitorTrafficChart"></canvas>
             </div>
-        </div>
-        --}}
-        <div class="lg:col-span-2 glass-card rounded-[2.5rem] p-10 border border-white/5 flex flex-col items-center justify-center text-center min-h-[500px]">
-            <div class="w-20 h-20 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center mb-6">
-                <i data-lucide="lock" class="w-8 h-8 text-gray-600"></i>
-            </div>
-            <h3 class="orbitron font-black text-xs tracking-[0.3em] text-gray-500 uppercase">Module Suspended</h3>
-            <p class="text-[10px] text-gray-700 uppercase tracking-widest mt-2">Neural Analytics and Predictive Streams are currently offline.</p>
         </div>
 
         <!-- System Logs -->
@@ -209,12 +189,66 @@
 </div>
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     function toggleModal(id) {
         const modal = document.getElementById(id);
         modal.classList.toggle('hidden');
         modal.classList.toggle('flex');
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('visitorTrafficChart').getContext('2d');
+        const purpleGradient = ctx.createLinearGradient(0, 0, 0, 400);
+        purpleGradient.addColorStop(0, 'rgba(147, 51, 234, 0.4)');
+        purpleGradient.addColorStop(1, 'rgba(147, 51, 234, 0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {!! json_encode(array_column($chart_data, 'day')) !!},
+                datasets: [{
+                    label: 'Unique Visitors',
+                    data: {!! json_encode(array_column($chart_data, 'count')) !!},
+                    borderColor: '#9333ea',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#9333ea',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    backgroundColor: purpleGradient,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#0c0518',
+                        titleFont: { family: 'Orbitron', size: 12 },
+                        bodyFont: { family: 'Inter', size: 12 },
+                        padding: 12,
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
+                        ticks: { color: '#6b7280', font: { family: 'Orbitron', size: 9 }, stepSize: 1 }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#6b7280', font: { family: 'Orbitron', size: 9 } }
+                    }
+                }
+            }
+        });
+    });
 </script>
 @endpush
 @endsection

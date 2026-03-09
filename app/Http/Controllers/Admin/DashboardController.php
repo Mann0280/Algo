@@ -33,13 +33,24 @@ class DashboardController extends Controller
             'month' => Visitor::whereMonth('visit_date', date('m'))->whereYear('visit_date', date('Y'))->count(),
         ];
 
+        // Last 7 days visitor data for chart
+        $chart_data = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = date('Y-m-d', strtotime("-$i days"));
+            $chart_data[] = [
+                'day' => date('D', strtotime($date)),
+                'count' => Visitor::where('visit_date', $date)->count()
+            ];
+        }
+
         return view('admin.dashboard', compact(
             'total_users',
             'active_signals',
             'ai_accuracy',
             'net_revenue',
             'admin_name',
-            'visitor_stats'
+            'visitor_stats',
+            'chart_data'
         ));
     }
 
@@ -57,12 +68,23 @@ class DashboardController extends Controller
             'month' => Visitor::whereMonth('visit_date', date('m'))->whereYear('visit_date', date('Y'))->count(),
         ];
 
+        // Last 7 days visitor data for chart
+        $chart_data = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = date('Y-m-d', strtotime("-$i days"));
+            $chart_data[] = [
+                'day' => date('D', strtotime($date)),
+                'count' => Visitor::where('visit_date', $date)->count()
+            ];
+        }
+
         return view('admin.analytics', compact(
             'total_users',
             'active_signals',
             'ai_accuracy',
             'net_revenue',
-            'visitor_stats'
+            'visitor_stats',
+            'chart_data'
         ));
     }
 

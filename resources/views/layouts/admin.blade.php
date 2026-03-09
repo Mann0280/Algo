@@ -92,7 +92,6 @@
                     <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Dashboard</span>
                 </a>
 
-{{-- 
                 <a href="{{ route('admin.analytics') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.analytics') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
                     <i data-lucide="bar-chart-3" class="w-5 h-5 {{ request()->routeIs('admin.analytics') ? 'text-purple-500' : '' }}"></i>
                     <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Neural Analytics</span>
@@ -102,7 +101,6 @@
                     <i data-lucide="activity" class="w-5 h-5 {{ request()->routeIs('admin.predictions.*') ? 'text-purple-500' : '' }}"></i>
                     <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Predictions</span>
                 </a>
---}}
 
                 <a href="{{ route('admin.users.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.users.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
                     <i data-lucide="users" class="w-5 h-5 {{ request()->routeIs('admin.users.*') ? 'text-purple-500' : '' }}"></i>
