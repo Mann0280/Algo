@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Terminal | Emperor Stock Predictor')</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Styles -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@
                 "main";
             grid-template-columns: 1fr;
             grid-template-rows: auto 1fr;
-            height: 100vh;
+            min-height: 100vh;
             width: 100%;
             transition: grid-template-columns 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -143,8 +143,6 @@
         /* Content Area */
         .main-content {
             grid-area: main;
-            overflow-y: auto;
-            overflow-x: hidden;
             background: radial-gradient(circle at top right, rgba(147, 51, 234, 0.03), transparent);
         }
 
@@ -355,8 +353,28 @@
 
     </div>
 
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
         lucide.createIcons();
+
+        // Initialize Lenis
+        const lenis = new Lenis();
+        
+        // Sync Lenis with ScrollTrigger
+        if (typeof ScrollTrigger !== 'undefined') {
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+        }
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
 
         // Theme Toggle Logic
         const darkBtn = document.getElementById('dark-theme-btn');
@@ -405,6 +423,7 @@
                 sidebar.classList.remove('mobile-open');
                 backdrop.classList.remove('active');
                 document.body.style.overflow = '';
+                if (typeof lenis !== 'undefined') lenis.start();
             }
         });
 
@@ -417,12 +436,14 @@
             sidebar.classList.add('mobile-open');
             sidebarBackdrop.classList.add('active');
             document.body.style.overflow = 'hidden';
+            if (typeof lenis !== 'undefined') lenis.stop();
         }
 
         function closeMobileSidebar() {
             sidebar.classList.remove('mobile-open');
             sidebarBackdrop.classList.remove('active');
             document.body.style.overflow = '';
+            if (typeof lenis !== 'undefined') lenis.start();
         }
 
         mobileSidebarToggle.addEventListener('click', openMobileSidebar);
@@ -433,6 +454,11 @@
             link.addEventListener('click', () => {
                 if (window.innerWidth < 1024) closeMobileSidebar();
             });
+        });
+
+        // Global scroll refresh on load
+        window.addEventListener('load', () => {
+            setTimeout(() => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); }, 500);
         });
     </script>
     @stack('scripts')

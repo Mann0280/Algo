@@ -16,7 +16,7 @@
 
             <!-- Navigation Links (Desktop only) -->
             <div class="hidden lg:flex items-center gap-8 relative z-10">
-                <a href="{{ url('/') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-white hover:text-purple-400 transition-colors tracking-wider uppercase">
+                <a href="{{ url('/') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-purple-400 transition-colors tracking-wider uppercase">
                     <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
                 </a>
                 <a href="{{ url('/about') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
@@ -25,7 +25,7 @@
                 <a href="{{ url('/contact') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
                     <i data-lucide="mail" class="w-3.5 h-3.5"></i> Contact Us
                 </a>
-                <a href="{{ url('/signals') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron {{ request()->is('signals') ? 'text-white' : 'text-gray-400' }} hover:text-white transition-colors tracking-wider uppercase">
+                <a href="{{ url('/signals') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron {{ request()->is('signals') ? 'text-white' : 'text-gray-400' }} hover:text-yellow-500 transition-colors tracking-wider uppercase">
                     <i data-lucide="activity" class="w-3.5 h-3.5"></i> Signals
                 </a>
                 <a href="{{ route('signals.past') }}" class="flex items-center gap-2 text-[10px] font-bold orbitron {{ request()->is('signals/past') ? 'text-white' : 'text-gray-400' }} hover:text-white transition-colors tracking-wider uppercase">
@@ -259,6 +259,7 @@
             menuIcon.classList.add('hidden');
             closeIcon.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            if (typeof lenis !== 'undefined') lenis.stop();
             
             // Animate items with fromTo — resets every time
             gsap.fromTo(".mobile-menu-item", 
@@ -280,6 +281,7 @@
             menuIcon.classList.remove('hidden');
             closeIcon.classList.add('hidden');
             document.body.style.overflow = '';
+            if (typeof lenis !== 'undefined') lenis.start();
         }
     }
 

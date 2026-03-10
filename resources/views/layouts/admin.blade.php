@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Panel') | Emperor Stock Predictor</title>
     
-    <!-- Libraries -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Styles -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
@@ -156,7 +156,7 @@
         </aside>
 
         <!-- Content Area -->
-        <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+        <div class="flex-1 flex flex-col min-w-0">
             <!-- Top Navbar -->
             <header class="h-20 border-b border-white/5 bg-[#05020a]/80 backdrop-blur-xl flex items-center justify-between px-8 z-50">
                 <div class="flex items-center gap-6">
@@ -193,20 +193,48 @@
             </header>
 
             <!-- Page Content -->
-            <main class="flex-1 overflow-y-auto p-8 lg:p-12 custom-scrollbar">
+            <main class="flex-1 p-8 lg:p-12 custom-scrollbar">
                 @yield('content')
             </main>
         </div>
     </div>
 
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
         lucide.createIcons();
+
+        // Initialize Lenis
+        const lenis = new Lenis();
+        
+        // Sync Lenis with ScrollTrigger
+        if (typeof ScrollTrigger !== 'undefined') {
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+        }
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
             sidebar.classList.toggle('sidebar-collapsed');
             overlay.classList.toggle('hidden');
+            
+            if (!overlay.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+                if (typeof lenis !== 'undefined') lenis.stop();
+            } else {
+                document.body.style.overflow = '';
+                if (typeof lenis !== 'undefined') lenis.start();
+            }
         }
 
         // Auto-close sidebar on resize
@@ -214,9 +242,16 @@
             if (window.innerWidth >= 1024) {
                 document.getElementById('sidebar').classList.remove('sidebar-collapsed');
                 document.getElementById('sidebar-overlay').classList.add('hidden');
+                document.body.style.overflow = '';
+                if (typeof lenis !== 'undefined') lenis.start();
             } else {
                 document.getElementById('sidebar').classList.add('sidebar-collapsed');
             }
+        });
+
+        // Global scroll refresh on load
+        window.addEventListener('load', () => {
+            setTimeout(() => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); }, 500);
         });
     </script>
     @stack('scripts')

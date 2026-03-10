@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Emperor Stock Predictor | Advanced Neural Trading Signals')</title>
     
-    <!-- Libraries -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Styles -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
@@ -84,7 +84,7 @@
     </style>
     @stack('styles')
 </head>
-<body class="selection:bg-purple-500 selection:text-white overflow-x-hidden">
+<body class="selection:bg-purple-500 selection:text-white">
     <div class="scroll-progress"></div>
 
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -104,7 +104,19 @@
 
     <script>
         lucide.createIcons();
+        
+        // Initialize Lenis
         const lenis = new Lenis();
+        
+        // Sync Lenis with ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        
+        gsap.ticker.lagSmoothing(0);
+
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
@@ -115,6 +127,11 @@
             width: "100%",
             ease: "none",
             scrollTrigger: { scrub: 0.3 }
+        });
+
+        // Global scroll refresh on load
+        window.addEventListener('load', () => {
+            setTimeout(() => ScrollTrigger.refresh(), 500);
         });
     </script>
     @stack('scripts')

@@ -1,0 +1,8 @@
+id
+username
+email
+password
+profile_photo
+remember_token
+created_at
+updated_at

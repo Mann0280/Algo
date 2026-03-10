@@ -22,7 +22,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('premium_expiry');
+            if (Schema::hasColumn('users', 'premium_expiry')) {
+                $table->dropColumn('premium_expiry');
+            }
         });
     }
 };

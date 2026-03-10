@@ -123,7 +123,7 @@
         iframe.src = finalUrl;
         modal.classList.remove('hidden');
         modal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
+        if (typeof lenis !== 'undefined') lenis.stop();
     }
 
     function closeVideoModal() {
@@ -132,7 +132,7 @@
         iframe.src = '';
         modal.classList.add('hidden');
         modal.classList.remove('flex');
-        document.body.style.overflow = 'auto';
+        if (typeof lenis !== 'undefined') lenis.start();
     }
 
     document.addEventListener("DOMContentLoaded", function() {
