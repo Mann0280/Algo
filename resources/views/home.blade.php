@@ -338,6 +338,83 @@
         </div>
     </section>
 
+    <!-- Pricing Packages Section -->
+    @if(isset($packages) && $packages->count() > 0)
+    <section class="py-20 sm:py-32 relative">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Choose Your Plan</span>
+                <h2 class="orbitron text-3xl md:text-5xl font-black mb-6 uppercase italic tracking-tighter text-white">Upgrade Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Trading Edge</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed">Unlock premium signals, real-time alerts, and institutional-grade AI predictions with a plan that fits your trading style.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+                @foreach($packages as $index => $package)
+                @php $isMiddle = ($packages->count() >= 3 && $index === 1); @endphp
+                <div class="relative group">
+                    @if($isMiddle)
+                    <div class="absolute -inset-[2px] bg-gradient-to-br from-amber-500 via-purple-500 to-indigo-500 rounded-[2.8rem] opacity-60 group-hover:opacity-100 blur-sm transition-opacity duration-500"></div>
+                    @endif
+                    <div class="relative glass-panel p-8 sm:p-10 rounded-[2.5rem] border {{ $isMiddle ? 'border-amber-500/30' : 'border-white/10' }} overflow-hidden transition-all duration-300 hover:-translate-y-2 h-full flex flex-col {{ $isMiddle ? 'bg-gradient-to-b from-amber-500/5 to-transparent' : '' }}">
+                        @if($isMiddle)
+                        <div class="absolute top-5 right-5">
+                            <span class="text-[7px] font-black orbitron uppercase tracking-[0.2em] bg-gradient-to-r from-amber-500 to-orange-500 text-black px-3 py-1.5 rounded-full">Popular</span>
+                        </div>
+                        @endif
+
+                        <!-- Package Name -->
+                        <div class="mb-6">
+                            <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight">{{ $package->name }}</h3>
+                            @if($package->tags_json && count($package->tags_json) > 0)
+                            <div class="flex flex-wrap gap-1.5 mt-3">
+                                @foreach(array_slice($package->tags_json, 0, 2) as $tag)
+                                <span class="text-[7px] font-bold orbitron uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10" style="background-color: {{ $tag['color'] ?? '#9333ea' }}20; color: {{ $tag['color'] ?? '#9333ea' }};">{{ $tag['name'] ?? $tag }}</span>
+                                @endforeach
+                            </div>
+                            @endif
+                        </div>
+
+                        <!-- Price -->
+                        <div class="mb-6">
+                            <span class="text-4xl font-black text-white orbitron">&#8377;{{ number_format($package->price, 0) }}</span>
+                            <span class="text-xs text-gray-500 font-medium ml-1">/ {{ $package->duration_days }} days</span>
+                        </div>
+
+                        <!-- Description -->
+                        <p class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-6 leading-relaxed">{{ $package->description }}</p>
+
+                        <!-- Features -->
+                        @if($package->features && count($package->features) > 0)
+                        <ul class="space-y-3 mb-8 flex-1">
+                            @foreach(array_slice($package->features, 0, 4) as $feature)
+                            <li class="flex items-start gap-3 text-sm text-gray-300">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                                <span>{{ $feature }}</span>
+                            </li>
+                            @endforeach
+                        </ul>
+                        @endif
+
+                        <!-- CTA -->
+                        <a href="{{ url('/pricing') }}" class="block w-full py-4 rounded-2xl text-center font-black orbitron text-[10px] tracking-[0.2em] uppercase italic transition-all hover:scale-[1.02] active:scale-[0.98] {{ $isMiddle ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-black hover:shadow-[0_0_30px_rgba(245,158,11,0.3)]' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-purple-500/30' }}">
+                            Get Started
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            <!-- View All Link -->
+            <div class="text-center mt-12">
+                <a href="{{ url('/pricing') }}" class="inline-flex items-center gap-2 text-[10px] font-black orbitron text-purple-400 uppercase tracking-[0.2em] hover:text-white transition-colors group">
+                    View All Plans
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    @endif
+
     <!-- Why Our AI -->
     <section id="features" class="py-32 relative bg-white/[0.01]">
         <div class="container mx-auto px-6">

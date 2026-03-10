@@ -78,20 +78,6 @@
                             </div>
                         </div>
 
-                        <!-- QR Code Upload -->
-                        <div class="space-y-4">
-                            <label class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-[0.2em] pl-1">Visual Matrix (QR Code)</label>
-                            <label class="relative block group/qr cursor-pointer">
-                                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-indigo-600/20 rounded-3xl blur opacity-0 group-hover/qr:opacity-100 transition duration-500"></div>
-                                <div class="relative h-48 bg-[#0c0518] border-2 border-dashed border-white/10 rounded-3xl flex flex-col items-center justify-center transition-all group-hover/qr:border-purple-500/40 group-hover/qr:bg-[#110825]">
-                                    <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-600 group-hover/qr:text-purple-400 group-hover/qr:scale-110 group-hover/qr:border-purple-500/20 transition-all duration-500">
-                                        <i data-lucide="qr-code" class="w-8 h-8"></i>
-                                    </div>
-                                    <span class="text-[10px] font-black orbitron text-gray-600 group-hover/qr:text-gray-400 uppercase tracking-[0.3em] mt-4">Inject New Matrix Schema</span>
-                                    <input type="file" name="wallet_qr_code" accept="image/*" class="hidden" onchange="previewQR(this)">
-                                </div>
-                            </label>
-                        </div>
 
                         <div class="flex justify-end pt-4">
                             <button type="submit" class="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 px-12 py-5 rounded-2xl font-black orbitron text-[11px] tracking-[0.3em] uppercase shadow-2xl shadow-purple-900/20 hover:scale-[1.02] active:scale-95 transition-all text-white italic">
@@ -105,27 +91,16 @@
 
         <!-- Preview & Warnings -->
         <div class="space-y-10">
-            <!-- Visual Matrix Preview -->
+            <!-- Live UPI Preview -->
             <div class="space-y-4">
-                <h4 class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-[0.4em] pl-4">REAL-TIME VISUALIZATION</h4>
+                <h4 class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-[0.4em] pl-4">LIVE PREVIEW</h4>
                 <div class="glass-card rounded-[2.5rem] p-10 border-white/5 flex flex-col items-center text-center relative overflow-hidden group shadow-2xl bg-gradient-to-b from-white/[0.02] to-transparent">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-purple-600/5 blur-[60px] rounded-full -mr-16 -mt-16"></div>
-                    
                     <div class="relative z-10 w-full flex flex-col items-center">
-                        <div class="relative p-6 bg-white rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.05)] border border-white/10 group-hover:scale-[1.02] transition-transform duration-700">
-                            @if($settings['qr_code'])
-                            <img id="qr-preview" src="{{ asset('storage/' . $settings['qr_code']) }}" 
-                                class="w-48 h-48 object-contain">
-                            @else
-                            <div id="qr-placeholder" class="w-48 h-48 flex flex-col items-center justify-center text-gray-300">
-                                <i data-lucide="image-off" class="w-12 h-12 opacity-20"></i>
-                                <p class="text-[8px] font-black orbitron uppercase tracking-widest mt-3 opacity-30">Null Matrix Data</p>
-                            </div>
-                            <img id="qr-preview" class="hidden w-48 h-48 object-contain">
-                            @endif
+                        <div class="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-6">
+                            <i data-lucide="wallet" class="w-8 h-8"></i>
                         </div>
-
-                        <div class="mt-8 space-y-2">
+                        <div class="space-y-2">
                             <p class="text-sm font-black orbitron text-white italic tracking-tight uppercase" id="preview-name">
                                 {{ $settings['upi_name'] ?: 'SYSTEM_GATEWAY_NODE' }}
                             </p>
@@ -136,6 +111,7 @@
                                 </p>
                             </div>
                         </div>
+                        <p class="text-[8px] font-bold text-gray-700 uppercase tracking-widest mt-6">QR code is auto-generated from UPI ID</p>
                     </div>
                 </div>
             </div>
@@ -160,20 +136,6 @@
 </div>
 
 <script>
-    function previewQR(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.getElementById('qr-preview');
-                const placeholder = document.getElementById('qr-placeholder');
-                
-                preview.src = e.target.result;
-                preview.classList.remove('hidden');
-                if(placeholder) placeholder.classList.add('hidden');
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 
     // Live sync for text inputs
     document.querySelector('input[name="wallet_upi_name"]').addEventListener('input', function(e) {

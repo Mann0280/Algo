@@ -223,9 +223,9 @@
                 </div>
 
                 <!-- Next Button -->
-                <button type="button" onclick="goToStep(2)" class="w-full py-4.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.25)] active:scale-[0.98] italic flex items-center justify-center gap-2.5 group">
+                <button type="button" onclick="goToStep(2)" class="w-full py-5 mt-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-2xl font-black orbitron uppercase tracking-[0.15em] text-xs transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.3)] active:scale-[0.98] italic flex items-center justify-center gap-3 group min-h-[56px]">
                     <span>Continue to Payment</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                 </button>
             </div>
 
