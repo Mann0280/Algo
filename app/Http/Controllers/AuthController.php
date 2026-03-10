@@ -148,8 +148,14 @@ class AuthController extends Controller
 
         try {
             \Illuminate\Support\Facades\Mail::to($request->email)->send(new \App\Mail\OtpVerificationMail($request->username, $otp));
+            \Illuminate\Support\Facades\Log::info('OTP Email sent successfully to: ' . $request->email);
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('OTP Email Sending Failed during registration: ' . $e->getMessage());
+            $smtpHost = config('mail.mailers.smtp.host');
+            $smtpPort = config('mail.mailers.smtp.port');
+            $smtpEncryption = config('mail.mailers.smtp.encryption');
+            \Illuminate\Support\Facades\Log::error('OTP Email Sending Failed during registration: ' . $e->getMessage() . " | SMTP Config: {$smtpHost}:{$smtpPort} (encryption: {$smtpEncryption})");
+            session()->forget('registration_data');
+            return back()->withInput()->withErrors(['email' => 'Failed to send OTP email. Please try again or contact support.']);
         }
 
         return redirect()->route('verification.notice');
@@ -237,8 +243,12 @@ class AuthController extends Controller
         
         try {
             \Illuminate\Support\Facades\Mail::to($data['email'])->send(new \App\Mail\OtpVerificationMail($data['username'], $otp));
+            \Illuminate\Support\Facades\Log::info('OTP Resend Email sent successfully to: ' . $data['email']);
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('OTP Email Resend Failed: ' . $e->getMessage());
+            $smtpHost = config('mail.mailers.smtp.host');
+            $smtpPort = config('mail.mailers.smtp.port');
+            $smtpEncryption = config('mail.mailers.smtp.encryption');
+            \Illuminate\Support\Facades\Log::error('OTP Email Resend Failed: ' . $e->getMessage() . " | SMTP Config: {$smtpHost}:{$smtpPort} (encryption: {$smtpEncryption})");
             return back()->withErrors(['otp' => 'Failed to send email. Please check SMTP configuration.']);
         }
         

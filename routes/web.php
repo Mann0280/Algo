@@ -30,15 +30,32 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/test-email', function () {
     try {
-        \Illuminate\Support\Facades\Mail::raw('Test Email Working', function ($message) {
-            $message->to('yourgmail@gmail.com')
-                    ->subject('Test Mail');
+        $testRecipient = config('mail.from.address', 'info@stockpredictor.in');
+        \Illuminate\Support\Facades\Mail::raw('Test Email Working - Sent at ' . now(), function ($message) use ($testRecipient) {
+            $message->to($testRecipient)
+                    ->subject('Test Mail - ' . config('app.name'));
         });
-        return "Mail Sent Successfully. Check your inbox to confirm.";
+        return "Mail Sent Successfully to {$testRecipient}. Check your inbox to confirm.";
     } catch (\Exception $e) {
-        \Illuminate\Support\Facades\Log::error('Test Email Failed: ' . $e->getMessage());
-        return "Mail Failed: " . $e->getMessage();
+        $smtpHost = config('mail.mailers.smtp.host');
+        $smtpPort = config('mail.mailers.smtp.port');
+        $smtpEncryption = config('mail.mailers.smtp.encryption');
+        \Illuminate\Support\Facades\Log::error("Test Email Failed: {$e->getMessage()} | SMTP: {$smtpHost}:{$smtpPort} ({$smtpEncryption})");
+        return "Mail Failed: " . $e->getMessage() . "<br><br>SMTP Config: {$smtpHost}:{$smtpPort} (encryption: {$smtpEncryption})";
     }
+});
+
+Route::get('/test-email-config', function () {
+    $config = [
+        'mailer'     => config('mail.default'),
+        'host'       => config('mail.mailers.smtp.host'),
+        'port'       => config('mail.mailers.smtp.port'),
+        'encryption' => config('mail.mailers.smtp.encryption'),
+        'username'   => config('mail.mailers.smtp.username'),
+        'from_address' => config('mail.from.address'),
+        'from_name'  => config('mail.from.name'),
+    ];
+    return response()->json(['smtp_config' => $config, 'status' => 'These are the active SMTP settings loaded from your .env']);
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
