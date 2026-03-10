@@ -28,7 +28,10 @@ class HomeController extends Controller
         // Get up to 3 packages for homepage
         $packages = \App\Models\PremiumPackage::where('is_active', true)->orderBy('price', 'asc')->limit(3)->get();
 
-        return view('home', compact('signals', 'isPremium', 'packages'));
+        // Initialize stats to prevent undefined variable errors in shared views
+        $totalPnl = 0;
+
+        return view('home', compact('signals', 'isPremium', 'packages', 'totalPnl'));
     }
 
     public function about()
