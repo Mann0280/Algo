@@ -229,7 +229,7 @@
                             </div>
                             <p class="text-[8px] font-medium text-rose-400/50 normal-case not-italic tracking-normal leading-relaxed">Your wallet doesn't have enough funds for this plan. Please add credits to proceed.</p>
                         </div>
-                        <a href="{{ route('account.profile') }}#tab-wallet" class="block w-full py-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-center text-[9px] font-black orbitron text-gray-300 uppercase tracking-widest hover:bg-purple-500/10 hover:border-purple-500/20 hover:text-white transition-all duration-300 group">
+                        <a href="{{ route('account.wallet.index') }}" class="block w-full py-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-center text-[9px] font-black orbitron text-gray-300 uppercase tracking-widest hover:bg-purple-500/10 hover:border-purple-500/20 hover:text-white transition-all duration-300 group">
                             <span class="flex items-center justify-center gap-2.5">
                                 <i data-lucide="plus-circle" class="w-4 h-4 text-purple-500 group-hover:scale-110 transition-transform"></i>
                                 Add Funds to Wallet

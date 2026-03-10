@@ -33,11 +33,7 @@ class PastSignalsController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        if (!$user) {
-            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
-        }
-
-        $isPremium = in_array($user->role, ['premium', 'vip', 'admin']);
+        $isPremium = $user && in_array($user->role, ['premium', 'vip', 'admin']);
         
         // Filtering for past signals (based on entry_date string)
         $today = now()->format('Y-m-d');

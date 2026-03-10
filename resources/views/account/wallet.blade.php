@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Neural Wallet | Emperor Stock Predictor')
+@section('title', 'My Wallet | Emperor Stock Predictor')
 
 @section('content')
 <div class="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -8,9 +8,9 @@
     <div class="flex items-end justify-between">
         <div>
             <h1 class="text-4xl font-black orbitron italic uppercase tracking-tighter text-white">
-                NEURAL <span class="text-amber-500 text-glow">WALLET</span>
+                My <span class="text-amber-500 text-glow">Wallet</span>
             </h1>
-            <p class="text-gray-400 text-sm font-medium mt-1 uppercase tracking-widest leading-none">Cryptonid Balance Management</p>
+            <p class="text-gray-400 text-sm font-medium mt-1 tracking-wide leading-none">Add funds and view your transaction history</p>
         </div>
     </div>
 
@@ -21,9 +21,9 @@
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
                 <div class="flex items-center gap-4">
                     <i data-lucide="wallet" class="w-6 h-6 text-amber-500"></i>
-                    <h3 class="text-xl font-black orbitron uppercase italic tracking-wider text-white">Neural Assets</h3>
+                    <h3 class="text-xl font-bold text-white tracking-wide">Wallet Balance</h3>
                 </div>
-                <button onclick="openFundsModal()" class="px-8 py-3.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-2xl text-[10px] font-black orbitron uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all">Add Neural Credit</button>
+                <button onclick="openFundsModal()" class="px-8 py-3.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-2xl text-sm font-bold uppercase tracking-[0.1em] hover:scale-105 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all">Add Funds</button>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -31,13 +31,13 @@
                 <div class="lg:col-span-1">
                     <div class="p-8 rounded-[2.5rem] bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20 relative overflow-hidden group/card h-full flex flex-col justify-center">
                         <div class="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/20 blur-[60px] rounded-full group-hover/card:scale-150 transition-transform duration-1000"></div>
-                        <p class="text-[10px] font-black orbitron text-amber-500/60 uppercase tracking-[0.3em] mb-4">Current Neural Balance</p>
+                        <p class="text-xs font-semibold text-amber-500/60 uppercase tracking-widest mb-4">Available Balance</p>
                         <h4 class="text-5xl font-black orbitron text-white italic tracking-tighter drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]">
                             &#8377;{{ number_format($user->wallet_balance, 2) }}
                         </h4>
                         <div class="mt-8 flex items-center gap-3">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span class="text-[8px] font-black orbitron text-emerald-500/80 uppercase tracking-widest text-glow">Secured by Cryptonid Protocol</span>
+                            <span class="text-xs font-medium text-emerald-500/80 tracking-wide">Secured & Encrypted</span>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 <!-- Transaction History -->
                 <div class="lg:col-span-2">
                     <div class="space-y-4">
-                        <h4 class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em] px-2">Recent Signal Logs</h4>
+                        <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-widest px-2">Recent Transactions</h4>
                         <div class="max-h-[300px] overflow-y-auto pr-2 no-scrollbar space-y-3">
                             @forelse($transactions as $tx)
                             <div class="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-between hover:bg-white/[0.04] transition-all group/tx">
@@ -54,12 +54,12 @@
                                         <i data-lucide="{{ $tx->type === 'credit' ? 'arrow-down-left' : 'arrow-up-right' }}" class="w-5 h-5"></i>
                                     </div>
                                     <div>
-                                        <p class="text-[10px] font-black orbitron text-white uppercase tracking-tight">{{ $tx->description }}</p>
-                                        <p class="text-[8px] font-bold orbitron text-gray-500 uppercase mt-0.5">{{ $tx->created_at->format('d M Y, h:i A') }}</p>
+                                        <p class="text-sm font-semibold text-white">{{ $tx->description }}</p>
+                                        <p class="text-xs text-gray-500 mt-0.5">{{ $tx->created_at->format('d M Y, h:i A') }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-xs font-black orbitron {{ $tx->type === 'credit' ? 'text-emerald-500' : 'text-rose-500' }}">
+                                    <p class="text-sm font-black orbitron {{ $tx->type === 'credit' ? 'text-emerald-500' : 'text-rose-500' }}">
                                         {{ $tx->type === 'credit' ? '+' : '-' }}&#8377;{{ number_format($tx->amount, 2) }}
                                     </p>
                                     @php
@@ -70,12 +70,12 @@
                                             default => 'text-gray-600'
                                         };
                                     @endphp
-                                    <p class="text-[7px] font-black orbitron {{ $statusColor }} uppercase mt-0.5 tracking-[0.2em] italic">{{ $tx->status }}</p>
+                                    <p class="text-xs {{ $statusColor }} capitalize mt-0.5 font-semibold">{{ $tx->status }}</p>
                                 </div>
                             </div>
                             @empty
                             <div class="py-12 text-center border border-dashed border-white/10 rounded-3xl">
-                                <p class="text-[10px] font-bold orbitron text-gray-600 uppercase tracking-widest italic">No transaction frequency detected...</p>
+                                <p class="text-sm font-medium text-gray-600">No transactions yet.</p>
                             </div>
                             @endforelse
                         </div>
@@ -87,21 +87,21 @@
 
     <!-- Success/Error Alerts -->
     @if(session('success'))
-    <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center gap-3 text-emerald-500 text-xs font-bold orbitron uppercase tracking-widest">
+    <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center gap-3 text-emerald-500 text-sm font-semibold">
         <i data-lucide="check-circle" class="w-4 h-4"></i>
         {{ session('success') }}
     </div>
     @endif
 
     @if(session('error'))
-    <div class="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl flex items-center gap-3 text-rose-500 text-xs font-bold orbitron uppercase tracking-widest">
+    <div class="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl flex items-center gap-3 text-rose-500 text-sm font-semibold">
         <i data-lucide="alert-circle" class="w-4 h-4"></i>
         {{ session('error') }}
     </div>
     @endif
 </div>
 
-<!-- MODAL: 3-STEP ADD FUNDS WIZARD -->
+<!-- MODAL: 4-STEP ADD FUNDS WIZARD -->
 <div id="add-funds-modal" class="fixed inset-0 z-[999999] hidden items-center justify-center p-4 sm:p-6 transition-all duration-500">
     <!-- Backdrop -->
     <div class="absolute inset-0 bg-black/90 backdrop-blur-3xl" onclick="closeFundsModal()"></div>
@@ -190,19 +190,19 @@
             @csrf
             <input type="hidden" name="payment_request_id" id="payment_request_id" value="">
 
-            <!-- ==================== STEP 1: CREDIT AMOUNT ==================== -->
+            <!-- ==================== STEP 1: ENTER AMOUNT ==================== -->
             <div id="fund-step-1" class="space-y-6">
                 <div class="text-center space-y-2">
                     <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-amber-500/15 to-orange-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
                         <i data-lucide="indian-rupee" class="w-7 h-7 text-amber-500"></i>
                     </div>
-                    <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Enter <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Amount</span></h3>
-                    <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">How much would you like to add to your wallet?</p>
+                    <h3 class="text-lg font-bold text-white tracking-tight">Enter Amount</h3>
+                    <p class="text-sm text-gray-500">How much would you like to add to your wallet?</p>
                 </div>
 
                 <!-- Amount Input -->
                 <div class="space-y-2.5">
-                    <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-[0.2em] pl-1">Credit Amount (&#8377;)</label>
+                    <label class="text-xs font-semibold text-gray-400 uppercase tracking-widest pl-1">Amount (&#8377;)</label>
                     <div class="relative group">
                         <div class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center group-focus-within:bg-amber-500/20 transition-colors">
                             <span class="text-amber-500 font-black orbitron text-lg">&#8377;</span>
@@ -211,19 +211,19 @@
                             class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl pl-18 pr-6 py-5 text-white text-lg font-black orbitron tracking-tight focus:outline-none focus:border-amber-500/40 focus:bg-white/[0.04] transition-all placeholder:text-gray-700 text-center" 
                             placeholder="1,000" style="padding-left: 4.5rem;">
                     </div>
-                    <p class="text-[7px] font-medium text-gray-700 uppercase tracking-wider text-center">Minimum: &#8377;100</p>
-                </div>
+                    <p class="text-xs text-gray-600 text-center">Minimum: &#8377;100  <br> Maximum: &#8377;50,000</p>
+                </div
 
                 <!-- Quick Amount Buttons -->
                 <div class="grid grid-cols-4 gap-2">
-                    <button type="button" onclick="document.getElementById('fund-amount').value=500" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[9px] font-bold orbitron text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;500</button>
-                    <button type="button" onclick="document.getElementById('fund-amount').value=1000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[9px] font-bold orbitron text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;1,000</button>
-                    <button type="button" onclick="document.getElementById('fund-amount').value=2000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[9px] font-bold orbitron text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;2,000</button>
-                    <button type="button" onclick="document.getElementById('fund-amount').value=5000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[9px] font-bold orbitron text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;5,000</button>
+                    <button type="button" onclick="document.getElementById('fund-amount').value=500" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-xs font-semibold text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;500</button>
+                    <button type="button" onclick="document.getElementById('fund-amount').value=1000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-xs font-semibold text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;1,000</button>
+                    <button type="button" onclick="document.getElementById('fund-amount').value=2000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-xs font-semibold text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;2,000</button>
+                    <button type="button" onclick="document.getElementById('fund-amount').value=5000" class="py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-xs font-semibold text-gray-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all">&#8377;5,000</button>
                 </div>
 
                 <!-- Next Button -->
-                <button type="button" onclick="goToStep(2)" class="w-full py-5 mt-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-2xl font-black orbitron uppercase tracking-[0.15em] text-xs transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.3)] active:scale-[0.98] italic flex items-center justify-center gap-3 group min-h-[56px]">
+                <button type="button" onclick="goToStep(2)" class="w-full py-5 mt-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-2xl font-bold uppercase tracking-[0.1em] text-sm transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.3)] active:scale-[0.98] flex items-center justify-center gap-3 group min-h-[56px]">
                     <span>Continue to Payment</span>
                     <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                 </button>
@@ -232,14 +232,14 @@
             <!-- ==================== STEP 2: QR CODE + UPI ID ==================== -->
             <div id="fund-step-2" class="hidden space-y-6">
                 <div class="text-center space-y-2">
-                    <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Scan & <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Transfer</span></h3>
-                    <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">Scan the QR code or use UPI to send payment</p>
+                    <h3 class="text-lg font-bold text-white tracking-tight">Make Payment</h3>
+                    <p class="text-sm text-gray-500">Scan the QR code or use the UPI ID below to send payment</p>
                 </div>
 
                 <!-- Amount Display -->
                 <div class="flex items-center justify-center gap-2 py-2">
-                    <span class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest">Transfer Amount:</span>
-                    <span id="step2-amount" class="text-sm font-black orbitron text-amber-400">&#8377; 0</span>
+                    <span class="text-sm text-gray-500">Amount to Pay: &#8377;</span>
+                    <span id="step2-amount" class="text-sm font-black orbitron text-amber-400">0</span>
                 </div>
 
                 <!-- QR Code + UPI Section -->
@@ -262,7 +262,7 @@
                     </div>
                     @else
                     <div class="w-full p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-center">
-                        <p class="text-[8px] font-black orbitron text-rose-500 uppercase tracking-widest">Admin has not configured UPI yet.</p>
+                        <p class="text-sm font-semibold text-rose-500">UPI not configured yet. Contact admin.</p>
                     </div>
                     @endif
 
@@ -270,8 +270,8 @@
                     <div class="w-full p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-3">
                         <div class="flex items-center justify-between">
                             <div class="space-y-0.5">
-                                <p class="text-[7px] font-black orbitron text-gray-600 uppercase tracking-[0.2em]">UPI Address</p>
-                                <p class="text-xs font-black orbitron text-amber-400 italic">{{ $walletSettings['upi_id'] }}</p>
+                                <p class="text-xs text-gray-500 uppercase tracking-widest">UPI ID</p>
+                                <p class="text-sm font-bold text-amber-400">{{ $walletSettings['upi_id'] }}</p>
                             </div>
                             <button type="button" onclick="copyUPIWallet()" class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/15 text-amber-500 flex items-center justify-center hover:bg-amber-500 hover:text-black transition-all">
                                 <i data-lucide="copy" class="w-3.5 h-3.5" id="copy-icon-wallet"></i>
@@ -280,7 +280,7 @@
                         @if(!empty($walletSettings['upi_name']))
                         <div class="flex items-center gap-2 pt-1 border-t border-white/[0.04]">
                             <i data-lucide="user-check" class="w-3 h-3 text-emerald-500/50"></i>
-                            <span class="text-[8px] font-bold orbitron text-gray-500 uppercase tracking-wider">Authorized: <span class="text-white">{{ $walletSettings['upi_name'] }}</span></span>
+                            <span class="text-xs text-gray-500">Account Name: <span class="text-white font-semibold">{{ $walletSettings['upi_name'] }}</span></span>
                         </div>
                         @endif
                     </div>
@@ -290,78 +290,78 @@
 
                 <!-- Navigation -->
                 <div class="flex gap-3">
-                    <button type="button" onclick="goToStep(1)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-black orbitron uppercase text-[9px] tracking-widest hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
+                    <button type="button" onclick="goToStep(1)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-semibold text-sm hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
                     </button>
-                    <button type="button" onclick="goToStep(3)" class="flex-[2] py-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.25)] italic flex items-center justify-center gap-2.5 group">
-                        <span>I Have Transferred</span>
+                    <button type="button" onclick="goToStep(3)" class="flex-[2] py-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl font-bold text-sm transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(245,158,11,0.25)] flex items-center justify-center gap-2.5 group">
+                        <span>I Have Paid</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- ==================== STEP 3: TRANSFER CONFIRMED ==================== -->
+            <!-- ==================== STEP 3: ENTER UTR ==================== -->
             <div id="fund-step-3" class="hidden space-y-6">
                 <div class="text-center space-y-6 py-4">
                     <div class="space-y-2">
-                        <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Verify <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Payment</span></h3>
-                        <p class="text-[8px] font-bold orbitron text-gray-500 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">Please verify the transferred amount against the UTR to proceed.</p>
+                        <h3 class="text-lg font-bold text-white tracking-tight">Confirm Payment</h3>
+                        <p class="text-sm text-gray-500 max-w-xs mx-auto">Enter the UTR / Reference number from your payment app to confirm the transaction.</p>
                     </div>
 
                     <!-- Transfer Summary -->
                     <div class="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5 text-left space-y-3">
                         <div class="flex items-center justify-between">
-                            <span class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest">Amount Transferred</span>
+                            <span class="text-sm text-gray-500">Amount Paid</span>
                             <span id="confirm-amount" class="text-sm font-black orbitron text-emerald-400">&#8377; 0</span>
                         </div>
                         <div class="flex items-center justify-between">
-                            <span class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest">Status</span>
-                            <span class="text-[9px] font-black orbitron text-amber-500 uppercase tracking-wider flex items-center gap-1.5" id="utr-status">
+                            <span class="text-sm text-gray-500">Status</span>
+                            <span class="text-sm font-semibold text-amber-500 flex items-center gap-1.5" id="utr-status">
                                 <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse border-indicator"></span>
                                 Waiting for UTR
                             </span>
                         </div>
                     </div>
 
-                    <!-- UTR Input Module -->
+                    <!-- UTR Input -->
                     <div class="space-y-2.5 text-left">
                         <div class="flex items-center justify-between pl-1 pr-1">
-                            <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">UTR / Reference ID</label>
-                            <span class="text-[7px] font-bold text-rose-500/70 uppercase tracking-widest">Required</span>
+                            <label class="text-xs font-semibold text-gray-400 uppercase tracking-widest">UTR / Reference ID</label>
+                            <span class="text-xs font-medium text-rose-500/70">Required</span>
                         </div>
                         <div class="relative group">
                             <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center group-focus-within:bg-emerald-500/20 transition-colors">
                                 <i data-lucide="hash" class="w-3.5 h-3.5 text-emerald-400"></i>
                             </div>
-                            <input type="text" id="verify_utr_input" class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl pl-16 pr-6 py-4 text-white text-xs font-bold orbitron tracking-wider outline-none focus:border-emerald-500/40 focus:bg-white/[0.04] transition-all placeholder:text-gray-700" placeholder="Enter 12-digit UTR number" required>
+                            <input type="text" id="verify_utr_input" class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl pl-16 pr-6 py-4 text-white text-sm font-semibold outline-none focus:border-emerald-500/40 focus:bg-white/[0.04] transition-all placeholder:text-gray-700" placeholder="Enter 12-digit UTR number" required>
                         </div>
-                        <p id="utr-error" class="hidden text-[8px] font-black orbitron text-rose-500 uppercase tracking-widest text-center mt-2"></p>
+                        <p id="utr-error" class="hidden text-xs font-semibold text-rose-500 text-center mt-2"></p>
                     </div>
                 </div>
 
                 <!-- Navigation -->
                 <div class="flex gap-3">
-                    <button type="button" onclick="goToStep(2)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-black orbitron uppercase text-[9px] tracking-widest hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
+                    <button type="button" onclick="goToStep(2)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-semibold text-sm hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
                     </button>
-                    <button type="button" onclick="verifyUtr()" id="verify-utr-btn" class="flex-[2] py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(16,185,129,0.25)] italic flex items-center justify-center gap-2 group">
-                        <span>Check & Verify</span>
+                    <button type="button" onclick="verifyUtr()" id="verify-utr-btn" class="flex-[2] py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-bold text-sm transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(16,185,129,0.25)] flex items-center justify-center gap-2 group">
+                        <span>Verify UTR</span>
                         <i data-lucide="check-circle" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- ==================== STEP 4: SCREENSHOT ==================== -->
+            <!-- ==================== STEP 4: UPLOAD SCREENSHOT ==================== -->
             <div id="fund-step-4" class="hidden space-y-6">
                 <div class="text-center space-y-2">
-                    <h3 class="orbitron text-lg font-black text-white italic uppercase tracking-tight">Upload <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Proof</span></h3>
-                    <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">Provide a payment screenshot for manual review</p>
+                    <h3 class="text-lg font-bold text-white tracking-tight">Upload Payment Screenshot</h3>
+                    <p class="text-sm text-gray-500">Please upload a screenshot of your payment for our team to verify.</p>
                 </div>
 
                 <!-- Payment Method -->
                 <div class="space-y-2.5">
-                    <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-[0.2em] pl-1">Payment Method</label>
-                    <select name="payment_method" required class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl px-5 py-4 text-white text-xs font-bold orbitron outline-none focus:border-purple-500/40 focus:bg-white/[0.04] appearance-none transition-all">
+                    <label class="text-xs font-semibold text-gray-400 uppercase tracking-widest pl-1">Payment Method</label>
+                    <select name="payment_method" required class="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl px-5 py-4 text-white text-sm font-semibold outline-none focus:border-purple-500/40 focus:bg-white/[0.04] appearance-none transition-all">
                         <option value="UPI" class="bg-[#0a0514]">UPI / G-Pay / PhonePe</option>
                         <option value="Bank Transfer" class="bg-[#0a0514]">Bank Transfer (IMPS/NEFT)</option>
                         <option value="QR Scan" class="bg-[#0a0514]">QR Code Scan</option>
@@ -371,16 +371,16 @@
                 <!-- Screenshot Upload -->
                 <div class="space-y-2.5">
                     <div class="flex items-center justify-between pl-1 pr-1">
-                        <label class="text-[9px] font-black orbitron text-gray-400 uppercase tracking-[0.2em]">Payment Screenshot</label>
-                        <span class="text-[7px] font-bold text-rose-500/70 uppercase tracking-widest">Mandatory</span>
+                        <label class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Payment Screenshot</label>
+                        <span class="text-xs font-medium text-rose-500/70">Required</span>
                     </div>
                     <label class="w-full bg-white/[0.02] border border-dashed border-white/[0.1] rounded-xl px-5 py-5 flex items-center gap-4 cursor-pointer group hover:bg-white/[0.04] hover:border-purple-500/30 transition-all">
                         <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 group-hover:border-purple-500/25 transition-all shrink-0">
                             <i data-lucide="image-plus" class="w-5 h-5 text-purple-400"></i>
                         </div>
                         <div class="flex flex-col flex-1 min-w-0">
-                            <span id="fund-file-name" class="text-[10px] font-bold orbitron text-gray-500 group-hover:text-gray-300 uppercase tracking-wider truncate transition-colors">Click to upload screenshot...</span>
-                            <span class="text-[7px] font-medium text-gray-700 uppercase tracking-wider">PNG, JPG, GIF — Max 2MB</span>
+                            <span id="fund-file-name" class="text-sm font-semibold text-gray-500 group-hover:text-gray-300 truncate transition-colors">Click to upload screenshot...</span>
+                            <span class="text-xs text-gray-700 mt-0.5">PNG, JPG, GIF — Max 2MB</span>
                         </div>
                         <input type="file" name="screenshot" accept="image/*" required class="hidden" onchange="handleFileSelect(this)">
                     </label>
@@ -389,18 +389,18 @@
                 <!-- Info Banner -->
                 <div class="p-3.5 rounded-xl bg-amber-500/[0.04] border border-amber-500/10 flex items-start gap-3">
                     <i data-lucide="info" class="w-3.5 h-3.5 text-amber-500/60 shrink-0 mt-0.5"></i>
-                    <p class="text-[7px] font-bold orbitron text-amber-500/50 uppercase leading-relaxed tracking-widest">Admin verification typically takes 5-15 minutes. Your balance will be credited after approval.</p>
+                    <p class="text-xs text-amber-500/60 leading-relaxed">Your payment will be reviewed and credited to your wallet within 5–15 minutes after approval.</p>
                 </div>
 
                 <!-- Navigation -->
                 <div class="flex gap-3">
-                    <button type="button" onclick="goToStep(3)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-black orbitron uppercase text-[9px] tracking-widest hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
+                    <button type="button" onclick="goToStep(3)" class="flex-1 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-gray-400 font-semibold text-sm hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2">
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back
                     </button>
-                    <button type="submit" id="submit-funds-btn" class="flex-[2] py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-black orbitron uppercase tracking-[0.2em] text-[10px] transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.25)] italic flex items-center justify-center gap-2.5 relative overflow-hidden group">
+                    <button type="submit" id="submit-funds-btn" class="flex-[2] py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-bold text-sm transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.25)] flex items-center justify-center gap-2.5 relative overflow-hidden group">
                         <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                         <i data-lucide="send" class="w-4 h-4 relative z-10"></i>
-                        <span class="relative z-10">Submit for Verification</span>
+                        <span class="relative z-10">Submit for Review</span>
                     </button>
                 </div>
             </div>
@@ -410,12 +410,12 @@
         <div class="flex items-center justify-center gap-2.5 mt-6">
             <div class="flex items-center gap-1">
                 <i data-lucide="shield-check" class="w-3 h-3 text-emerald-500/40"></i>
-                <span class="text-[7px] font-bold orbitron text-gray-700 uppercase tracking-[0.15em]">Encrypted</span>
+                <span class="text-xs text-gray-700 tracking-wide">Encrypted</span>
             </div>
             <span class="text-gray-800">•</span>
             <div class="flex items-center gap-1">
                 <i data-lucide="lock" class="w-2.5 h-2.5 text-emerald-500/40"></i>
-                <span class="text-[7px] font-bold orbitron text-gray-700 uppercase tracking-[0.15em]">Admin Verified</span>
+                <span class="text-xs text-gray-700 tracking-wide">Admin Verified</span>
             </div>
         </div>
     </div>
@@ -530,7 +530,7 @@
                 }
             } catch (err) {
                 console.error('Error:', err);
-                alert('Network error initiating top-up request.');
+                alert('Network error. Please try again.');
                 return;
             }
 
@@ -611,7 +611,7 @@
         const verifyBtn = document.getElementById('verify-utr-btn');
 
         if (!utrVal || utrVal.length < 5) {
-            errorText.innerText = "Please enter a valid UTR.";
+            errorText.innerText = "Please enter a valid UTR number.";
             errorText.classList.remove('hidden');
             return;
         }
@@ -634,29 +634,28 @@
 
             if (data.success) {
                 errorText.classList.add('hidden');
-                statusSpan.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span><span class="text-emerald-500">Amount Verified</span>';
+                statusSpan.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span><span class="text-emerald-500 font-semibold">Amount Verified</span>';
                 
-                // Allow user to proceed to Step 4 after a short delay so they see the success state
                 setTimeout(() => {
                     verifyBtn.disabled = false;
-                    verifyBtn.innerHTML = '<span>Check & Verify</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
+                    verifyBtn.innerHTML = '<span>Verify UTR</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
                     goToStep(4);
                 }, 1000);
 
             } else {
-                errorText.innerText = data.message || "UTR validation failed.";
+                errorText.innerText = data.message || "UTR verification failed. Please check and try again.";
                 errorText.classList.remove('hidden');
-                statusSpan.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse border-indicator"></span><span class="text-rose-500">Validation Failed</span>';
+                statusSpan.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse border-indicator"></span><span class="text-rose-500 font-semibold">Verification Failed</span>';
                 verifyBtn.disabled = false;
-                verifyBtn.innerHTML = '<span>Check & Verify</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
+                verifyBtn.innerHTML = '<span>Verify UTR</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
                 lucide.createIcons();
             }
         } catch (err) {
             console.error('Error verifying UTR:', err);
-            errorText.innerText = "Network error during validation.";
+            errorText.innerText = "Network error. Please try again.";
             errorText.classList.remove('hidden');
             verifyBtn.disabled = false;
-            verifyBtn.innerHTML = '<span>Check & Verify</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
+            verifyBtn.innerHTML = '<span>Verify UTR</span><i data-lucide="check-circle" class="w-4 h-4"></i>';
             lucide.createIcons();
         }
     }

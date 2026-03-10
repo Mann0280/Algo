@@ -168,5 +168,5 @@ Route::middleware('auth')->group(function () {
 });
 
 // Past Signals Management
-Route::get('/signals/past', [\App\Http\Controllers\SignalController::class, 'pastSignals'])->name('signals.past')->middleware('auth');
-Route::get('/api/past-signals', [\App\Http\Controllers\Api\PastSignalsController::class, 'index'])->name('api.past-signals')->middleware(['auth', 'throttle:60,1']);
+Route::get('/signals/past', [\App\Http\Controllers\SignalController::class, 'pastSignals'])->name('signals.past');
+Route::get('/api/past-signals', [\App\Http\Controllers\Api\PastSignalsController::class, 'index'])->name('api.past-signals')->middleware('throttle:60,1');

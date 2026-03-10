@@ -71,10 +71,15 @@
                     @endfor
                 </div>
 
-                <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black orbitron uppercase tracking-[0.3em] text-[10px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-purple-900/40 italic flex items-center justify-center gap-3">
+                <button type="submit" id="otpSubmitBtn" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black orbitron uppercase tracking-[0.3em] text-[10px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-purple-900/40 italic flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
                     <i data-lucide="check-circle" class="w-4 h-4"></i>
-                    Verify Access Protocol
+                    <span id="btnText">Verify Access Protocol</span>
                 </button>
+                <div id="throttleMsg" class="hidden text-center mt-4 animate-in fade-in zoom-in duration-300">
+                    <p class="text-[9px] font-black orbitron text-purple-400 uppercase tracking-[0.2em]">
+                        Security lock active. Next attempt in <span id="throttleTimer" class="text-white text-xs ml-1">30</span>s
+                    </p>
+                </div>
             </form>
 
             <div class="space-y-4 pt-4 border-t border-white/5">
@@ -164,6 +169,53 @@
         };
 
         updateTimer();
+
+        // Submit Button Throttle Logic
+        const otpForm = document.getElementById('otpForm');
+        const submitBtn = document.getElementById('otpSubmitBtn');
+        const btnText = document.getElementById('btnText');
+        const throttleMsg = document.getElementById('throttleMsg');
+        const throttleTimerSpan = document.getElementById('throttleTimer');
+        const THROTTLE_TIME = 30000; // 30 seconds
+        const STORAGE_KEY = 'auth_otp_throttle';
+
+        const startSubmitCountdown = (remaining) => {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            throttleMsg.classList.remove('hidden');
+            
+            const timer = setInterval(() => {
+                remaining -= 1000;
+                const seconds = Math.ceil(remaining / 1000);
+                throttleTimerSpan.textContent = seconds;
+
+                if (remaining <= 0) {
+                    clearInterval(timer);
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    btnText.textContent = 'Verify Access Protocol';
+                    throttleMsg.classList.add('hidden');
+                    localStorage.removeItem(STORAGE_KEY);
+                }
+            }, 1000);
+        };
+
+        const lastSubmit = localStorage.getItem(STORAGE_KEY);
+        if (lastSubmit) {
+            const timePassed = Date.now() - parseInt(lastSubmit);
+            if (timePassed < THROTTLE_TIME) {
+                startSubmitCountdown(THROTTLE_TIME - timePassed);
+            } else {
+                localStorage.removeItem(STORAGE_KEY);
+            }
+        }
+
+        otpForm.addEventListener('submit', (e) => {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            btnText.textContent = 'Verifying Protocol...';
+            localStorage.setItem(STORAGE_KEY, Date.now().toString());
+        });
     });
 </script>
 @endpush

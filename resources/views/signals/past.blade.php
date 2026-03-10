@@ -120,7 +120,7 @@
 
     <div class="max-w-7xl mx-auto relative">
         <!-- Main Content Area -->
-        <div class="{{ $userState !== 'premium' ? 'blur-md pointer-events-none select-none opacity-40 transition-all duration-700' : '' }}">
+        <div class="transition-all duration-700">
             <!-- Filter Panel -->
             <div class="mb-8">
                 <div class="glass-card p-6 border border-white/5">
@@ -212,38 +212,7 @@
             </div>
         </div>
         {{-- Overlays kept from previous version as they are part of the UI structure --}}
-        <!-- Locked Overlays -->
-        @if($userState === 'guest')
-        <div class="absolute inset-x-0 top-0 bottom-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-[2rem] border border-white/5">
-            <div class="text-center p-12 glass-card max-w-lg border-purple-500/20 shadow-2xl shadow-purple-500/10 scale-110">
-                <div class="w-20 h-20 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-purple-500/40">
-                    <i data-lucide="lock" class="w-10 h-10 text-white"></i>
-                </div>
-                <h2 class="text-3xl font-black orbitron text-white mb-4 italic tracking-tighter">ARCHIVE ENCRYPTED</h2>
-                <p class="text-gray-400 mb-8 leading-relaxed uppercase tracking-tight font-medium">Authentication is required to synchronize with the neural signal history archive.</p>
-                <div class="flex flex-col gap-4">
-                    <a href="{{ route('login') }}" class="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white font-black orbitron text-sm uppercase italic tracking-widest rounded-2xl transition-all shadow-lg shadow-purple-500/30">
-                        Initiate Login
-                    </a>
-                    <a href="{{ route('register') }}" class="text-gray-500 hover:text-white orbitron text-[10px] uppercase tracking-widest transition-colors">Create Neural Identity</a>
-                </div>
-            </div>
-        </div>
-        @elseif($userState === 'free')
-        <div class="absolute inset-x-0 top-0 bottom-0 z-50 flex items-center justify-center pointer-events-none">
-            <div class="pointer-events-auto text-center p-12 glass-card max-w-lg border-purple-500/20 shadow-2xl shadow-purple-500/20 bg-black/60 relative overflow-hidden">
-                <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-600/20 blur-[80px] rounded-full"></div>
-                <div class="w-20 h-20 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-purple-500/40 relative z-10">
-                    <i data-lucide="zap" class="w-10 h-10 text-white fill-white"></i>
-                </div>
-                <h2 class="text-3xl font-black orbitron text-white mb-4 italic tracking-tighter relative z-10 uppercase">PREMIUM ACCESS REQUIRED</h2>
-                <p class="text-gray-400 mb-8 leading-relaxed uppercase tracking-tight font-medium relative z-10">Full signal history and performance verification is restricted to Premium Alpha Nodes.</p>
-                <a href="{{ url('/pricing') }}" class="inline-block px-10 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black orbitron text-sm uppercase italic tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-purple-600/40 relative z-10">
-                    Upgrade to Premium
-                </a>
-            </div>
-        </div>
-        @endif
+
     </div>
 </main>
 @endsection

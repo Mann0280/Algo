@@ -2,6 +2,119 @@
 
 @section('title', 'AlgoTra AI | Smart Algo Trading Signals')
 
+@push('styles')
+<style>
+    .hero-upgrade-wrap {
+        position: relative;
+        display: inline-flex;
+        border-radius: 14px;
+        overflow: hidden;
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .hero-upgrade-wrap .border-spinner {
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        z-index: 0;
+        overflow: hidden;
+    }
+    .hero-upgrade-wrap .border-spinner::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: conic-gradient(
+            transparent 0deg,
+            transparent 200deg,
+            rgba(115, 76, 137, 0.0) 220deg,
+            rgba(115, 76, 137, 0.3) 240deg,
+            rgba(147, 51, 234, 0.6) 255deg,
+            rgba(168, 85, 247, 0.8) 270deg,
+            rgba(192, 132, 252, 0.9) 280deg,
+            rgba(233, 213, 255, 1.0) 290deg,
+            rgba(192, 132, 252, 0.9) 300deg,
+            rgba(168, 85, 247, 0.8) 310deg,
+            rgba(147, 51, 234, 0.6) 325deg,
+            rgba(115, 76, 137, 0.3) 340deg,
+            rgba(115, 76, 137, 0.0) 355deg,
+            transparent 360deg
+        );
+        will-change: transform;
+        backface-visibility: hidden;
+        transform: translate(-50%, -50%) rotate(0deg) translateZ(0);
+        animation: spin-border 4s linear infinite;
+    }
+    .hero-upgrade-wrap .border-fill {
+        position: absolute;
+        inset: 2px;
+        border-radius: 12px;
+        background: linear-gradient(145deg, #2d1b4e, #1a0a2e, #0a0515);
+        z-index: 1;
+    }
+    .hero-upgrade-wrap .btn-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.625rem;
+        padding: 1rem 2rem;
+        color: white;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 900;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-style: italic;
+        white-space: nowrap;
+    }
+    .hero-glow {
+        position: absolute;
+        inset: -12px;
+        border-radius: 26px;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+        opacity: 0.5;
+        transition: opacity 0.4s ease;
+    }
+    .hero-glow::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: conic-gradient(
+            transparent 0deg,
+            transparent 220deg,
+            rgba(168, 85, 247, 0.0) 245deg,
+            rgba(168, 85, 247, 0.2) 265deg,
+            rgba(192, 132, 252, 0.35) 280deg,
+            rgba(233, 213, 255, 0.45) 290deg,
+            rgba(192, 132, 252, 0.35) 300deg,
+            rgba(168, 85, 247, 0.2) 315deg,
+            rgba(168, 85, 247, 0.0) 340deg,
+            transparent 355deg,
+            transparent 360deg
+        );
+        will-change: transform;
+        backface-visibility: hidden;
+        transform: translate(-50%, -50%) rotate(0deg) translateZ(0);
+        animation: spin-border 4s linear infinite;
+        filter: blur(16px);
+    }
+    .hero-upgrade-wrap:hover .hero-glow { opacity: 1; }
+    .hero-upgrade-wrap:hover { transform: translateY(-2px) scale(1.03); }
+    @keyframes spin-border {
+        from { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); }
+        to { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); }
+    }
+</style>
+@endpush
+
 @section('content')
     <!-- Hero Section -->
     <div class="relative overflow-x-hidden">
@@ -25,12 +138,18 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8 hero-stagger opacity-0">
-                    <a href="#signals" class="w-full sm:w-auto bg-purple-600 text-white font-black py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(147,51,234,0.4)] transform hover:-translate-y-1 orbitron text-[10px] uppercase tracking-widest">
+                    <a href="{{ url('/pricing') }}" class="hero-upgrade-wrap w-full sm:w-auto group">
+                        <div class="hero-glow"></div>
+                        <div class="border-spinner"></div>
+                        <div class="border-fill"></div>
+                        <span class="btn-content">
+                            <i data-lucide="crown" class="w-4 h-4 group-hover:rotate-12 transition-transform"></i>
+                            Upgrade To Premium
+                        </span>
+                    </a>
+                    <a href="#signals" class="w-full sm:w-auto glass-panel border border-white/10 hover:bg-white/5 text-white font-black py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all transform hover:-translate-y-1 orbitron text-[10px] uppercase tracking-widest flex items-center justify-center gap-3">
                         Explore Signals
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                    <a href="{{ url('/pricing') }}" class="w-full sm:w-auto glass-panel border border-white/10 hover:bg-white/5 text-white font-black py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all transform hover:-translate-y-1 orbitron text-[10px] uppercase tracking-widest text-center">
-                        Upgrade To Premium
                     </a>
                 </div>
             </div>
@@ -352,13 +471,10 @@
                 @foreach($packages as $index => $package)
                 @php $isMiddle = ($packages->count() >= 3 && $index === 1); @endphp
                 <div class="relative group">
-                    @if($isMiddle)
-                    <div class="absolute -inset-[2px] bg-gradient-to-br from-amber-500 via-purple-500 to-indigo-500 rounded-[2.8rem] opacity-60 group-hover:opacity-100 blur-sm transition-opacity duration-500"></div>
-                    @endif
-                    <div class="relative glass-panel p-8 sm:p-10 rounded-[2.5rem] border {{ $isMiddle ? 'border-amber-500/30' : 'border-white/10' }} overflow-hidden transition-all duration-300 hover:-translate-y-2 h-full flex flex-col {{ $isMiddle ? 'bg-gradient-to-b from-amber-500/5 to-transparent' : '' }}">
+                    <div class="relative glass-panel p-8 sm:p-10 rounded-[2.5rem] border {{ $isMiddle ? 'border-[#734C89]/30' : 'border-white/10' }} overflow-hidden transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">
                         @if($isMiddle)
                         <div class="absolute top-5 right-5">
-                            <span class="text-[7px] font-black orbitron uppercase tracking-[0.2em] bg-gradient-to-r from-amber-500 to-orange-500 text-black px-3 py-1.5 rounded-full">Popular</span>
+                            <span class="text-[7px] font-black orbitron uppercase tracking-[0.2em] text-white px-3 py-1.5 rounded-full" style="background: linear-gradient(135deg, #734C89, #9333ea);">Popular</span>
                         </div>
                         @endif
 
@@ -396,7 +512,7 @@
                         @endif
 
                         <!-- CTA -->
-                        <a href="{{ url('/pricing') }}" class="block w-full py-4 rounded-2xl text-center font-black orbitron text-[10px] tracking-[0.2em] uppercase italic transition-all hover:scale-[1.02] active:scale-[0.98] {{ $isMiddle ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-black hover:shadow-[0_0_30px_rgba(245,158,11,0.3)]' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-purple-500/30' }}">
+                        <a href="{{ url('/pricing') }}" class="block w-full py-4 rounded-2xl text-center font-black orbitron text-[10px] tracking-[0.2em] uppercase italic transition-all hover:scale-[1.02] active:scale-[0.98] {{ $isMiddle ? 'text-white hover:shadow-[0_0_30px_rgba(115,76,137,0.4)]' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-purple-500/30' }}" style="{{ $isMiddle ? 'background: linear-gradient(135deg, #734C89, #9333ea);' : '' }}">
                             Get Started
                         </a>
                     </div>
@@ -488,21 +604,41 @@
                         <div class="absolute -bottom-10 -right-10 w-48 h-24 glass-panel rounded-[2rem] border border-white/10 rotate-6 blur-[1px] opacity-40 scale-110"></div>
 
                         <!-- Notification Card -->
-                        <div class="relative w-full max-sm glass-panel p-10 rounded-[3rem] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] z-10 transform -rotate-3 hover:rotate-0 transition-all duration-700 overflow-hidden group/card">
+                        <div class="relative w-full max-w-sm glass-panel p-10 rounded-[3rem] border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] z-10 transform -rotate-3 hover:rotate-0 transition-all duration-700 overflow-hidden group/card">
                             <div class="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
                             
                             <div class="flex items-center gap-5 mb-10 relative z-10">
-                                <div class="w-12 h-12 bg-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-600/40 animate-pulse">
-                                    <i data-lucide="bell" class="w-6 h-6 text-white"></i>
+                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-600/40 relative">
+                                    <div class="absolute inset-0 bg-white/20 rounded-2xl animate-ping opacity-20"></div>
+                                    <i data-lucide="bell" class="w-6 h-6 text-white relative z-10"></i>
                                 </div>
-                                <span class="orbitron font-black text-[12px] tracking-[0.3em] text-white uppercase">NEW SIGNAL ALERT</span>
+                                <div class="flex flex-col">
+                                    <span class="text-purple-400 text-[8px] font-black orbitron uppercase tracking-[0.4em] mb-1 leading-none">System Core</span>
+                                    <span class="orbitron font-black text-[12px] tracking-[0.2em] text-white uppercase italic">NEW SIGNAL ALERT</span>
+                                </div>
                             </div>
                             
-                            <div class="space-y-5 relative z-10 opacity-40">
-                                <div class="h-3 w-5/6 bg-white/10 rounded-full"></div>
-                                <div class="h-3 w-full bg-white/10 rounded-full"></div>
-                                <div class="pt-6">
-                                    <div class="h-12 w-full bg-purple-600/20 rounded-2xl border border-purple-500/30"></div>
+                            <div class="space-y-6 relative z-10">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-500 text-[9px] font-black orbitron uppercase tracking-widest mb-1">Pair</span>
+                                        <span class="text-white text-xl font-black orbitron italic">BTC/USDT</span>
+                                    </div>
+                                    <div class="text-right flex flex-col">
+                                        <span class="text-gray-500 text-[9px] font-black orbitron uppercase tracking-widest mb-1">Status</span>
+                                        <span class="text-emerald-400 text-sm font-black orbitron animate-pulse">● LONG / BUY</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                                    <span class="text-gray-500 text-[9px] font-black orbitron uppercase tracking-widest">Entry Price</span>
+                                    <span class="text-white text-lg font-black orbitron tracking-tight">$64,250.75</span>
+                                </div>
+
+                                <div class="pt-4">
+                                    <div class="w-full py-4 bg-purple-600/20 rounded-2xl border border-purple-500/30 text-center text-[9px] font-black orbitron uppercase tracking-[0.2em] italic text-purple-400">
+                                        STOCHASTIC RSI OVERBOUGHT
+                                    </div>
                                 </div>
                             </div>
                         </div>

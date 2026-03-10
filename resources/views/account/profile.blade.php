@@ -35,9 +35,9 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
                     <div class="flex items-center gap-4">
                         <i data-lucide="fingerprint" class="w-6 h-6 text-purple-500"></i>
-                        <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Identity Protocol</h3>
+                        <h3 class="text-xl font-bold text-white tracking-wide">Profile</h3>
                     </div>
-                    <button id="save-changes-btn" class="px-8 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl text-[10px] font-black orbitron uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all">Save Changes</button>
+                    <button id="save-changes-btn" class="px-8 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl text-sm font-bold hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all">Save Changes</button>
                 </div>
 
                 <div class="flex flex-col lg:flex-row gap-8 xl:gap-12 items-center lg:items-start">
@@ -58,7 +58,7 @@
                             <!-- Hover Upload Overlay -->
                             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 group-hover/avatar:opacity-100 transition-all duration-500 cursor-pointer z-20" onclick="document.getElementById('profile_photo_input').click()">
                                 <i data-lucide="camera" class="w-8 h-8 text-white mb-2 transform translate-y-2 group-hover/avatar:translate-y-0 transition-transform"></i>
-                                <span class="text-[8px] font-black orbitron text-white uppercase tracking-widest opacity-0 group-hover/avatar:opacity-100 transition-opacity">Update Node</span>
+                                <span class="text-xs font-semibold text-white opacity-0 group-hover/avatar:opacity-100 transition-opacity">Update Photo</span>
                             </div>
                             <input type="file" id="profile_photo_input" class="hidden" accept="image/*">
                         </div>
@@ -66,7 +66,7 @@
                         <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-5 py-2.5 bg-[#05020a] border border-emerald-500/30 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.1)] z-30">
                             <div class="flex items-center gap-2">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></span>
-                                <p class="text-[8px] font-black orbitron text-emerald-500 uppercase tracking-[0.2em] whitespace-nowrap">Verified Node</p>
+                                <p class="text-xs font-semibold text-emerald-500 whitespace-nowrap">Verified</p>
                             </div>
                         </div>
                     </div>
@@ -77,46 +77,46 @@
                             <!-- Field: Username -->
                             <div class="space-y-3.5">
                                 <div class="flex justify-between items-center px-2">
-                                    <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Username Handle</label>
-                                    <span class="text-[8px] font-bold orbitron text-purple-500/50 uppercase tracking-widest">Public</span>
+                                    <label class="text-sm font-semibold text-gray-300">Username</label>
+                                    <span class="text-xs text-purple-500/60">Public</span>
                                 </div>
                                 <div class="relative group/field">
                                     <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                    <input type="text" name="username" value="{{ Auth::user()->username }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-[var(--text-white)] text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
+                                    <input type="text" name="username" value="{{ Auth::user()->username }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4 text-white text-base font-medium focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
                                 </div>
                             </div>
 
                             <!-- Field: Email -->
                             <div class="space-y-3.5">
                                 <div class="flex justify-between items-center px-2">
-                                    <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Neural Email</label>
-                                    <span class="text-[8px] font-bold orbitron text-emerald-500/50 uppercase tracking-widest">Active</span>
+                                    <label class="text-sm font-semibold text-gray-300">Email Address</label>
+                                    <span class="text-xs text-emerald-500/60">Active</span>
                                 </div>
                                 <div class="relative group/field">
                                     <i data-lucide="mail" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                    <input type="email" name="email" value="{{ Auth::user()->email }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-[var(--text-white)] text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
+                                    <input type="email" name="email" value="{{ Auth::user()->email }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4 text-white text-base font-medium focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
                                 </div>
                             </div>
 
                             <!-- Field: PIN -->
                             <div class="space-y-3.5">
                                 <div class="flex justify-between items-center px-2">
-                                    <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Access PIN</label>
-                                    <span class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest">Hidden</span>
+                                    <label class="text-sm font-semibold text-gray-300">Password</label>
+                                    <span class="text-xs text-gray-600">Hidden</span>
                                 </div>
                                 <div class="relative group/field">
                                     <i data-lucide="lock" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                    <input type="password" value="********" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-[var(--text-white)] text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
+                                    <input type="password" value="********" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4 text-white text-base font-medium focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all shadow-inner">
                                 </div>
                             </div>
 
                             <!-- Reset Button Callout -->
                             <div class="flex items-end">
                                 <div class="w-full p-1 bg-white/[0.02] border border-white/[0.05] rounded-2xl">
-                                    <button class="w-full py-3.5 rounded-xl bg-white/[0.03] border border-white/[0.1] text-[9px] font-black orbitron uppercase tracking-[0.25em] hover:bg-purple-600 hover:text-white hover:border-purple-500 transition-all duration-300 group/btn shadow-lg">
+                                    <button class="w-full py-3.5 rounded-xl bg-white/[0.03] border border-white/[0.1] text-sm font-semibold text-gray-300 hover:bg-purple-600 hover:text-white hover:border-purple-500 transition-all duration-300 group/btn shadow-lg">
                                         <div class="flex items-center justify-center gap-3">
                                             <i data-lucide="refresh-cw" class="w-3.5 h-3.5 group-hover/btn:rotate-180 transition-transform duration-500"></i>
-                                            Reset Access Credentials
+                                            Reset Password
                                         </div>
                                     </button>
                                 </div>
@@ -135,8 +135,8 @@
             <div class="relative z-10">
                 <div class="mb-10 flex items-center justify-between">
                     <div>
-                        <h3 class="text-2xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">{{ \App\Models\SiteSetting::getValue('subscription_header', 'Subscription Protocol') }}</h3>
-                        <p class="text-[11px] font-bold orbitron text-gray-500 uppercase tracking-[0.2em] mt-1">{{ \App\Models\SiteSetting::getValue('subscription_subheader', 'Neural Access Monitoring') }} • Link ID: {{ substr(md5($user->id), 0, 8) }}</p>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">{{ \App\Models\SiteSetting::getValue('subscription_header', 'My Subscription') }}</h3>
+                        <p class="text-sm text-gray-500 mt-1">{{ \App\Models\SiteSetting::getValue('subscription_subheader', 'Membership & Access') }} • ID: {{ substr(md5($user->id), 0, 8) }}</p>
                     </div>
                 </div>
 
@@ -147,19 +147,19 @@
                                 <i data-lucide="{{ $latestPayment->status === 'pending' ? 'clock' : 'shield-alert' }}" class="w-6 h-6"></i>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-[10px] font-black orbitron {{ $latestPayment->status === 'pending' ? 'text-amber-500' : 'text-rose-500' }} uppercase tracking-[0.2em]">
+                                <h4 class="text-sm font-bold {{ $latestPayment->status === 'pending' ? 'text-amber-500' : 'text-rose-500' }}">
                                     Payment {{ ucfirst($latestPayment->status) }}
                                 </h4>
-                                <p class="text-[9px] font-bold orbitron text-gray-400 uppercase tracking-widest mt-1">
+                                <p class="text-sm text-gray-400 mt-1">
                                     @if($latestPayment->status === 'pending')
-                                        Your requisition for the {{ $latestPayment->package->name ?? 'Premium' }} protocol is under neural verification.
+                                        Your payment for the {{ $latestPayment->package->name ?? 'Premium' }} plan is being reviewed.
                                     @else
-                                        Protocol rejected: {{ $latestPayment->rejection_note ?? 'Institutional verification failed.' }}
+                                        Rejected: {{ $latestPayment->rejection_note ?? 'Payment verification failed.' }}
                                     @endif
                                 </p>
                             </div>
                             @if($latestPayment->status === 'rejected')
-                                <a href="{{ route('pricing') }}" class="px-6 py-2.5 bg-rose-500 text-black rounded-xl text-[8px] font-black orbitron uppercase tracking-widest hover:bg-rose-600 transition-all">Re-initiate Upgrade</a>
+                                <a href="{{ route('pricing') }}" class="px-6 py-2.5 bg-rose-500 text-black rounded-xl text-sm font-bold hover:bg-rose-600 transition-all">Try Again</a>
                             @endif
                         </div>
                     </div>
@@ -174,8 +174,8 @@
                                 $hasPlan = (bool)$user->premium_expiry;
                             @endphp
                             <div class="flex items-center justify-between group">
-                                <span class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest">Plan Name</span>
-                                <span class="text-sm font-black orbitron text-white uppercase italic group-hover:text-purple-400 transition-colors">
+                                <span class="text-sm text-gray-400">Plan Name</span>
+                                <span class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors">
                                     @if($user->role === 'admin')
                                         Institutional Admin
                                     @elseif($isActive && $currentSubscription)
@@ -187,20 +187,20 @@
                             </div>
                             
                             <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest">Link Status</span>
-                                <span class="px-5 py-1.5 rounded-full {{ $isActive ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-500' : 'bg-rose-500/10 border border-rose-500/20 text-rose-500' }} text-[9px] font-black orbitron uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(244,63,94,0.1)]">
-                                    {{ $isActive ? 'Protocol Active' : ($hasPlan ? 'Protocol Expired' : 'Link Offline') }}
+                                <span class="text-sm text-gray-400">Status</span>
+                                <span class="px-4 py-1.5 rounded-full {{ $isActive ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-500' : 'bg-rose-500/10 border border-rose-500/20 text-rose-500' }} text-xs font-semibold">
+                                    {{ $isActive ? 'Active' : ($hasPlan ? 'Expired' : 'No Plan') }}
                                 </span>
                             </div>
 
                             <div class="flex items-center justify-between pt-4 border-t border-white/[0.05]">
-                                <span class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest">Init Date</span>
-                                <span class="text-xs font-bold orbitron text-gray-400">{{ $user->created_at ? $user->created_at->format('d M Y') : '01 Mar 2026' }}</span>
+                                <span class="text-sm text-gray-400">Member Since</span>
+                                <span class="text-sm font-semibold text-gray-300">{{ $user->created_at ? $user->created_at->format('d M Y') : '01 Mar 2026' }}</span>
                             </div>
 
                             <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest">Termination</span>
-                                <span class="text-xs font-bold orbitron {{ $isActive ? 'text-indigo-400' : 'text-rose-500/50' }}">{{ $user->premium_expiry ? \Carbon\Carbon::parse($user->premium_expiry)->format('d M Y') : 'UNDEFINED' }}</span>
+                                <span class="text-sm text-gray-400">Expires On</span>
+                                <span class="text-sm font-semibold {{ $isActive ? 'text-indigo-400' : 'text-rose-500/50' }}">{{ $user->premium_expiry ? \Carbon\Carbon::parse($user->premium_expiry)->format('d M Y') : 'Not Set' }}</span>
                             </div>
                         </div>
                     </div>
@@ -208,7 +208,7 @@
                     <!-- COUNTDOWN -->
                     <div class="w-full lg:w-1/2 flex flex-col items-center text-center space-y-6">
                         <div class="space-y-2">
-                            <h4 class="text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.4em]">Temporal Remaining Capacity</h4>
+                            <h4 class="text-sm font-semibold text-gray-400">Time Remaining</h4>
                             <div class="h-0.5 w-12 bg-purple-500/30 mx-auto rounded-full"></div>
                         </div>
                         
@@ -222,10 +222,10 @@
                                     <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                                     <span class="relative z-10">Upgrade Protocol</span>
                                 </a>
-                                <p class="text-[8px] font-bold orbitron text-gray-600 uppercase tracking-widest italic animate-pulse">Neural limits imposed. Upgrade for full bandwidth.</p>
+                                <p class="text-xs text-gray-500 animate-pulse">Upgrade to access premium features.</p>
                             @else
                                 <div class="px-8 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
-                                    <p class="text-[9px] font-black orbitron text-emerald-500 uppercase tracking-widest italic">Full Neural Integration Active</p>
+                                    <p class="text-sm font-semibold text-emerald-500">Premium Access Active</p>
                                 </div>
                             @endif
                         </div>
@@ -425,22 +425,22 @@
                 <div class="flex items-center justify-between gap-6 mb-10">
                     <div class="flex items-center gap-4">
                         <i data-lucide="shield-check" class="w-6 h-6 text-emerald-500"></i>
-                        <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Active Secure Sessions</h3>
+                        <h3 class="text-xl font-bold text-white tracking-wide">Active Sessions</h3>
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></span>
-                        <span class="text-[8px] font-black orbitron text-emerald-500 uppercase tracking-[0.2em]">Monitoring Active</span>
+                        <span class="text-xs font-semibold text-emerald-500">Monitoring Active</span>
                     </div>
                 </div>
 
                 <div class="overflow-x-auto no-scrollbar">
                     <table class="w-full text-left border-separate border-spacing-y-4">
                         <thead>
-                            <tr class="text-[9px] font-black orbitron text-gray-600 uppercase tracking-[0.25em]">
-                                <th class="px-6 pb-2">Device Node</th>
+                            <tr class="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+                                <th class="px-6 pb-2">Device</th>
                                 <th class="px-6 pb-2">Location</th>
                                 <th class="px-6 pb-2">IP Address</th>
-                                <th class="px-6 pb-2">Last Activity</th>
+                                <th class="px-6 pb-2">Last Active</th>
                                 <th class="px-6 pb-2">Status</th>
                                 <th class="px-6 pb-2 text-right">Action</th>
                             </tr>
@@ -451,30 +451,30 @@
                                 <td class="px-6 py-5 rounded-l-2xl border-l border-t border-b border-white/[0.05]">
                                     <div class="flex items-center gap-3">
                                         <i data-lucide="{{ str_contains($session->device, 'PC') ? 'monitor' : 'smartphone' }}" class="w-4 h-4 text-purple-500"></i>
-                                        <span class="text-[10px] font-bold orbitron text-white uppercase">{{ $session->device }}</span>
+                                        <span class="text-sm font-semibold text-white">{{ $session->device }}</span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 border-t border-b border-white/[0.05]">
-                                    <span class="text-[10px] font-medium text-gray-400 uppercase tracking-widest">{{ $session->location }}</span>
+                                    <span class="text-sm text-gray-400">{{ $session->location }}</span>
                                 </td>
                                 <td class="px-6 py-5 border-t border-b border-white/[0.05]">
-                                    <code class="text-[10px] font-bold text-indigo-400">{{ $session->ip_address }}</code>
+                                    <code class="text-sm text-indigo-400">{{ $session->ip_address }}</code>
                                 </td>
                                 <td class="px-6 py-5 border-t border-b border-white/[0.05]">
-                                    <span class="text-[10px] font-medium text-gray-500 uppercase">{{ $session->last_active }}</span>
+                                    <span class="text-sm text-gray-500">{{ $session->last_active }}</span>
                                 </td>
                                 <td class="px-6 py-5 border-t border-b border-white/[0.05]">
                                     @if($session->is_current_device)
-                                        <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-[8px] font-black orbitron uppercase tracking-widest">Current</span>
+                                        <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-semibold">Current</span>
                                     @else
-                                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-500 text-[8px] font-black orbitron uppercase tracking-widest">Active</span>
+                                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-500 text-xs font-semibold">Active</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-5 rounded-r-2xl border-r border-t border-b border-white/[0.05] text-right">
                                     @if(!$session->is_current_device)
-                                        <button onclick="terminateSession('{{ $session->id }}', this)" class="px-4 py-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 text-[8px] font-black orbitron uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all">Logout</button>
+                                        <button onclick="terminateSession('{{ $session->id }}', this)" class="px-4 py-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs font-semibold hover:bg-rose-500 hover:text-white transition-all">Sign Out</button>
                                     @else
-                                        <span class="text-[8px] font-black orbitron text-emerald-500/50 uppercase tracking-widest italic">Immutable</span>
+                                        <span class="text-xs text-emerald-500/50">This Device</span>
                                     @endif
                                 </td>
                             </tr>
@@ -493,7 +493,7 @@
             <div class="relative z-10">
                 <div class="flex items-center gap-4 mb-10">
                     <i data-lucide="lock" class="w-6 h-6 text-purple-500"></i>
-                    <h3 class="text-xl font-black orbitron uppercase italic tracking-wider" style="color: var(--text-white)">Password Security Protocol</h3>
+                    <h3 class="text-xl font-bold text-white tracking-wide">Change Password</h3>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -501,36 +501,36 @@
                     <div class="space-y-8">
                         <div class="space-y-6">
                             <div class="space-y-3">
-                                <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Current Authorization Key</label>
+                                <label class="text-sm font-semibold text-gray-300">Current Password</label>
                                 <div class="relative group/field">
                                     <i data-lucide="key" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                    <input type="password" id="current_password" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-white text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all" placeholder="Enter Current Password">
+                                    <input type="password" id="current_password" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4 text-white text-base font-medium focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all placeholder:text-gray-600" placeholder="Enter your current password">
                                 </div>
                             </div>
 
                             <div class="space-y-3">
-                                <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">New Security Hash</label>
+                                <label class="text-sm font-semibold text-gray-300">New Password</label>
                                 <div class="relative group/field">
                                     <i data-lucide="shield-plus" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                    <input type="password" id="new_password" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-white text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all" placeholder="Enter New Password">
+                                    <input type="password" id="new_password" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4 text-white text-base font-medium focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all placeholder:text-gray-600" placeholder="Enter your new password">
                                 </div>
                             </div>
 
                             <div class="space-y-3">
-                                <label class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Confirm Protocol Hash</label>
+                                <label class="text-sm font-semibold text-gray-300">Confirm New Password</label>
                                 <div class="relative group/field">
                                     <i data-lucide="check-circle-2" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                    <input type="password" id="new_password_confirmation" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4.5 text-white text-sm font-bold orbitron tracking-tight focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all" placeholder="Repeat New Password">
+                                    <input type="password" id="new_password_confirmation" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-14 pr-6 py-4 text-white text-base font-medium focus:outline-none focus:border-purple-500/40 focus:bg-white/[0.06] transition-all placeholder:text-gray-600" placeholder="Repeat your new password">
                                 </div>
                             </div>
                         </div>
 
-                        <button onclick="updatePassword()" class="w-full py-5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[10px] font-black orbitron uppercase tracking-[0.2em] hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all">Update Access Key</button>
+                        <button onclick="updatePassword()" class="w-full py-5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-sm font-bold hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all">Update Password</button>
                     </div>
 
                     <!-- Requirements & Status -->
                     <div class="space-y-8 p-8 rounded-[2.5rem] bg-indigo-500/[0.02] border border-white/[0.03]">
-                        <h4 class="text-[10px] font-black orbitron text-white uppercase tracking-[0.2em] mb-6">Encryption Complexity Requirements</h4>
+                        <h4 class="text-sm font-bold text-white mb-6">Password Requirements</h4>
                         
                         <div class="space-y-5">
                             <div class="requirement-item flex items-center justify-between group" data-req="length">
@@ -538,7 +538,7 @@
                                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center group-[.valid]:bg-emerald-500/20 transition-colors">
                                         <i data-lucide="hash" class="w-4 h-4 text-gray-600 group-[.valid]:text-emerald-500"></i>
                                     </div>
-                                    <span class="text-[10px] font-bold orbitron text-gray-500 group-[.valid]:text-emerald-500 uppercase tracking-widest">Min. 8 Characters</span>
+                                    <span class="text-sm text-gray-500 group-[.valid]:text-emerald-500">At least 8 characters</span>
                                 </div>
                                 <i data-lucide="circle" class="w-3 h-3 text-gray-700 group-[.valid]:hidden"></i>
                                 <i data-lucide="check-circle" class="w-3 h-3 text-emerald-500 hidden group-[.valid]:block"></i>
@@ -549,7 +549,7 @@
                                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center group-[.valid]:bg-emerald-500/20 transition-colors">
                                         <i data-lucide="type" class="w-4 h-4 text-gray-600 group-[.valid]:text-emerald-500"></i>
                                     </div>
-                                    <span class="text-[10px] font-bold orbitron text-gray-500 group-[.valid]:text-emerald-500 uppercase tracking-widest">Uppercase Sentinel</span>
+                                    <span class="text-sm text-gray-500 group-[.valid]:text-emerald-500">One uppercase letter</span>
                                 </div>
                                 <i data-lucide="circle" class="w-3 h-3 text-gray-700 group-[.valid]:hidden"></i>
                                 <i data-lucide="check-circle" class="w-3 h-3 text-emerald-500 hidden group-[.valid]:block"></i>
@@ -560,7 +560,7 @@
                                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center group-[.valid]:bg-emerald-500/20 transition-colors">
                                         <i data-lucide="binary" class="w-4 h-4 text-gray-600 group-[.valid]:text-emerald-500"></i>
                                     </div>
-                                    <span class="text-[10px] font-bold orbitron text-gray-500 group-[.valid]:text-emerald-500 uppercase tracking-widest">Numeric Sequence</span>
+                                    <span class="text-sm text-gray-500 group-[.valid]:text-emerald-500">One number</span>
                                 </div>
                                 <i data-lucide="circle" class="w-3 h-3 text-gray-700 group-[.valid]:hidden"></i>
                                 <i data-lucide="check-circle" class="w-3 h-3 text-emerald-500 hidden group-[.valid]:block"></i>
@@ -571,7 +571,7 @@
                                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center group-[.valid]:bg-emerald-500/20 transition-colors">
                                         <i data-lucide="asterisk" class="w-4 h-4 text-gray-600 group-[.valid]:text-emerald-500"></i>
                                     </div>
-                                    <span class="text-[10px] font-bold orbitron text-gray-500 group-[.valid]:text-emerald-500 uppercase tracking-widest">Special Character Link</span>
+                                    <span class="text-sm text-gray-500 group-[.valid]:text-emerald-500">One special character</span>
                                 </div>
                                 <i data-lucide="circle" class="w-3 h-3 text-gray-700 group-[.valid]:hidden"></i>
                                 <i data-lucide="check-circle" class="w-3 h-3 text-emerald-500 hidden group-[.valid]:block"></i>
@@ -581,7 +581,7 @@
                         <div class="pt-6 border-t border-white/[0.05]">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="history" class="w-3.5 h-3.5 text-gray-600"></i>
-                                <p class="text-[8px] font-black orbitron text-gray-600 uppercase tracking-[0.2em]">Last Modified: <span class="text-indigo-500/80">3 DAYS AGO</span></p>
+                                <p class="text-xs text-gray-600">Last Modified: <span class="text-indigo-500/80">3 days ago</span></p>
                             </div>
                         </div>
                     </div>
@@ -807,7 +807,7 @@
                     reader.onload = (event) => {
                         const avatarContainer = document.getElementById('avatar-container');
                         avatarContainer.innerHTML = `<img src="${event.target.result}" alt="Preview" class="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" id="avatar-image">`;
-                        notify('Node telemetry updated. Sync to finalize.', 'info');
+                        notify('Photo updated. Click Save Changes to apply.', 'info');
                     };
                     reader.readAsDataURL(e.target.files[0]);
                 }
