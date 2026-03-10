@@ -15,16 +15,34 @@ class PastSignalsController extends Controller
      */
     public function webIndex()
     {
+        // Compute global stats for all past signals
+        $today = now()->format('Y-m-d');
+        $baseQuery = \App\Models\StockSignal::where('entry_date', '<=', $today);
+
+        $totalSignals  = (clone $baseQuery)->count();
+        $totalWins     = (clone $baseQuery)->where('pnl', '>', 0)->count();
+        $totalLossCount = (clone $baseQuery)->where('pnl', '<', 0)->count();
+        $totalPnl      = (clone $baseQuery)->sum('pnl');
+        $winRate       = $totalSignals > 0 ? round(($totalWins / $totalSignals) * 100, 2) . '%' : '0%';
+
+        $stats = [
+            'totalSignals' => $totalSignals,
+            'winRate'      => $winRate,
+            'totalWin'     => $totalWins,
+            'totalLoss'    => $totalLossCount,
+            'totalPnl'     => $totalPnl,
+        ];
+
         if (!Auth::check()) {
-            return view('signals.past', ['userState' => 'guest']);
+            return view('signals.past', array_merge(['userState' => 'guest'], $stats));
         }
 
         $user = Auth::user();
         if (in_array($user->role, ['premium', 'vip', 'admin'])) {
-            return view('signals.past', ['userState' => 'premium']);
+            return view('signals.past', array_merge(['userState' => 'premium'], $stats));
         }
 
-        return view('signals.past', ['userState' => 'free']);
+        return view('signals.past', array_merge(['userState' => 'free'], $stats));
     }
 
     /**
@@ -37,7 +55,7 @@ class PastSignalsController extends Controller
         
         // Filtering for past signals (based on entry_date string)
         $today = now()->format('Y-m-d');
-        $query = \App\Models\StockSignal::where('entry_date', '<', $today);
+        $query = \App\Models\StockSignal::where('entry_date', '<=', $today);
 
         // Tier Access: Free users only see last 7 days of archive
         if (!$isPremium) {
@@ -88,7 +106,7 @@ class PastSignalsController extends Controller
         
         // 1. Global Platform Performance (All past signals)
         $today = now()->format('Y-m-d');
-        $globalQuery = \App\Models\StockSignal::where('entry_date', '<', $today);
+        $globalQuery = \App\Models\StockSignal::where('entry_date', '<=', $today);
         $globalTotal = $globalQuery->count();
         $globalWins = (clone $globalQuery)->where('pnl', '>', 0)->count();
         $globalProfit = (clone $globalQuery)->sum('pnl');
@@ -112,8 +130,9 @@ class PastSignalsController extends Controller
             'stats' => [
                 'total_signals' => $globalTotal,
                 'win_rate' => $globalTotal > 0 ? round(($globalWins / $globalTotal) * 100, 1) . '%' : '0%',
-                'total_win' => number_format($globalProfit, 2),
+                'total_win' => $globalWins,
                 'total_loss' => $globalLossCount,
+                'total_pnl' => number_format($globalProfit, 2),
                 
                 'filtered' => [
                     'total' => $filteredTotal,

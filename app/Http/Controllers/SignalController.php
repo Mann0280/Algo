@@ -50,9 +50,10 @@ class SignalController extends Controller
         $totalSignals = $signals->count();
         $totalWin = $signals->where('pnl', '>', 0)->count();
         $totalLoss = $signals->where('pnl', '<', 0)->count();
+        $totalPnl = $signals->sum('pnl');
         $winRate = $totalSignals > 0 ? round(($totalWin / $totalSignals) * 100, 2) . '%' : '0%';
 
         // Pass data to the Blade view
-        return view('signals.past', compact('signals', 'totalSignals', 'totalWin', 'totalLoss', 'winRate', 'userState'));
+        return view('signals.past', compact('signals', 'totalSignals', 'totalWin', 'totalLoss', 'totalPnl', 'winRate', 'userState'));
     }
 }

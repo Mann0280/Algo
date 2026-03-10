@@ -518,8 +518,8 @@
                             text: upiString,
                             width: 140,
                             height: 140,
-                            colorDark : "#000000",
-                            colorLight : "#ffffff",
+                            colorDark : "#030303ff",
+                            colorLight : "#fdfbfdff",
                             correctLevel : QRCode.CorrectLevel.H
                         });
                     }

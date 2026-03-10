@@ -95,7 +95,7 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
         <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
@@ -115,6 +115,13 @@
             <div class="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-rose-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL LOSS</p>
             <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $totalLoss }}</h3>
+        </div>
+        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group" style="border-color: {{ $totalPnl >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)' }}">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style="background: {{ $totalPnl >= 0 ? 'rgba(16,185,129,0.05)' : 'rgba(244,63,94,0.05)' }}"></div>
+            <p class="text-[10px] font-bold orbitron uppercase tracking-widest mb-1 relative z-10" style="color: {{ $totalPnl >= 0 ? '#34d399' : '#fb7185' }}">TOTAL PNL</p>
+            <h3 class="text-3xl font-black orbitron italic relative z-10" style="color: {{ $totalPnl >= 0 ? '#34d399' : '#fb7185' }}">
+                {{ $totalPnl >= 0 ? '+' : '' }}₹{{ number_format($totalPnl, 2) }}
+            </h3>
         </div>
     </div>
 
@@ -167,18 +174,19 @@
             </div>
 
             <!-- Table Section -->
-            <div class="glass-card border border-white/5 overflow-hidden p-6">
-                <table class="w-full text-left border-collapse">
+            <div class="glass-card border border-white/5 overflow-hidden p-4 sm:p-6">
+                <div class="overflow-x-auto -mx-4 sm:-mx-6">
+                <table class="w-full text-left border-collapse" style="min-width: 700px;">
                     <thead>
                         <tr class="border-b border-white/10 text-gray-400 orbitron text-[10px] uppercase tracking-widest">
-                            <th class="py-4 px-4 font-black">Stock Name</th>
-                            <th class="py-4 px-4 font-black">Entry Price</th>
-                            <th class="py-4 px-4 font-black">Target Price</th>
-                            <th class="py-4 px-4 font-black">Stop Loss</th>
-                            <th class="py-4 px-4 font-black">Breakeven</th>
-                            <th class="py-4 px-4 font-black">Entry Date</th>
-                            <th class="py-4 px-4 font-black">Entry Time</th>
-                            <th class="py-4 px-4 font-black text-right">PnL</th>
+                            <th class="py-4 px-4 font-black whitespace-nowrap">Stock</th>
+                            <th class="py-4 px-4 font-black whitespace-nowrap">Entry</th>
+                            <th class="py-4 px-4 font-black whitespace-nowrap">Target</th>
+                            <th class="py-4 px-4 font-black whitespace-nowrap">Stop Loss</th>
+                            <th class="py-4 px-4 font-black whitespace-nowrap">Breakeven</th>
+                            <th class="py-4 px-4 font-black whitespace-nowrap">Date</th>
+                            <th class="py-4 px-4 font-black whitespace-nowrap">Time</th>
+                            <th class="py-4 px-4 font-black text-right whitespace-nowrap">PnL</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/5">
@@ -204,6 +212,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>{{-- end overflow-x-auto --}}
                 @if($signals->isEmpty())
                     <div class="py-12 text-center">
                         <p class="orbitron text-xs text-gray-500 uppercase tracking-widest italic">Neural Archive Empty...</p>

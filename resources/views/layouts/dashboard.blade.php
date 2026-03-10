@@ -240,7 +240,7 @@
                 @foreach($navItems as $item)
                 <a href="{{ $item['url'] }}" class="nav-link flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-[var(--nav-hover-bg)] group {{ $item['active'] ? 'active-link' : '' }}" style="color: var(--nav-text)">
                     <i data-lucide="{{ $item['icon'] }}" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-[10px] font-black orbitron uppercase tracking-[0.15em] sidebar-text whitespace-nowrap">{{ $item['label'] }}</span>
+                    <span class="text-sm font-semibold sidebar-text whitespace-nowrap tracking-wide">{{ $item['label'] }}</span>
                 </a>
                 @endforeach
             </nav>
@@ -249,7 +249,7 @@
             <div class="px-2">
                 <button id="sidebar-toggle" class="w-full flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-[var(--nav-hover-bg)] transition-all group border border-white/[0.05]" style="background: var(--input-bg); color: var(--nav-text)">
                     <i data-lucide="chevron-left" class="w-4 h-4 shrink-0" id="toggle-icon"></i>
-                    <span class="text-[9px] font-bold orbitron uppercase tracking-widest sidebar-text">Collapse Panel</span>
+                    <span class="text-xs font-semibold tracking-wide sidebar-text">Collapse Panel</span>
                 </button>
             </div>
         </aside>
