@@ -262,7 +262,7 @@
                 </div>{{-- end overflow-x-auto --}}
                 @if($signals->isEmpty())
                     <div class="py-12 text-center">
-                        <p class="orbitron text-xs text-gray-500 uppercase tracking-widest italic">Neural Archive Empty...</p>
+                        <p class="orbitron text-xs text-gray-500 uppercase tracking-widest italic">No past signals available yet.</p>
                     </div>
                 @endif
             </div>

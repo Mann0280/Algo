@@ -21,8 +21,8 @@ class SignalController extends Controller
             $userState = in_array(Auth::user()->role, ['premium', 'vip', 'admin']) ? 'premium' : 'free';
         }
 
-        // Retrieve and filter signals
-        $query = StockSignal::query();
+        // Retrieve and filter signals (strictly past dates only)
+        $query = StockSignal::query()->where('entry_date', '<', now()->toDateString());
 
         if ($request->filled('start_date')) {
             $query->where('entry_date', '>=', $request->start_date);
