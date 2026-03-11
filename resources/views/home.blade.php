@@ -124,7 +124,7 @@
             <div class="relative z-20 space-y-8">
                 <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-panel border border-purple-500/20 text-purple-400 text-[10px] font-bold orbitron uppercase tracking-[0.2em] hero-stagger opacity-0">
                     <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
-                    Join 15k+ traders using AI Precision
+                    Join 15k+ traders using AI Trading
                 </div>
                 
                 <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] orbitron uppercase italic">
@@ -134,7 +134,7 @@
                 </h1>
 
                 <p class="text-slate-400 text-sm sm:text-lg md:text-xl leading-relaxed max-w-xl hero-stagger opacity-0 font-medium">
-                    Real-time market insights with precision entry points and intelligent risk management powered by advanced AI prediction models.
+                    Real-time market insights with best entry points and smart risk control powered by AI price predictions.
                 </p>
 
                 <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8 hero-stagger opacity-0">
@@ -166,7 +166,7 @@
                 </div>
                 <div class="group">
                     <div class="text-3xl font-black text-white orbitron tracking-tighter count-up" data-value="24">0</div>
-                    <div class="text-[9px] text-slate-500 font-bold orbitron uppercase tracking-widest mt-2">AI Engine (hrs)</div>
+                    <div class="text-[9px] text-slate-500 font-bold orbitron uppercase tracking-widest mt-2">AI Running (hrs)</div>
                 </div>
             </div>
         </div>
@@ -187,7 +187,7 @@
              <!-- Floating Badges -->
              <div class="absolute top-0 right-10 glass-panel rounded-full py-2 px-4 hidden sm:flex items-center gap-2 z-20 hero-stagger opacity-0 border border-purple-500/30">
                 <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-                <span class="text-[9px] font-bold text-slate-200 orbitron tracking-widest uppercase">TERMINAL v2.0 ACTIVE</span>
+                <span class="text-[9px] font-bold text-slate-200 orbitron tracking-widest uppercase">LIVE TRADING ACTIVE</span>
             </div>
 
             <!-- Premium Terminal Device Frame -->

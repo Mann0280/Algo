@@ -69,7 +69,7 @@
         <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden lg:hidden" onclick="toggleSidebar()"></div>
 
         <!-- Sidebar -->
-        <aside id="sidebar" class="fixed lg:sticky top-0 left-0 w-72 h-screen border-r border-white/5 bg-[#0c0518]/90 backdrop-blur-2xl z-[100] transition-transform duration-300 sidebar-collapsed lg:transform-none flex flex-col pt-8">
+        <aside id="sidebar" data-lenis-prevent class="fixed lg:sticky top-0 left-0 w-72 h-screen border-r border-white/5 bg-[#0c0518]/90 backdrop-blur-2xl z-[100] transition-transform duration-300 sidebar-collapsed lg:transform-none flex flex-col pt-8">
             <div class="px-8 flex items-center justify-between mb-12">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-600/20">

@@ -84,12 +84,12 @@
                     PAST <span class="text-gradient">SIGNALS</span>
                 </h1>
                 <p class="text-gray-400 max-w-2xl text-lg uppercase tracking-tight">
-                    Historical intelligence performance analytics and verification. All signals are premium curated assets.
+                    Track our past performance and winning signals. All signals are quality trading signals.
                 </p>
             </div>
             <div class="flex items-center gap-4">
                 <div class="h-px w-24 bg-gradient-to-r from-purple-500 to-transparent hidden lg:block"></div>
-                <span class="text-[10px] orbitron font-bold text-purple-500 uppercase tracking-[0.3em]">Historical Archive Mode V2.0</span>
+                <span class="text-[10px] orbitron font-bold text-purple-500 uppercase tracking-[0.3em]">Past Signals History</span>
             </div>
         </div>
     </div>
@@ -142,7 +142,7 @@
                             <h2 class="orbitron text-2xl font-black text-white italic uppercase tracking-tighter">
                                 Capital <span class="text-gradient">Backtest Simulator</span>
                             </h2>
-                            <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Leveraged Simulation Engine v1.0 • 5X Capital Multiplier</p>
+                            <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Profit Calculator • 5x Investment</p>
                         </div>
 
                         <div class="flex flex-wrap items-end gap-4">
@@ -166,7 +166,7 @@
                         </div>
 
                         <div id="sim-result-container" class="hidden min-w-[240px] p-4 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-md">
-                            <p class="text-[9px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-1">Estimated Net Return</p>
+                            <p class="text-[9px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-1">Expected Profit</p>
                             <div id="sim-total-pnl" class="text-2xl font-black orbitron italic">₹0.00</div>
                         </div>
                     </div>

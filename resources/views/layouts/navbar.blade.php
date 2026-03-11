@@ -70,17 +70,17 @@
                             <!-- Notification Dropdown -->
                             <div id="notification-dropdown" class="absolute top-[120%] right-0 w-80 bg-[#0a0a12]/95 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-2xl transition-all duration-300 transform scale-95 opacity-0 invisible z-[110] overflow-hidden">
                                 <div class="p-6 border-b border-white/5 flex justify-between items-center">
-                                    <h3 class="orbitron text-[10px] font-black text-white uppercase tracking-widest">Neural Notifications</h3>
+                                    <h3 class="orbitron text-[10px] font-black text-white uppercase tracking-widest">Notifications</h3>
                                     <span id="unread-badge" class="px-2 py-0.5 rounded-full bg-amber-500 text-black text-[8px] font-black orbitron hidden">0 NEW</span>
                                 </div>
                                 <div id="notification-list" class="max-h-[400px] overflow-y-auto custom-scrollbar p-2 space-y-1">
                                     <div class="py-10 text-center opacity-30 flex flex-col items-center gap-2">
                                         <i data-lucide="inbox" class="w-8 h-8"></i>
-                                        <span class="text-[8px] font-bold orbitron uppercase tracking-[0.2em]">Matrix Clear</span>
+                                        <span class="text-[8px] font-bold orbitron uppercase tracking-[0.2em]">No new notifications</span>
                                     </div>
                                 </div>
                                 <div class="p-4 border-t border-white/5 text-center">
-                                    <a href="{{ url('/account/notifications') }}" class="text-[8px] font-black orbitron text-gray-500 hover:text-white transition-colors uppercase tracking-widest">View Archives</a>
+                                    <a href="{{ url('/account/notifications') }}" class="text-[8px] font-black orbitron text-gray-500 hover:text-white transition-colors uppercase tracking-widest">View History</a>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-[8px] font-black orbitron {{ $isPremium ? 'text-amber-500' : 'text-purple-400' }} leading-none tracking-widest uppercase transition-colors group-hover:text-white">
-                                    {{ $isPremium ? ($isAdmin ? 'Admin Oracle' : 'Premium Member') : 'Standard Account' }}
+                                    {{ $isPremium ? ($isAdmin ? 'Admin' : 'Premium Member') : 'Free Account' }}
                                 </span>
                                 <span class="text-[11px] font-bold orbitron text-white leading-tight uppercase global-username">{{ $user->username }}</span>
                             </div>
@@ -115,7 +115,7 @@
                     </div>
                 @else
                     <a href="{{ url('/login') }}" class="hidden lg:inline text-[10px] font-bold orbitron text-white hover:text-purple-400 transition-colors tracking-widest uppercase mr-4">Login</a>
-                    <a href="{{ url('/register') }}" class="hidden lg:inline px-8 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-widest hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all uppercase">Initialize</a>
+                    <a href="{{ url('/register') }}" class="hidden lg:inline px-8 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-widest hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all uppercase">Sign Up</a>
                 @endauth
                 
                 <!-- Hamburger Button — always visible on mobile -->
@@ -200,7 +200,7 @@
                     </div>
                     <div class="flex flex-col min-w-0">
                         <span class="orbitron font-black text-white text-sm uppercase truncate global-username">{{ $user->username }}</span>
-                        <span class="text-[8px] orbitron text-purple-400 font-bold uppercase tracking-widest">{{ $isPremium ? 'Premium Access' : 'Standard Node' }}</span>
+                        <span class="text-[8px] orbitron text-purple-400 font-bold uppercase tracking-widest">{{ $isPremium ? 'Premium Member' : 'Free Account' }}</span>
                     </div>
                 </a>
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
