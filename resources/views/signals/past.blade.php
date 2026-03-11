@@ -144,7 +144,7 @@
                             <div class="space-y-2">
                                 <label class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest ml-1">Enter Capital (₹)</label>
                                 <div class="relative group/input">
-                                    <input type="number" id="sim-capital" placeholder="e.g. 10000" 
+                                    <input type="number" id="sim-capital" placeholder="e.g. 10000" value="100000"
                                         class="input-cyber w-full sm:w-64 !pl-10 !py-3 font-bold orbitron text-sm focus:ring-2 focus:ring-purple-500/20">
                                     <i data-lucide="wallet" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within/input:text-purple-400 transition-colors"></i>
                                 </div>
@@ -277,6 +277,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
+        
+        // Auto-run simulation if default capital is set
+        if (document.getElementById('sim-capital').value) {
+            calculateSimulation();
+        }
     });
 
     function applyFilters() {
