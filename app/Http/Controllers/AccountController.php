@@ -58,9 +58,11 @@ class AccountController extends Controller
             ->orderBy('purchased_at', 'desc')
             ->first();
 
-        $preciseExpiry = ($currentSubscription && $currentSubscription->expires_at) 
-            ? $currentSubscription->expires_at->format('Y-m-d H:i:s')
-            : ($user->premium_expiry ? $user->premium_expiry . ' 23:59:59' : null);
+        $preciseExpiry = null;
+        if ($user->premium_expiry) {
+            // Use ISO8601 string so the frontend JS correctly parses the UTC timezone
+            $preciseExpiry = $user->premium_expiry->toIso8601String();
+        }
             
         return view('account.profile', compact('user', 'sessions', 'latestPayment', 'walletTransactions', 'currentSubscription', 'preciseExpiry', 'paymentRequests'));
     }
@@ -219,6 +221,7 @@ class AccountController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:100|max:50000',
+            'package_id' => 'nullable|exists:premium_packages,id',
         ]);
 
         $user = Auth::user();
@@ -226,7 +229,8 @@ class AccountController extends Controller
         // Create a pending topup request
         $paymentRequest = \App\Models\PaymentRequest::create([
             'user_id' => $user->id,
-            'type' => 'topup',
+            'type' => $request->package_id ? 'upgrade' : 'topup',
+            'package_id' => $request->package_id,
             'amount' => $request->amount,
             'status' => 'pending',
         ]);
@@ -311,7 +315,7 @@ class AccountController extends Controller
         // Find existing request
         $paymentRequest = \App\Models\PaymentRequest::where('id', $request->payment_request_id)
                             ->where('user_id', $user->id)
-                            ->where('type', 'topup')
+                            ->whereIn('type', ['topup', 'upgrade'])
                             ->whereNotNull('utr_number')
                             ->firstOrFail();
 

@@ -3,13 +3,14 @@
 @section('title', 'Past Signals | Emperor Stock Predictor')
 
 @push('styles')
-<link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_midnight.min.css" rel="stylesheet">
+<!-- Using custom emperor theme instead of tabulator_midnight -->
+<link href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator.min.css" rel="stylesheet">
 <style>
     .glass-card {
         background: rgba(10, 5, 20, 0.6);
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 1.5rem;
+        border-radius: 2rem;
     }
     .stats-card {
         background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(79, 70, 229, 0.1));
@@ -28,32 +29,80 @@
         box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
         outline: none;
     }
-    .input-cyber::-webkit-calendar-picker-indicator {
-        filter: invert(1);
-        cursor: pointer;
+
+    /* Premium Status Badges (Match Live Tips) */
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
     }
-    /* Tabulator Custom Cyber Theme */
+    .status-win { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-loss { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .status-breakeven { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+    .glow-badge::after {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        background: inherit;
+        filter: blur(8px);
+        opacity: 0.4;
+        z-index: -1;
+    }
+
     .tabulator {
+        width: 100% !important;
         background-color: transparent !important;
+        background: transparent !important;
         border: none !important;
-        font-family: 'Inter', sans-serif !important;
+        font-family: inherit !important;
     }
     .tabulator-header {
-        background-color: rgba(255, 255, 255, 0.02) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        position: sticky !important;
+        top: 0;
+        z-index: 10;
+        background-color: #05020c !important;
+        border-bottom: 2px solid rgba(147, 51, 234, 0.3) !important;
         color: #94a3b8 !important;
+        font-family: 'Orbitron', sans-serif !important;
+        font-size: 10px !important;
+        font-weight: 950 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.1em !important;
-        font-weight: 800 !important;
+        letter-spacing: 0.15em !important;
     }
-    .tabulator-row {
+    .tabulator, .tabulator-table {
         background-color: transparent !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
-        color: #e2e8f0 !important;
-        transition: all 0.2s ease !important;
+        background: transparent !important;
+    }
+    .tabulator-col {
+        background: transparent !important;
+        border: none !important;
+    }
+    .tabulator-row,
+    .tabulator-row.tabulator-row-even,
+    .tabulator-row.tabulator-row-odd,
+    .tabulator-row:nth-child(even),
+    .tabulator-row:nth-child(odd) {
+        background-color: transparent !important;
+        background: rgba(0,0,0,0) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        transition: all 0.3s ease !important;
+    }
+    .tabulator-row.tabulator-row-even {
+        background-color: rgba(255, 255, 255, 0.01) !important;
     }
     .tabulator-row:hover {
-        background-color: rgba(147, 51, 234, 0.05) !important;
+        background: rgba(140,90,255,0.08) !important;
+        background-color: rgba(140,90,255,0.08) !important;
+        transform: scale(1.002);
     }
     .tabulator-cell {
         padding: 12px 16px !important;
@@ -62,18 +111,31 @@
     .tabulator-footer {
         background-color: transparent !important;
         border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
-        color: #94a3b8 !important;
+        color: #64748b !important;
+        font-family: 'Orbitron', sans-serif !important;
+        font-size: 10px !important;
     }
     .tabulator-page {
-        background: rgba(255, 255, 255, 0.05) !important;
-        color: white !important;
+        background: rgba(255, 255, 255, 0.03) !important;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 0.5rem !important;
-        margin: 0 2px !important;
+        color: #94a3b8 !important;
+        border-radius: 8px !important;
+        margin: 0 4px !important;
+        font-weight: bold;
     }
     .tabulator-page.active {
-        background: #9333ea !important;
-        border-color: #9333ea !important;
+        background: linear-gradient(135deg, #9333ea, #6366f1) !important;
+        color: white !important;
+        border-color: transparent !important;
+        box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+    }
+    
+    /* Strict Tabulator Background Override */
+    div.tabulator-row {
+        background-color: transparent !important;
+    }
+    div.tabulator-row.tabulator-row-even {
+        background-color: rgba(255, 255, 255, 0.01) !important;
     }
 </style>
 @endpush
@@ -88,12 +150,16 @@
                     PAST <span class="text-gradient">SIGNALS</span>
                 </h1>
                 <p class="text-gray-400 max-w-2xl text-lg uppercase tracking-tight">
-                    Track our past performance and winning signals. All signals are quality trading signals.
+                    Premium historical telemetry database. 100% verified performance.
                 </p>
             </div>
             <div class="flex items-center gap-4">
-                <div class="h-px w-24 bg-gradient-to-r from-purple-500 to-transparent hidden lg:block"></div>
-                <span class="text-[10px] orbitron font-bold text-purple-500 uppercase tracking-[0.3em]">Past Signals History</span>
+                <div class="flex items-center gap-2 group cursor-help">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-[10px] orbitron font-bold text-gray-500 uppercase tracking-widest">Archive Online</span>
+                </div>
+                <div class="h-px w-24 bg-gradient-to-r from-purple-500/50 to-transparent hidden lg:block"></div>
+                <span class="text-[10px] orbitron font-bold text-purple-500 uppercase tracking-[0.3em]">PRO ARCHIVE</span>
             </div>
         </div>
     </div>
@@ -101,339 +167,280 @@
     <!-- Stats Section -->
     <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mb-12">
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <div class="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
             <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalSignals ?? 0 }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <div class="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-emerald-400 orbitron uppercase tracking-widest mb-1 relative z-10">WIN RATE</p>
             <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $winRate ?? '0%' }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <div class="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-blue-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL WIN</p>
             <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalWin ?? 0 }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <div class="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-rose-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL LOSS</p>
             <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalLoss ?? 0 }}</h3>
         </div>
-        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group border-purple-500/20">
-            <div class="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL CAPITAL</p>
-            <h3 id="stat-total-capital" class="text-xl font-black text-white orbitron italic relative z-10">₹0.00</h3>
+        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
+            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">SIM CAPITAL</p>
+            <h3 id="stat-total-capital" class="text-xl font-black text-white orbitron italic relative z-10">₹0</h3>
         </div>
         <div id="stat-pnl-card" class="stats-card p-4 rounded-3xl relative overflow-hidden group" style="border-color: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)' }}">
-            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style="background: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.05)' : 'rgba(244,63,94,0.05)' }}"></div>
             <p id="stat-pnl-label" class="text-[10px] font-bold orbitron uppercase tracking-widest mb-1 relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">TOTAL PNL</p>
             <h3 id="stat-total-pnl-top" class="text-xl font-black orbitron italic relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">
-                {{ ($totalPnl ?? 0) >= 0 ? '+' : '' }}₹{{ number_format($totalPnl ?? 0, 2) }}
+                {{ ($totalPnl ?? 0) >= 0 ? '+' : '' }}₹{{ number_format($totalPnl ?? 0, 0) }}
             </h3>
         </div>
     </div>
 
-        <!-- Capital Backtest Simulator -->
-        <div class="mb-8 overflow-hidden relative group">
-            <div class="glass-card p-8 border border-purple-500/20 relative overflow-hidden">
-                <!-- Background Decoration -->
-                <div class="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/10 blur-[80px] rounded-full group-hover:bg-purple-600/20 transition-all duration-700"></div>
-                
-                <div class="relative z-10">
-                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                        <div class="space-y-2">
-                            <h2 class="orbitron text-2xl font-black text-white italic uppercase tracking-tighter">
-                                Capital <span class="text-gradient">Backtest Simulator</span>
-                            </h2>
-                            <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Profit Calculator • 5x Investment</p>
-                        </div>
+    <!-- Capital Backtest Simulator -->
+    <div class="max-w-7xl mx-auto mb-12">
+        <div class="glass-card p-8 border border-purple-500/20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 blur-[100px] rounded-full"></div>
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                <div class="space-y-2">
+                    <h2 class="orbitron text-2xl font-black text-white italic uppercase tracking-tighter">
+                        Backtest <span class="text-gradient">Simulator</span>
+                    </h2>
+                    <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Synchronized Capital Telemetry</p>
+                </div>
 
-                        <div class="flex flex-wrap items-end gap-4">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest ml-1">Enter Capital (₹)</label>
-                                <div class="relative group/input">
-                                    <input type="number" id="sim-capital" placeholder="e.g. 10000" value="100000"
-                                        class="input-cyber w-full sm:w-64 !pl-10 !py-3 font-bold orbitron text-sm focus:ring-2 focus:ring-purple-500/20">
-                                    <i data-lucide="wallet" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within/input:text-purple-400 transition-colors"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="flex gap-2">
-                                <button onclick="calculateSimulation()" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black orbitron text-xs uppercase italic tracking-widest rounded-xl transition-all shadow-[0_10px_30px_rgba(147,51,234,0.3)] hover:shadow-purple-500/50 transform hover:-translate-y-0.5 active:translate-y-0">
-                                    Calculate
-                                </button>
-                                <button onclick="resetSimulation()" class="px-5 py-3 bg-white/5 hover:bg-white/10 text-gray-400 font-bold orbitron text-xs uppercase tracking-widest rounded-xl transition-all border border-white/5">
-                                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div id="sim-result-container" class="hidden min-w-[240px] p-4 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-md">
-                            <p class="text-[9px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-1">Expected Profit</p>
-                            <div id="sim-total-pnl" class="text-2xl font-black orbitron italic">₹0.00</div>
-                        </div>
+                <div class="flex flex-wrap items-end gap-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest ml-1">Capital Investment (₹)</label>
+                        <input type="number" id="sim-capital" placeholder="e.g. 100000" value="100000"
+                               class="input-cyber w-full sm:w-64 font-bold orbitron text-sm">
                     </div>
+                    <div class="flex gap-2">
+                        <button onclick="calculateSimulation()" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-xs uppercase italic tracking-widest rounded-xl transition-all shadow-lg hover:shadow-purple-500/40 transform hover:-translate-y-1">
+                            Execute Simulation
+                        </button>
+                        <button onclick="resetSimulation()" class="px-5 py-3 bg-white/5 text-gray-400 font-bold orbitron text-xs uppercase tracking-widest rounded-xl transition-all border border-white/5 hover:bg-white/10">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="sim-result-container" class="hidden min-w-[240px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-inner">
+                    <p class="text-[9px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-1">PROJECTION RESULT</p>
+                    <div id="sim-total-pnl" class="text-2xl font-black orbitron italic">₹0.00</div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Main Content Area -->
-        <div class="transition-all duration-700">
-            <!-- Filter Panel -->
-            <div class="mb-8">
-                <div class="glass-card p-6 border border-white/5">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Start Date</label>
-                            <input type="date" id="filter-start" class="input-cyber w-full" value="{{ request('start_date') }}">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">End Date</label>
-                            <input type="date" id="filter-end" class="input-cyber w-full" value="{{ request('end_date') }}">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Symbol</label>
-                            <input type="text" id="filter-symbol" placeholder="E.G. BTC" class="input-cyber w-full uppercase" value="{{ request('symbol') }}">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Signal Type</label>
-                            <select id="filter-type" class="input-cyber w-full">
-                                <option value="">ALL TYPES</option>
-                                <option value="BUY" {{ request('signal_type') == 'BUY' ? 'selected' : '' }}>BUY</option>
-                                <option value="SELL" {{ request('signal_type') == 'SELL' ? 'selected' : '' }}>SELL</option>
-                            </select>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Result</label>
-                            <select id="filter-result" class="input-cyber w-full">
-                                <option value="">ALL RESULTS</option>
-                                <option value="WIN" {{ request('result') == 'WIN' ? 'selected' : '' }}>WIN</option>
-                                <option value="LOSS" {{ request('result') == 'LOSS' ? 'selected' : '' }}>LOSS</option>
-                                <option value="BREAKEVEN" {{ request('result') == 'BREAKEVEN' ? 'selected' : '' }}>BREAKEVEN</option>
-                            </select>
-                        </div>
-                        <div class="flex items-end gap-2">
-                            <button onclick="applyFilters()" class="flex-1 px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-black orbitron text-xs uppercase italic tracking-widest rounded-xl transition-all shadow-lg shadow-purple-500/20">
-                                Apply
-                            </button>
-                            <button onclick="resetFilters()" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-gray-400 font-black orbitron text-xs uppercase tracking-widest rounded-xl transition-all">
-                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
+    <!-- Filter Panel -->
+    <div class="max-w-7xl mx-auto mb-12">
+        <form action="{{ route('signals.past') }}" method="GET" class="glass-card p-6 border border-white/5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Start Date</label>
+                    <input type="date" name="start_date" class="input-cyber w-full" value="{{ request('start_date') }}">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">End Date</label>
+                    <input type="date" name="end_date" class="input-cyber w-full" value="{{ request('end_date') }}">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Symbol</label>
+                    <input type="text" name="symbol" placeholder="E.G. NIFTY" class="input-cyber w-full uppercase" value="{{ request('symbol') }}">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Type</label>
+                    <select name="signal_type" class="input-cyber w-full">
+                        <option value="">ALL TYPES</option>
+                        <option value="BUY" {{ request('signal_type') == 'BUY' ? 'selected' : '' }}>BUY</option>
+                        <option value="SELL" {{ request('signal_type') == 'SELL' ? 'selected' : '' }}>SELL</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Signal Result</label>
+                    <select name="result" class="input-cyber w-full">
+                        <option value="">ALL RESULTS</option>
+                        <option value="WIN" {{ request('result') == 'WIN' ? 'selected' : '' }}>WIN</option>
+                        <option value="LOSS" {{ request('result') == 'LOSS' ? 'selected' : '' }}>LOSS</option>
+                    </select>
+                </div>
+                <div class="flex items-end gap-2">
+                    <button type="submit" class="flex-1 px-4 py-2.5 bg-white text-black font-black orbitron text-xs uppercase italic tracking-widest rounded-xl shadow-lg hover:bg-gray-100 transition-colors">
+                        Query
+                    </button>
+                    <a href="{{ route('signals.past') }}" class="px-4 py-2.5 bg-white/5 text-gray-400 font-black orbitron text-xs uppercase tracking-widest rounded-xl border border-white/5 flex items-center justify-center hover:bg-white/10">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </a>
                 </div>
             </div>
+        </form>
+    </div>
 
-            <!-- Table Section -->
-            <div class="glass-card border border-white/5 overflow-hidden p-4 sm:p-6">
-                <div class="overflow-x-auto -mx-4 sm:-mx-6">
-                <table class="w-full text-left border-collapse" style="min-width: 700px;">
-                    <thead>
-                        <tr class="border-b border-white/10 text-gray-400 orbitron text-[10px] uppercase tracking-widest">
-                            <th class="py-4 px-4 font-black whitespace-nowrap">Stock</th>
-                            <th class="py-4 px-4 font-black whitespace-nowrap">Entry</th>
-                            <th class="py-4 px-4 font-black whitespace-nowrap">Target</th>
-                            <th class="py-4 px-4 font-black whitespace-nowrap">Stop Loss</th>
-                            <th class="py-4 px-4 font-black whitespace-nowrap">Breakeven</th>
-                            <th class="py-4 px-4 font-black whitespace-nowrap">Date</th>
-                            <th class="py-4 px-4 font-black whitespace-nowrap">Time</th>
-                            <th class="py-4 px-4 font-black text-right whitespace-nowrap sim-col hidden">Quantity</th>
-                            <th class="py-4 px-4 font-black text-right whitespace-nowrap">PnL</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-white/5">
-                        @foreach ($signals as $signal)
-                        <tr class="hover:bg-white/5 transition-colors sim-row" 
-                            data-entry="{{ $signal->entry }}" 
-                            data-pnl="{{ $signal->pnl }}">
-                            <td class="py-4 px-4 font-black text-white orbitron uppercase">{{ $signal->stock_name }}</td>
-                            <td class="py-4 px-4 text-gray-300">₹{{ number_format($signal->entry, 2) }}</td>
-                            <td class="py-4 px-4 text-emerald-400 font-bold">₹{{ number_format($signal->target, 2) }}</td>
-                            <td class="py-4 px-4 text-rose-400 font-bold">₹{{ number_format($signal->sl, 2) }}</td>
-                            <td class="py-4 px-4 text-blue-400">₹{{ number_format($signal->breakeven, 2) }}</td>
-                            <td class="py-4 px-4 text-gray-500 font-mono text-xs">{{ $signal->entry_date }}</td>
-                            <td class="py-4 px-4 text-gray-500 font-mono text-xs">{{ $signal->entry_time }}</td>
-                            <td class="py-4 px-4 text-right font-mono text-xs sim-qty-cell sim-col hidden">-</td>
-                            <td class="py-4 px-4 text-right sim-pnl-cell">
-                                @if($signal->pnl !== null)
-                                    <span class="font-black pnl-val {{ $signal->pnl >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">
-                                        {{ $signal->pnl >= 0 ? '+' : '' }}₹{{ number_format($signal->pnl, 2) }}
-                                    </span>
-                                @else
-                                    <span class="text-gray-600">--</span>
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                </div>{{-- end overflow-x-auto --}}
-                @if($signals->isEmpty())
-                    <div class="py-12 text-center">
-                        <p class="orbitron text-xs text-gray-500 uppercase tracking-widest italic">No past signals available yet.</p>
-                    </div>
-                @endif
+    <!-- Tabulator Table Section -->
+    <div class="max-w-7xl mx-auto px-4 md:px-0">
+        <div class="flex items-center justify-between mb-4">
+            <div id="data-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hidden">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span id="data-status-text" class="text-[9px] orbitron font-bold text-gray-400 uppercase tracking-widest">Archive Engine Synced</span>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] orbitron text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
+                <i data-lucide="info" class="w-3 h-3"></i> Use scroll for more data
             </div>
         </div>
-        {{-- Overlays kept from previous version as they are part of the UI structure --}}
 
+        <div class="glass-card border border-white/5 overflow-hidden p-0 relative shadow-2xl">
+            <div class="w-full overflow-x-auto">
+                <div id="signals-table" class="w-full !max-w-none" style="height: 550px;"></div>
+            </div>
+        </div>
     </div>
 </main>
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
 <script>
-    let originalPnlState = null;
+    window.addEventListener('load', function() {
+        @php
+            $tableData = $signals->map(function($s) {
+                return [
+                    'id' => $s->id,
+                    'stock' => (string)($s->stock_name ?? '---'),
+                    'entry' => (float)($s->entry ?? 0),
+                    'target' => (float)($s->target ?? 0),
+                    'sl' => (float)($s->sl ?? 0),
+                    'breakeven' => (float)($s->breakeven ?? 0),
+                    'date' => (string)($s->entry_date ?? '---'),
+                    'time' => (string)($s->entry_time ?? '---'),
+                    'qty' => 0,
+                    'pnl' => (float)($s->pnl ?? 0),
+                    'sim_pnl' => (float)($s->pnl ?? 0)
+                ];
+            });
+        @endphp
+        
+        const rawData = @json($tableData);
 
-    document.addEventListener('DOMContentLoaded', function() {
-        lucide.createIcons();
-        
-        // Store original state of Top PnL card
-        const statPnlTop = document.getElementById('stat-total-pnl-top');
-        const statPnlCard = document.getElementById('stat-pnl-card');
-        const statPnlLabel = document.getElementById('stat-pnl-label');
-        
-        if (statPnlTop) {
-            originalPnlState = {
-                text: statPnlTop.textContent,
-                color: statPnlTop.style.color,
-                borderColor: statPnlCard.style.borderColor,
-                labelColor: statPnlLabel.style.color
-            };
+        // UI Update for record count
+        const statusBadge = document.getElementById('data-status-badge');
+        const statusText = document.getElementById('data-status-text');
+        if (statusBadge && statusText) {
+            statusBadge.classList.remove('hidden');
+            statusText.textContent = `${rawData.length} HISTORICAL RECORDS`;
         }
 
-        // Auto-run simulation if default capital is set
-        if (document.getElementById('sim-capital').value) {
-            calculateSimulation();
+        try {
+            window.signalsTable = new Tabulator("#signals-table", {
+                data: rawData,
+                height: "550px",
+                layout: "fitColumns",
+                pagination: false,
+                placeholder: "<div class='orbitron text-gray-600 py-32 text-[10px] tracking-[0.4em]'>NO ARCHIVED TELEMETRY FOUND</div>",
+                resizableColumns: true,
+                columnHeaderVertAlign: "bottom",
+                columns: [
+                    {title: "Stock", field: "stock", hozAlign: "left", formatter: function(cell){
+                        return "<span style='font-weight:bold; color:white;'>" + cell.getValue() + "</span>";
+                    }},
+                    {title: "Entry", field: "entry", hozAlign: "right"},
+                    {title: "Target", field: "target", hozAlign: "right", formatter: function(cell){
+                        return "<span style='color:#10b981'>" + cell.getValue() + "</span>";
+                    }},
+                    {title: "Stop Loss", field: "sl", hozAlign: "right", formatter: function(cell){
+                        return "<span style='color:#ef4444'>" + cell.getValue() + "</span>";
+                    }},
+                    {title: "Breakeven", field: "breakeven", hozAlign: "right", formatter: function(cell){
+                        return "<span style='color:#3b82f6'>" + cell.getValue() + "</span>";
+                    }},
+                    {title: "Date", field: "date", hozAlign: "right"},
+                    {title: "Time", field: "time", hozAlign: "right"},
+                    {title: "Quantity", field: "qty", hozAlign: "right", formatter: function(cell){
+                        return cell.getValue() > 0 ? cell.getValue() : '---';
+                    }},
+                    {title: "PNL", field: "sim_pnl", hozAlign: "right", formatter: function(cell){
+                        let value = cell.getValue();
+                        if(value > 0){
+                            return "<span style='color:#10b981'>+" + value + "</span>";
+                        } else if(value < 0){
+                            return "<span style='color:#ef4444'>" + value + "</span>";
+                        } else {
+                            return value;
+                        }
+                    }}
+                ],
+            });
+
+            // Initial simulation check
+            setTimeout(() => {
+                if (document.getElementById('sim-capital').value) calculateSimulation();
+            }, 500);
+
+        } catch (err) {
+            console.error("Initialization Failure:", err);
+            document.getElementById('signals-table').innerHTML = `<div class='p-10 text-rose-500 orbitron text-[10px]'>SYSTEM OVERLOAD: ${err.message}</div>`;
+        }
+
+        // Store original stats state
+        const statPnlTop = document.getElementById('stat-total-pnl-top');
+        if (statPnlTop) {
+            window.originalPnlState = {
+                text: statPnlTop.textContent,
+                color: statPnlTop.style.color,
+                borderColor: document.getElementById('stat-pnl-card').style.borderColor,
+                labelColor: document.getElementById('stat-pnl-label').style.color
+            };
         }
     });
 
-    function applyFilters() {
-        const start = document.getElementById('filter-start').value;
-        const end = document.getElementById('filter-end').value;
-        const symbol = document.getElementById('filter-symbol').value;
-        const type = document.getElementById('filter-type').value;
-        const result = document.getElementById('filter-result').value;
-
-        const params = new URLSearchParams();
-        if (start) params.append('start_date', start);
-        if (end) params.append('end_date', end);
-        if (symbol) params.append('symbol', symbol);
-        if (type) params.append('signal_type', type);
-        if (result) params.append('result', result);
-
-        window.location.href = window.location.pathname + '?' + params.toString();
-    }
-
-    function resetFilters() {
-        window.location.href = window.location.pathname;
-    }
-
     function calculateSimulation() {
+        if(!window.signalsTable) return;
         const capitalInput = document.getElementById('sim-capital');
         const capital = parseFloat(capitalInput.value);
-        
-        if (isNaN(capital) || capital <= 0) {
-            capitalInput.classList.add('border-rose-500/50');
-            setTimeout(() => capitalInput.classList.remove('border-rose-500/50'), 2000);
-            return;
-        }
+        if (isNaN(capital) || capital <= 0) return;
 
-        const multiplier = 5;
-        const tradingCapital = capital * multiplier;
+        const tradingCapital = capital * 5;
         let totalNetPnl = 0;
 
-        // Show simulation columns
-        document.querySelectorAll('.sim-col').forEach(el => el.classList.remove('hidden'));
-
-        document.querySelectorAll('.sim-row').forEach(row => {
-            const entry = parseFloat(row.dataset.entry);
-            const pnlPerUnit = parseFloat(row.dataset.pnl);
-            
-            if (!isNaN(entry) && entry > 0) {
-                const qty = Math.floor(tradingCapital / entry);
-                const simPnl = qty * (isNaN(pnlPerUnit) ? 0 : pnlPerUnit);
+        const updatedData = window.signalsTable.getData().map(row => {
+            if (row.entry > 0) {
+                const qty = Math.floor(tradingCapital / row.entry);
+                const simPnl = qty * row.pnl;
                 totalNetPnl += simPnl;
-
-                // Update Quantity
-                row.querySelector('.sim-qty-cell').textContent = qty.toLocaleString();
-
-                // Update PnL Cell
-                const pnlCell = row.querySelector('.sim-pnl-cell');
-                const sign = simPnl >= 0 ? '+' : '';
-                const colorClass = simPnl >= 0 ? 'text-emerald-400' : 'text-rose-400';
-                
-                pnlCell.innerHTML = `<span class="font-black ${colorClass}">${sign}₹${Math.abs(simPnl).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
+                return { ...row, qty: qty, sim_pnl: simPnl };
             }
+            return row;
         });
 
-        // Update Summary Section
-        const summaryVal = document.getElementById('sim-total-pnl');
-        const summarySign = totalNetPnl >= 0 ? '+' : '-';
-        summaryVal.textContent = `${summarySign}₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-        summaryVal.className = `text-xl font-black orbitron italic ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-        
-        document.getElementById('sim-result-container').classList.remove('hidden');
+        window.signalsTable.updateData(updatedData);
 
-        // Update Top Stats
-        document.getElementById('stat-total-capital').textContent = `₹${tradingCapital.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+        const summaryVal = document.getElementById('sim-total-pnl');
+        summaryVal.textContent = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        summaryVal.className = `text-2xl font-black orbitron italic ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        document.getElementById('sim-result-container').classList.remove('hidden');
+        document.getElementById('stat-total-capital').textContent = `₹${(tradingCapital/1000).toFixed(0)}K`;
         
         const topPnl = document.getElementById('stat-total-pnl-top');
-        const topPnlCard = document.getElementById('stat-pnl-card');
-        const topPnlLabel = document.getElementById('stat-pnl-label');
-        
         if (topPnl) {
-            const pnlSign = totalNetPnl >= 0 ? '+' : '';
             const pnlColor = totalNetPnl >= 0 ? '#34d399' : '#fb7185';
-            const pnlBorder = totalNetPnl >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)';
-            
-            topPnl.textContent = `${pnlSign}₹${totalNetPnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            topPnl.textContent = (totalNetPnl >= 0 ? '+' : '') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {maximumFractionDigits: 0})}`;
             topPnl.style.color = pnlColor;
-            topPnlCard.style.borderColor = pnlBorder;
-            topPnlLabel.style.color = pnlColor;
+            document.getElementById('stat-pnl-card').style.borderColor = totalNetPnl >= 0 ? 'rgba(16,185,129,0.4)' : 'rgba(244,63,94,0.4)';
+            document.getElementById('stat-pnl-label').style.color = pnlColor;
         }
-        
-        // Visual Feedback
-        summaryVal.animate([
-            { transform: 'scale(1)', opacity: 0.5 },
-            { transform: 'scale(1.05)', opacity: 1 },
-            { transform: 'scale(1)', opacity: 1 }
-        ], { duration: 500, easing: 'ease-out' });
     }
 
     function resetSimulation() {
-        // Hide simulation columns
-        document.querySelectorAll('.sim-col').forEach(el => el.classList.add('hidden'));
+        if(!window.signalsTable) return;
         document.getElementById('sim-result-container').classList.add('hidden');
         document.getElementById('sim-capital').value = '';
-
-        // Reset Top Stats
-        document.getElementById('stat-total-capital').textContent = '₹0.00';
-        if (originalPnlState) {
+        document.getElementById('stat-total-capital').textContent = '₹0';
+        window.signalsTable.updateData(window.signalsTable.getData().map(row => ({ ...row, qty: 0, sim_pnl: row.pnl })));
+        
+        if (window.originalPnlState) {
             const topPnl = document.getElementById('stat-total-pnl-top');
-            const topPnlCard = document.getElementById('stat-pnl-card');
-            const topPnlLabel = document.getElementById('stat-pnl-label');
-            
-            topPnl.textContent = originalPnlState.text;
-            topPnl.style.color = originalPnlState.color;
-            topPnlCard.style.borderColor = originalPnlState.borderColor;
-            topPnlLabel.style.color = originalPnlState.labelColor;
+            topPnl.textContent = window.originalPnlState.text;
+            topPnl.style.color = window.originalPnlState.color;
+            document.getElementById('stat-pnl-card').style.borderColor = window.originalPnlState.borderColor;
+            document.getElementById('stat-pnl-label').style.color = window.originalPnlState.labelColor;
         }
-
-        // Restore original PnL values in table
-        document.querySelectorAll('.sim-row').forEach(row => {
-            const pnlPerUnit = parseFloat(row.dataset.pnl);
-            const pnlCell = row.querySelector('.sim-pnl-cell');
-            
-            if (!isNaN(pnlPerUnit)) {
-                const sign = pnlPerUnit >= 0 ? '+' : '';
-                const colorClass = pnlPerUnit >= 0 ? 'text-emerald-400' : 'text-rose-400';
-                pnlCell.innerHTML = `<span class="font-black ${colorClass}">${sign}₹${Math.abs(pnlPerUnit).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
-            } else {
-                pnlCell.innerHTML = `<span class="text-gray-600">--</span>`;
-            }
-        });
     }
 </script>
 @endpush

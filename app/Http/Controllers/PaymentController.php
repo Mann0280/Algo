@@ -3,14 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\PaymentRequest;
 use App\Models\PremiumPackage;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
+    /**
+     * Show the dedicated payment page for a package.
+     */
+    public function show($package_id)
+    {
+        $package = PremiumPackage::findOrFail($package_id);
+        
+        $upiId = \App\Models\SiteSetting::getValue('wallet_upi_id', 'merchant@upi');
+        $upiName = \App\Models\SiteSetting::getValue('wallet_upi_name', 'Merchant');
+        
+        return view('payment.index', compact('package', 'upiId', 'upiName'));
+    }
+
+    /**
+     * Submit the payment request for verification.
+     */
+    public function submit(Request $request)
+    {
+        $request->validate([
+            'package_id' => 'required|exists:premium_packages,id',
+            'utr' => 'required|string|unique:payment_requests,utr_number',
+            'screenshot' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        $data = [
+            'user_id' => $user->id,
+            'package_id' => $request->package_id,
+            'amount' => $request->amount ?? PremiumPackage::find($request->package_id)->price,
+            'utr_number' => $request->utr,
+            'status' => 'pending',
+            'type' => 'upgrade',
+        ];
+
+        if ($request->hasFile('screenshot')) {
+            $imageName = time() . '_' . $user->id . '.' . $request->screenshot->extension();
+            $request->screenshot->move(public_path('uploads/payments'), $imageName);
+            $data['payment_screenshot'] = 'uploads/payments/' . $imageName;
+        }
+
+        PaymentRequest::create($data);
+
+        return redirect()->route('account.subscription-history')
+            ->with('success', 'Payment submitted for verification. Our team will verify it shortly.');
+    }
+
+    /**
+     * Admin: List all specific sub payment requests.
+     */
+    public function adminPaymentRequests()
+    {
+        $requests = PaymentRequest::with(['user', 'package'])->latest()->paginate(15);
+        return view('admin.payment_requests.index', compact('requests'));
+    }
+
     /**
      * Submit a payment request from the user.
      */
@@ -60,15 +118,56 @@ class PaymentController extends Controller
      */
     public function adminIndex()
     {
-        $payments = Payment::with(['user', 'package'])->orderBy('created_at', 'desc')->paginate(10, ['*'], 'payments_page');
-        $upgradeRequests = \App\Models\PaymentRequest::with(['user', 'package'])->orderBy('created_at', 'desc')->paginate(10, ['*'], 'upgrades_page');
-        
-        $walletTransactions = \App\Models\WalletTransaction::with('user')
+        // 1. Direct Payments (from legacy/direct flow)
+        $payments = Payment::with(['user', 'package'])->latest()->get()->map(function($p) {
+            $p->sync_type = 'payment';
+            $p->display_amount = $p->amount;
+            $p->display_reference = $p->transaction_id;
+            $p->display_proof = $p->screenshot;
+            $p->display_plan = $p->package->name ?? 'Direct Payment';
+            return $p;
+        });
+
+        // 2. Payment Requests (New Purchase flow) - Only show those that are fully submitted (Step 4 completed)
+        $requests = \App\Models\PaymentRequest::with(['user', 'package'])
+            ->whereNotNull('utr_number')
+            ->whereNotNull('payment_screenshot')
+            ->latest()
+            ->get()
+            ->map(function($r) {
+            $r->sync_type = 'request';
+            $r->display_amount = $r->amount;
+            $r->display_reference = $r->utr_number;
+            $r->display_proof = $r->payment_screenshot;
+            $r->display_plan = $r->package->name ?? $r->plan_name ?? 'Custom Sync';
+            return $r;
+        });
+
+        // 3. Pending Wallet Transactions (Older logic remnants)
+        $walletTx = \App\Models\WalletTransaction::with('user')
             ->where('type', 'credit')
-            ->orderBy('created_at', 'desc')
-            ->get();
-            
-        return view('admin.payments.index', compact('payments', 'walletTransactions', 'upgradeRequests'));
+            ->latest()->get()->map(function($t) {
+                $t->sync_type = 'wallet';
+                $t->display_amount = $t->amount;
+                $t->display_reference = $t->payment_reference ?? 'N/A';
+                $t->display_proof = $t->screenshot;
+                $t->display_plan = 'Wallet Credit (' . $t->payment_method . ')';
+                return $t;
+            });
+
+        // Merge and Paginate
+        $merged = $payments->concat($requests)->concat($walletTx)->sortByDesc('created_at');
+        
+        // Manual pagination to keep view compatible
+        $currentPage = \Illuminate\Support\Facades\Request::get('page', 1);
+        $perPage = 15;
+        $currentItems = $merged->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $paginatedItems = new \Illuminate\Pagination\LengthAwarePaginator($currentItems, $merged->count(), $perPage, $currentPage, [
+            'path' => \Illuminate\Support\Facades\Request::url(),
+            'query' => \Illuminate\Support\Facades\Request::query(),
+        ]);
+
+        return view('admin.payments.index', ['allRequests' => $paginatedItems]);
     }
 
     /**
@@ -89,24 +188,7 @@ class PaymentController extends Controller
 
             $user = $payment->user;
             $package = $payment->package;
-
-            // Activate Premium Role
-            $user->role = 'premium';
-            
-            // Set expiry date
-            $expiry = now()->addDays($package->duration_days);
-            $user->premium_expiry = $expiry;
-            $user->save();
-
-            // Record in subscription history
-            \App\Models\SubscriptionHistory::create([
-                'user_id' => $user->id,
-                'plan_name' => $package->name,
-                'amount' => $payment->amount,
-                'status' => 'Completed',
-                'purchased_at' => now(),
-                'expires_at' => $expiry,
-            ]);
+            $expiry = $this->activatePackageForUser($user, $package, $payment->amount);
 
             DB::commit();
             return back()->with('success', "Payment approved. Premium activated for {$user->username} until " . $expiry->format('d M Y'));
@@ -194,18 +276,11 @@ class PaymentController extends Controller
                         $referral->update(['status' => 'rewarded']);
                     }
                 }
-
-                DB::commit();
-                return back()->with('success', "Top-up approved. ₹{$request->amount} credited to {$user->username}'s wallet.");
             } else {
                 // Plan Upgrade Request
                 $package = $request->package;
-                $expiry = now()->addDays($package->duration_days);
-                
-                $user->update([
-                    'role' => 'premium',
-                    'premium_expiry' => $expiry
-                ]);
+
+                $expiry = $this->activatePackageForUser($user, $package, $request->amount);
 
                 // Create Wallet Transaction (Manual Payment Debit Log)
                 $user->walletTransactions()->create([
@@ -214,18 +289,13 @@ class PaymentController extends Controller
                     'description' => 'Premium Plan Upgrade (Manual P2P Verification)',
                     'status' => 'success'
                 ]);
+            }
 
-                // Record Subscription History
-                \App\Models\SubscriptionHistory::create([
-                    'user_id' => $user->id,
-                    'plan_name' => $package->name ?? 'Unknown Plan',
-                    'amount' => $request->amount,
-                    'status' => 'Completed',
-                    'purchased_at' => now(),
-                    'expires_at' => $expiry
-                ]);
+            DB::commit();
 
-                DB::commit();
+            if ($request->type === 'topup') {
+                return back()->with('success', "Top-up approved. ₹{$request->amount} credited to {$user->username}'s wallet.");
+            } else {
                 return back()->with('success', "Upgrade approved for {$user->username}. Premium protocol activated.");
             }
         } catch (\Exception $e) {
@@ -254,5 +324,41 @@ class PaymentController extends Controller
         ]);
 
         return back()->with('success', 'Upgrade request rejected.');
+    }
+
+    /**
+     * Activate a package for the given user and return the new expiry date.
+     * Centralizes premium/elite upgrade logic across payment flows.
+     */
+    private function activatePackageForUser(User $user, ?PremiumPackage $package, float $amount): Carbon
+    {
+        $role = 'premium';
+        if ($package && stripos($package->name, 'elite') !== false) {
+            $role = 'elite';
+        }
+
+        $duration = $package ? $package->duration_days : 30; // fallback when package missing
+
+        $startDate = ($user->premium_expiry instanceof Carbon && $user->premium_expiry->isFuture())
+            ? $user->premium_expiry->copy()
+            : now();
+
+        $expiry = $startDate->addDays($duration);
+
+        $user->role = $role;
+        $user->premium_expiry = $expiry;
+        $user->save();
+
+        // Record subscription history to maintain audit trail
+        \App\Models\SubscriptionHistory::create([
+            'user_id'     => $user->id,
+            'plan_name'   => $package->name ?? 'Manual Credit',
+            'amount'      => $amount,
+            'status'      => 'Completed',
+            'purchased_at'=> now(),
+            'expires_at'  => $expiry,
+        ]);
+
+        return $expiry;
     }
 }

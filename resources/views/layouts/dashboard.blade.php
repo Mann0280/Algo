@@ -12,26 +12,27 @@
     
     <style>
         :root {
-            /* Dark Theme Default */
-            --bg-deep: #020105;
-            --bg-sidebar: rgba(10, 5, 20, 0.4);
-            --header-bg: rgba(2, 1, 5, 0.82);
-            --text-main: #d1d5db;
+            /* Dark Theme Default - Refined for Premium Feel */
+            --bg-deep: #020106;
+            --bg-sidebar: rgba(8, 4, 15, 0.7);
+            --header-bg: rgba(2, 1, 6, 0.82);
+            --text-main: #94a3b8;
             --text-white: #ffffff;
-            --text-muted: #6b7280;
+            --text-muted: #64748b;
             --accent-purple: #9333ea;
             --accent-indigo: #6366f1;
             --accent-gold: #fbbf24;
+            --accent-gradient: linear-gradient(135deg, #9333ea 0%, #6366f1 100%);
             --card-glass: rgba(255, 255, 255, 0.02);
-            --border-glass: rgba(255, 255, 255, 0.05);
-            --input-bg: rgba(255, 255, 255, 0.03);
-            --dropdown-bg: #020105;
+            --border-glass: rgba(255, 255, 255, 0.06);
+            --input-bg: rgba(255, 255, 255, 0.02);
+            --dropdown-bg: #05020c;
             --card-inner-bg: #0a0514;
-            --nav-sticky-bg: rgba(2, 1, 5, 0.8);
+            --nav-sticky-bg: rgba(2, 1, 6, 0.8);
             --logo-text: #ffffff;
             --nav-text: #6b7280;
-            --nav-hover-bg: rgba(255, 255, 255, 0.03);
-            --scrollbar-thumb: rgba(255, 255, 255, 0.05);
+            --nav-hover-bg: rgba(255, 255, 255, 0.04);
+            --scrollbar-thumb: rgba(147, 51, 234, 0.1);
         }
 
         .light-mode {
@@ -96,13 +97,26 @@
             bottom: 0;
             width: 280px;
             background: var(--bg-sidebar);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
             border-right: 1px solid var(--border-glass);
             display: flex;
             flex-direction: column;
             z-index: 200;
             transform: translateX(-100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(147, 51, 234, 0.1), transparent);
         }
 
         .sidebar.mobile-open {
@@ -111,9 +125,16 @@
 
         @media (min-width: 1024px) {
             .sidebar {
-                position: relative;
+                position: sticky;
+                top: 0;
+                height: 100vh;
                 grid-area: sidebar;
                 transform: translateX(0);
+                box-shadow: none;
+                overflow-y: auto;
+            }
+            .collapsed .sidebar {
+                width: 88px;
             }
         }
 
@@ -156,23 +177,30 @@
         .nav-link {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            margin: 0 4px;
         }
 
         .nav-link.active-link {
-            background: rgba(147, 51, 234, 0.08);
+            background: rgba(147, 51, 234, 0.1);
             color: #fff !important;
+            box-shadow: inset 0 0 20px rgba(147, 51, 234, 0.05);
         }
 
         .nav-link.active-link::before {
             content: "";
             position: absolute;
-            left: 0;
-            top: 20%;
-            bottom: 20%;
-            width: 3px;
-            background: var(--accent-purple);
+            left: -12px;
+            top: 4px;
+            bottom: 4px;
+            width: 4px;
+            background: var(--accent-gradient);
             border-radius: 0 4px 4px 0;
-            box-shadow: 0 0 10px var(--accent-purple);
+            box-shadow: 4px 0 15px rgba(147, 51, 234, 0.4);
+        }
+
+        .nav-link:not(.active-link):hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(4px);
         }
 
         /* Perfect Inputs */
@@ -211,14 +239,15 @@
         <div class="mobile-sidebar-backdrop lg:hidden" id="sidebar-backdrop"></div>
 
         <!-- SIDEBAR -->
-        <aside class="sidebar py-8 px-6 flex flex-col gap-12 overflow-hidden">
+        <aside class="sidebar py-10 px-6 flex flex-col gap-14 overflow-hidden">
             <!-- Logo area -->
-            <a href="{{ url('/') }}" class="flex items-center gap-4 px-2 overflow-hidden shrink-0 group">
-                <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                    <i data-lucide="zap" class="w-6 h-6 text-white fill-white"></i>
+            <a href="{{ url('/') }}" class="flex items-center gap-4 px-2 overflow-visible shrink-0 group">
+                <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-[1.2rem] flex items-center justify-center shadow-[0_0_30px_rgba(147,51,234,0.2)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <i data-lucide="zap" class="w-6 h-6 text-white fill-white animate-pulse"></i>
                 </div>
-                <div class="orbitron font-black text-xl italic tracking-tighter sidebar-text" style="color: var(--logo-text)">
-                    EMPEROR<span class="text-purple-500">PREDICTOR</span>
+                <div class="orbitron font-black text-xl italic tracking-tighter sidebar-text flex flex-col leading-none" style="color: var(--logo-text)">
+                    <span class="text-white text-lg">EMPEROR</span>
+                    <span class="text-purple-500 text-sm tracking-[0.2em] -mt-1 uppercase not-italic font-bold">PREDICTOR</span>
                 </div>
             </a>
 
@@ -228,7 +257,6 @@
                     $navItems = [
                         // ['icon' => 'layout-dashboard', 'label' => 'Terminal', 'url' => url('/terminal'), 'active' => Request::is('terminal*')],
                         ['icon' => 'activity', 'label' => 'Signals', 'url' => url('/signals'), 'active' => Request::is('signals*')],
-                        ['icon' => 'wallet', 'label' => 'Wallet', 'url' => route('account.wallet.index'), 'active' => Request::is('account/wallet*')],
                         ['icon' => 'gift', 'label' => 'Refer & Earn', 'url' => route('account.referral'), 'active' => Request::is('account/referral*')],
                         ['icon' => 'credit-card', 'label' => 'Link History', 'url' => route('account.subscription-history'), 'active' => Request::is('account/history*')],
                         ['icon' => 'settings', 'label' => 'Settings', 'url' => route('account.profile'), 'active' => Request::is('account/profile*')],
@@ -244,10 +272,13 @@
             </nav>
 
             <!-- Bottom Action -->
-            <div class="px-2">
-                <button id="sidebar-toggle" class="w-full flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-[var(--nav-hover-bg)] transition-all group border border-white/[0.05]" style="background: var(--input-bg); color: var(--nav-text)">
-                    <i data-lucide="chevron-left" class="w-4 h-4 shrink-0" id="toggle-icon"></i>
-                    <span class="text-xs font-semibold tracking-wide sidebar-text">Collapse Panel</span>
+            <div class="px-2 mt-auto">
+                <button id="sidebar-toggle" class="w-full flex items-center gap-4 px-2 sm:px-4 py-3.5 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-purple-500/30 transition-all group overflow-hidden relative shadow-lg shadow-black/20" style="color: var(--nav-text)">
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-purple-500/10 group-hover:text-purple-400 transition-colors">
+                        <i data-lucide="chevron-left" class="w-4 h-4" id="toggle-icon"></i>
+                    </div>
+                    <span class="text-[10px] font-black orbitron uppercase tracking-[0.2em] sidebar-text whitespace-nowrap">Collapse System</span>
                 </button>
             </div>
         </aside>

@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visitors', function (Blueprint $table) {
-            $table->id();
-            $table->string('ip_address');
-            $table->date('visit_date');
-            $table->timestamps();
+        if (!Schema::hasTable('visitors')) {
+            Schema::create('visitors', function (Blueprint $table) {
+                $table->id();
+                $table->string('ip_address');
+                $table->date('visit_date');
+                $table->timestamps();
 
-            $table->unique(['ip_address', 'visit_date']);
-        });
+                $table->unique(['ip_address', 'visit_date']);
+            });
+        }
     }
 
     /**

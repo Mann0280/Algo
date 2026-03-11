@@ -18,7 +18,7 @@ class PremiumMiddleware
     {
         $user = Auth::user();
 
-        if ($user && ($user->role === 'premium' || $user->role === 'admin')) {
+        if ($user && in_array($user->role, ['premium', 'elite', 'admin'])) {
             return $next($request);
         }
 

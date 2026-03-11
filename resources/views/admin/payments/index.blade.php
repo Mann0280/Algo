@@ -37,23 +37,7 @@
     </div>
     @endif
 
-    <!-- TABBED NAVIGATION -->
-    <div class="flex flex-wrap items-center gap-4 md:gap-8 border-b border-white/5 pb-8">
-        <button onclick="switchAdminTab('premium')" id="tab-btn-premium" class="admin-tab-btn active group flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-500 border border-transparent">
-            <i data-lucide="zap" class="w-4 h-4 opacity-50 group-[.active]:opacity-100 group-[.active]:text-purple-500 transition-all"></i>
-            <span class="text-[10px] font-black orbitron uppercase tracking-[0.2em] italic transition-all text-gray-500 group-[.active]:text-white">Premium Sync</span>
-        </button>
-        <button onclick="switchAdminTab('upgrades')" id="tab-btn-upgrades" class="admin-tab-btn group flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-500 border border-transparent">
-            <i data-lucide="trending-up" class="w-4 h-4 opacity-50 group-[.active]:opacity-100 group-[.active]:text-purple-500 transition-all"></i>
-            <span class="text-[10px] font-black orbitron uppercase tracking-[0.2em] italic transition-all text-gray-500 group-[.active]:text-white">P2P Upgrades</span>
-        </button>
-        <button onclick="switchAdminTab('wallet')" id="tab-btn-wallet" class="admin-tab-btn group flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-500 border border-transparent">
-            <i data-lucide="wallet" class="w-4 h-4 opacity-50 group-[.active]:opacity-100 group-[.active]:text-purple-500 transition-all"></i>
-            <span class="text-[10px] font-black orbitron uppercase tracking-[0.2em] italic transition-all text-gray-500 group-[.active]:text-white">Wallet Ingress</span>
-        </button>
-    </div>
-
-    <!-- PREMIUM REQUISITIONS TABLE -->
+    <!-- PREMIUM REQUISITIONS TABLE (CONSOLIDATED) -->
     <div id="admin-tab-premium" class="admin-tab-content active glass-card rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl animate-in fade-in duration-700">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -68,7 +52,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/5">
-                    @forelse($payments as $payment)
+                    @forelse($allRequests as $item)
                     <tr class="group hover:bg-white/[0.01] transition-all duration-500">
                         <td class="px-10 py-8">
                             <div class="flex items-center gap-5">
@@ -76,24 +60,27 @@
                                     <i data-lucide="user" class="w-6 h-6"></i>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="text-sm font-black orbitron text-white italic group-hover:text-purple-400 transition-colors uppercase tracking-tight">{{ $payment->user->username ?? 'Unknown' }}</span>
-                                    <span class="text-[9px] font-bold text-gray-600 mt-1 uppercase tracking-widest">{{ $payment->package->name ?? 'DELETED_PROTOCOL' }}</span>
+                                    <span class="text-sm font-black orbitron text-white italic group-hover:text-purple-400 transition-colors uppercase tracking-tight">{{ $item->user->username ?? 'Unknown' }}</span>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="text-[9px] font-bold text-gray-600 uppercase tracking-widest">{{ $item->display_plan }}</span>
+                                        <span class="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[7px] font-black orbitron text-gray-500 uppercase">{{ $item->sync_type }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </td>
                         <td class="px-10 py-8">
                             <div class="flex flex-col">
-                                <span class="text-lg font-black orbitron text-white italic">₹{{ number_format($payment->amount, 0) }}</span>
+                                <span class="text-lg font-black orbitron text-white italic">₹{{ number_format($item->display_amount, 0) }}</span>
                                 <span class="text-[9px] font-bold text-emerald-500/40 uppercase tracking-widest mt-0.5 italic">Credit Inbound</span>
                             </div>
                         </td>
                         <td class="px-10 py-8">
                             <div class="flex items-center gap-3">
                                 <span class="px-3 py-1.5 bg-[#0c0518] border border-white/5 rounded-xl text-[10px] font-mono text-gray-400 italic">
-                                    {{ $payment->transaction_id }}
+                                    {{ $item->display_reference ?: 'NO_REF' }}
                                 </span>
-                                @if($payment->screenshot)
-                                <button onclick="viewProof('{{ asset('storage/' . $payment->screenshot) }}')" class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/20 transition-all group/btn">
+                                @if($item->display_proof)
+                                <button onclick="viewProof('{{ asset($item->display_proof) }}')" class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/20 transition-all group/btn">
                                     <i data-lucide="image" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
                                 </button>
                                 @endif
@@ -105,32 +92,39 @@
                                     'pending' => 'text-amber-400 border-amber-500/20 bg-amber-500/5',
                                     'approved' => 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5',
                                     'rejected' => 'text-rose-400 border-rose-500/20 bg-rose-500/5',
+                                    'success' => 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5',
                                 ];
                             @endphp
                             <div class="flex items-center gap-2">
-                                <span class="px-4 py-1.5 rounded-full text-[9px] font-black orbitron uppercase tracking-[0.2em] {{ $statusMap[$payment->status] ?? 'text-white border-white/10' }} border">
-                                    {{ $payment->status }}
+                                <span class="px-4 py-1.5 rounded-full text-[9px] font-black orbitron uppercase tracking-[0.2em] {{ $statusMap[$item->status] ?? 'text-white border-white/10' }} border">
+                                    {{ $item->status }}
                                 </span>
                             </div>
                         </td>
                         <td class="px-10 py-8">
                             <div class="flex flex-col">
-                                <span class="text-[10px] font-black orbitron text-gray-400 uppercase tracking-widest italic">{{ $payment->created_at->format('d M Y') }}</span>
-                                <span class="text-[8px] font-bold text-gray-700 uppercase tracking-[0.2em] mt-1">{{ $payment->created_at->format('H:i') }} UTC</span>
+                                <span class="text-[10px] font-black orbitron text-gray-400 uppercase tracking-widest italic">{{ $item->created_at->format('d M Y') }}</span>
+                                <span class="text-[8px] font-bold text-gray-700 uppercase tracking-[0.2em] mt-1">{{ $item->created_at->format('H:i') }} UTC</span>
                             </div>
                         </td>
                         <td class="px-10 py-8 text-right">
                             <div class="flex justify-end gap-3">
-                                @if($payment->status === 'pending')
-                                <form action="{{ route('admin.payments.approve', $payment) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" onclick="return confirm('Authorize this premium activation?')" class="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-[9px] orbitron uppercase tracking-widest transition-all shadow-lg shadow-purple-900/20">
-                                        Authorize
+                                @if($item->status === 'pending')
+                                    @php
+                                        $approveRoute = '#';
+                                        if($item->sync_type === 'payment') $approveRoute = route('admin.payments.approve', $item->id);
+                                        elseif($item->sync_type === 'request') $approveRoute = route('admin.payments.upgrade.approve', $item->id);
+                                        elseif($item->sync_type === 'wallet') $approveRoute = route('admin.wallet.approve', $item->id);
+                                    @endphp
+                                    <form action="{{ $approveRoute }}" method="POST">
+                                        @csrf
+                                        <button type="submit" onclick="return confirm('Authorize this sequence?')" class="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-[9px] orbitron uppercase tracking-widest transition-all shadow-lg shadow-purple-900/20">
+                                            Authorize
+                                        </button>
+                                    </form>
+                                    <button onclick="openRejectModal({{ $item->id }}, '{{ $item->sync_type }}')" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-gray-600 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all flex items-center justify-center">
+                                        <i data-lucide="x-circle" class="w-4 h-4"></i>
                                     </button>
-                                </form>
-                                <button onclick="openRejectModal({{ $payment->id }}, 'premium')" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-gray-600 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all flex items-center justify-center">
-                                    <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                </button>
                                 @else
                                     <span class="text-[8px] font-black orbitron text-gray-800 uppercase tracking-[0.4em] italic">ARCHIVED_LOG</span>
                                 @endif
@@ -153,171 +147,11 @@
             </table>
         </div>
     </div>
-
-    <!-- Other tabs will follow same structure logic handled by minimalist JS as before -->
-    <div id="admin-tab-upgrades" class="admin-tab-content hidden glass-card rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl animate-in fade-in duration-700">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-white/[0.02] border-b border-white/5">
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">User / Target Plan</th>
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Differential Value</th>
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">UTR Number</th>
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Status</th>
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Timestamp</th>
-                        <th class="px-10 py-8 text-right text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-white/5">
-                    @forelse($upgradeRequests as $req)
-                    <tr class="group hover:bg-white/[0.01] transition-all duration-500">
-                        <td class="px-10 py-8">
-                            <div class="flex items-center gap-5">
-                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
-                                    <i data-lucide="arrow-up-circle" class="w-6 h-6"></i>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="text-sm font-black orbitron text-white italic group-hover:text-amber-500 transition-colors uppercase tracking-tight">{{ $req->user->username ?? 'Unknown' }}</span>
-                                    <span class="text-[9px] font-bold text-gray-600 mt-1 uppercase tracking-widest">{{ $req->plan_name }}</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-10 py-8 font-black orbitron text-white text-lg italic">
-                            ₹{{ number_format($req->amount, 0) }}
-                        </td>
-                        <td class="px-10 py-8">
-                            <div class="flex items-center gap-3">
-                                <span class="px-3 py-1.5 bg-[#0c0518] border border-white/5 rounded-xl text-[10px] font-mono text-gray-400">
-                                    {{ $req->utr_number }}
-                                </span>
-                                @if($req->payment_screenshot)
-                                <button onclick="viewProof('{{ asset('storage/' . $req->payment_screenshot) }}')" class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/20 transition-all">
-                                    <i data-lucide="image" class="w-4 h-4"></i>
-                                </button>
-                                @endif
-                            </div>
-                        </td>
-                        <td class="px-10 py-8">
-                             <span class="px-4 py-1.5 rounded-full text-[9px] font-black orbitron uppercase tracking-[0.2em] {{ $statusMap[$req->status] ?? 'text-white border-white/10' }} border">
-                                {{ $req->status }}
-                            </span>
-                        </td>
-                        <td class="px-10 py-8 italic text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-                            {{ $req->created_at->format('d M Y') }}
-                        </td>
-                        <td class="px-10 py-8 text-right">
-                            @if($req->status === 'pending')
-                            <div class="flex justify-end gap-3">
-                                <form action="{{ route('admin.payments.upgrade.approve', $req) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" onclick="return confirm('Authorize this P2P Upgrade?')" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[9px] orbitron uppercase tracking-widest transition-all">
-                                        Approve
-                                    </button>
-                                </form>
-                                <button onclick="openRejectModal({{ $req->id }}, 'upgrade')" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-gray-600 hover:text-rose-500 hover:bg-rose-500/10 transition-all flex items-center justify-center">
-                                    <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                            @else
-                                <span class="text-[8px] font-black orbitron {{ $req->status === 'approved' ? 'text-emerald-500' : 'text-rose-500' }} uppercase tracking-[0.4em] italic">{{ strtoupper($req->status) }}</span>
-                            @endif
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="px-10 py-32 text-center opacity-20">
-                            <i data-lucide="zap-off" class="w-12 h-12 mx-auto mb-4"></i>
-                            <span class="text-[10px] font-black orbitron uppercase tracking-[0.4em]">No P2P Upgrade Requisitions</span>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- WALLET TAB -->
-    <div id="admin-tab-wallet" class="admin-tab-content hidden glass-card rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl animate-in fade-in duration-700">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-white/[0.02] border-b border-white/5">
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Initiator</th>
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Ingress Value / Method</th>
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Reference (UTR)</th>
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Status</th>
-                        <th class="px-10 py-8 text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Timestamp</th>
-                        <th class="px-10 py-8 text-right text-[10px] font-black orbitron text-gray-400 uppercase tracking-[0.3em]">Override</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-white/5">
-                    @forelse($walletTransactions as $tx)
-                    <tr class="group hover:bg-white/[0.01] transition-all duration-500">
-                        <td class="px-10 py-8">
-                            <span class="text-sm font-black orbitron text-white italic group-hover:text-purple-400 transition-all uppercase tracking-tight">{{ $tx->user->username ?? 'Unknown' }}</span>
-                        </td>
-                        <td class="px-10 py-8 flex flex-col">
-                            <span class="font-black orbitron text-lg italic text-white underline decoration-emerald-500/20 underline-offset-4">₹{{ number_format($tx->amount, 0) }}</span>
-                            <span class="text-[8px] text-purple-500/60 font-black orbitron uppercase tracking-[0.2em] mt-1">{{ $tx->payment_method }} Gateway</span>
-                        </td>
-                        <td class="px-10 py-8">
-                             <div class="flex items-center gap-3">
-                                <span class="px-3 py-1.5 bg-[#0c0518] border border-white/5 rounded-xl text-[10px] font-mono text-gray-400">
-                                    {{ $tx->payment_reference }}
-                                </span>
-                                @if($tx->screenshot)
-                                <button onclick="viewProof('{{ asset('storage/' . $tx->screenshot) }}')" class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center hover:bg-purple-500/20 transition-all">
-                                    <i data-lucide="image" class="w-4 h-4"></i>
-                                </button>
-                                @endif
-                            </div>
-                        </td>
-                        <td class="px-10 py-8">
-                             <span class="px-4 py-1.5 rounded-full text-[9px] font-black orbitron uppercase tracking-[0.2em] {{ $statusMap[$tx->status] ?? 'text-white border-white/10' }} border">
-                                {{ $tx->status }}
-                            </span>
-                        </td>
-                        <td class="px-10 py-8 italic text-[10px] font-bold text-gray-600 uppercase tracking-widest">
-                            {{ $tx->created_at->format('d M Y') }}
-                        </td>
-                        <td class="px-10 py-8 text-right">
-                             <div class="flex justify-end gap-3">
-                                @if($tx->status === 'pending')
-                                <form action="{{ route('admin.wallet.approve', $tx) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" onclick="return confirm('Credit ₹{{ $tx->amount }} to user wallet?')" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-black font-black text-[9px] orbitron uppercase tracking-widest transition-all">
-                                        Authorize
-                                    </button>
-                                </form>
-                                <form action="{{ route('admin.wallet.reject', $tx) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" onclick="return confirm('Reject this wallet top-up?')" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-gray-600 hover:text-rose-500 hover:bg-rose-500/10 transition-all flex items-center justify-center">
-                                        <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                    </button>
-                                </form>
-                                @else
-                                    <span class="text-[8px] font-black orbitron text-gray-800 uppercase tracking-[0.4em] italic">SYNC_COMPLETE</span>
-                                @endif
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                     <tr>
-                        <td colspan="6" class="px-10 py-32 text-center opacity-20">
-                            <i data-lucide="database-zap" class="w-12 h-12 mx-auto mb-4"></i>
-                            <span class="text-[10px] font-black orbitron uppercase tracking-[0.4em]">Zero Wallet Transactions</span>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
     
     <div class="mt-12 flex justify-center">
         <!-- Minimalist Pagination Styling Link -->
         <div class="glass-panel px-6 py-4 rounded-3xl border-white/5">
-            {{ $payments->links() }}
+            {{ $allRequests->links() }}
         </div>
     </div>
 </div>
@@ -370,21 +204,6 @@
 
 @push('scripts')
 <script>
-    function switchAdminTab(tab) {
-        document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-            btn.classList.remove('active', 'bg-white/5', 'border-white/10');
-            btn.classList.add('border-transparent');
-        });
-        const activeBtn = document.getElementById('tab-btn-' + tab);
-        activeBtn.classList.add('active', 'bg-white/5', 'border-white/10');
-        activeBtn.classList.remove('border-transparent');
-
-        document.querySelectorAll('.admin-tab-content').forEach(content => {
-            content.classList.add('hidden');
-        });
-        document.getElementById('admin-tab-' + tab).classList.remove('hidden');
-    }
-
     function viewProof(url) {
         const modal = document.getElementById('proof-modal');
         const img = document.getElementById('proof-img');
@@ -403,14 +222,16 @@
         }, 700);
     }
 
-    function openRejectModal(id, type = 'premium') {
+    function openRejectModal(id, type = 'payment') {
         const modal = document.getElementById('reject-modal');
         const form = document.getElementById('reject-form');
         
-        if (type === 'upgrade') {
+        if (type === 'request') {
             form.action = `/admin/payments/upgrade/${id}/reject`;
-        } else {
+        } else if (type === 'payment') {
             form.action = `/admin/payments/${id}/reject`;
+        } else {
+            form.action = `/admin/wallet/reject/${id}`;
         }
         
         modal.classList.remove('hidden');
@@ -422,11 +243,6 @@
         modal.classList.add('hidden');
         modal.classList.remove('flex');
     }
-
-    // Initialize first tab
-    document.addEventListener('DOMContentLoaded', () => {
-        switchAdminTab('premium');
-    });
 </script>
 @endpush
 @endsection

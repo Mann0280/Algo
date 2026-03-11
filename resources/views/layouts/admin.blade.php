@@ -119,9 +119,14 @@
                     <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Pricing Plans</span>
                 </a>
 
+                <a href="{{ route('admin.payment-requests.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.payment-requests.index') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
+                    <i data-lucide="bell" class="w-5 h-5 {{ request()->routeIs('admin.payment-requests.index') ? 'text-purple-500' : '' }}"></i>
+                    <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Sub Requests</span>
+                </a>
+
                 <a href="{{ route('admin.payments.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.payments.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
                     <i data-lucide="credit-card" class="w-5 h-5 {{ request()->routeIs('admin.payments.*') ? 'text-purple-500' : '' }}"></i>
-                    <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Transactions</span>
+                    <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Premium Sync</span>
                 </a>
                 
                 <a href="{{ route('admin.referrals.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.referrals.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">

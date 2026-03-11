@@ -89,20 +89,16 @@ Route::prefix('account')->name('account.')->middleware(['auth', \App\Http\Middle
     Route::post('/profile/password', [AccountController::class, 'updatePassword'])->name('update-password');
     Route::post('/profile/sessions/{id}/terminate', [AccountController::class, 'terminateSession'])->name('terminate-session');
     Route::get('/membership', [AccountController::class, 'membership'])->name('membership');
-    Route::get('/history', [AccountController::class, 'subscriptionHistory'])->name('subscription-history');
-    Route::get('/notifications', [AccountController::class, 'notifications'])->name('notifications');
-    Route::get('/referral', [AccountController::class, 'referral'])->name('referral');
-    Route::get('/receipt/{id}', [AccountController::class, 'receiptPrint'])->name('receipt.print');
-
-    // Wallet Routes
-    Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');
-    Route::post('/wallet/add', [WalletController::class, 'addFunds'])->name('wallet.add');
-    Route::post('/wallet/purchase-premium', [WalletController::class, 'purchasePremium'])->name('wallet.purchase-premium');
-    Route::post('/upgrade-plan', [AccountController::class, 'upgradePlan'])->name('upgrade-plan');
+    // Plan Purchase & Payments (Previously Wallet Topup)
+    Route::post('/plan-purchase/init', [AccountController::class, 'initWalletTopup'])->name('plan-purchase.init');
+    Route::post('/plan-purchase/verify', [AccountController::class, 'verifyTopupAmount'])->name('plan-purchase.verify');
+    Route::post('/plan-purchase/submit', [AccountController::class, 'submitWalletTopup'])->name('plan-purchase.submit');
     Route::post('/payment-request', [AccountController::class, 'submitPaymentRequest'])->name('payment-request');
-    Route::post('/wallet/topup/init', [AccountController::class, 'initWalletTopup'])->name('wallet.topup.init');
-    Route::post('/wallet/topup/verify', [AccountController::class, 'verifyTopupAmount'])->name('wallet.topup.verify');
-    Route::post('/wallet/topup/submit', [AccountController::class, 'submitWalletTopup'])->name('wallet.topup.submit');
+    Route::post('/upgrade-plan', [AccountController::class, 'upgradePlan'])->name('upgrade-plan');
+
+    // Referral & History
+    Route::get('/referral', [AccountController::class, 'referral'])->name('referral');
+    Route::get('/history', [AccountController::class, 'subscriptionHistory'])->name('subscription-history');
 });
 
 Route::get('/api/notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -159,12 +155,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Referral Management
         Route::get('/referrals', [\App\Http\Controllers\Admin\ReferralController::class, 'index'])->name('referrals.index');
+
+        // New Subscription Payment Requests
+        Route::get('/payment-requests', [\App\Http\Controllers\PaymentController::class, 'adminPaymentRequests'])->name('payment-requests.index');
     });
 });
 
-// Manual Payment System Submission
+// Manual Payment System Flow
 Route::middleware('auth')->group(function () {
-    Route::post('/payment/submit', [\App\Http\Controllers\PaymentController::class, 'submitPayment'])->name('payment.submit');
+    Route::get('/payment/{package}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+    Route::post('/payment/submit', [\App\Http\Controllers\PaymentController::class, 'submit'])->name('payment.submit');
 });
 
 // Past Signals Management
