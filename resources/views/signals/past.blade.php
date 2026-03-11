@@ -23,6 +23,7 @@
         border-radius: 0.75rem;
         padding: 0.5rem 1rem;
         transition: all 0.3s ease;
+        color-scheme: dark;
     }
     .input-cyber:focus {
         border-color: #9333ea;
@@ -136,6 +137,26 @@
     }
     div.tabulator-row.tabulator-row-even {
         background-color: rgba(255, 255, 255, 0.01) !important;
+    }
+
+    /* Custom Sleek Scrollbars */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: rgba(10, 5, 20, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(147, 51, 234, 0.3);
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(147, 51, 234, 0.6);
+    }
+    .tabulator .tabulator-tableholder::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
     }
 </style>
 @endpush
@@ -285,10 +306,10 @@
                 <div class="flex items-center gap-2">
                     <label class="text-[9px] orbitron font-bold text-gray-400 uppercase tracking-widest">Rows per page</label>
                     <select id="page-size-selector" class="bg-white/5 border border-white/10 text-white text-[10px] font-bold orbitron rounded-lg px-2 py-1 outline-none focus:border-purple-500 transition-colors">
-                        <option value="10">10</option>
-                        <option value="25" selected>25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                        <option value="10" class="bg-[#0a0514] text-white">10</option>
+                        <option value="25" class="bg-[#0a0514] text-white" selected>25</option>
+                        <option value="50" class="bg-[#0a0514] text-white">50</option>
+                        <option value="100" class="bg-[#0a0514] text-white">100</option>
                     </select>
                 </div>
                 <div class="flex items-center gap-2 text-[10px] orbitron text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
@@ -432,7 +453,15 @@
         summaryVal.textContent = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
         summaryVal.className = `text-2xl font-black orbitron italic ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
         document.getElementById('sim-result-container').classList.remove('hidden');
-        document.getElementById('stat-total-capital').textContent = `₹${(tradingCapital/1000).toFixed(0)}K`;
+        
+        // Format Capital Display accurately
+        let capitalDisplay = '';
+        if (capital >= 1000) {
+            capitalDisplay = `₹${(capital / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+        } else {
+            capitalDisplay = `₹${capital}`;
+        }
+        document.getElementById('stat-total-capital').textContent = capitalDisplay;
         
         const topPnl = document.getElementById('stat-total-pnl-top');
         if (topPnl) {

@@ -19,12 +19,6 @@
 
 <!-- Premium Plans Section -->
 <section class="py-20 sm:py-32 relative overflow-hidden">
-    <!-- Background gradient -->
-    <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 0%, rgba(147,51,234,0.18) 0%, transparent 70%), radial-gradient(ellipse at 80% 100%, rgba(99,102,241,0.12) 0%, transparent 60%), #030008;"></div>
-    <!-- Decorative top border line -->
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent"></div>
-    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent"></div>
-
     <div class="container mx-auto px-4 sm:px-6 relative z-10">
         <!-- Header removed as requested to avoid duplication on pricing page -->
 

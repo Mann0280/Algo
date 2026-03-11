@@ -25,8 +25,8 @@ class HomeController extends Controller
             ->limit(5)
             ->get();
 
-        // Get up to 3 packages for homepage
-        $packages = \App\Models\PremiumPackage::where('is_active', true)->orderBy('price', 'asc')->limit(3)->get();
+        // Get up to 4 packages for homepage
+        $packages = \App\Models\PremiumPackage::where('is_active', true)->orderBy('price', 'asc')->limit(4)->get();
 
         // Initialize stats to prevent undefined variable errors in shared views
         $totalPnl = 0;
