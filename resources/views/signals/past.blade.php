@@ -281,14 +281,25 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span id="data-status-text" class="text-[9px] orbitron font-bold text-gray-400 uppercase tracking-widest">Archive Engine Synced</span>
             </div>
-            <div class="flex items-center gap-2 text-[10px] orbitron text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
-                <i data-lucide="info" class="w-3 h-3"></i> Use scroll for more data
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <label class="text-[9px] orbitron font-bold text-gray-400 uppercase tracking-widest">Rows per page</label>
+                    <select id="page-size-selector" class="bg-white/5 border border-white/10 text-white text-[10px] font-bold orbitron rounded-lg px-2 py-1 outline-none focus:border-purple-500 transition-colors">
+                        <option value="10">10</option>
+                        <option value="25" selected>25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2 text-[10px] orbitron text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
+                    <i data-lucide="info" class="w-3 h-3"></i> Use scroll for more data
+                </div>
             </div>
         </div>
 
         <div class="glass-card border border-white/5 overflow-hidden p-0 relative shadow-2xl">
             <div class="w-full overflow-x-auto">
-                <div id="signals-table" class="w-full !max-w-none" style="height: 550px;"></div>
+                <div id="signals-table" class="w-full !max-w-none"></div>
             </div>
         </div>
     </div>
@@ -330,9 +341,10 @@
         try {
             window.signalsTable = new Tabulator("#signals-table", {
                 data: rawData,
-                height: "550px",
                 layout: "fitColumns",
-                pagination: false,
+                pagination: true,
+                paginationSize: 25,
+                paginationSizeSelector: false,
                 placeholder: "<div class='orbitron text-gray-600 py-32 text-[10px] tracking-[0.4em]'>NO ARCHIVED TELEMETRY FOUND</div>",
                 resizableColumns: true,
                 columnHeaderVertAlign: "bottom",
@@ -366,6 +378,11 @@
                         }
                     }}
                 ],
+            });
+
+            // Bind Custom Page Size Selector
+            document.getElementById("page-size-selector").addEventListener("change", function() {
+                window.signalsTable.setPageSize(this.value);
             });
 
             // Initial simulation check
