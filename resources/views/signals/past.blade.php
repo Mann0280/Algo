@@ -28,6 +28,10 @@
         box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
         outline: none;
     }
+    .input-cyber::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        cursor: pointer;
+    }
     /* Tabulator Custom Cyber Theme */
     .tabulator {
         background-color: transparent !important;
