@@ -22,14 +22,17 @@ class SignalController extends Controller
         }
 
         // Retrieve and filter signals (strictly past dates only)
-        $query = StockSignal::query()->where('entry_date', '<', now()->toDateString());
+        // Since entry_date is a varchar(50) and may contain single digits (like 2026-03-2),
+        // strict string comparison fails. We use STR_TO_DATE to convert it to an actual date object for comparison.
+        $query = StockSignal::query()
+            ->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [now()->toDateString()]);
 
         if ($request->filled('start_date')) {
-            $query->where('entry_date', '>=', $request->start_date);
+            $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') >= STR_TO_DATE(?, '%Y-%m-%d')", [$request->start_date]);
         }
 
         if ($request->filled('end_date')) {
-            $query->where('entry_date', '<=', $request->end_date);
+            $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') <= STR_TO_DATE(?, '%Y-%m-%d')", [$request->end_date]);
         }
 
         if ($request->filled('symbol')) {
