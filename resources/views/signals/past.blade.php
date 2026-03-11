@@ -95,31 +95,36 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mb-12">
+        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
-            <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $totalSignals ?? 0 }}</h3>
+            <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalSignals ?? 0 }}</h3>
         </div>
-        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
+        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-emerald-400 orbitron uppercase tracking-widest mb-1 relative z-10">WIN RATE</p>
-            <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $winRate ?? '0%' }}</h3>
+            <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $winRate ?? '0%' }}</h3>
         </div>
-        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
+        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-blue-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL WIN</p>
-            <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $totalWin ?? 0 }}</h3>
+            <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalWin ?? 0 }}</h3>
         </div>
-        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group">
+        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <div class="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-[10px] font-bold text-rose-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL LOSS</p>
-            <h3 class="text-4xl font-black text-white orbitron italic relative z-10">{{ $totalLoss ?? 0 }}</h3>
+            <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalLoss ?? 0 }}</h3>
         </div>
-        <div class="stats-card p-6 rounded-3xl relative overflow-hidden group" style="border-color: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)' }}">
+        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group border-purple-500/20">
+            <div class="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL CAPITAL</p>
+            <h3 id="stat-total-capital" class="text-xl font-black text-white orbitron italic relative z-10">₹0.00</h3>
+        </div>
+        <div id="stat-pnl-card" class="stats-card p-4 rounded-3xl relative overflow-hidden group" style="border-color: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)' }}">
             <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style="background: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.05)' : 'rgba(244,63,94,0.05)' }}"></div>
-            <p class="text-[10px] font-bold orbitron uppercase tracking-widest mb-1 relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">TOTAL PNL</p>
-            <h3 class="text-3xl font-black orbitron italic relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">
+            <p id="stat-pnl-label" class="text-[10px] font-bold orbitron uppercase tracking-widest mb-1 relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">TOTAL PNL</p>
+            <h3 id="stat-total-pnl-top" class="text-xl font-black orbitron italic relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">
                 {{ ($totalPnl ?? 0) >= 0 ? '+' : '' }}₹{{ number_format($totalPnl ?? 0, 2) }}
             </h3>
         </div>
@@ -275,9 +280,25 @@
 
 @push('scripts')
 <script>
+    let originalPnlState = null;
+
     document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
         
+        // Store original state of Top PnL card
+        const statPnlTop = document.getElementById('stat-total-pnl-top');
+        const statPnlCard = document.getElementById('stat-pnl-card');
+        const statPnlLabel = document.getElementById('stat-pnl-label');
+        
+        if (statPnlTop) {
+            originalPnlState = {
+                text: statPnlTop.textContent,
+                color: statPnlTop.style.color,
+                borderColor: statPnlCard.style.borderColor,
+                labelColor: statPnlLabel.style.color
+            };
+        }
+
         // Auto-run simulation if default capital is set
         if (document.getElementById('sim-capital').value) {
             calculateSimulation();
@@ -343,13 +364,31 @@
             }
         });
 
-        // Update Summary
+        // Update Summary Section
         const summaryVal = document.getElementById('sim-total-pnl');
         const summarySign = totalNetPnl >= 0 ? '+' : '-';
         summaryVal.textContent = `${summarySign}₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-        summaryVal.className = `text-2xl font-black orbitron italic ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        summaryVal.className = `text-xl font-black orbitron italic ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
         
         document.getElementById('sim-result-container').classList.remove('hidden');
+
+        // Update Top Stats
+        document.getElementById('stat-total-capital').textContent = `₹${tradingCapital.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+        
+        const topPnl = document.getElementById('stat-total-pnl-top');
+        const topPnlCard = document.getElementById('stat-pnl-card');
+        const topPnlLabel = document.getElementById('stat-pnl-label');
+        
+        if (topPnl) {
+            const pnlSign = totalNetPnl >= 0 ? '+' : '';
+            const pnlColor = totalNetPnl >= 0 ? '#34d399' : '#fb7185';
+            const pnlBorder = totalNetPnl >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)';
+            
+            topPnl.textContent = `${pnlSign}₹${totalNetPnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            topPnl.style.color = pnlColor;
+            topPnlCard.style.borderColor = pnlBorder;
+            topPnlLabel.style.color = pnlColor;
+        }
         
         // Visual Feedback
         summaryVal.animate([
@@ -365,7 +404,20 @@
         document.getElementById('sim-result-container').classList.add('hidden');
         document.getElementById('sim-capital').value = '';
 
-        // Restore original PnL values
+        // Reset Top Stats
+        document.getElementById('stat-total-capital').textContent = '₹0.00';
+        if (originalPnlState) {
+            const topPnl = document.getElementById('stat-total-pnl-top');
+            const topPnlCard = document.getElementById('stat-pnl-card');
+            const topPnlLabel = document.getElementById('stat-pnl-label');
+            
+            topPnl.textContent = originalPnlState.text;
+            topPnl.style.color = originalPnlState.color;
+            topPnlCard.style.borderColor = originalPnlState.borderColor;
+            topPnlLabel.style.color = originalPnlState.labelColor;
+        }
+
+        // Restore original PnL values in table
         document.querySelectorAll('.sim-row').forEach(row => {
             const pnlPerUnit = parseFloat(row.dataset.pnl);
             const pnlCell = row.querySelector('.sim-pnl-cell');
