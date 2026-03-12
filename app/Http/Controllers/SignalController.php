@@ -15,19 +15,26 @@ class SignalController extends Controller
      */
     public function pastSignals(Request $request)
     {
+        // Redirection Logic: If user filters for ONLY "Today" (both dates), send them to Live Signals
+        $today = now()->toDateString();
+        if ($request->input('start_date') === $today && $request->input('end_date') === $today) {
+            return redirect()->route('signals');
+        }
+
         // Determine User State for tiered access
         $userState = 'guest';
         if (Auth::check()) {
             $userState = in_array(Auth::user()->role, ['premium', 'vip', 'admin']) ? 'premium' : 'free';
         }
 
-        // Retrieve and filter signals. A signal is "past" if it's before today
-        // OR if it's from today but already has a result or PNL (meaning it's closed).
+        // Retrieve and filter signals. 
+        // We include ALL signals from before today, 
+        // AND signals from today that are already finished (have result/pnl).
         $query = StockSignal::query()
-            ->where(function($q) {
-                $q->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [now()->toDateString()])
-                  ->orWhere(function($sq) {
-                      $sq->where('entry_date', now()->toDateString())
+            ->where(function($q) use ($today) {
+                $q->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [$today])
+                  ->orWhere(function($sq) use ($today) {
+                      $sq->where('entry_date', $today)
                          ->where(function($ssq) {
                              $ssq->whereNotNull('result')->where('result', '!=', '')->where('result', '!=', 'RUNNING')
                                  ->orWhereNotNull('pnl')->where('pnl', '!=', '');
