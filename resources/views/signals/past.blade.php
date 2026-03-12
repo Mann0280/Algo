@@ -184,16 +184,16 @@
                     PAST <span class="text-gradient">SIGNALS</span>
                 </h1>
                 <p class="text-gray-400 max-w-2xl text-lg uppercase tracking-tight">
-                    Premium historical telemetry database. 100% verified performance.
+                    Premium historical data records. 100% verified performance.
                 </p>
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2 group cursor-help">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="text-[10px] orbitron font-bold text-gray-500 uppercase tracking-widest">Archive Online</span>
+                    <span class="text-[10px] orbitron font-bold text-gray-500 uppercase tracking-widest">System Online</span>
                 </div>
                 <div class="h-px w-24 bg-gradient-to-r from-purple-500/50 to-transparent hidden lg:block"></div>
-                <span class="text-[10px] orbitron font-bold text-purple-500 uppercase tracking-[0.3em]">PRO ARCHIVE</span>
+                <span class="text-[10px] orbitron font-bold text-purple-500 uppercase tracking-[0.3em]">ALL RECORDS</span>
             </div>
         </div>
     </div>
@@ -228,27 +228,27 @@
         </div>
     </div>
 
-    <!-- Capital Backtest Simulator -->
+    <!-- Profit Simulator -->
     <div class="max-w-7xl mx-auto mb-12">
         <div class="glass-card p-8 border border-purple-500/20 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 blur-[100px] rounded-full"></div>
             <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
                 <div class="space-y-2">
                     <h2 class="orbitron text-2xl font-black text-white italic uppercase tracking-tighter">
-                        Backtest <span class="text-gradient">Simulator</span>
+                        Profit <span class="text-gradient">Simulator</span>
                     </h2>
-                    <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Synchronized Capital Telemetry</p>
+                    <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Live Profit Analysis</p>
                 </div>
 
                 <div class="flex flex-wrap items-end gap-4">
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest ml-1">Capital Investment Per Trade (₹)</label>
+                        <label class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest ml-1">Investment Per Trade (₹)</label>
                         <input type="number" id="sim-capital" placeholder="e.g. 100000" value="100000"
                                class="input-cyber w-full sm:w-64 font-bold orbitron text-sm">
                     </div>
                     <div class="flex gap-2">
                         <button onclick="calculateSimulation()" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-xs uppercase italic tracking-widest rounded-xl transition-all shadow-lg hover:shadow-purple-500/40 transform hover:-translate-y-1">
-                            Execute Simulation
+                            Calculate Profit
                         </button>
                         <button onclick="resetSimulation()" class="px-5 py-3 bg-white/5 text-gray-400 font-bold orbitron text-xs uppercase tracking-widest rounded-xl transition-all border border-white/5 hover:bg-white/10">
                             <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
@@ -257,7 +257,7 @@
                 </div>
 
                 <div id="sim-result-container" class="hidden min-w-[240px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-inner">
-                    <p class="text-[9px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-1">PROJECTION RESULT</p>
+                    <p class="text-[9px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-1">PROFIT RESULT</p>
                     <div id="sim-total-pnl" class="text-2xl font-black orbitron italic">₹0.00</div>
                 </div>
             </div>
@@ -313,7 +313,7 @@
         <div class="flex items-center justify-between mb-4">
             <div id="data-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hidden">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span id="data-status-text" class="text-[9px] orbitron font-bold text-gray-400 uppercase tracking-widest">Archive Engine Synced</span>
+                <span id="data-status-text" class="text-[9px] orbitron font-bold text-gray-400 uppercase tracking-widest">History Update Successful</span>
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2">
@@ -386,7 +386,7 @@
                 pagination: true,
                 paginationSize: 25,
                 paginationSizeSelector: false,
-                placeholder: "<div class='orbitron text-gray-600 py-32 text-[10px] tracking-[0.4em]'>NO ARCHIVED TELEMETRY FOUND</div>",
+                placeholder: "<div class='orbitron text-gray-600 py-32 text-[10px] tracking-[0.4em]'>NO HISTORY FOUND</div>",
                 resizableColumns: true,
                 columnHeaderVertAlign: "bottom",
                 columns: [

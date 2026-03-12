@@ -9,8 +9,10 @@ class Referral extends Model
     protected $fillable = [
         'referrer_id',
         'referred_user_id',
+        'plan_name',
+        'plan_amount',
         'reward_amount',
-        'status', // pending, rewarded
+        'status', // pending, rewarded, rejected
     ];
 
     public function referrer()

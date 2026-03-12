@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -57,6 +58,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'premium_expiry' => 'datetime',
+            'wallet_balance' => 'decimal:2',
         ];
     }
 
@@ -78,7 +80,7 @@ class User extends Authenticatable
     public static function generateUniqueReferralCode()
     {
         do {
-            $code = 'REF' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+            $code = 'EMP' . strtoupper(Str::random(5));
         } while (static::where('referral_code', $code)->exists());
 
         return $code;
@@ -107,5 +109,10 @@ class User extends Authenticatable
     public function walletTransactions()
     {
         return $this->hasMany(WalletTransaction::class);
+    }
+
+    public function withdrawRequests()
+    {
+        return $this->hasMany(WithdrawRequest::class);
     }
 }

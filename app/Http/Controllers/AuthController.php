@@ -214,7 +214,7 @@ class AuthController extends Controller
             \App\Models\Referral::create([
                 'referrer_id' => $referredBy,
                 'referred_user_id' => $user->id,
-                'reward_amount' => 100.00,
+                'reward_amount' => 0,
                 'status' => 'pending',
             ]);
         }

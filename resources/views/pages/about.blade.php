@@ -15,7 +15,7 @@
         <div class="text-center max-w-4xl mx-auto mb-28 fade-in-up">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-black orbitron uppercase tracking-[0.3em] mb-6">
                 <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping"></span>
-                Algorithmic Excellence Node
+                Smart Trading Systems
             </div>
             <h1 class="text-5xl md:text-8xl font-black leading-[0.95] orbitron uppercase italic mb-8">
                 <span class="block text-white">REDEFINING</span>
@@ -23,7 +23,7 @@
                 <span class="text-white">WITH</span> <span class="text-purple-600/50">AI</span>
             </h1>
             <p class="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-                Emperor Stock Predictor combines advanced neural engines with systematic risk governance to empower retail traders with institutional-grade intelligence.
+                Emperor Stock Predictor uses advanced AI systems and smart risk management to help regular traders with high-level market insights.
             </p>
         </div>
 
@@ -66,16 +66,16 @@
                     </div>
                 </div>
                 <p class="text-slate-300 text-base leading-relaxed mb-6">
-                    Eliminate emotional bias through cold, hard data analysis. We provide the mathematical edge required for consistent, disciplined market performance.
+                    We remove emotions from trading using clear data analysis. We provide the smart tools needed for consistent and disciplined trading performance.
                 </p>
                 <ul class="space-y-4">
                     <li class="flex items-start gap-3">
                         <span class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
-                        <span class="text-sm text-slate-400">Democratize institutional-grade trading intelligence for retail investors</span>
+                        <span class="text-sm text-slate-400">Provide pro-level trading tools for every trader</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
-                        <span class="text-sm text-slate-400">Eliminate guesswork with AI-powered decision support systems</span>
+                        <span class="text-sm text-slate-400">Remove guessing with AI-powered trading help</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
@@ -110,7 +110,7 @@
                     </li>
 {{-- <li class="flex items-start gap-3">
 112:                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
-113:                         <span class="text-sm text-slate-400">Pioneer fully autonomous portfolio management powered by neural networks</span>
+113:                         <span class="text-sm text-slate-400">Pioneer fully automatic trading powered by smart AI</span>
 114:                     </li> --}}
                 </ul>
             </div>
@@ -135,10 +135,10 @@
                         Emperor Stock Predictor was born in <strong class="text-white">2024</strong> from a simple frustration: retail traders were losing consistently, not because they lacked intelligence, but because they lacked the tools that institutions had been using for decades.
                     </p>
                     <p>
-                        Our founding team — a group of quantitative analysts, machine learning engineers, and ex-Wall Street traders — set out to bridge this gap. We built a neural prediction engine trained on over <strong class="text-white">15 years of market microstructure data</strong>, incorporating sentiment analysis from 50+ data feeds, and optimized through reinforcement learning.
+                        Our founding team — a group of data analysts, software engineers, and experienced traders — built this to bridge the gap. We created an AI engine trained on over <strong class="text-white">15 years of stock market history</strong>, looking at news, trends, and patterns from 50+ sources.
                     </p>
                     <p>
-                        Within our first year, the platform processed over <strong class="text-white">2 million data points daily</strong>, generating signals with accuracy rates exceeding 85%. Today, Emperor Stock Predictor serves thousands of traders across India and beyond, from beginners taking their first trade to seasoned professionals optimizing their alpha.
+                        Within our first year, the platform processed over <strong class="text-white">2 million data points daily</strong>, generating signals with high accuracy. Today, Emperor Stock Predictor serves thousands of traders across India, from beginners to pros.
                     </p>
                     <p>
                         We believe that the future of trading is not about gut feeling — it's about <strong class="text-white">precision, speed, and data</strong>. And we're just getting started.
@@ -152,9 +152,9 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="mb-28 fade-in-up">
             <div class="text-center mb-16">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Neural Pipeline</span>
+                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">AI Process</span>
                 <h2 class="orbitron text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase">
-                    How Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Engine</span> Works
+                    How Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">AI</span> Works
                 </h2>
             </div>
 
@@ -165,8 +165,8 @@
                         <i data-lucide="database" class="w-8 h-8 text-purple-400"></i>
                     </div>
                     <div class="text-[10px] font-black orbitron text-purple-400 uppercase tracking-widest mb-3">Step 01</div>
-                    <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight mb-4">Data Ingestion</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">We aggregate real-time feeds from exchanges, news APIs, social sentiment, and macroeconomic indicators — over 2M data points daily.</p>
+                    <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight mb-4">Market Data</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">We collect real-time data from stock exchanges, news systems, and social trends — over 2M data points daily.</p>
                 </div>
 
                 <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center relative overflow-hidden group hover:border-emerald-500/20 transition-all">
@@ -175,8 +175,8 @@
                         <i data-lucide="brain" class="w-8 h-8 text-emerald-400"></i>
                     </div>
                     <div class="text-[10px] font-black orbitron text-emerald-400 uppercase tracking-widest mb-3">Step 02</div>
-                    <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight mb-4">Neural Processing</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Our multi-layered neural network analyses patterns, correlations, and anomalies using LSTM and transformer architectures trained on 15+ years of data.</p>
+                    <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight mb-4">AI Processing</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Our advanced AI system analyzes patterns and trends using smart technology trained on more than 15 years of market history.</p>
                 </div>
 
                 <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center relative overflow-hidden group hover:border-blue-500/20 transition-all">
@@ -208,7 +208,7 @@
                         <i data-lucide="shield-check" class="w-7 h-7 text-purple-400"></i>
                     </div>
                     <h4 class="orbitron text-sm font-black text-white uppercase italic tracking-tight mb-3">Transparency</h4>
-                    <p class="text-[13px] text-slate-400 leading-relaxed">Every signal comes with clear rationale, confidence levels, and risk parameters. No black boxes.</p>
+                    <p class="text-[13px] text-slate-400 leading-relaxed">Every signal comes with a clear reason, accuracy estimate, and risk details. No hidden math.</p>
                 </div>
 
                 <div class="glass-panel p-8 rounded-3xl border border-white/5 hover:border-emerald-500/20 transition-all group text-center">
@@ -224,7 +224,7 @@
                         <i data-lucide="zap" class="w-7 h-7 text-blue-400"></i>
                     </div>
                     <h4 class="orbitron text-sm font-black text-white uppercase italic tracking-tight mb-3">Innovation</h4>
-                    <p class="text-[13px] text-slate-400 leading-relaxed">Constantly evolving models, weekly retraining cycles, and bleeding-edge ML architectures.</p>
+                    <p class="text-[13px] text-slate-400 leading-relaxed">We constantly improve our models with daily updates and the latest AI technology.</p>
                 </div>
 
                 <div class="glass-panel p-8 rounded-3xl border border-white/5 hover:border-amber-500/20 transition-all group text-center">
@@ -255,8 +255,8 @@
                             <i data-lucide="cpu" class="w-6 h-6 text-purple-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-black orbitron text-white uppercase italic tracking-tight">LSTM + Transformers</div>
-                            <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Neural Architecture</div>
+                            <div class="text-sm font-black orbitron text-white uppercase italic tracking-tight">AI Systems</div>
+                            <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Technology</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 group">
@@ -325,7 +325,7 @@
 
                 @php
                     $milestones = [
-                        ['year' => '2024 Q1', 'title' => 'Project Genesis', 'desc' => 'Founding team assembled. Initial neural engine prototype developed. First backtest results exceeded 80% accuracy.', 'color' => 'purple'],
+                        ['year' => '2024 Q1', 'title' => 'Project Start', 'desc' => 'Founding team started. Early AI model prototype created. First tests showed high accuracy.', 'color' => 'purple'],
                         ['year' => '2024 Q2', 'title' => 'Beta Launch', 'desc' => 'Platform launched to 200 beta testers. Real-time signal delivery via dashboard and Telegram integration completed.', 'color' => 'indigo'],
                         ['year' => '2024 Q3', 'title' => 'Public Release', 'desc' => 'Open registration enabled. 1,000 traders onboarded within the first month. Premium subscription tier introduced.', 'color' => 'blue'],
                         ['year' => '2025 Q1', 'title' => 'Scale & Expand', 'desc' => 'Crossed 5,000 active users. Expanded to forex and crypto signals. Partnership program launched for institutional users.', 'color' => 'emerald'],
@@ -357,11 +357,11 @@
                 Ready to <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Trade Smarter</span>?
             </h2>
             <p class="text-slate-400 max-w-2xl mx-auto mb-12 text-sm leading-relaxed">
-                Join thousands of traders already leveraging Emperor Stock Predictor's neural prediction engine. Start your journey and update to premium features.
+                Join thousands of traders already using Emperor Stock Predictor's AI trading system. Start your journey and get premium features.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-6">
                 <a href="{{ url('/register') }}" class="px-12 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-widest rounded-2xl hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all uppercase">
-                    Initialize Terminal
+                    Start Trading
                 </a>
                 <a href="{{ url('/contact') }}" class="px-12 py-5 glass-panel border border-white/10 text-white font-black orbitron text-[10px] tracking-widest rounded-2xl hover:bg-white/5 transition-all uppercase">
                     Contact Us

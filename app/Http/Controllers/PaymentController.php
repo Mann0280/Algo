@@ -190,6 +190,9 @@ class PaymentController extends Controller
             $package = $payment->package;
             $expiry = $this->activatePackageForUser($user, $package, $payment->amount);
 
+            // Process Referral Reward
+            $this->processReferralReward($user, $package, $payment->amount);
+
             DB::commit();
             return back()->with('success', "Payment approved. Premium activated for {$user->username} until " . $expiry->format('d M Y'));
         } catch (\Exception $e) {
@@ -282,6 +285,9 @@ class PaymentController extends Controller
 
                 $expiry = $this->activatePackageForUser($user, $package, $request->amount);
 
+                // Process Referral Reward
+                $this->processReferralReward($user, $package, $request->amount);
+
                 // Create Wallet Transaction (Manual Payment Debit Log)
                 $user->walletTransactions()->create([
                     'type' => 'debit',
@@ -360,5 +366,56 @@ class PaymentController extends Controller
         ]);
 
         return $expiry;
+    }
+
+    /**
+     * Process referral reward for a successful purchase.
+     */
+    private function processReferralReward(User $user, $package, float $amount)
+    {
+        // 1. Check if user was referred
+        $referral = \App\Models\Referral::where('referred_user_id', $user->id)
+            ->where('status', 'pending')
+            ->first();
+
+        if (!$referral) {
+            return;
+        }
+
+        $referrer = $referral->referrer;
+        if (!$referrer || $referrer->id === $user->id) {
+            return;
+        }
+
+        // 2. Determine reward amount
+        $rewardAmount = 0;
+        if ($amount >= 30000) $rewardAmount = 5000;
+        elseif ($amount >= 3000) $rewardAmount = 500;
+        elseif ($amount >= 2800) $rewardAmount = 400;
+        elseif ($amount >= 200) $rewardAmount = 50;
+
+        if ($rewardAmount <= 0) {
+            return;
+        }
+
+        // 3. Credit Referrer and Log Transaction
+        $referrer->increment('wallet_balance', $rewardAmount);
+
+        $referrer->walletTransactions()->create([
+            'user_id' => $referrer->id,
+            'type' => 'credit',
+            'amount' => $rewardAmount,
+            'description' => "Referral reward from {$user->username} purchase",
+            'source' => 'referral_reward',
+            'status' => 'success'
+        ]);
+
+        // 4. Update Referral record
+        $referral->update([
+            'plan_name' => $package->name ?? 'Custom Plan',
+            'plan_amount' => $amount,
+            'reward_amount' => $rewardAmount,
+            'status' => 'rewarded'
+        ]);
     }
 }

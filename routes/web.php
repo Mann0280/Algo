@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\PremiumPackageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -96,8 +97,11 @@ Route::prefix('account')->name('account.')->middleware(['auth', \App\Http\Middle
     Route::post('/payment-request', [AccountController::class, 'submitPaymentRequest'])->name('payment-request');
     Route::post('/upgrade-plan', [AccountController::class, 'upgradePlan'])->name('upgrade-plan');
 
-    // Referral & History
-    Route::get('/referral', [AccountController::class, 'referral'])->name('referral');
+    // Wallet, Referral & History
+    Route::get('/wallet', [WalletController::class, 'index'])->name('wallet');
+    Route::get('/referral', [WalletController::class, 'referral'])->name('referral');
+    Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+    Route::post('/withdraw', [WalletController::class, 'storeWithdraw'])->name('withdraw.store');
     Route::get('/history', [AccountController::class, 'subscriptionHistory'])->name('subscription-history');
 });
 
@@ -155,6 +159,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Referral Management
         Route::get('/referrals', [\App\Http\Controllers\Admin\ReferralController::class, 'index'])->name('referrals.index');
+
+        // Withdraw Management
+        Route::get('/withdraw-requests', [AdminWithdrawController::class, 'index'])->name('withdraw-requests.index');
+        Route::post('/withdraw-requests/{withdrawRequest}/approve', [AdminWithdrawController::class, 'approve'])->name('withdraw-requests.approve');
+        Route::post('/withdraw-requests/{withdrawRequest}/reject', [AdminWithdrawController::class, 'reject'])->name('withdraw-requests.reject');
 
         // New Subscription Payment Requests
         Route::get('/payment-requests', [\App\Http\Controllers\PaymentController::class, 'adminPaymentRequests'])->name('payment-requests.index');

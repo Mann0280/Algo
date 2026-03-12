@@ -134,6 +134,11 @@
                     <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Referrals</span>
                 </a>
 
+                <a href="{{ route('admin.withdraw-requests.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.withdraw-requests.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
+                    <i data-lucide="external-link" class="w-5 h-5 {{ request()->routeIs('admin.withdraw-requests.*') ? 'text-purple-500' : '' }}"></i>
+                    <span class="orbitron text-[10px] font-bold uppercase tracking-[0.2em]">Withdrawals</span>
+                </a>
+
                 <div class="px-4 mt-10 mb-4 text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest leading-none">Configuration</div>
 
                 <a href="{{ route('admin.settings') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.settings') && !str_contains(request()->url(), 'wallet') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">

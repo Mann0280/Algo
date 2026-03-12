@@ -11,12 +11,12 @@
 
         {{-- Hero Section --}}
         <div class="text-center max-w-3xl mx-auto mb-20 fade-in-up">
-            <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Uplink Portal</span>
+            <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Contact Portal</span>
             <h1 class="orbitron text-4xl md:text-6xl font-black italic tracking-tighter mb-6 leading-tight uppercase">
                 <span class="text-white">Get in Touch With</span> <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Emperor Stock Predictor</span>
             </h1>
             <p class="text-gray-400 text-sm md:text-base font-medium leading-relaxed opacity-80">
-                Synchronize with our dedicated support team for technical guidance, institutional partnerships, or platform assistance.
+                Talk to our dedicated support team for help, partnership offers, or platform questions.
             </p>
         </div>
 
@@ -52,7 +52,7 @@
                             <i data-lucide="send" class="w-6 h-6 text-purple-400"></i>
                         </div>
                         <div>
-                            <h2 class="text-lg font-black orbitron text-white uppercase italic tracking-tight">Send a Transmission</h2>
+                            <h2 class="text-lg font-black orbitron text-white uppercase italic tracking-tight">Send a Message</h2>
                             <p class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest">All fields marked are required</p>
                         </div>
                     </div>
@@ -105,14 +105,14 @@
                         </div>
 
                         <div class="relative group/input">
-                            <label class="block text-[10px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-3 px-1 transition-colors group-focus-within/input:text-purple-400">Message Payload</label>
+                            <label class="block text-[10px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-3 px-1 transition-colors group-focus-within/input:text-purple-400">Your Message</label>
                             <textarea name="message" rows="5" required placeholder="Describe your query in detail..." class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm font-medium text-white placeholder:text-gray-700 resize-none"></textarea>
                         </div>
 
                         <button type="submit" class="relative w-full group overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl transition-all duration-300 group-hover:blur-md opacity-30"></div>
                             <div class="relative py-4 px-8 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-[0.2em] transform transition-all active:scale-95 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] flex items-center justify-center gap-3 rounded-xl uppercase">
-                                <span>Initialize Uplink</span>
+                                <span>Send Message</span>
                                 <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
                             </div>
                         </button>
@@ -130,7 +130,7 @@
                         <span class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
                             <i data-lucide="globe" class="w-4 h-4 text-emerald-400"></i>
                         </span>
-                        Corporate Hub
+                        Office Hub
                     </h3>
                     
                     <div class="space-y-8">
@@ -149,7 +149,7 @@
                                 <i data-lucide="phone" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <div class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-1">Voice Protocol</div>
+                                <div class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-1">Phone Number</div>
                                 <div class="text-sm font-bold text-white tracking-tight">+91 (800) 555-0199</div>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                         </div>
                         <h4 class="text-sm font-black orbitron text-white uppercase italic tracking-tight">How accurate are the signals?</h4>
                     </div>
-                    <p class="text-sm text-slate-400 leading-relaxed pl-11">Our AI neural engine maintains an average accuracy rate of 85-92% across all asset classes, continuously optimized through deep learning algorithms.</p>
+                    <p class="text-sm text-slate-400 leading-relaxed pl-11">Our AI system has a very high accuracy rate across all stocks, constantly getting better using advanced technology.</p>
                 </div>
 
                 <div class="glass-panel p-8 rounded-3xl border border-white/5 hover:border-purple-500/20 transition-all group">
@@ -241,7 +241,7 @@
                         </div>
                         <h4 class="text-sm font-black orbitron text-white uppercase italic tracking-tight">Is my data secure?</h4>
                     </div>
-                    <p class="text-sm text-slate-400 leading-relaxed pl-11">Absolutely. We use AES-256 encryption for all data at rest, TLS 1.3 for data in transit, and never share user information with third parties.</p>
+                    <p class="text-sm text-slate-400 leading-relaxed pl-11">Yes. We use top-level security to keep your data safe and never share your information with others.</p>
                 </div>
 
                 <div class="glass-panel p-8 rounded-3xl border border-white/5 hover:border-purple-500/20 transition-all group">
