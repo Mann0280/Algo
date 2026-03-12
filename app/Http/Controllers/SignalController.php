@@ -22,8 +22,7 @@ class SignalController extends Controller
         }
 
         // Retrieve and filter signals (strictly past dates only)
-        // Since entry_date is a varchar(50) and may contain single digits (like 2026-03-2),
-        // strict string comparison fails. We use STR_TO_DATE to convert it to an actual date object for comparison.
+        // Using STR_TO_DATE for robust comparison of varchar dates
         $query = StockSignal::query()
             ->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [now()->toDateString()]);
 
@@ -36,23 +35,25 @@ class SignalController extends Controller
         }
 
         if ($request->filled('symbol')) {
-            $query->where('stock_name', 'like', '%' . $request->symbol . '%');
+            $query->where('stock_name', 'LIKE', '%' . strtoupper($request->symbol) . '%');
         }
 
         if ($request->filled('signal_type')) {
-            $query->where('signal_type', $request->signal_type);
+            $query->where('signal_type', strtoupper($request->signal_type));
         }
 
         if ($request->filled('result')) {
-            $query->where('result', $request->result);
+            $query->where('result', strtoupper($request->result));
         }
 
-        $signals = $query->orderBy('id', 'desc')->get();
+        $signals = $query->orderByRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') DESC")
+                       ->orderBy('entry_time', 'DESC')
+                       ->get();
 
         // Calculate Stats for the UI
         $totalSignals = $signals->count();
-        $totalWin = $signals->where('pnl', '>', 0)->count();
-        $totalLoss = $signals->where('pnl', '<', 0)->count();
+        $totalWin = $signals->where('result', 'WIN')->count();
+        $totalLoss = $signals->where('result', 'LOSS')->count();
         $totalPnl = $signals->sum('pnl');
         $winRate = $totalSignals > 0 ? round(($totalWin / $totalSignals) * 100, 2) . '%' : '0%';
 

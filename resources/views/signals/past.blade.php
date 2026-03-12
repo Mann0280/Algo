@@ -30,6 +30,18 @@
         box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
         outline: none;
     }
+    select.input-cyber {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1rem;
+        padding-right: 2.5rem;
+    }
+    select.input-cyber option {
+        background-color: #0a0514;
+        color: white;
+    }
 
     /* Premium Status Badges (Match Live Tips) */
     .status-badge {
@@ -72,7 +84,7 @@
         border-bottom: 2px solid rgba(147, 51, 234, 0.3) !important;
         color: #94a3b8 !important;
         font-family: 'Orbitron', sans-serif !important;
-        font-size: 10px !important;
+        font-size: 11px !important;
         font-weight: 950 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.15em !important;
@@ -108,13 +120,14 @@
     .tabulator-cell {
         padding: 12px 16px !important;
         border: none !important;
+        font-size: 12px !important;
     }
     .tabulator-footer {
         background-color: transparent !important;
         border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
         color: #64748b !important;
         font-family: 'Orbitron', sans-serif !important;
-        font-size: 10px !important;
+        font-size: 11px !important;
     }
     .tabulator-page {
         background: rgba(255, 255, 255, 0.03) !important;
@@ -328,14 +341,20 @@
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
 <script>
     window.addEventListener('load', function() {
+        // Initialize Lucide Icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
         @php
             $tableData = $signals->map(function($s) {
                 return [
                     'id' => $s->id,
                     'stock' => (string)($s->stock_name ?? '---'),
+                    'type' => (string)($s->signal_type ?? '---'),
                     'entry' => (float)($s->entry ?? 0),
                     'target' => (float)($s->target ?? 0),
                     'sl' => (float)($s->sl ?? 0),
@@ -344,7 +363,8 @@
                     'time' => (string)($s->entry_time ?? '---'),
                     'qty' => 0,
                     'pnl' => (float)($s->pnl ?? 0),
-                    'sim_pnl' => (float)($s->pnl ?? 0)
+                    'sim_pnl' => (float)($s->pnl ?? 0),
+                    'result' => (string)($s->result ?? '---'),
                 ];
             });
         @endphp
@@ -370,32 +390,46 @@
                 resizableColumns: true,
                 columnHeaderVertAlign: "bottom",
                 columns: [
-                    {title: "Stock", field: "stock", hozAlign: "left", formatter: function(cell){
+                    {title: "Stock", field: "stock", hozAlign: "left", widthGrow: 2, formatter: function(cell){
                         return "<span style='font-weight:bold; color:white;'>" + cell.getValue() + "</span>";
                     }},
-                    {title: "Entry", field: "entry", hozAlign: "right"},
+                    {title: "Type", field: "type", hozAlign: "center", width: 80, formatter: function(cell){
+                        let val = cell.getValue().toUpperCase();
+                        let color = val === 'BUY' ? '#10b981' : (val === 'SELL' ? '#ef4444' : '#94a3b8');
+                        return `<span style="color:${color}; font-weight:900; font-size:10px;">${val}</span>`;
+                    }},
+                    {title: "Entry", field: "entry", hozAlign: "right", formatter: function(cell){
+                        return "₹" + cell.getValue().toLocaleString();
+                    }},
                     {title: "Target", field: "target", hozAlign: "right", formatter: function(cell){
-                        return "<span style='color:#10b981'>" + cell.getValue() + "</span>";
+                        return "<span style='color:#10b981'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
                     {title: "Stop Loss", field: "sl", hozAlign: "right", formatter: function(cell){
-                        return "<span style='color:#ef4444'>" + cell.getValue() + "</span>";
+                        return "<span style='color:#ef4444'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
                     {title: "Breakeven", field: "breakeven", hozAlign: "right", formatter: function(cell){
-                        return "<span style='color:#3b82f6'>" + cell.getValue() + "</span>";
+                        return "<span style='color:#3b82f6'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
-                    {title: "Date", field: "date", hozAlign: "right"},
-                    {title: "Time", field: "time", hozAlign: "right"},
+                    {title: "Date", field: "date", hozAlign: "center"},
+                    {title: "Result", field: "result", hozAlign: "center", formatter: function(cell){
+                        let val = cell.getValue().toUpperCase();
+                        let cls = '';
+                        if(val === 'WIN') cls = 'status-win';
+                        else if(val === 'LOSS') cls = 'status-loss';
+                        else cls = 'status-breakeven';
+                        return `<span class="status-badge ${cls}">${val}</span>`;
+                    }},
                     {title: "Quantity", field: "qty", hozAlign: "right", formatter: function(cell){
                         return cell.getValue() > 0 ? cell.getValue() : '---';
                     }},
                     {title: "PNL", field: "sim_pnl", hozAlign: "right", formatter: function(cell){
                         let value = cell.getValue();
                         if(value > 0){
-                            return "<span style='color:#10b981'>+" + value + "</span>";
+                            return "<span style='color:#10b981; font-weight:bold;'>+₹" + value.toLocaleString() + "</span>";
                         } else if(value < 0){
-                            return "<span style='color:#ef4444'>" + value + "</span>";
+                            return "<span style='color:#ef4444; font-weight:bold;'>-₹" + Math.abs(value).toLocaleString() + "</span>";
                         } else {
-                            return value;
+                            return "₹" + value;
                         }
                     }}
                 ],

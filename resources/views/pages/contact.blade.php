@@ -140,7 +140,7 @@
                             </div>
                             <div>
                                 <div class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-1">Direct Support</div>
-                                <div class="text-sm font-bold text-white tracking-tight">support@emperorstock.ai</div>
+                                <div class="text-sm font-bold text-white tracking-tight">info@stockpredictor.in</div>
                             </div>
                         </div>
 
@@ -154,17 +154,17 @@
                             </div>
                         </div>
 
-                        <div class="flex items-start gap-4 group/info">
+                        <!-- <div class="flex items-start gap-4 group/info">
                             <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 group-hover/info:text-purple-400 group-hover/info:border-purple-500/30 transition-all">
                                 <i data-lucide="map-pin" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <div class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-1">Operational Base</div>
+                            <div class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-1">Operational Base</div>
                                 <div class="text-sm font-bold text-white tracking-tight leading-snug">Suite 405, Digital Fin-Hub,<br>Mumbai, Maharashtra, India</div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="flex items-start gap-4 group/info">
+                        <!-- <div class="flex items-start gap-4 group/info">
                             <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 group-hover/info:text-purple-400 group-hover/info:border-purple-500/30 transition-all">
                                 <i data-lucide="clock" class="w-5 h-5"></i>
                             </div>
@@ -172,11 +172,11 @@
                                 <div class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-1">Operating Hours</div>
                                 <div class="text-sm font-bold text-white tracking-tight">Mon – Fri: 9:00 AM – 6:00 PM IST</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
-                {{-- Social Channels --}}
+                <!-- {{-- Social Channels --}}
                 <div class="glass-panel p-8 rounded-[2.5rem] border border-white/10">
                     <h3 class="orbitron text-sm font-black italic text-white mb-6 uppercase tracking-tight">Connect on Social</h3>
                     <div class="grid grid-cols-3 gap-4">
@@ -193,7 +193,7 @@
                             <span class="text-[8px] font-bold orbitron text-slate-600 uppercase tracking-widest group-hover:text-purple-400">Telegram</span>
                         </a>
                     </div>
-                </div>
+                </div> -->
 
                 {{-- Quick Help --}}
                 <div class="glass-panel p-8 rounded-[2.5rem] border border-amber-500/20 border-l-4 border-l-amber-500 relative overflow-hidden">
