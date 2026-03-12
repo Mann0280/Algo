@@ -315,15 +315,7 @@
             </div>
 
             <div class="flex items-center gap-3 sm:gap-8">
-                <!-- Theme/Status -->
-                <div class="flex items-center gap-1 p-1 rounded-xl border border-white/[0.05] theme-toggle-container" style="background: var(--input-bg)">
-                    <button id="dark-theme-btn" class="w-8 h-8 rounded-lg flex items-center justify-center transition-all bg-purple-600 text-white shadow-lg">
-                        <i data-lucide="moon" class="w-4 h-4"></i>
-                    </button>
-                    <button id="light-theme-btn" class="w-8 h-8 rounded-lg flex items-center justify-center transition-all text-gray-600 hover:text-[var(--text-white)]">
-                        <i data-lucide="sun" class="w-4 h-4"></i>
-                    </button>
-                </div>
+
 
                 <!-- Notifications -->
                 <button class="relative w-11 h-11 rounded-xl border border-white/[0.05] flex items-center justify-center text-gray-400 hover:text-[var(--text-white)] transition-all group" style="background: var(--input-bg)">
@@ -407,34 +399,10 @@
         }
         requestAnimationFrame(raf);
 
-        // Theme Toggle Logic
-        const darkBtn = document.getElementById('dark-theme-btn');
-        const lightBtn = document.getElementById('light-theme-btn');
-        const body = document.body;
+        // Initialize Theme (Default to Dark)
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('theme', 'dark');
 
-        function setTheme(theme) {
-            if (theme === 'light') {
-                body.classList.add('light-mode');
-                lightBtn.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
-                lightBtn.classList.remove('text-gray-600', 'hover:text-[var(--text-white)]');
-                darkBtn.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
-                darkBtn.classList.add('text-gray-600', 'hover:text-[var(--text-white)]');
-            } else {
-                body.classList.remove('light-mode');
-                darkBtn.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
-                darkBtn.classList.remove('text-gray-600', 'hover:text-[var(--text-white)]');
-                lightBtn.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
-                lightBtn.classList.add('text-gray-600', 'hover:text-[var(--text-white)]');
-            }
-            localStorage.setItem('theme', theme);
-        }
-
-        darkBtn.addEventListener('click', () => setTheme('dark'));
-        lightBtn.addEventListener('click', () => setTheme('light'));
-
-        // Load persisted theme
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(savedTheme);
 
         // Desktop Sidebar Toggle
         const dashLayout = document.getElementById('dash-layout');
