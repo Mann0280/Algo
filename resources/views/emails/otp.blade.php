@@ -1,54 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Your Verification Code</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Verification</title>
 </head>
-<body style="margin: 0; padding: 40px; background-color: #0c0518; color: #ffffff; font-family: Arial, Helvetica, sans-serif;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 560px; margin: 0 auto;">
+<body style="margin: 0; padding: 0; background-color: #030008; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #030008; padding: 40px 20px;">
         <tr>
-            <td style="background-color: #1a0f2e; border: 1px solid #581c87; border-radius: 12px; padding: 40px; text-align: center;">
-                
-                <!-- Header -->
-                <h2 style="color: #a855f7; margin: 0 0 24px 0; font-size: 22px; font-weight: bold;">
-                    Verification Secure Protocol
-                </h2>
-                
-                <!-- Greeting -->
-                <p style="font-size: 16px; color: #e5e7eb; margin: 0 0 16px 0;">
-                    Hello {{ $name }},
-                </p>
-                <p style="font-size: 16px; color: #d1d5db; margin: 0 0 28px 0;">
-                    Your verification code is:
-                </p>
-                
-                <!-- OTP Box -->
-                <table width="100%" cellpadding="0" cellspacing="0">
+            <td align="center">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 500px; background-color: #0c0518; border: 1px solid rgba(147, 51, 234, 0.2); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);">
+                    <!-- Brand Header -->
                     <tr>
-                        <td align="center">
-                            <div style="display: inline-block; background-color: #0c0518; border: 2px solid #9333ea; border-radius: 8px; padding: 18px 32px; margin-bottom: 28px;">
-                                <span style="font-size: 36px; font-weight: bold; letter-spacing: 10px; color: #ffffff; font-family: 'Courier New', Courier, monospace;">{{ $otp }}</span>
+                        <td align="center" style="padding: 40px 40px 20px 40px;">
+                            <div style="display: inline-block; padding: 12px; background: linear-gradient(135deg, #9333ea, #6366f1); border-radius: 12px; margin-bottom: 24px;">
+                                <img src="https://img.icons8.com/ios-filled/50/ffffff/lightning-bolt.png" width="24" height="24" alt="Logo" style="display: block;">
                             </div>
+                            <h2 style="margin: 0; color: #ffffff; font-family: Arial, sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;">
+                                EMPEROR <span style="color: #9333ea;">STOCK</span>
+                            </h2>
+                        </td>
+                    </tr>
+
+                    <!-- Body Content -->
+                    <tr>
+                        <td align="center" style="padding: 0 40px 40px 40px;">
+                            <h1 style="color: #ffffff; font-size: 24px; font-weight: 800; margin: 0 0 12px 0; letter-spacing: -0.02em;">Security Verification</h1>
+                            <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin: 0 0 32px 0;">
+                                Hello <strong>{{ $name }}</strong>,<br>
+                                Use the following code to verify your account session.
+                            </p>
+
+                            <!-- OTP Code -->
+                            <div style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(147, 51, 234, 0.4); border-radius: 16px; padding: 24px 0; margin-bottom: 32px;">
+                                <span style="font-family: 'Courier New', Courier, monospace; font-size: 42px; font-weight: 900; letter-spacing: 12px; color: #ffffff; text-shadow: 0 0 20px rgba(147, 51, 234, 0.3);">{{ $otp }}</span>
+                            </div>
+
+                            <!-- Meta Info -->
+                            <p style="color: #64748b; font-size: 13px; margin: 0 0 8px 0;">
+                                This secure protocol expires in <span style="color: #a855f7; font-weight: bold;">5 minutes</span>.
+                            </p>
+                            <p style="color: #475569; font-size: 12px; margin: 0;">
+                                If you did not request this code, please secure your account.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="padding: 0 40px 32px 40px; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+                            <p style="color: #334155; font-size: 11px; font-weight: 600; margin: 24px 0 0 0; text-transform: uppercase; letter-spacing: 0.1em;">
+                                &copy; {{ date('Y') }} EMPEROR STOCK PREDICTOR &bull; SYSTEM TERMINAL
+                            </p>
                         </td>
                     </tr>
                 </table>
-                
-                <!-- Expiry Notice -->
-                <p style="font-size: 14px; color: #9ca3af; margin: 0 0 8px 0;">
-                    This code will expire in <strong style="color: #c084fc;">5 minutes</strong>.
-                </p>
-                <p style="font-size: 13px; color: #6b7280; margin: 0 0 24px 0;">
-                    If you did not request this verification, please ignore this message.
-                </p>
-
-                <!-- Divider -->
-                <hr style="border: none; border-top: 1px solid #581c87; margin: 20px 0;">
-
-                <!-- Footer -->
-                <p style="font-size: 12px; color: #4b5563; margin: 0;">
-                    &copy; {{ date('Y') }} Emperor Stock Predictor. All rights reserved.
-                </p>
-
             </td>
         </tr>
     </table>

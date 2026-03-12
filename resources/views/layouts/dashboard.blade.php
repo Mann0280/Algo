@@ -359,7 +359,7 @@
                             <a href="{{ route('account.profile') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] rounded-xl text-[10px] font-bold orbitron uppercase transition-all" style="color: var(--text-muted)">
                                 <i data-lucide="settings-2" class="w-4 h-4 text-purple-500"></i> Settings
                             </a>
-                            <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] rounded-xl text-[10px] font-bold orbitron uppercase transition-all" style="color: var(--text-muted)">
+                            <a href="{{ route('account.subscription-history') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] rounded-xl text-[10px] font-bold orbitron uppercase transition-all" style="color: var(--text-muted)">
                                 <i data-lucide="credit-card" class="w-4 h-4 text-amber-500"></i> Subscription
                             </a>
                             <div class="h-px bg-white/[0.05] my-2 mx-2"></div>
