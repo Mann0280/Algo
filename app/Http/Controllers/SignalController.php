@@ -21,10 +21,19 @@ class SignalController extends Controller
             $userState = in_array(Auth::user()->role, ['premium', 'vip', 'admin']) ? 'premium' : 'free';
         }
 
-        // Retrieve and filter signals (strictly past dates only)
-        // Using STR_TO_DATE for robust comparison of varchar dates
+        // Retrieve and filter signals. A signal is "past" if it's before today
+        // OR if it's from today but already has a result or PNL (meaning it's closed).
         $query = StockSignal::query()
-            ->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [now()->toDateString()]);
+            ->where(function($q) {
+                $q->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [now()->toDateString()])
+                  ->orWhere(function($sq) {
+                      $sq->where('entry_date', now()->toDateString())
+                         ->where(function($ssq) {
+                             $ssq->whereNotNull('result')->where('result', '!=', '')->where('result', '!=', 'RUNNING')
+                                 ->orWhereNotNull('pnl')->where('pnl', '!=', '');
+                         });
+                  });
+            });
 
         if ($request->filled('start_date')) {
             $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') >= STR_TO_DATE(?, '%Y-%m-%d')", [$request->start_date]);
@@ -43,17 +52,42 @@ class SignalController extends Controller
         }
 
         if ($request->filled('result')) {
-            $query->where('result', strtoupper($request->result));
+            $res = strtoupper($request->result);
+            if ($res === 'WIN') {
+                $query->where(function($q) {
+                    $q->where('result', 'WIN')
+                      ->orWhere(function($sq) {
+                          $sq->where(function($internal) {
+                              $internal->whereNull('result')->orWhere('result', '');
+                          })->where('pnl', '>', 0);
+                      });
+                });
+            } elseif ($res === 'LOSS') {
+                $query->where(function($q) {
+                    $q->where('result', 'LOSS')
+                      ->orWhere(function($sq) {
+                          $sq->where(function($internal) {
+                              $internal->whereNull('result')->orWhere('result', '');
+                          })->where('pnl', '<', 0);
+                      });
+                });
+            } else {
+                $query->where('result', $res);
+            }
         }
 
         $signals = $query->orderByRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') DESC")
                        ->orderBy('entry_time', 'DESC')
                        ->get();
 
-        // Calculate Stats for the UI
+        // Calculate Stats for the UI with Data Resiliency
         $totalSignals = $signals->count();
-        $totalWin = $signals->where('result', 'WIN')->count();
-        $totalLoss = $signals->where('result', 'LOSS')->count();
+        $totalWin = $signals->filter(function($s) {
+            return strtoupper($s->result) === 'WIN' || (empty($s->result) && $s->pnl > 0);
+        })->count();
+        $totalLoss = $signals->filter(function($s) {
+            return strtoupper($s->result) === 'LOSS' || (empty($s->result) && $s->pnl < 0);
+        })->count();
         $totalPnl = $signals->sum('pnl');
         $winRate = $totalSignals > 0 ? round(($totalWin / $totalSignals) * 100, 2) . '%' : '0%';
 

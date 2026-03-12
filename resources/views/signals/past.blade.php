@@ -410,14 +410,31 @@
                     {title: "Breakeven", field: "breakeven", hozAlign: "right", formatter: function(cell){
                         return "<span style='color:#3b82f6'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
-                    {title: "Date", field: "date", hozAlign: "center"},
+                    {title: "Date", field: "date", hozAlign: "center", formatter: function(cell) {
+                        let time = cell.getData().time || '';
+                        return `<div class="flex flex-col items-center">
+                            <span class="text-white font-bold">${cell.getValue()}</span>
+                            ${time ? `<span class="text-[9px] text-gray-500 font-medium">${time}</span>` : ''}
+                        </div>`;
+                    }},
                     {title: "Result", field: "result", hozAlign: "center", formatter: function(cell){
-                        let val = cell.getValue().toUpperCase();
+                        let val = (cell.getValue() || '').toUpperCase();
+                        let pnl = cell.getData().pnl;
+                        
+                        // Infer result if empty
+                        if(!val || val === '---') {
+                            if(pnl > 0) val = 'WIN';
+                            else if(pnl < 0) val = 'LOSS';
+                            else val = '---';
+                        }
+
                         let cls = '';
                         if(val === 'WIN') cls = 'status-win';
                         else if(val === 'LOSS') cls = 'status-loss';
+                        else if(val === '---') cls = '';
                         else cls = 'status-breakeven';
-                        return `<span class="status-badge ${cls}">${val}</span>`;
+                        
+                        return val !== '---' ? `<span class="status-badge ${cls}">${val}</span>` : '---';
                     }},
                     {title: "Quantity", field: "qty", hozAlign: "right", formatter: function(cell){
                         return cell.getValue() > 0 ? cell.getValue() : '---';
