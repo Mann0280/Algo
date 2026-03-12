@@ -1,6 +1,6 @@
-<nav class="fixed top-0 left-0 w-full z-[100] px-3 sm:px-6 py-3 sm:py-6 transition-all duration-500" id="main-nav">
+<nav class="fixed top-0 left-0 w-full z-[100] px-3 sm:px-6 py-2 sm:py-3 transition-all duration-500" id="main-nav">
     <div class="container mx-auto">
-        <div class="glass-panel px-4 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-[2rem] border border-white/10 flex justify-between items-center relative group">
+        <div class="glass-panel px-4 py-2 sm:px-8 sm:py-2.5 rounded-xl sm:rounded-[2rem] border border-white/10 flex justify-between items-center relative group">
             <div class="absolute inset-0 rounded-xl sm:rounded-[2rem] overflow-hidden pointer-events-none">
                 <div class="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             </div>

@@ -30,6 +30,27 @@
             color: white;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            width: 100%;
+        }
+
+        html.lenis {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
         }
 
         .orbitron { font-family: 'Orbitron', sans-serif; }
@@ -96,7 +117,7 @@
 
     @include('layouts.navbar')
 
-    <main class="relative z-10 pt-24 sm:pt-32 w-full overflow-x-hidden">
+    <main class="relative z-10 pt-16 sm:pt-20 w-full overflow-x-hidden">
         @yield('content')
     </main>
 

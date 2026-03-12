@@ -117,8 +117,8 @@
 
 @section('content')
     <!-- Hero Section -->
-    <div class="relative overflow-x-hidden">
-        <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between py-10 sm:py-16 lg:py-20 gap-8 sm:gap-12">
+    <div class="relative">
+        <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between py-6 sm:py-10 lg:py-12 gap-8 sm:gap-12">
         <!-- Left Column -->
         <div class="w-full lg:w-5/12 flex flex-col gap-8">
             <div class="relative z-20 space-y-8">
@@ -154,21 +154,7 @@
                 </div>
             </div>
 
-            <!-- Stats Bar -->
-            <div class="flex flex-wrap gap-6 sm:gap-12 mt-6 border-t border-white/5 pt-8 hero-stagger opacity-0">
-                <div class="group">
-                    <div class="text-3xl font-black text-white orbitron tracking-tighter count-up" data-value="95">0</div>
-                    <div class="text-[9px] text-slate-500 font-bold orbitron uppercase tracking-widest mt-2">Win Rate %</div>
-                </div>
-                <div class="group">
-                    <div class="text-3xl font-black text-white orbitron tracking-tighter count-up" data-value="15">0</div>
-                    <div class="text-[9px] text-slate-500 font-bold orbitron uppercase tracking-widest mt-2">Active Users (k)</div>
-                </div>
-                <div class="group">
-                    <div class="text-3xl font-black text-white orbitron tracking-tighter count-up" data-value="24">0</div>
-                    <div class="text-[9px] text-slate-500 font-bold orbitron uppercase tracking-widest mt-2">AI Running (hrs)</div>
-                </div>
-            </div>
+
         </div>
 
         <!-- Right Column: AI Terminal -->
