@@ -28,19 +28,9 @@ class SignalController extends Controller
         }
 
         // Retrieve and filter signals. 
-        // We include ALL signals from before today, 
-        // AND signals from today that are already finished (have result/pnl).
+        // We include ALL signals up to and including today.
         $query = StockSignal::query()
-            ->where(function($q) use ($today) {
-                $q->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [$today])
-                  ->orWhere(function($sq) use ($today) {
-                      $sq->where('entry_date', $today)
-                         ->where(function($ssq) {
-                             $ssq->whereNotNull('result')->where('result', '!=', '')->where('result', '!=', 'RUNNING')
-                                 ->orWhereNotNull('pnl')->where('pnl', '!=', '');
-                         });
-                  });
-            });
+            ->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') <= STR_TO_DATE(?, '%Y-%m-%d')", [$today]);
 
         if ($request->filled('start_date')) {
             $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') >= STR_TO_DATE(?, '%Y-%m-%d')", [$request->start_date]);
