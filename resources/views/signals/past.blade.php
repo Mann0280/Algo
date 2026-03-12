@@ -204,7 +204,7 @@
             <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalLoss ?? 0 }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">SIM CAPITAL</p>
+            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">CAPITAL Per Trade</p>
             <h3 id="stat-total-capital" class="text-xl font-black text-white orbitron italic relative z-10">₹0</h3>
         </div>
         <div id="stat-pnl-card" class="stats-card p-4 rounded-3xl relative overflow-hidden group" style="border-color: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)' }}">
@@ -229,7 +229,7 @@
 
                 <div class="flex flex-wrap items-end gap-4">
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest ml-1">Capital Investment (₹)</label>
+                        <label class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest ml-1">Capital Investment Per Trade (₹)</label>
                         <input type="number" id="sim-capital" placeholder="e.g. 100000" value="100000"
                                class="input-cyber w-full sm:w-64 font-bold orbitron text-sm">
                     </div>
