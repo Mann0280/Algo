@@ -5,30 +5,31 @@
                 <div class="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             </div>
             
-            <a href="{{ url('/') }}" class="flex items-center gap-2 relative z-10 transition-transform hover:scale-105">
-                <div class="w-8 h-8 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
+            <a href="{{ url('/') }}" class="flex items-center gap-2.5 relative z-10 transition-transform hover:scale-105">
+                <div class="w-9 h-9 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
                     <i data-lucide="zap" class="w-5 h-5 text-white fill-white"></i>
                 </div>
-                <div class="font-professional text-xl text-white">
-                    EMPEROR STOCK <span class="text-vibrant">PREDICTOR</span>
+                <div class="flex flex-col leading-none font-professional">
+                    <span class="text-[11px] font-bold text-white tracking-[0.2em] opacity-90">EMPEROR STOCK</span>
+                    <span class="text-[16px] font-bold text-purple-500 tracking-tighter mt-0.5">PREDICTOR</span>
                 </div>
             </a>
 
             <!-- Navigation Links (Desktop only) -->
             <div class="hidden lg:flex items-center gap-8 relative z-10">
-                <a href="{{ url('/') }}" class="flex items-center gap-2 text-[10px] font-bold text-gray-400 hover:text-purple-400 transition-colors tracking-wider uppercase">
+                <a href="{{ url('/') }}" class="flex items-center gap-2 text-[11px] font-bold text-gray-400 hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
                 </a>
-                <a href="{{ url('/about') }}" class="flex items-center gap-2 text-[10px] font-bold text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
+                <a href="{{ url('/about') }}" class="flex items-center gap-2 text-[11px] font-bold text-gray-400 hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="info" class="w-3.5 h-3.5"></i> About Us
                 </a>
-                <a href="{{ url('/contact') }}" class="flex items-center gap-2 text-[10px] font-bold text-gray-400 hover:text-white transition-colors tracking-wider uppercase">
+                <a href="{{ url('/contact') }}" class="flex items-center gap-2 text-[11px] font-bold text-gray-400 hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="mail" class="w-3.5 h-3.5"></i> Contact Us
                 </a>
-                <a href="{{ url('/signals') }}" class="flex items-center gap-2 text-[10px] font-bold {{ request()->is('signals') ? 'text-white' : 'text-gray-400' }} hover:text-white transition-colors tracking-wider uppercase">
+                <a href="{{ url('/signals') }}" class="flex items-center gap-2 text-[11px] font-bold {{ request()->is('signals') ? 'text-white' : 'text-gray-400' }} hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="activity" class="w-3.5 h-3.5"></i> Signals
                 </a>
-                <a href="{{ route('signals.past') }}" class="flex items-center gap-2 text-[10px] font-bold {{ request()->is('signals/past') ? 'text-white' : 'text-gray-400' }} hover:text-white transition-colors tracking-wider uppercase">
+                <a href="{{ route('signals.past') }}" class="flex items-center gap-2 text-[11px] font-bold {{ request()->is('signals/past') ? 'text-white' : 'text-gray-400' }} hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="history" class="w-3.5 h-3.5"></i> Past Signals
                 </a>
             </div>
@@ -50,11 +51,15 @@
                     <div class="hidden lg:flex items-center gap-3">
                         <!-- Terminal Access -->
                         @if($isPremium)
-                        <a href="{{ url('/signals') }}" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-900/40 border border-purple-500/30 text-purple-200 font-bold text-[10px] tracking-wider hover:bg-purple-800/40 transition-all">
-                            <i data-lucide="crown" class="w-3.5 h-3.5 text-white"></i> Premium Terminal
+                        <a href="{{ url('/signals') }}" class="flex items-center gap-3 px-5 py-2 rounded-2xl bg-purple-950/40 border border-purple-500/30 text-white transition-all hover:bg-purple-900/40 hover:border-purple-500/50 shadow-lg shadow-purple-900/10 group">
+                            <i data-lucide="crown" class="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform"></i>
+                            <div class="flex flex-col items-start leading-none font-professional">
+                                <span class="text-[8px] font-bold text-purple-200/60 uppercase tracking-[0.15em] mb-0.5">Premium</span>
+                                <span class="text-[11px] font-bold text-white uppercase tracking-wide">Terminal</span>
+                            </div>
                         </a>
                         @else
-                        <a href="{{ url('/pricing') }}" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/30 text-white font-bold text-[10px] tracking-wider hover:bg-white/20 transition-all group">
+                        <a href="{{ url('/pricing') }}" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 border border-white/30 text-white font-bold text-[11px] tracking-widest hover:bg-white/20 transition-all uppercase group">
                             <i data-lucide="zap" class="w-3.5 h-3.5 group-hover:animate-pulse"></i> Upgrade
                         </a>
                         @endif
@@ -97,11 +102,11 @@
                                        class="w-4 h-4 {{ $isPremium ? 'fill-black' : '' }}"></i>
                                 </span>
                             </div>
-                            <div class="flex flex-col">
-                                <span class="text-[8px] font-bold {{ $isPremium ? 'text-amber-500' : 'text-purple-400' }} leading-none tracking-widest uppercase transition-colors group-hover:text-white">
+                            <div class="flex flex-col leading-none">
+                                <span class="text-[9px] font-bold {{ $isPremium ? 'text-amber-500' : 'text-purple-400' }} leading-none tracking-widest uppercase transition-colors group-hover:text-white mb-0.5">
                                     {{ $isPremium ? ($isAdmin ? 'Admin' : 'Premium Member') : 'Free Account' }}
                                 </span>
-                                <span class="text-[11px] font-bold text-white leading-tight uppercase global-username">{{ $user->username }}</span>
+                                <span class="text-[12px] font-bold text-white uppercase global-username">{{ $user->username }}</span>
                             </div>
                         </a>
 
