@@ -28,10 +28,16 @@ class SignalController extends Controller
         }
 
         // Retrieve and filter signals. 
-        // We include ALL signals strictly BEFORE today.
-        // Using whereRaw to handle unpadded dates like '2026-3-2' found in the DB.
-        $query = StockSignal::query()
-            ->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [$today]);
+        // Before 4 PM: include signals strictly BEFORE today.
+        // After 4 PM: include signals UP TO AND INCLUDING today.
+        $isAfterMarketClose = now()->hour >= 16;
+        $query = StockSignal::query();
+
+        if ($isAfterMarketClose) {
+            $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') <= STR_TO_DATE(?, '%Y-%m-%d')", [$today]);
+        } else {
+            $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [$today]);
+        }
 
         if ($request->filled('start_date')) {
             $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') >= STR_TO_DATE(?, '%Y-%m-%d')", [$request->start_date]);
@@ -80,7 +86,7 @@ class SignalController extends Controller
         
         $totalWin = $signals->filter(function($s) {
             $res = strtoupper($s->result ?? '');
-            return in_array($res, ['WIN', 'TP HIT']) || (empty($res) && $s->pnl > 0);
+            return in_array($res, ['WIN', 'TP HIT', 'BREAKEVEN']) || (empty($res) && $s->pnl > 0);
         })->count();
 
         $totalLoss = $signals->filter(function($s) {
@@ -88,10 +94,15 @@ class SignalController extends Controller
             return in_array($res, ['LOSS', 'SL HIT']) || (empty($res) && $s->pnl < 0);
         })->count();
 
+        $totalEOD = $signals->filter(function($s) {
+            $res = strtoupper($s->result ?? '');
+            return $res === 'EOD';
+        })->count();
+
         $totalPnl = $signals->sum('pnl');
         $winRate = $totalSignals > 0 ? round(($totalWin / $totalSignals) * 100, 1) . '%' : '0%';
 
         // Pass data to the Blade view
-        return view('signals.past', compact('signals', 'totalSignals', 'totalWin', 'totalLoss', 'totalPnl', 'winRate', 'userState'));
+        return view('signals.past', compact('signals', 'totalSignals', 'totalWin', 'totalLoss', 'totalEOD', 'totalPnl', 'winRate', 'userState'));
     }
 }

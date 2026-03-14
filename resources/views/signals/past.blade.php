@@ -32,15 +32,21 @@
     }
     select.input-cyber {
         appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 0.75rem center;
-        background-size: 1rem;
+        background-size: 0.9rem;
         padding-right: 2.5rem;
+        cursor: pointer;
+        width: 100% !important;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     select.input-cyber option {
-        background-color: #0a0514;
+        background-color: #0d061a;
         color: white;
+        padding: 12px !important;
     }
 
     /* Premium Status Badges (Match Live Tips) */
@@ -121,23 +127,188 @@
         font-size: 12px !important;
     }
     .tabulator-footer {
-        background-color: transparent !important;
-        font-family: 'Inter', sans-serif !important;
-        font-size: 11px !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 32px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 20px !important;
+        width: 100% !important;
     }
-    .tabulator-page {
+
+    /* Target the container that holds BOTH page-size and paginator */
+    .tabulator-footer > div:first-child {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 20px !important;
+        width: 100% !important;
+    }
+
+    /* Style the select box within footer */
+    .tabulator-footer select {
         background: rgba(255, 255, 255, 0.03) !important;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        color: #94a3b8 !important;
+        color: white !important;
         border-radius: 8px !important;
-        margin: 0 4px !important;
-        font-weight: bold;
+        padding: 6px 32px 6px 12px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        outline: none !important;
+        transition: all 0.3s ease !important;
+        color-scheme: dark;
+        width: 100px !important;
+        cursor: pointer !important;
+        appearance: none !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 10px center !important;
     }
+
+    .tabulator-footer select option {
+        background-color: #0d061a !important;
+        color: white !important;
+        padding: 10px !important;
+    }
+
+    .tabulator-footer select:focus {
+        border-color: #9333ea !important;
+        box-shadow: 0 0 10px rgba(147, 51, 234, 0.2) !important;
+    }
+
+    /* Target the Page Size label */
+    .tabulator-page-size {
+        color: #64748b !important;
+        font-size: 10px !important;
+        font-weight: 800 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.1em !important;
+        margin-right: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .tabulator-page {
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        color: #94a3b8 !important;
+        min-width: 36px !important;
+        height: 36px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 10px !important;
+        margin: 0 3px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    @media (max-width: 640px) {
+        .tabulator-footer {
+            padding: 30px 10px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 20px !important;
+        }
+
+        /* Group Page Size and Pagination sections to stack them vertically */
+        .tabulator-footer .tabulator-page-size,
+        .tabulator-footer .tabulator-paginator {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 12px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            float: none !important;
+        }
+
+        /* Keep the internal navigation elements (Prev, Numbers, Next) HORIZONTAL */
+        .tabulator-footer .tabulator-pages {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 4px !important;
+            width: auto !important;
+            margin: 0 auto !important;
+        }
+
+        /* Ensure PREV, Numbers, and NEXT stay in a HORIZONTAL ROW */
+        .tabulator-paginator {
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+
+        .tabulator-page {
+            min-width: 32px !important;
+            height: 32px !important;
+            margin: 2px !important;
+            font-size: 10px !important;
+            display: inline-flex !important;
+            padding: 0 8px !important;
+        }
+        
+        .tabulator-page-size {
+            margin-bottom: 5px !important;
+        }
+
+        /* Hide First/Last on mobile to save space */
+        .tabulator-page[data-page="first"],
+        .tabulator-page[data-page="last"] {
+            display: none !important;
+        }
+        
+        .tabulator-page-counter {
+            display: none !important;
+        }
+    }
+
+    .tabulator-page:hover:not(.disabled) {
+        background: rgba(147, 51, 234, 0.1) !important;
+        color: white !important;
+        border-color: rgba(147, 51, 234, 0.3) !important;
+        transform: translateY(-2px) !important;
+    }
+
     .tabulator-page.active {
         background: linear-gradient(135deg, #9333ea, #6366f1) !important;
         color: white !important;
         border-color: transparent !important;
-        box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+        box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3) !important;
+    }
+
+    .tabulator-page.disabled {
+        opacity: 0.3 !important;
+        cursor: not-allowed !important;
+    }
+
+    /* Hide the default buttons if we want just numbers, but keeping them for now */
+    .tabulator-page[data-page="first"],
+    .tabulator-page[data-page="prev"],
+    .tabulator-page[data-page="next"],
+    .tabulator-page[data-page="last"] {
+        padding: 0 12px !important;
+        font-size: 9px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+    }
+
+    @media (max-width: 480px) {
+        .tabulator-page[data-page="prev"],
+        .tabulator-page[data-page="next"] {
+            padding: 0 8px !important;
+            font-size: 8px !important;
+        }
     }
     
     /* Strict Tabulator Background Override */
@@ -244,7 +415,7 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mb-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 mb-12">
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
             <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalSignals ?? 0 }}</h3>
@@ -262,8 +433,12 @@
             <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalLoss ?? 0 }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
+            <p class="text-[10px] font-bold text-blue-300 uppercase tracking-widest mb-1 relative z-10">TOTAL EOD</p>
+            <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalEOD ?? 0 }}</h3>
+        </div>
+        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1 relative z-10">CAPITAL Per Trade</p>
-            <h3 id="stat-total-capital" class="text-xl font-bold text-white relative z-10">₹0</h3>
+            <h3 id="stat-total-capital" class="text-xl font-bold text-white relative z-10">₹100K</h3>
         </div>
         <div id="stat-pnl-card" class="stats-card p-4 rounded-3xl relative overflow-hidden group" style="border-color: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)' }}">
             <p id="stat-pnl-label" class="text-[10px] font-bold uppercase tracking-widest mb-1 relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">TOTAL PNL</p>
@@ -339,6 +514,8 @@
                         <option value="">ALL RESULTS</option>
                         <option value="WIN" {{ request('result') == 'WIN' ? 'selected' : '' }}>WIN</option>
                         <option value="LOSS" {{ request('result') == 'LOSS' ? 'selected' : '' }}>LOSS</option>
+                        <option value="EOD" {{ request('result') == 'EOD' ? 'selected' : '' }}>EOD</option>
+                        <option value="BREAKEVEN" {{ request('result') == 'BREAKEVEN' ? 'selected' : '' }}>BREAKEVEN</option>
                     </select>
                 </div>
                 <div class="flex items-end gap-2">
@@ -355,24 +532,13 @@
 
     <!-- Tabulator Table Section -->
     <div class="max-w-7xl mx-auto px-4 md:px-0">
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center justify-between mb-6">
             <div id="data-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hidden">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span id="data-status-text" class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">History Update Successful</span>
             </div>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <label class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Rows per page</label>
-                    <select id="page-size-selector" class="bg-white/5 border border-white/10 text-white text-[10px] font-bold rounded-lg px-2 py-1 outline-none focus:border-purple-500 transition-colors">
-                        <option value="10" class="bg-[#0a0514] text-white">10</option>
-                        <option value="25" class="bg-[#0a0514] text-white" selected>25</option>
-                        <option value="50" class="bg-[#0a0514] text-white">50</option>
-                        <option value="100" class="bg-[#0a0514] text-white">100</option>
-                    </select>
-                </div>
-                <div class="flex items-center gap-2 text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
-                    <i data-lucide="info" class="w-3 h-3"></i> Use scroll for more data
-                </div>
+            <div class="flex items-center gap-2 text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
+                <i data-lucide="info" class="w-3 h-3"></i> Use scroll for more data
             </div>
         </div>
 
@@ -519,6 +685,28 @@
                 borderColor: document.getElementById('stat-pnl-card').style.borderColor,
                 labelColor: document.getElementById('stat-pnl-label').style.color
             };
+        }
+
+        // Auto-sync Investment Input with Stat Card
+        const simCapitalInput = document.getElementById('sim-capital');
+        if (simCapitalInput) {
+            simCapitalInput.addEventListener('input', function() {
+                const val = parseFloat(this.value);
+                const statCapital = document.getElementById('stat-total-capital');
+                if (statCapital) {
+                    if (!isNaN(val) && val >= 0) {
+                        let display = '';
+                        if (val >= 1000) {
+                            display = `₹${(val / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+                        } else {
+                            display = `₹${val}`;
+                        }
+                        statCapital.textContent = display;
+                    } else if (this.value === '') {
+                        statCapital.textContent = '₹0';
+                    }
+                }
+            });
         }
     });
 

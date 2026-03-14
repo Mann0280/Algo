@@ -67,6 +67,17 @@ class LiveTipsController extends Controller
         }
 
         $today = now()->format('Y-m-d');
+        $isAfterMarketClose = now()->hour >= 16;
+
+        if ($isAfterMarketClose) {
+             return response()->json([
+                'success' => true,
+                'count'   => 0,
+                'data'    => [],
+                'market_status' => 'closed',
+            ]);
+        }
+
         $tips = \App\Models\StockSignal::where('entry_date', $today)
             ->orderBy('created_at', 'desc')
             ->get()
