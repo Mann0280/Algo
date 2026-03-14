@@ -167,6 +167,55 @@
         width: 6px;
         height: 6px;
     }
+
+    /* Laravel Pagination Cyber Styles */
+    .pagination-cyber nav {
+        background: transparent;
+    }
+    .pagination-cyber .relative.inline-flex.items-center {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 4px;
+        gap: 4px;
+    }
+    .pagination-cyber a, .pagination-cyber span[aria-current="page"] > span {
+        min-width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 800;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid transparent;
+    }
+    .pagination-cyber a {
+        color: #94a3b8;
+        background: transparent;
+    }
+    .pagination-cyber a:hover {
+        background: rgba(147, 51, 234, 0.1);
+        color: #c084fc;
+        border-color: rgba(147, 51, 234, 0.2);
+    }
+    .pagination-cyber span[aria-current="page"] > span {
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        color: white;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    }
+    .pagination-cyber .hidden.flex-1.flex.items-center.justify-between {
+        display: flex !important;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+    }
+    @media (min-width: 640px) {
+        .pagination-cyber .hidden.flex-1.flex.items-center.justify-between {
+            flex-direction: row;
+        }
+    }
 </style>
 @endpush
 
@@ -203,7 +252,7 @@
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1 relative z-10">WIN RATE</p>
             <h3 class="text-2xl font-bold text-white relative z-10">{{ $winRate ?? '0%' }}</h3>
-        </div>
+         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1 relative z-10">TOTAL WIN</p>
             <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalWin ?? 0 }}</h3>
@@ -330,6 +379,11 @@
         <div class="table-wrapper">
             <div id="signals-table" class="whiskey-table"></div>
         </div>
+
+        <!-- Laravel Pagination Links -->
+        <div class="mt-8 pagination-cyber">
+            {{ $signals->links() }}
+        </div>
     </div>
 </main>
 @endsection
@@ -378,9 +432,7 @@
                 data: rawData,
                 layout: "fitDataStretch",
                 responsiveLayout: false,
-                pagination: true,
-                paginationSize: 25,
-                paginationSizeSelector: false,
+                pagination: false,
                 placeholder: "<div class='text-gray-600 py-32 text-[10px] font-bold uppercase tracking-[0.4em]'>NO HISTORY FOUND</div>",
                 resizableColumns: true,
                 columnHeaderVertAlign: "bottom",

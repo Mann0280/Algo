@@ -248,60 +248,71 @@
                 </h2>
             </div>
 
-            <div class="glass-panel p-8 md:p-12 rounded-[2.5rem] border border-white/5 max-w-5xl mx-auto">
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                    <div class="flex items-center gap-4 group">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-purple-500/30 transition-all">
-                            <i data-lucide="cpu" class="w-6 h-6 text-purple-400"></i>
+            <div class="glass-panel p-6 sm:p-10 md:p-14 rounded-[3rem] border border-white/5 max-w-5xl mx-auto shadow-2xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
+                    {{-- AI Systems --}}
+                    <div class="flex items-center gap-6 group">
+                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-purple-500/30 transition-all flex-shrink-0">
+                            <i data-lucide="cpu" class="w-7 h-7 text-purple-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-professional text-white tracking-tight">AI Systems</div>
-                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Technology</div>
+                            <div class="text-xl font-professional text-white tracking-tight mb-1">AI Systems</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Technology</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 group">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-emerald-500/30 transition-all">
-                            <i data-lucide="server" class="w-6 h-6 text-emerald-400"></i>
+
+                    {{-- AWS Cloud --}}
+                    <div class="flex items-center gap-6 group">
+                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-emerald-500/30 transition-all flex-shrink-0">
+                            <i data-lucide="server" class="w-7 h-7 text-emerald-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-professional text-white tracking-tight">AWS Cloud</div>
-                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Infrastructure</div>
+                            <div class="text-xl font-professional text-white tracking-tight mb-1">AWS Cloud</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Infrastructure</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 group">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-blue-500/30 transition-all">
-                            <i data-lucide="globe" class="w-6 h-6 text-blue-400"></i>
+
+                    {{-- Real-time APIs --}}
+                    <div class="flex items-center gap-6 group">
+                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-blue-500/30 transition-all flex-shrink-0">
+                            <i data-lucide="globe" class="w-7 h-7 text-blue-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-professional text-white tracking-tight">Real-time APIs</div>
-                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Data Feeds</div>
+                            <div class="text-xl font-professional text-white tracking-tight mb-1">Real-time APIs</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Data Feeds</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 group">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-amber-500/30 transition-all">
-                            <i data-lucide="bar-chart-3" class="w-6 h-6 text-amber-400"></i>
+
+                    {{-- 15+ Years --}}
+                    <div class="flex items-center gap-6 group">
+                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-amber-500/30 transition-all flex-shrink-0">
+                            <i data-lucide="bar-chart-3" class="w-7 h-7 text-amber-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-professional text-white tracking-tight">15+ Years</div>
-                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Training Data</div>
+                            <div class="text-xl font-professional text-white tracking-tight mb-1">15+ Years</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Training Data</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 group">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-rose-500/30 transition-all">
-                            <i data-lucide="refresh-cw" class="w-6 h-6 text-rose-400"></i>
+
+                    {{-- Weekly Retraining --}}
+                    <div class="flex items-center gap-6 group">
+                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-rose-500/30 transition-all flex-shrink-0">
+                            <i data-lucide="refresh-cw" class="w-7 h-7 text-rose-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-professional text-white tracking-tight">Weekly Retraining</div>
-                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Model Updates</div>
+                            <div class="text-xl font-professional text-white tracking-tight mb-1">Weekly Retraining</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Model Updates</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 group">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-indigo-500/30 transition-all">
-                            <i data-lucide="activity" class="w-6 h-6 text-indigo-400"></i>
+
+                    {{-- 2M+ Daily --}}
+                    <div class="flex items-center gap-6 group">
+                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-indigo-500/30 transition-all flex-shrink-0">
+                            <i data-lucide="activity" class="w-7 h-7 text-indigo-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-professional text-white tracking-tight">2M+ Daily</div>
-                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Data Points</div>
+                            <div class="text-xl font-professional text-white tracking-tight mb-1">2M+ Daily</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Data Points</div>
                         </div>
                     </div>
                 </div>

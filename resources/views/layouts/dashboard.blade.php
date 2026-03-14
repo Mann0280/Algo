@@ -180,6 +180,20 @@
         .main-content {
             grid-area: main;
             background: radial-gradient(circle at top right, rgba(147, 51, 234, 0.03), transparent);
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin-right: auto;
+            padding: 2rem;
+        }
+        
+        @media (min-width: 1536px) {
+            .main-container {
+                padding: 3rem;
+            }
         }
 
         /* Institutional Components */
@@ -196,9 +210,10 @@
         }
 
         .nav-link.active-link {
-            background: rgba(147, 51, 234, 0.1);
+            background: #1a0b2e;
             color: #fff !important;
-            box-shadow: inset 0 0 20px rgba(147, 51, 234, 0.05);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(147, 51, 234, 0.05);
         }
 
         .nav-link.active-link::before {
@@ -242,6 +257,38 @@
 
         @media (max-width: 1023px) {
             .collapsed .sidebar-text { opacity: 1; pointer-events: auto; }
+        }
+        @keyframes whatsappPulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            background: #25D366;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: whatsappPulse 2.5s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-icon {
+            width: 34px;
+            height: 34px;
         }
     </style>
     @stack('styles')
@@ -384,7 +431,7 @@
 
         <!-- MAIN CONTENT -->
         <main class="main-content">
-            <div class="max-w-[1600px] mx-auto p-4 sm:p-8 lg:p-12">
+            <div class="main-container">
                 @yield('content')
             </div>
         </main>
@@ -475,6 +522,17 @@
             setTimeout(() => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); }, 500);
         });
     </script>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', App\Models\SiteSetting::getValue('whatsapp_number', '91XXXXXXXXXX')) }}" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp">
+        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" 
+             alt="WhatsApp" 
+             class="whatsapp-icon">
+    </a>
+
     @stack('scripts')
 </body>
 </html>
