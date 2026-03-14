@@ -18,6 +18,7 @@ class SettingsController extends Controller
             'site_tagline'     => SiteSetting::getValue('site_tagline', 'Neural-Powered Trading Intelligence'),
             'support_email'    => SiteSetting::getValue('support_email', 'support@emperorstock.ai'),
             'telegram_link'    => SiteSetting::getValue('telegram_link', ''),
+            'whatsapp_number'  => SiteSetting::getValue('whatsapp_number', '91XXXXXXXXXX'),
             'breakeven_point'  => SiteSetting::getValue('breakeven_point', '2500.00'),
             'ai_refresh_rate'  => SiteSetting::getValue('ai_refresh_rate', '5'),
             'max_free_signals' => SiteSetting::getValue('max_free_signals', '3'),
@@ -39,7 +40,7 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         $keys = [
-            'site_name', 'site_tagline', 'support_email', 'telegram_link',
+            'site_name', 'site_tagline', 'support_email', 'telegram_link', 'whatsapp_number',
             'breakeven_point', 'ai_refresh_rate', 'max_free_signals',
             'premium_price', 'maintenance_mode', 'registration_open',
             'subscription_header', 'subscription_subheader',

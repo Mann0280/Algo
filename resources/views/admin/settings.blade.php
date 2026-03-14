@@ -67,6 +67,10 @@
                         <label class="text-[10px] font-semibold font-whiskey text-gray-600 uppercase tracking-widest pl-1">Telegram Channel</label>
                         <input type="text" name="telegram_link" value="{{ $settings['telegram_link'] }}" placeholder="https://t.me/your_protocol" class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-sm font-black font-whiskey tracking-tight text-white placeholder:text-gray-800">
                     </div>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-semibold font-whiskey text-gray-600 uppercase tracking-widest pl-1">WhatsApp Number</label>
+                        <input type="text" name="whatsapp_number" value="{{ $settings['whatsapp_number'] }}" placeholder="919876543210 (Country code + Number)" class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-sm font-black font-whiskey tracking-tight text-white placeholder:text-gray-800">
+                    </div>
                 </div>
             </div>
         </div>
