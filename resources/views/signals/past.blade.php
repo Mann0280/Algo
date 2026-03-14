@@ -379,11 +379,6 @@
         <div class="table-wrapper">
             <div id="signals-table" class="whiskey-table"></div>
         </div>
-
-        <!-- Laravel Pagination Links -->
-        <div class="mt-8 pagination-cyber">
-            {{ $signals->links() }}
-        </div>
     </div>
 </main>
 @endsection
@@ -432,7 +427,9 @@
                 data: rawData,
                 layout: "fitDataStretch",
                 responsiveLayout: false,
-                pagination: false,
+                pagination: "local",
+                paginationSize: 20,
+                paginationSizeSelector: [10, 20, 50, 100],
                 placeholder: "<div class='text-gray-600 py-32 text-[10px] font-bold uppercase tracking-[0.4em]'>NO HISTORY FOUND</div>",
                 resizableColumns: true,
                 columnHeaderVertAlign: "bottom",
@@ -465,21 +462,20 @@
                         </div>`;
                     }},
                     {title: "Result", field: "result", hozAlign: "center", minWidth: 110, formatter: function(cell){
+                        let val = (cell.getValue() || '').toUpperCase();
                         let pnl = cell.getData().pnl;
-                        let val = '';
                         
-                        if (pnl > 0) val = 'WIN';
-                        else if (pnl < 0) val = 'LOSS';
-                        else {
-                            let dbVal = (cell.getValue() || '').toUpperCase();
-                            val = (dbVal && dbVal !== '---') ? dbVal : '---';
+                        // Fallback logic if result is empty
+                        if (!val || val === '---') {
+                            if (pnl > 0) val = 'WIN';
+                            else if (pnl < 0) val = 'LOSS';
+                            else val = '---';
                         }
 
                         let cls = '';
-                        if(val === 'WIN') cls = 'status-win';
-                        else if(val === 'LOSS') cls = 'status-loss';
-                        else if(val === '---') cls = '';
-                        else cls = 'status-breakeven';
+                        if (['WIN', 'TP HIT'].includes(val)) cls = 'status-win';
+                        else if (['LOSS', 'SL HIT'].includes(val)) cls = 'status-loss';
+                        else if (['BREAKEVEN', 'EOD'].includes(val)) cls = 'status-breakeven';
                         
                         return val !== '---' ? `<span class="status-badge ${cls}">${val}</span>` : '---';
                     }},
