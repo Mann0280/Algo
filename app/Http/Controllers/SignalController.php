@@ -15,8 +15,11 @@ class SignalController extends Controller
      */
     public function pastSignals(Request $request)
     {
+        // Use IST for all time-based logic to align with Indian Market hours
+        $nowIST = now()->timezone('Asia/Kolkata');
+        $today = $nowIST->toDateString();
+        
         // Redirection Logic: If user filters for ONLY "Today" (both dates), send them to Live Signals
-        $today = now()->toDateString();
         if ($request->input('start_date') === $today && $request->input('end_date') === $today) {
             return redirect()->route('signals');
         }
@@ -30,7 +33,7 @@ class SignalController extends Controller
         // Retrieve and filter signals. 
         // Before 4 PM: include signals strictly BEFORE today.
         // After 4 PM: include signals UP TO AND INCLUDING today.
-        $isAfterMarketClose = now()->hour >= 16;
+        $isAfterMarketClose = $nowIST->hour >= 16;
         $query = StockSignal::query();
 
         if ($isAfterMarketClose) {

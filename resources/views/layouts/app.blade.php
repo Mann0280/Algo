@@ -226,10 +226,10 @@
 
         /* WhatsApp Floating Button */
         .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
+            position: fixed !important;
+            bottom: 30px !important;
+            right: 30px !important;
+            z-index: 999999 !important;
             background: #25D366;
             border-radius: 50%;
             width: 60px;
@@ -248,8 +248,9 @@
         }
 
         .whatsapp-icon {
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
         }
 
         @keyframes whatsappPulse {
@@ -314,13 +315,14 @@
 
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', App\Models\SiteSetting::getValue('whatsapp_number', '91XXXXXXXXXX')) }}" 
-       class="whatsapp-float" 
+       style="position: fixed !important; bottom: 30px !important; right: 30px !important; z-index: 99999999 !important; background-color: #25d366 !important; width: 60px !important; height: 60px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; box-shadow: 0 10px 25px rgba(37,211,102,0.4) !important;"
+       class="whatsapp-float-hardcoded hover:scale-110 transition-transform duration-300"
        target="_blank" 
        rel="noopener noreferrer"
        aria-label="Chat on WhatsApp">
-        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" 
-             alt="WhatsApp" 
-             class="whatsapp-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" style="width: 35px !important; height: 35px !important; fill: white !important;" viewBox="0 0 24 24">
+            <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.195 1.594 6.021L.188 23.813l5.885-1.547a11.968 11.968 0 0 0 5.958 1.594h.005c6.641 0 12.031-5.385 12.031-12.031 0-6.646-5.385-12.031-12.036-12.031zM19.042 16.927c-.292.818-1.464 1.563-2.026 1.636-.542.068-1.182.26-3.76-.807-3.13-1.296-5.141-4.526-5.292-4.729-.151-.203-1.266-1.688-1.266-3.219 0-1.531.792-2.286 1.078-2.589.286-.302.625-.375.833-.375s.417 0 .599.01c.193.01.448-.073.703.542.266.646.911 2.224.995 2.391.083.167.141.359.036.568-.104.208-.156.339-.313.526-.156.188-.328.396-.469.542-.156.167-.318.354-.135.672.182.318.813 1.349 1.745 2.177 1.203 1.073 2.193 1.406 2.516 1.563.323.156.51.135.703-.094.193-.229.833-.969 1.057-1.302.224-.333.443-.276.734-.167.292.109 1.844.87 2.156 1.026.313.156.521.234.599.365.078.13.078.755-.214 1.573z"/>
+        </svg>
     </a>
 </body>
 </html>

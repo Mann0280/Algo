@@ -66,8 +66,9 @@ class LiveTipsController extends Controller
             ], 403);
         }
 
-        $today = now()->format('Y-m-d');
-        $isAfterMarketClose = now()->hour >= 16;
+        $nowIST = now()->timezone('Asia/Kolkata');
+        $today = $nowIST->format('Y-m-d');
+        $isAfterMarketClose = $nowIST->hour >= 16;
 
         if ($isAfterMarketClose) {
              return response()->json([

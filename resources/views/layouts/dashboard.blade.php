@@ -258,6 +258,7 @@
         @media (max-width: 1023px) {
             .collapsed .sidebar-text { opacity: 1; pointer-events: auto; }
         }
+
         @keyframes whatsappPulse {
             0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
             70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
@@ -265,20 +266,20 @@
         }
 
         .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-            background: #25D366;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: whatsappPulse 2.5s infinite;
+            position: fixed !important;
+            bottom: 30px !important;
+            right: 30px !important;
+            z-index: 999999 !important;
+            background: #25D366 !important;
+            border-radius: 50% !important;
+            width: 60px !important;
+            height: 60px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3) !important;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            animation: whatsappPulse 2.5s infinite !important;
         }
 
         .whatsapp-float:hover {
@@ -287,9 +288,10 @@
         }
 
         .whatsapp-icon {
-            width: 34px;
-            height: 34px;
-        }
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+        } 
     </style>
     @stack('styles')
 </head>
@@ -321,6 +323,7 @@
                         ['icon' => 'wallet', 'label' => 'Neural Wallet', 'url' => route('account.wallet'), 'active' => Request::is('account/wallet*')],
                         ['icon' => 'gift', 'label' => 'Refer & Earn', 'url' => route('account.referral'), 'active' => Request::is('account/referral*')],
                         ['icon' => 'credit-card', 'label' => 'Link History', 'url' => route('account.subscription-history'), 'active' => Request::is('account/history*')],
+                        ['icon' => 'bell', 'label' => 'Notifications', 'url' => route('account.notifications'), 'active' => Request::is('account/notifications*')],
                         ['icon' => 'settings', 'label' => 'Settings', 'url' => route('account.profile'), 'active' => Request::is('account/profile*')],
                     ];
                 @endphp
@@ -380,10 +383,10 @@
 
 
                 <!-- Notifications -->
-                <button class="relative w-11 h-11 rounded-xl border border-white/[0.05] flex items-center justify-center text-gray-400 hover:text-[var(--text-white)] transition-all group" style="background: var(--input-bg)">
+                <a href="{{ route('account.notifications') }}" class="relative w-11 h-11 rounded-xl border border-white/[0.05] flex items-center justify-center text-gray-400 hover:text-[var(--text-white)] transition-all group" style="background: var(--input-bg)">
                     <i data-lucide="bell" class="w-5 h-5"></i>
                     <span class="absolute top-3 right-3 w-2 h-2 bg-purple-500 rounded-full shadow-[0_0_10px_#9333ea]"></span>
-                </button>
+                </a>
 
                 <!-- Profile -->
                 <div class="relative group/user">
@@ -528,9 +531,9 @@
        target="_blank" 
        rel="noopener noreferrer"
        aria-label="Chat on WhatsApp">
-        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" 
-             alt="WhatsApp" 
-             class="whatsapp-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.195 1.594 6.021L.188 23.813l5.885-1.547a11.968 11.968 0 0 0 5.958 1.594h.005c6.641 0 12.031-5.385 12.031-12.031 0-6.646-5.385-12.031-12.036-12.031zM19.042 16.927c-.292.818-1.464 1.563-2.026 1.636-.542.068-1.182.26-3.76-.807-3.13-1.296-5.141-4.526-5.292-4.729-.151-.203-1.266-1.688-1.266-3.219 0-1.531.792-2.286 1.078-2.589.286-.302.625-.375.833-.375s.417 0 .599.01c.193.01.448-.073.703.542.266.646.911 2.224.995 2.391.083.167.141.359.036.568-.104.208-.156.339-.313.526-.156.188-.328.396-.469.542-.156.167-.318.354-.135.672.182.318.813 1.349 1.745 2.177 1.203 1.073 2.193 1.406 2.516 1.563.323.156.51.135.703-.094.193-.229.833-.969 1.057-1.302.224-.333.443-.276.734-.167.292.109 1.844.87 2.156 1.026.313.156.521.234.599.365.078.13.078.755-.214 1.573z"/>
+        </svg>
     </a>
 
     @stack('scripts')

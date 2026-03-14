@@ -103,6 +103,8 @@ Route::prefix('account')->name('account.')->middleware(['auth', \App\Http\Middle
     Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
     Route::post('/withdraw', [WalletController::class, 'storeWithdraw'])->name('withdraw.store');
     Route::get('/history', [AccountController::class, 'subscriptionHistory'])->name('subscription-history');
+    Route::get('/receipt/{id}', [AccountController::class, 'receiptPrint'])->name('receipt');
+    Route::get('/notifications', [AccountController::class, 'notifications'])->name('notifications');
 });
 
 Route::get('/api/notifications', [NotificationController::class, 'index'])->name('notifications.index');
