@@ -19,13 +19,13 @@
                     <i data-lucide="mail" class="w-10 h-10 text-purple-500 relative z-10"></i>
                 </div>
                 
-                <h1 class="orbitron text-3xl font-black text-white italic uppercase tracking-tighter mb-4">
+                <h1 class="font-whiskey text-3xl font-black text-white italic uppercase tracking-tighter mb-4">
                     Identity <span class="text-purple-500 text-glow">Verification</span>
                 </h1>
                 
                 <div class="flex items-center gap-2 mb-6">
                     <span class="w-8 h-[1px] bg-purple-500/50"></span>
-                    <span class="text-[9px] font-black orbitron text-purple-500 uppercase tracking-[0.4em]">Protocol Authorization Required</span>
+                    <span class="text-[9px] font-black font-whiskey text-purple-500 uppercase tracking-[0.4em]">Protocol Authorization Required</span>
                     <span class="w-8 h-[1px] bg-purple-500/50"></span>
                 </div>
             </div>
@@ -37,7 +37,7 @@
 
                 @if (session('status') == 'verification-link-sent')
                     <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 animate-in zoom-in duration-300">
-                        <p class="text-[10px] font-black orbitron text-emerald-400 uppercase tracking-widest">
+                        <p class="text-[10px] font-black font-whiskey text-emerald-400 uppercase tracking-widest">
                             New transmission link deployed successfully!
                         </p>
                     </div>
@@ -47,7 +47,7 @@
             <div class="space-y-6 pt-4">
                 <form method="POST" action="{{ route('verification.send') }}">
                     @csrf
-                    <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black orbitron uppercase tracking-[0.3em] text-[10px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-purple-900/40 italic flex items-center justify-center gap-3">
+                    <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black font-whiskey uppercase tracking-[0.3em] text-[10px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-purple-900/40 italic flex items-center justify-center gap-3">
                         <i data-lucide="send" class="w-4 h-4"></i>
                         Resend Verification Protocol
                     </button>
@@ -55,14 +55,14 @@
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="text-[9px] font-black orbitron text-gray-600 hover:text-white uppercase tracking-[0.4em] transition-all">
+                    <button type="submit" class="text-[9px] font-black font-whiskey text-gray-600 hover:text-white uppercase tracking-[0.4em] transition-all">
                         Terminate Session
                     </button>
                 </form>
             </div>
             
             <div class="pt-6 border-t border-white/5">
-                <p class="text-[8px] font-black orbitron text-gray-700 uppercase tracking-[0.3em]">
+                <p class="text-[8px] font-black font-whiskey text-gray-700 uppercase tracking-[0.3em]">
                     Algorithmic Security Layer v4.0 Active
                 </p>
             </div>

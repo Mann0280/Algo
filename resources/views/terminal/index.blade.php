@@ -114,7 +114,7 @@
         <div class="flex justify-end mb-6">
             <div class="px-4 py-1.5 bg-black/40 border border-purple-500/30 rounded-full flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_8px_#9333ea]"></span>
-                <span class="orbitron text-[9px] font-bold text-gray-300 uppercase tracking-widest">TERMINAL V2.0 ACTIVE</span>
+                <span class="font-whiskey text-[9px] font-bold text-gray-300 uppercase tracking-widest">TERMINAL V2.0 ACTIVE</span>
             </div>
         </div>
 
@@ -133,7 +133,7 @@
                         <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
                             <i data-lucide="zap" class="w-5 h-5 text-white fill-white"></i>
                         </div>
-                        <span class="orbitron font-black text-xs italic tracking-tighter text-purple-500">NEURAL PATHWAY</span>
+                        <span class="font-whiskey font-black text-xs italic tracking-tighter text-purple-500">NEURAL PATHWAY</span>
                     </div>
                     <div class="flex gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-red-500/40"></span>
@@ -144,9 +144,9 @@
 
                 <!-- Main Display -->
                 <div class="space-y-1">
-                    <p class="orbitron text-[9px] font-bold text-gray-500 uppercase tracking-widest">SCANNING MARKET DEPTH</p>
+                    <p class="font-whiskey text-[9px] font-bold text-gray-500 uppercase tracking-widest">SCANNING MARKET DEPTH</p>
                     <div class="flex items-baseline gap-3">
-                        <h2 class="orbitron text-6xl font-black text-white tracking-tighter italic">98.4<span class="text-4xl">%</span></h2>
+                        <h2 class="font-whiskey text-6xl font-black text-white tracking-tighter italic">98.4<span class="text-4xl">%</span></h2>
                         <span class="text-emerald-400 font-bold text-xs font-mono">+2.45%</span>
                     </div>
                 </div>
@@ -172,10 +172,10 @@
 
                 <!-- Footer -->
                 <div class="flex justify-between items-center mt-6">
-                    <span class="orbitron text-[8px] font-bold text-gray-600 uppercase tracking-widest">EST 2024</span>
+                    <span class="font-whiskey text-[8px] font-bold text-gray-600 uppercase tracking-widest">EST 2024</span>
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
-                        <span class="orbitron text-[8px] font-bold text-gray-400 uppercase tracking-widest">SYSTEM OPERATIONAL</span>
+                        <span class="font-whiskey text-[8px] font-bold text-gray-400 uppercase tracking-widest">SYSTEM OPERATIONAL</span>
                     </div>
                 </div>
             </div>
@@ -186,7 +186,7 @@
     <!-- Notification Panel Overlay -->
     <div id="notif-panel" class="notification-panel p-6 sm:p-8 w-full sm:w-[380px] right-[-100%] sm:right-[-400px]" style="background: var(--nav-sticky-bg)">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="orbitron font-bold text-xl uppercase" style="color: var(--text-white)">NOTIFICATIONS</h2>
+            <h2 class="font-whiskey font-bold text-xl uppercase" style="color: var(--text-white)">NOTIFICATIONS</h2>
             <button onclick="toggleNotif()" class="text-gray-500 hover:text-white">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
@@ -194,7 +194,7 @@
         <div class="space-y-4" id="alert-list">
             <div class="glass-panel p-5 rounded-2xl border-l-4 border-purple-500 animate-pulse">
                 <div class="flex justify-between mb-2">
-                    <span class="text-[10px] font-bold text-purple-400 orbitron">SYSTEM UPDATE</span>
+                    <div class="text-[9px] font-black text-white font-whiskey">SYSTEM UPDATE</div>
                     <span class="text-[10px] text-gray-600 uppercase">Just Now</span>
                 </div>
                 <p class="text-xs text-gray-300 leading-relaxed">AI Neural Engine has successfully scanned 500+ NSE symbols. New signals generated.</p>
@@ -206,7 +206,7 @@
     <div class="flex-grow">
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
             <div>
-                <h1 class="orbitron text-2xl font-bold uppercase italic tracking-tighter" style="color: var(--text-white)">TERMINAL <span class="text-purple-500">ACCESS</span></h1>
+                <h1 class="font-whiskey text-2xl font-bold uppercase italic tracking-tighter" style="color: var(--text-white)">TERMINAL <span class="text-purple-500">ACCESS</span></h1>
                 <p class="text-[var(--text-muted)] text-sm">Welcome back, {{ $user->username }}. AI Engine is active.</p>
             </div>
             <div class="flex flex-wrap gap-3 sm:gap-4 w-full md:w-auto">
@@ -217,13 +217,13 @@
                 <div class="glass-panel px-4 sm:px-6 py-3 rounded-2xl flex items-center gap-4 flex-grow md:flex-grow-0">
                     <div class="text-left">
                         <div class="text-[10px] uppercase font-bold" style="color: var(--text-muted)">Account Status</div>
-                        <div class="text-sm font-bold {{ $isPremium ? 'text-amber-400' : 'text-purple-400' }}">
+                        <div class="text-sm font-bold {{ $isPremium ? 'text-white' : 'text-purple-400' }}">
                             {{ $isPremium ? 'PREMIUM' : 'LIMITED' }}
                         </div>
                     </div>
                 </div>
                 @if (!$isPremium)
-                    <a href="{{ url('/pricing') }}" class="bg-amber-400 text-black px-6 py-3 rounded-2xl font-bold text-sm shadow-lg shadow-amber-400/20 hover:scale-105 transition-all flex items-center flex-grow md:flex-grow-0 justify-center">UPGRADE</a>
+                    <a href="{{ url('/pricing') }}" class="bg-white text-black px-6 py-3 rounded-2xl font-bold text-sm shadow-lg shadow-white/20 hover:scale-105 transition-all flex items-center flex-grow md:flex-grow-0 justify-center">UPGRADE</a>
                 @endif
             </div>
         </header>
@@ -231,20 +231,20 @@
         <!-- Stats Grid -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 reveal-section">
             <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-white/5">
-                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Breakeven</div>
-                <div id="display-breakeven" class="text-xl sm:text-2xl font-bold text-purple-400 orbitron">{{ $settings['breakeven_point'] ?? '2500.00' }}</div>
+                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 font-whiskey uppercase tracking-widest mb-1">Breakeven</div>
+                <div id="display-breakeven" class="text-xl sm:text-2xl font-bold text-purple-400 font-whiskey">{{ $settings['breakeven_point'] ?? '2500.00' }}</div>
             </div>
             <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-white/5">
-                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Session Date</div>
-                <div id="display-date" class="text-xl sm:text-2xl font-bold orbitron tracking-tighter" style="color: var(--text-white)">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M') }}</div>
+                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 font-whiskey uppercase tracking-widest mb-1">Session Date</div>
+                <div id="display-date" class="text-xl sm:text-2xl font-bold font-whiskey tracking-tighter" style="color: var(--text-white)">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M') }}</div>
             </div>
             <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-white/5">
-                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Active</div>
-                <div id="total-active" class="text-xl sm:text-2xl font-bold text-emerald-400 orbitron">00</div>
+                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 font-whiskey uppercase tracking-widest mb-1">Active</div>
+                <div id="total-active" class="text-xl sm:text-2xl font-bold text-emerald-400 font-whiskey">00</div>
             </div>
             <div class="glass-panel p-5 sm:p-6 rounded-2xl border border-white/5">
-                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Sync Status</div>
-                <div id="refresh-counter" class="text-[10px] font-bold text-purple-400 orbitron uppercase">SYNC...</div>
+                <div class="text-[9px] sm:text-[10px] font-bold text-slate-500 font-whiskey uppercase tracking-widest mb-1">Sync Status</div>
+                <div id="refresh-counter" class="text-[10px] font-bold text-purple-400 font-whiskey uppercase">SYNC...</div>
             </div>
         </div>
 
@@ -254,13 +254,13 @@
             <div class="lg:col-span-2 reveal-section">
                 <div class="glass-panel rounded-3xl overflow-hidden border border-white/5 relative">
                     <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
-                        <h2 class="orbitron text-sm font-bold tracking-widest uppercase italic" style="color: var(--text-white)">AI MONITORING TERMINAL</h2>
-                        <span class="text-[9px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-1 rounded font-black orbitron animate-pulse">LIVE DATA</span>
+                        <h2 class="font-whiskey text-sm font-bold tracking-widest uppercase italic" style="color: var(--text-white)">AI MONITORING TERMINAL</h2>
+                        <span class="text-[9px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-1 rounded font-black font-whiskey animate-pulse">LIVE DATA</span>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="table-wrapper">
                         <div id="tips-table"></div>
                         <div id="empty-state" class="p-10 text-center hidden">
-                            <p class="text-slate-500 text-xs orbitron uppercase">No active signals detected.</p>
+                            <p class="text-slate-500 text-xs font-whiskey uppercase">No active signals detected.</p>
                         </div>
                     </div>
                 </div>
@@ -268,7 +268,7 @@
 
             <div class="space-y-8 reveal-section">
                 <div class="glass-panel rounded-3xl p-6 border border-white/5">
-                    <h2 class="orbitron text-sm font-bold mb-6 flex justify-between uppercase italic tracking-widest" style="color: var(--text-white)">
+                    <h2 class="font-whiskey text-sm font-bold mb-6 flex justify-between uppercase italic tracking-widest" style="color: var(--text-white)">
                         WATCHLIST
                         <span class="text-purple-500 cursor-pointer">+</span>
                     </h2>
@@ -279,7 +279,7 @@
                             @endphp
                             @foreach($placeholders as $p)
                              <div class="flex justify-between items-center p-3 rounded-xl hover:bg-white/5 transition-all">
-                                <div><div class="font-bold text-sm" style="color: var(--text-white)">{{ $p['s'] }}</div><div class="text-[10px] text-gray-500 uppercase font-black orbitron">SIGNAL ACTIVE</div></div>
+                                <div><div class="font-bold text-sm" style="color: var(--text-white)">{{ $p['s'] }}</div><div class="text-[10px] text-gray-500 uppercase font-black font-whiskey">SIGNAL ACTIVE</div></div>
                                 <div class="text-right"><div class="text-sm font-mono" style="color: var(--text-white)">{{ $p['p'] }}</div><div class="text-[10px] font-bold {{ strpos($p['c'], '+') !== false ? 'text-emerald-400' : 'text-rose-400' }}">{{ $p['c'] }}</div></div>
                             </div>
                             @endforeach
@@ -323,44 +323,46 @@
         tipsTable = new Tabulator("#tips-table", {
             ...TABULATOR_BASE_CONFIG,
             data: [],
+            layout: "fitDataStretch",
+            responsiveLayout: false,
             columns: [
-                {title: "Stock", field: "stock_name", widthGrow: 2, minWidth: 130, resizable: false, sorter: "string", formatter: (cell) => `<span class="font-black orbitron text-xs text-white uppercase tracking-tighter">${cell.getValue()}</span>`},
-                {title: "Type", field: "confidence_percentage", width: 90, resizable: false, hozAlign: "center", formatter: (cell) => {
+                {title: "Stock", field: "stock_name", minWidth: 120, resizable: false, sorter: "string", formatter: (cell) => `<span class="font-black font-whiskey text-xs text-white uppercase tracking-tighter">${cell.getValue()}</span>`},
+                {title: "Type", field: "confidence_percentage", minWidth: 90, resizable: false, hozAlign: "center", formatter: (cell) => {
                     const badge = cell.getValue() >= 90 ? 'VIP' : 'PRO';
-                    const cls = cell.getValue() >= 90 ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 'bg-purple-500/10 text-purple-500 border-purple-500/20';
-                    return `<span class="px-2 py-0.5 rounded border text-[8px] font-bold orbitron ${cls}">${badge}</span>`;
+                    const cls = cell.getValue() >= 90 ? 'bg-white/10 text-white border-white/20' : 'bg-purple-500/10 text-purple-500 border-purple-500/20';
+                    return `<span class="px-2 py-0.5 rounded border text-[8px] font-bold font-whiskey ${cls}">${badge}</span>`;
                 }},
-                {title: "Entry", field: "entry_price", width: 110, hozAlign: "right", sorter: "number", formatter: (cell) => {
+                {title: "Entry", field: "entry_price", minWidth: 110, hozAlign: "right", sorter: "number", formatter: (cell) => {
                     const v = cell.getValue();
                     const isMasked = v === '•••••';
                     return `<span class="font-mono text-xs text-gray-400 ${isMasked ? 'blur-[5px] select-none opacity-50' : ''}">${isMasked ? '' : '₹'}${v}</span>`;
                 }},
-                {title: "SL", field: "stop_loss", width: 100, hozAlign: "right", sorter: "number", formatter: (cell) => {
+                {title: "Stop Loss", field: "stop_loss", minWidth: 100, hozAlign: "right", sorter: "number", formatter: (cell) => {
                     const v = cell.getValue();
                     const isMasked = v === '•••••';
                     return `<span class="font-mono text-[10px] text-rose-500/60 ${isMasked ? 'blur-[5px] select-none opacity-50' : ''}">${isMasked ? '' : '₹'}${v}</span>`;
                 }},
-                {title: "T1", field: "target_1", width: 100, hozAlign: "right", sorter: "number", formatter: (cell) => {
+                {title: "Target 1", field: "target_1", minWidth: 110, hozAlign: "right", sorter: "number", formatter: (cell) => {
                     const v = cell.getValue();
                     const isMasked = v === '•••••';
                     return `<span class="font-mono text-xs text-purple-400 ${isMasked ? 'blur-[5px] select-none opacity-50' : ''}">${isMasked ? '' : '₹'}${v}</span>`;
                 }},
-                {title: "T2", field: "target_2", width: 100, hozAlign: "right", sorter: "number", formatter: (cell) => {
+                {title: "Target 2", field: "target_2", minWidth: 110, hozAlign: "right", sorter: "number", formatter: (cell) => {
                     const v = cell.getValue();
                     const isMasked = v === '•••••';
                     return `<span class="font-mono text-xs text-purple-400 ${isMasked ? 'blur-[5px] select-none opacity-50' : ''}">${v && !isMasked ? '₹' : ''}${v || '---'}</span>`;
                 }},
-                {title: "AI %", field: "confidence_percentage", width: 90, hozAlign: "center", sorter: "number", formatter: (cell) => `<span class="font-black orbitron text-xs text-purple-500">${cell.getValue()}%</span>`},
-                {title: "Time", field: "updated_at", width: 90, hozAlign: "center", formatter: (cell) => {
+                {title: "AI %", field: "confidence_percentage", minWidth: 90, hozAlign: "center", sorter: "number", formatter: (cell) => `<span class="font-black font-whiskey text-xs text-purple-500">${cell.getValue()}%</span>`},
+                {title: "Time", field: "updated_at", minWidth: 90, hozAlign: "center", formatter: (cell) => {
                     return `<span class="font-mono text-[10px] text-gray-500">${new Date(cell.getValue()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
                 }},
-                {title: "Status", field: "status", width: 120, resizable: false, hozAlign: "center", formatter: (cell) => `
+                {title: "Status", field: "status", minWidth: 120, resizable: false, hozAlign: "center", formatter: (cell) => `
                     <div class="flex items-center justify-center gap-2">
-                        <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
-                        <span class="text-[9px] font-bold orbitron text-emerald-500 uppercase tracking-widest">ACTIVE</span>
+                        <div class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff] ${cell.getValue() === 'Active' ? 'opacity-100' : 'opacity-20'}"></div>
+                        <span class="text-[9px] font-bold font-whiskey text-white uppercase tracking-widest">${cell.getValue()}</span>
                     </div>`
                 },
-                {title: "Profit", field: "profit", width: 100, resizable: false, hozAlign: "right", formatter: (cell) => `<span class="font-black orbitron text-[10px] text-emerald-400 italic">PENDING</span>`},
+                {title: "Profit", field: "profit", minWidth: 120, resizable: false, hozAlign: "right", formatter: (cell) => `<span class="font-black font-whiskey text-[10px] text-emerald-400 italic">PENDING</span>`},
             ]
         });
 

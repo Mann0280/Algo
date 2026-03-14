@@ -3,9 +3,9 @@
 @section('title', 'Pricing Tiers | Emperor Stock Predictor')
 
 @section('content')
-<main class="min-h-screen flex flex-col items-center justify-center p-6 py-20 relative z-10 font-bold uppercase italic tracking-tighter">
+<main class="min-h-screen flex flex-col items-center justify-center p-6 py-20 relative z-10 font-bold uppercase tracking-tight">
     <div class="text-center mb-16">
-        <h1 class="orbitron text-3xl sm:text-5xl font-black mb-4 tracking-tighter text-white">CHOOSE YOUR <span class="text-purple-500">LEVEL</span></h1>
+        <h1 class="text-3xl sm:text-5xl font-bold-tight mb-4 text-white">CHOOSE YOUR <span class="text-vibrant">LEVEL</span></h1>
         <p class="text-gray-400 max-w-lg mx-auto font-normal not-italic normal-case tracking-normal">Scale your trading with AI-powered insights and professional grade toolsets.</p>
     </div>
 

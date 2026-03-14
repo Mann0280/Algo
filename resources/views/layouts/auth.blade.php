@@ -10,13 +10,16 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-deep: #05020a;
+            --bg-deep: #0a0b14;
             --accent-purple: #9333ea;
-            --accent-blue: #6366f1;
+            --accent-magenta: #d946ef;
+            --accent-blue: #3b82f6;
+            --whiskey-gold: #ffffff;
+            --vibrant-gradient: linear-gradient(90deg, #9333ea 0%, #d946ef 100%);
         }
 
         body {
@@ -27,21 +30,31 @@
             min-height: 100vh;
         }
 
-        .orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-whiskey { 
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            color: white;
+        }
+
+        .font-bold-tight {
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+        }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 
-                0 25px 80px rgba(0, 0, 0, 0.6),
-                0 0 0 1px rgba(147, 51, 234, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .text-glow {
-            text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+            text-shadow: 0 0 15px currentColor;
         }
 
         @keyframes float {
@@ -79,7 +92,7 @@
         }
 
         .auth-btn {
-            background: linear-gradient(135deg, #9333ea, #6366f1);
+            background: var(--vibrant-gradient);
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;

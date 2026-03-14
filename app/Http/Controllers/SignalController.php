@@ -51,23 +51,9 @@ class SignalController extends Controller
         if ($request->filled('result')) {
             $res = strtoupper($request->result);
             if ($res === 'WIN') {
-                $query->where(function($q) {
-                    $q->where('result', 'WIN')
-                      ->orWhere(function($sq) {
-                          $sq->where(function($internal) {
-                              $internal->whereNull('result')->orWhere('result', '');
-                          })->where('pnl', '>', 0);
-                      });
-                });
+                $query->where('pnl', '>', 0);
             } elseif ($res === 'LOSS') {
-                $query->where(function($q) {
-                    $q->where('result', 'LOSS')
-                      ->orWhere(function($sq) {
-                          $sq->where(function($internal) {
-                              $internal->whereNull('result')->orWhere('result', '');
-                          })->where('pnl', '<', 0);
-                      });
-                });
+                $query->where('pnl', '<', 0);
             } else {
                 $query->where('result', $res);
             }

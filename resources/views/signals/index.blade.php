@@ -11,7 +11,7 @@
         padding: 48px 0 24px;
     }
     .signals-hero h1 {
-        font-family: 'Orbitron', monospace;
+        font-family: 'Inter', sans-serif;
         font-size: clamp(18px, 4vw, 28px);
         font-weight: 900;
         text-transform: uppercase;

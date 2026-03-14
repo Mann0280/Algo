@@ -48,7 +48,7 @@
         padding: 4px 12px;
         border-radius: 8px;
         font-size: 9px;
-        font-weight: 900;
+        font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         position: relative;
@@ -80,14 +80,12 @@
         position: sticky !important;
         top: 0;
         z-index: 10;
-        background-color: #05020c !important;
-        border-bottom: 2px solid rgba(147, 51, 234, 0.3) !important;
-        color: #94a3b8 !important;
-        font-family: 'Orbitron', sans-serif !important;
+        background-color: rgba(10, 11, 20, 0.95) !important;
+        font-family: 'Inter', sans-serif !important;
         font-size: 11px !important;
-        font-weight: 950 !important;
+        font-weight: 700 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.15em !important;
+        letter-spacing: 0.1em !important;
     }
     .tabulator, .tabulator-table {
         background-color: transparent !important;
@@ -124,9 +122,7 @@
     }
     .tabulator-footer {
         background-color: transparent !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
-        color: #64748b !important;
-        font-family: 'Orbitron', sans-serif !important;
+        font-family: 'Inter', sans-serif !important;
         font-size: 11px !important;
     }
     .tabulator-page {
@@ -180,20 +176,20 @@
     <div class="max-w-7xl mx-auto mb-12">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-                <h1 class="text-5xl font-black orbitron text-white mb-4 italic uppercase tracking-tighter">
-                    PAST <span class="text-gradient">SIGNALS</span>
+                <h1 class="text-5xl font-professional text-white mb-4 tracking-tighter">
+                    Past <span class="text-gradient">Signals</span>
                 </h1>
-                <p class="text-gray-400 max-w-2xl text-lg uppercase tracking-tight">
+                <p class="text-gray-400 max-w-2xl text-lg tracking-tight">
                     Premium historical data records. 100% verified performance.
                 </p>
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2 group cursor-help">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="text-[10px] orbitron font-bold text-gray-500 uppercase tracking-widest">System Online</span>
+                    <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">System Online</span>
                 </div>
                 <div class="h-px w-24 bg-gradient-to-r from-purple-500/50 to-transparent hidden lg:block"></div>
-                <span class="text-[10px] orbitron font-bold text-purple-500 uppercase tracking-[0.3em]">ALL RECORDS</span>
+                <span class="text-[10px] font-bold text-purple-500 uppercase tracking-[0.3em]">ALL RECORDS</span>
             </div>
         </div>
     </div>
@@ -201,28 +197,28 @@
     <!-- Stats Section -->
     <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mb-12">
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
-            <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalSignals ?? 0 }}</h3>
+            <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
+            <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalSignals ?? 0 }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <p class="text-[10px] font-bold text-emerald-400 orbitron uppercase tracking-widest mb-1 relative z-10">WIN RATE</p>
-            <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $winRate ?? '0%' }}</h3>
+            <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1 relative z-10">WIN RATE</p>
+            <h3 class="text-2xl font-bold text-white relative z-10">{{ $winRate ?? '0%' }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <p class="text-[10px] font-bold text-blue-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL WIN</p>
-            <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalWin ?? 0 }}</h3>
+            <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1 relative z-10">TOTAL WIN</p>
+            <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalWin ?? 0 }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <p class="text-[10px] font-bold text-rose-400 orbitron uppercase tracking-widest mb-1 relative z-10">TOTAL LOSS</p>
-            <h3 class="text-2xl font-black text-white orbitron italic relative z-10">{{ $totalLoss ?? 0 }}</h3>
+            <p class="text-[10px] font-bold text-rose-400 uppercase tracking-widest mb-1 relative z-10">TOTAL LOSS</p>
+            <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalLoss ?? 0 }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
-            <p class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest mb-1 relative z-10">CAPITAL Per Trade</p>
-            <h3 id="stat-total-capital" class="text-xl font-black text-white orbitron italic relative z-10">₹0</h3>
+            <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1 relative z-10">CAPITAL Per Trade</p>
+            <h3 id="stat-total-capital" class="text-xl font-bold text-white relative z-10">₹0</h3>
         </div>
         <div id="stat-pnl-card" class="stats-card p-4 rounded-3xl relative overflow-hidden group" style="border-color: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)' }}">
-            <p id="stat-pnl-label" class="text-[10px] font-bold orbitron uppercase tracking-widest mb-1 relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">TOTAL PNL</p>
-            <h3 id="stat-total-pnl-top" class="text-xl font-black orbitron italic relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">
+            <p id="stat-pnl-label" class="text-[10px] font-bold uppercase tracking-widest mb-1 relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">TOTAL PNL</p>
+            <h3 id="stat-total-pnl-top" class="text-xl font-bold relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">
                 {{ ($totalPnl ?? 0) >= 0 ? '+' : '' }}₹{{ number_format($totalPnl ?? 0, 0) }}
             </h3>
         </div>
@@ -234,7 +230,7 @@
             <div class="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 blur-[100px] rounded-full"></div>
             <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
                 <div class="space-y-2">
-                    <h2 class="orbitron text-2xl font-black text-white italic uppercase tracking-tighter">
+                    <h2 class="font-professional text-2xl text-white tracking-tighter">
                         Profit <span class="text-gradient">Simulator</span>
                     </h2>
                     <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Live Profit Analysis</p>
@@ -242,23 +238,23 @@
 
                 <div class="flex flex-wrap items-end gap-4">
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold text-purple-400 orbitron uppercase tracking-widest ml-1">Investment Per Trade (₹)</label>
+                        <label class="text-[10px] font-bold text-purple-400 uppercase tracking-widest ml-1">Investment Per Trade (₹)</label>
                         <input type="number" id="sim-capital" placeholder="e.g. 100000" value="100000"
-                               class="input-cyber w-full sm:w-64 font-bold orbitron text-sm">
+                               class="input-cyber w-full sm:w-64 font-bold text-sm">
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="calculateSimulation()" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-xs uppercase italic tracking-widest rounded-xl transition-all shadow-lg hover:shadow-purple-500/40 transform hover:-translate-y-1">
+                        <button onclick="calculateSimulation()" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg hover:shadow-purple-500/40 transform hover:-translate-y-1">
                             Calculate Profit
                         </button>
-                        <button onclick="resetSimulation()" class="px-5 py-3 bg-white/5 text-gray-400 font-bold orbitron text-xs uppercase tracking-widest rounded-xl transition-all border border-white/5 hover:bg-white/10">
+                        <button onclick="resetSimulation()" class="px-5 py-3 bg-white/5 text-gray-400 font-bold text-xs uppercase tracking-widest rounded-xl transition-all border border-white/5 hover:bg-white/10">
                             <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                         </button>
                     </div>
                 </div>
 
                 <div id="sim-result-container" class="hidden min-w-[240px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-inner">
-                    <p class="text-[9px] font-bold text-gray-500 orbitron uppercase tracking-widest mb-1">PROFIT RESULT</p>
-                    <div id="sim-total-pnl" class="text-2xl font-black orbitron italic">₹0.00</div>
+                    <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1">PROFIT RESULT</p>
+                    <div id="sim-total-pnl" class="text-2xl font-bold">₹0.00</div>
                 </div>
             </div>
         </div>
@@ -297,10 +293,10 @@
                     </select>
                 </div>
                 <div class="flex items-end gap-2">
-                    <button type="submit" class="flex-1 px-4 py-2.5 bg-white text-black font-black orbitron text-xs uppercase italic tracking-widest rounded-xl shadow-lg hover:bg-gray-100 transition-colors">
-                        Query
+                    <button type="submit" class="flex-1 px-4 py-2.5 bg-black text-white font-bold text-xs uppercase tracking-widest rounded-xl shadow-lg hover:bg-gray-100 transition-colors">
+                        Apply
                     </button>
-                    <a href="{{ route('signals.past') }}" class="px-4 py-2.5 bg-white/5 text-gray-400 font-black orbitron text-xs uppercase tracking-widest rounded-xl border border-white/5 flex items-center justify-center hover:bg-white/10">
+                    <a href="{{ route('signals.past') }}" class="px-4 py-2.5 bg-white/5 text-gray-400 font-bold text-xs uppercase tracking-widest rounded-xl border border-white/5 flex items-center justify-center hover:bg-white/10">
                         <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -313,28 +309,26 @@
         <div class="flex items-center justify-between mb-4">
             <div id="data-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hidden">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span id="data-status-text" class="text-[9px] orbitron font-bold text-gray-400 uppercase tracking-widest">History Update Successful</span>
+                <span id="data-status-text" class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">History Update Successful</span>
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2">
-                    <label class="text-[9px] orbitron font-bold text-gray-400 uppercase tracking-widest">Rows per page</label>
-                    <select id="page-size-selector" class="bg-white/5 border border-white/10 text-white text-[10px] font-bold orbitron rounded-lg px-2 py-1 outline-none focus:border-purple-500 transition-colors">
+                    <label class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Rows per page</label>
+                    <select id="page-size-selector" class="bg-white/5 border border-white/10 text-white text-[10px] font-bold rounded-lg px-2 py-1 outline-none focus:border-purple-500 transition-colors">
                         <option value="10" class="bg-[#0a0514] text-white">10</option>
                         <option value="25" class="bg-[#0a0514] text-white" selected>25</option>
                         <option value="50" class="bg-[#0a0514] text-white">50</option>
                         <option value="100" class="bg-[#0a0514] text-white">100</option>
                     </select>
                 </div>
-                <div class="flex items-center gap-2 text-[10px] orbitron text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
+                <div class="flex items-center gap-2 text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
                     <i data-lucide="info" class="w-3 h-3"></i> Use scroll for more data
                 </div>
             </div>
         </div>
 
-        <div class="glass-card border border-white/5 overflow-hidden p-0 relative shadow-2xl">
-            <div class="w-full overflow-x-auto">
-                <div id="signals-table" class="w-full !max-w-none"></div>
-            </div>
+        <div class="table-wrapper">
+            <div id="signals-table" class="whiskey-table"></div>
         </div>
     </div>
 </main>
@@ -382,50 +376,51 @@
         try {
             window.signalsTable = new Tabulator("#signals-table", {
                 data: rawData,
-                layout: "fitColumns",
+                layout: "fitDataStretch",
+                responsiveLayout: false,
                 pagination: true,
                 paginationSize: 25,
                 paginationSizeSelector: false,
-                placeholder: "<div class='orbitron text-gray-600 py-32 text-[10px] tracking-[0.4em]'>NO HISTORY FOUND</div>",
+                placeholder: "<div class='text-gray-600 py-32 text-[10px] font-bold uppercase tracking-[0.4em]'>NO HISTORY FOUND</div>",
                 resizableColumns: true,
                 columnHeaderVertAlign: "bottom",
                 columns: [
-                    {title: "Stock", field: "stock", hozAlign: "left", widthGrow: 2, formatter: function(cell){
+                    {title: "Stock", field: "stock", hozAlign: "left", minWidth: 120, formatter: function(cell){
                         return "<span style='font-weight:bold; color:white;'>" + cell.getValue() + "</span>";
                     }},
-                    {title: "Type", field: "type", hozAlign: "center", width: 80, formatter: function(cell){
+                    {title: "Type", field: "type", hozAlign: "center", minWidth: 90, formatter: function(cell){
                         let val = cell.getValue().toUpperCase();
                         let color = val === 'BUY' ? '#10b981' : (val === 'SELL' ? '#ef4444' : '#94a3b8');
                         return `<span style="color:${color}; font-weight:900; font-size:10px;">${val}</span>`;
                     }},
-                    {title: "Entry", field: "entry", hozAlign: "right", formatter: function(cell){
+                    {title: "Entry", field: "entry", hozAlign: "right", minWidth: 110, formatter: function(cell){
                         return "₹" + cell.getValue().toLocaleString();
                     }},
-                    {title: "Target", field: "target", hozAlign: "right", formatter: function(cell){
+                    {title: "Target", field: "target", hozAlign: "right", minWidth: 110, formatter: function(cell){
                         return "<span style='color:#10b981'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
-                    {title: "Stop Loss", field: "sl", hozAlign: "right", formatter: function(cell){
+                    {title: "Stop Loss", field: "sl", hozAlign: "right", minWidth: 100, formatter: function(cell){
                         return "<span style='color:#ef4444'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
-                    {title: "Breakeven", field: "breakeven", hozAlign: "right", formatter: function(cell){
+                    {title: "Breakeven", field: "breakeven", hozAlign: "right", minWidth: 100, formatter: function(cell){
                         return "<span style='color:#3b82f6'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
-                    {title: "Date", field: "date", hozAlign: "center", formatter: function(cell) {
+                    {title: "Date", field: "date", hozAlign: "center", minWidth: 160, formatter: function(cell) {
                         let time = cell.getData().time || '';
                         return `<div class="flex flex-col items-center">
                             <span class="text-white font-bold">${cell.getValue()}</span>
                             ${time ? `<span class="text-[9px] text-gray-500 font-medium">${time}</span>` : ''}
                         </div>`;
                     }},
-                    {title: "Result", field: "result", hozAlign: "center", formatter: function(cell){
-                        let val = (cell.getValue() || '').toUpperCase();
+                    {title: "Result", field: "result", hozAlign: "center", minWidth: 110, formatter: function(cell){
                         let pnl = cell.getData().pnl;
+                        let val = '';
                         
-                        // Infer result if empty
-                        if(!val || val === '---') {
-                            if(pnl > 0) val = 'WIN';
-                            else if(pnl < 0) val = 'LOSS';
-                            else val = '---';
+                        if (pnl > 0) val = 'WIN';
+                        else if (pnl < 0) val = 'LOSS';
+                        else {
+                            let dbVal = (cell.getValue() || '').toUpperCase();
+                            val = (dbVal && dbVal !== '---') ? dbVal : '---';
                         }
 
                         let cls = '';
@@ -436,10 +431,10 @@
                         
                         return val !== '---' ? `<span class="status-badge ${cls}">${val}</span>` : '---';
                     }},
-                    {title: "Quantity", field: "qty", hozAlign: "right", formatter: function(cell){
+                    {title: "Quantity", field: "qty", hozAlign: "right", minWidth: 110, formatter: function(cell){
                         return cell.getValue() > 0 ? cell.getValue() : '---';
                     }},
-                    {title: "PNL", field: "sim_pnl", hozAlign: "right", formatter: function(cell){
+                    {title: "PNL", field: "sim_pnl", hozAlign: "right", minWidth: 120, formatter: function(cell){
                         let value = cell.getValue();
                         if(value > 0){
                             return "<span style='color:#10b981; font-weight:bold;'>+₹" + value.toLocaleString() + "</span>";
@@ -464,7 +459,7 @@
 
         } catch (err) {
             console.error("Initialization Failure:", err);
-            document.getElementById('signals-table').innerHTML = `<div class='p-10 text-rose-500 orbitron text-[10px]'>SYSTEM OVERLOAD: ${err.message}</div>`;
+            document.getElementById('signals-table').innerHTML = `<div class='p-10 text-rose-500 font-bold text-[10px]'>SYSTEM OVERLOAD: ${err.message}</div>`;
         }
 
         // Store original stats state
@@ -502,7 +497,7 @@
 
         const summaryVal = document.getElementById('sim-total-pnl');
         summaryVal.textContent = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        summaryVal.className = `text-2xl font-black orbitron italic ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        summaryVal.className = `text-2xl font-bold ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
         document.getElementById('sim-result-container').classList.remove('hidden');
         
         // Format Capital Display accurately

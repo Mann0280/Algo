@@ -51,7 +51,7 @@
                                 @if(Auth::user()->profile_photo)
                                     <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="Profile" class="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" id="avatar-image">
                                 @else
-                                    <span class="text-5xl sm:text-7xl font-black orbitron italic select-none tracking-tighter" id="avatar-initial" style="color: var(--text-white); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2))">{{ strtoupper(substr(Auth::user()->username, 0, 1)) }}</span>
+                                    <span class="text-5xl sm:text-7xl font-black font-whiskey italic select-none tracking-tighter" id="avatar-initial" style="color: var(--text-white); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2))">{{ strtoupper(substr(Auth::user()->username, 0, 1)) }}</span>
                                 @endif
                             </div>
                             
@@ -141,13 +141,13 @@
                 </div>
 
                 @if($latestPayment && $latestPayment->status !== 'approved' && !($user->role === 'premium' && $latestPayment->status === 'approved'))
-                    <div class="mb-8 p-6 rounded-3xl border {{ $latestPayment->status === 'pending' ? 'bg-amber-500/5 border-amber-500/20' : 'bg-rose-500/5 border-rose-500/20' }} animate-in fade-in slide-in-from-top-4 duration-700">
+                    <div class="mb-8 p-6 rounded-3xl border {{ $latestPayment->status === 'pending' ? 'bg-white/5 border-white/20' : 'bg-rose-500/5 border-rose-500/20' }} animate-in fade-in slide-in-from-top-4 duration-700">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl {{ $latestPayment->status === 'pending' ? 'bg-amber-500/10 text-amber-500' : 'bg-rose-500/10 text-rose-500' }} flex items-center justify-center shrink-0">
+                            <div class="w-12 h-12 rounded-2xl {{ $latestPayment->status === 'pending' ? 'bg-white/10 text-white' : 'bg-rose-500/10 text-rose-500' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="{{ $latestPayment->status === 'pending' ? 'clock' : 'shield-alert' }}" class="w-6 h-6"></i>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-sm font-bold {{ $latestPayment->status === 'pending' ? 'text-amber-500' : 'text-rose-500' }}">
+                                <h4 class="text-sm font-bold {{ $latestPayment->status === 'pending' ? 'text-white' : 'text-rose-500' }}">
                                     Payment {{ ucfirst($latestPayment->status) }}
                                 </h4>
                                 <p class="text-sm text-gray-400 mt-1">
@@ -159,7 +159,7 @@
                                 </p>
                             </div>
                             @if($latestPayment->status === 'rejected')
-                                <a href="{{ route('pricing') }}" class="px-6 py-2.5 bg-rose-500 text-black rounded-xl text-sm font-bold hover:bg-rose-600 transition-all">Try Again</a>
+                                <a href="{{ route('pricing') }}" class="px-6 py-2.5 bg-white text-black rounded-xl text-sm font-bold hover:bg-gray-100 transition-all">Try Again</a>
                             @endif
                         </div>
                     </div>
@@ -216,13 +216,13 @@
                             <div class="h-0.5 w-12 bg-purple-500/30 mx-auto rounded-full"></div>
                         </div>
                         
-                        <div id="subscription-timer" class="whitespace-nowrap text-4xl sm:text-5xl xl:text-7xl font-black orbitron italic tracking-tighter {{ $isActive ? 'text-purple-500 drop-shadow-[0_0_25px_rgba(147,51,234,0.6)]' : 'text-white/10' }}">
+                        <div id="subscription-timer" class="whitespace-nowrap text-4xl sm:text-5xl xl:text-7xl font-black font-whiskey italic tracking-tighter {{ $isActive ? 'text-purple-500 drop-shadow-[0_0_25px_rgba(147,51,234,0.6)]' : 'text-white/10' }}">
                             00h 00m 00s
                         </div>
 
                         <div class="flex flex-col items-center gap-4">
                             @if(!$isActive)
-                                <a href="{{ route('pricing') }}" class="group relative px-12 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl text-[10px] font-black orbitron uppercase tracking-[0.3em] overflow-hidden transition-all hover:scale-105 shadow-2xl">
+                                <a href="{{ route('pricing') }}" class="group relative px-12 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl text-[10px] font-black font-whiskey uppercase tracking-[0.3em] overflow-hidden transition-all hover:scale-105 shadow-2xl">
                                     <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                                     <span class="relative z-10">Upgrade Protocol</span>
                                 </a>
@@ -469,7 +469,7 @@
         toast.className = `px-8 py-4 rounded-2xl border backdrop-blur-xl ${colors[type]} flex items-center gap-4 shadow-2xl pointer-events-auto transform translate-x-12 opacity-0 transition-all duration-500`;
         toast.innerHTML = `
             <div class="w-2 h-2 rounded-full bg-current ${type === 'info' ? 'animate-pulse' : ''}"></div>
-            <span class="text-[10px] font-black orbitron uppercase tracking-widest">${message}</span>
+            <span class="text-[10px] font-black font-whiskey uppercase tracking-widest">${message}</span>
         `;
         
         container.appendChild(toast);
@@ -617,7 +617,7 @@
                             if (result.user.profile_photo_url) {
                                 avatarContainer.innerHTML = `<img src="${result.user.profile_photo_url}" alt="Profile" class="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" id="avatar-image">`;
                             } else {
-                                avatarContainer.innerHTML = `<span class="text-7xl font-black orbitron italic select-none tracking-tighter" id="avatar-initial" style="color: var(--text-white); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2))">${result.user.initial}</span>`;
+                                avatarContainer.innerHTML = `<span class="text-7xl font-black font-whiskey italic select-none tracking-tighter" id="avatar-initial" style="color: var(--text-white); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2))">${result.user.initial}</span>`;
                             }
                             
                             document.querySelectorAll('.global-user-photo').forEach(img => {

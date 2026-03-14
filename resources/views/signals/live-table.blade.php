@@ -12,7 +12,7 @@
     }
     .cyber-table thead th {
         padding: 12px 16px;
-        font-[Orbitron] font-black uppercase text-[10px] text-gray-500 tracking-[0.2em] border-b border-white/[0.05];
+        font-bold uppercase text-[10px] text-gray-500 tracking-[0.2em] border-b border-white/[0.05];
         text-align: left;
     }
     .cyber-table tbody tr {
@@ -54,17 +54,17 @@
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-1">
         <div class="flex items-center gap-3">
             <span class="live-dot"></span>
-            <span class="text-[10px] font-bold orbitron text-emerald-400 uppercase tracking-[0.2em]">Live Feed Active</span>
+            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em]">Live Feed Active</span>
             <span class="text-gray-600 text-xs">•</span>
             <span id="last-update" class="text-[10px] text-gray-600 font-mono">--:--:--</span>
             <span class="text-gray-600 text-xs">•</span>
             <div class="flex items-center gap-1.5 bg-white/[0.03] px-2 py-0.5 rounded-md border border-white/[0.02]">
-                <span class="text-[9px] font-bold orbitron text-gray-500 uppercase tracking-widest">Next Sync in:</span>
-                <span id="countdown-timer" class="text-[10px] font-black orbitron text-purple-400 w-4">05s</span>
+                <span class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Next Sync in:</span>
+                <span id="countdown-timer" class="text-[10px] font-bold text-purple-400 w-4">05s</span>
             </div>
         </div>
         <div class="flex items-center gap-3">
-            <span id="signal-count" class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest">0 signals</span>
+            <span id="signal-count" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">0 signals</span>
             <button onclick="refreshData()" class="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05] text-gray-500 hover:text-purple-400 hover:border-purple-500/20 transition-all" title="Refresh now">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
             </button>
@@ -172,7 +172,7 @@
                     </div>
                 </td>
                 <td style="text-align: center;">
-                    <span style="display:inline-block;padding:4px 14px;border-radius:8px;font-family:Orbitron,monospace;font-size:9px;font-weight:900;background:${signalBg};color:${signalColor};border:1px solid ${signalBdr};">${(item.signal_type || '').toUpperCase()}</span>
+                    <span style="display:inline-block;padding:4px 14px;border-radius:8px;font-family:'Inter',sans-serif;font-size:9px;font-weight:900;background:${signalBg};color:${signalColor};border:1px solid ${signalBdr};">${(item.signal_type || '').toUpperCase()}</span>
                 </td>
                 <td style="text-align: right; color:#d1d5db; font-weight:600;">₹${parseFloat(item.entry_price || 0).toFixed(2)}</td>
                 <td style="text-align: right; color:#f87171; font-weight:600;">₹${parseFloat(item.stop_loss || 0).toFixed(2)}</td>
@@ -255,12 +255,12 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                         <div class="absolute bottom-3 left-3 flex items-center gap-2">
                              <div class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></div>
-                             <span class="text-[8px] font-black orbitron text-white uppercase tracking-widest italic">Educational Stream</span>
+                             <span class="text-[8px] font-bold text-white uppercase tracking-widest">Educational Stream</span>
                         </div>
                     </div>
                     <div>
                         <div class="flex items-center justify-between mb-1">
-                            <h3 class="text-sm font-black orbitron text-white italic tracking-tight line-clamp-1">${item.title}</h3>
+                            <h3 class="text-sm font-bold text-white tracking-tight line-clamp-1">${item.title}</h3>
                         </div>
                         <p class="text-[9px] font-medium text-gray-500 uppercase tracking-widest line-clamp-1">${item.description || 'Neural Learning Protocol'}</p>
                     </div>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Verification</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #030008; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">
+<body style="margin: 0; padding: 0; background-color: #030008; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #030008; padding: 40px 20px;">
         <tr>
             <td align="center">
@@ -16,7 +16,7 @@
                             <div style="display: inline-block; padding: 12px; background: linear-gradient(135deg, #9333ea, #6366f1); border-radius: 12px; margin-bottom: 24px;">
                                 <img src="https://img.icons8.com/ios-filled/50/ffffff/lightning-bolt.png" width="24" height="24" alt="Logo" style="display: block;">
                             </div>
-                            <h2 style="margin: 0; color: #ffffff; font-family: Arial, sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;">
+                            <h2 style="margin: 0; color: #ffffff; font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;">
                                 EMPEROR <span style="color: #9333ea;">STOCK</span>
                             </h2>
                         </td>
@@ -38,7 +38,7 @@
 
                             <!-- Meta Info -->
                             <p style="color: #64748b; font-size: 13px; margin: 0 0 8px 0;">
-                                This secure protocol expires in <span style="color: #a855f7; font-weight: bold;">5 minutes</span>.
+                                This secure protocol expires in <span style="color: #a855f7; font-weight: bold;">1 minutes</span>.
                             </p>
                             <p style="color: #475569; font-size: 12px; margin: 0;">
                                 If you did not request this code, please secure your account.

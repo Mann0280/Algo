@@ -10,7 +10,7 @@
 
     <div class="max-w-4xl mx-auto relative z-10">
         <div class="mb-12 fade-in-up">
-            <h1 class="text-4xl font-black orbitron text-white mb-2 tracking-tighter italic">Account Status</h1>
+            <h1 class="text-4xl font-black font-whiskey text-white mb-2 tracking-tighter italic">Account Status</h1>
             <p class="text-gray-400 font-normal not-italic capitalize">Manage your plan and view your trading access.</p>
         </div>
 
@@ -32,8 +32,8 @@
                     <div class="relative z-10">
                         <div class="flex justify-between items-start mb-8">
                             <div>
-                                <label class="block text-[10px] font-black orbitron text-gray-500 tracking-widest mb-2">Current Active Node</label>
-                                <h3 class="text-3xl font-black orbitron text-white tracking-tighter">{{ ($user->role === 'premium' || $user->role === 'admin') ? 'PREMIUM KING' : 'FREE EXPLORER' }}</h3>
+                                <label class="block text-[10px] font-black font-whiskey text-gray-500 tracking-widest mb-2">Current Active Node</label>
+                                <h3 class="text-3xl font-black font-whiskey text-white tracking-tighter">{{ ($user->role === 'premium' || $user->role === 'admin') ? 'PREMIUM KING' : 'FREE EXPLORER' }}</h3>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500">
                                 <i data-lucide="{{ ($user->role === 'premium' || $user->role === 'admin') ? 'crown' : 'zap' }}" class="w-6 h-6"></i>
@@ -52,7 +52,7 @@
                         </div>
 
                         @if($user->role !== 'premium' && $user->role !== 'admin')
-                            <a href="{{ url('/pricing') }}" class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-black orbitron text-sm hover:scale-[1.02] transition-all">
+                            <a href="{{ url('/pricing') }}" class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-black font-whiskey text-sm hover:scale-[1.02] transition-all">
                                 Update Access Node
                                 <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </a>

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Access | Admin Login</title>
+    <title>Admin Login | Admin Panel</title>
     
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -25,7 +25,13 @@
             overflow: hidden;
         }
 
-        .orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-whiskey { 
+            font-family: inherit; 
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.02);
@@ -64,10 +70,10 @@
             <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-600 shadow-[0_0_30px_rgba(147,51,234,0.3)] mb-6">
                 <i data-lucide="shield-check" class="w-10 h-10 text-white"></i>
             </div>
-            <h1 class="orbitron font-black text-3xl italic tracking-tighter uppercase mb-2">
-                CORE <span class="text-purple-500 text-glow">OVERRIDE</span>
+            <h1 class="font-whiskey font-black text-3xl italic tracking-tighter uppercase mb-2">
+                ADMIN <span class="text-purple-500 text-glow">PANEL</span>
             </h1>
-            <p class="text-gray-500 text-[10px] font-bold orbitron uppercase tracking-[0.3em]">Administrator Command Node</p>
+            <p class="text-gray-500 text-[10px] font-semibold font-whiskey uppercase tracking-widest">Secure login for administrators</p>
         </div>
 
         <!-- Login Card -->
@@ -75,14 +81,14 @@
             @if($errors->any())
             <div class="bg-rose-500/10 border border-rose-500/20 p-4 rounded-xl space-y-1">
                 @foreach($errors->all() as $error)
-                <p class="text-[10px] font-bold orbitron text-rose-500 uppercase tracking-widest text-center">{{ $error }}</p>
+                <p class="text-[10px] font-bold font-whiskey text-rose-500 uppercase tracking-widest text-center">{{ $error }}</p>
                 @endforeach
             </div>
             @endif
 
             @if(session('error'))
             <div class="bg-rose-500/10 border border-rose-500/20 p-4 rounded-xl">
-                <p class="text-[10px] font-bold orbitron text-rose-500 uppercase tracking-widest text-center">{{ session('error') }}</p>
+                <p class="text-[10px] font-bold font-whiskey text-rose-500 uppercase tracking-widest text-center">{{ session('error') }}</p>
             </div>
             @endif
 
@@ -90,7 +96,7 @@
                 @csrf
                 
                 <div class="space-y-2">
-                    <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest px-2">Operator Identity (Email)</label>
+                    <label class="block text-[10px] font-semibold font-whiskey text-gray-500 uppercase tracking-widest px-2">Email Address</label>
                     <div class="relative group">
                         <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-purple-500 transition-colors"></i>
                         <input type="email" name="email" required 
@@ -100,7 +106,7 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest px-2">Security Override Key</label>
+                    <label class="block text-[10px] font-semibold font-whiskey text-gray-500 uppercase tracking-widest px-2">Password</label>
                     <div class="relative group">
                         <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-purple-500 transition-colors"></i>
                         <input type="password" id="password" name="password" required 
@@ -111,16 +117,16 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black orbitron uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-purple-500/20 italic mt-4">
-                    Initialize Core Access
+                <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black font-whiskey uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-purple-500/20 italic mt-4">
+                    Login to Dashboard
                 </button>
             </form>
         </div>
 
         <!-- Back Link -->
         <div class="text-center">
-            <a href="{{ route('home') }}" class="text-[10px] font-bold orbitron text-gray-500 hover:text-white uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
-                <i data-lucide="arrow-left" class="w-3 h-3"></i> Return to Public Sector
+            <a href="{{ route('home') }}" class="text-[10px] font-bold font-whiskey text-gray-500 hover:text-white uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="arrow-left" class="w-3 h-3"></i> Back to Homepage
             </a>
         </div>
     </div>

@@ -24,6 +24,8 @@ class UserController extends Controller
                 'profile_photo' => $u->profile_photo ? asset('storage/' . $u->profile_photo) : null,
                 'initial' => strtoupper(substr($u->username, 0, 1)),
                 'created_at' => $u->created_at ? $u->created_at->format('d M Y') : 'N/A',
+                'premium_expiry' => $u->premium_expiry ? $u->premium_expiry->format('d M Y') : null,
+                'is_premium' => $u->premium_expiry && $u->premium_expiry->isFuture(),
                 'edit_url' => route('admin.users.edit', $u->id),
                 'delete_url' => route('admin.users.destroy', $u->id),
             ];
@@ -102,5 +104,57 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+    }
+
+    /**
+     * Update the user's premium plan.
+     */
+    public function updatePlan(Request $request, User $user)
+    {
+        $durations = [
+            'day' => 1,
+            'week' => 7,
+            'month' => 30,
+            'year' => 365,
+        ];
+
+        $plan = $request->plan;
+
+        if (!isset($durations[$plan])) {
+            return back()->with('error', 'Invalid protocol duration selected.');
+        }
+
+        $days = $durations[$plan];
+
+        // Determine start date for extension
+        if ($user->premium_expiry && $user->premium_expiry->isFuture()) {
+            $startDate = $user->premium_expiry;
+        } else {
+            $startDate = now();
+        }
+
+        // Calculate precise expiry
+        $expiryDate = \Carbon\Carbon::parse($startDate)->addDays($days);
+
+        // Update user state for high-performance scanning
+        $user->premium_expiry = $expiryDate;
+        $user->premium_plan = $plan;
+        $user->premium_source = 'admin';
+        $user->role = 'premium';
+        $user->save();
+
+        // Historical Audit Log
+        \App\Models\PremiumSubscription::create([
+            'user_id' => $user->id,
+            'plan' => $plan,
+            'price' => 0, // Admin override
+            'start_date' => now(), // Time of administrative action
+            'expiry_date' => $expiryDate,
+            'source' => 'admin',
+            'status' => 'active',
+            'created_by' => auth()->id(),
+        ]);
+
+        return back()->with('success', "Premium plan updated successfully. Node {$user->username} now active until " . $expiryDate->format('d M Y') . ".");
     }
 }

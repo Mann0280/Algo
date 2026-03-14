@@ -14,7 +14,7 @@
         </div>
 
         {{-- Message --}}
-        <h2 class="text-xl font-black orbitron uppercase tracking-tight text-white mb-3">
+        <h2 class="text-xl font-bold uppercase tracking-tight text-white mb-3">
             Neural Signal Stream <span class="text-purple-400">Restricted</span>
         </h2>
         <p class="text-gray-500 text-sm leading-relaxed mb-8 max-w-md mx-auto">
@@ -23,11 +23,11 @@
 
         {{-- Buttons --}}
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="{{ route('login') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-xs font-bold orbitron uppercase tracking-widest transition-all shadow-[0_4px_20px_rgba(124,58,237,0.25)] hover:shadow-[0_4px_28px_rgba(124,58,237,0.4)] hover:-translate-y-0.5">
+            <a href="{{ route('login') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-xs font-bold uppercase tracking-widest transition-all shadow-[0_4px_20px_rgba(124,58,237,0.25)] hover:shadow-[0_4px_28px_rgba(124,58,237,0.4)] hover:-translate-y-0.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
                 Login
             </a>
-            <a href="{{ route('pricing') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-white/[0.03] border border-purple-500/10 text-gray-400 hover:text-white hover:border-purple-500/25 text-xs font-bold orbitron uppercase tracking-widest transition-all hover:-translate-y-0.5">
+            <a href="{{ route('pricing') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-white/[0.03] border border-purple-500/10 text-gray-400 hover:text-white hover:border-purple-500/25 text-xs font-bold uppercase tracking-widest transition-all hover:-translate-y-0.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
                 Explore Premium
             </a>

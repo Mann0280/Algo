@@ -35,6 +35,11 @@ class User extends Authenticatable
         'wallet_balance',
         'referral_code',
         'referred_by',
+        'premium_plan',
+        'premium_source',
+        'is_blocked',
+        'otp',
+        'otp_expires_at',
     ];
 
     /**
@@ -59,6 +64,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'premium_expiry' => 'datetime',
             'wallet_balance' => 'decimal:2',
+            'otp_expires_at' => 'datetime',
         ];
     }
 
@@ -114,5 +120,10 @@ class User extends Authenticatable
     public function withdrawRequests()
     {
         return $this->hasMany(WithdrawRequest::class);
+    }
+
+    public function premiumSubscriptions()
+    {
+        return $this->hasMany(PremiumSubscription::class);
     }
 }

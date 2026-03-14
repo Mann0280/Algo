@@ -4,58 +4,66 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Signal;
+use App\Models\StockSignal;
 
 class PredictionController extends Controller
 {
     /**
-     * Display a listing of predictions.
+     * Display a listing of past signals for management.
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $predictions = Signal::orderBy('created_at', 'desc')->get();
+        $today = now()->toDateString();
+        
+        // Retrieve and filter signals using the exact same logic as SignalController
+        $query = StockSignal::query()
+            ->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') < STR_TO_DATE(?, '%Y-%m-%d')", [$today]);
+
+        if ($request->filled('start_date')) {
+            $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') >= STR_TO_DATE(?, '%Y-%m-%d')", [$request->start_date]);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') <= STR_TO_DATE(?, '%Y-%m-%d')", [$request->end_date]);
+        }
+
+        if ($request->filled('symbol')) {
+            $query->where('stock_name', 'LIKE', '%' . strtoupper($request->symbol) . '%');
+        }
+
+        if ($request->filled('signal_type')) {
+            $query->where('signal_type', strtoupper($request->signal_type));
+        }
+
+        if ($request->filled('result')) {
+            $res = strtoupper($request->result);
+            if ($res === 'WIN') {
+                $query->where('pnl', '>', 0);
+            } elseif ($res === 'LOSS') {
+                $query->where('pnl', '<', 0);
+            } else {
+                $query->where('result', $res);
+            }
+        }
+
+        $predictions = $query->orderByRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') DESC")
+            ->orderBy('entry_time', 'DESC')
+            ->get();
+
         return view('admin.predictions.index', compact('predictions'));
     }
 
     /**
-     * Store a new prediction.
+     * Remove the specified signal transmission.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StockSignal $prediction
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'symbol' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'confidence' => 'required|numeric',
-        ]);
-
-        Signal::create([
-            'stock_symbol' => strtoupper($request->symbol),
-            'entry_price' => $request->price,
-            'confidence_level' => $request->confidence,
-            'risk_level' => 'Medium', // Default for now
-            'stop_loss' => $request->price * 0.95, // Dummy
-            'target_1' => $request->price * 1.05, // Dummy
-            'target_2' => $request->price * 1.10, // Dummy
-            'is_premium' => true,
-        ]);
-
-        return redirect()->back()->with('success', 'Neural signal broadcasted successfully.');
-    }
-
-    /**
-     * Remove the specified prediction.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Signal $prediction)
+    public function destroy(StockSignal $prediction)
     {
         $prediction->delete();
-        return redirect()->back()->with('success', 'Signal terminated.');
+        return redirect()->back()->with('success', 'Historical signal transmission purged.');
     }
 }

@@ -8,31 +8,34 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Dark Theme Default - Refined for Premium Feel */
-            --bg-deep: #020106;
-            --bg-sidebar: rgba(8, 4, 15, 0.7);
-            --header-bg: rgba(2, 1, 6, 0.82);
+            /* Dark Theme Default - Refined for Professional Feel */
+            --bg-deep: #0a0b14;
+            --bg-sidebar: rgba(10, 11, 20, 0.75);
+            --header-bg: rgba(10, 11, 20, 0.85);
             --text-main: #94a3b8;
             --text-white: #ffffff;
             --text-muted: #64748b;
             --accent-purple: #9333ea;
-            --accent-indigo: #6366f1;
-            --accent-gold: #fbbf24;
-            --accent-gradient: linear-gradient(135deg, #9333ea 0%, #6366f1 100%);
-            --card-glass: rgba(255, 255, 255, 0.02);
-            --border-glass: rgba(255, 255, 255, 0.06);
+            --accent-magenta: #d946ef;
+            --accent-indigo: #4f46e5;
+            --accent-gold: #eab308;
+            --accent-gradient: var(--vibrant-gradient);
+            --card-glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
             --input-bg: rgba(255, 255, 255, 0.02);
-            --dropdown-bg: #05020c;
-            --card-inner-bg: #0a0514;
-            --nav-sticky-bg: rgba(2, 1, 6, 0.8);
+            --dropdown-bg: #0f111a;
+            --card-inner-bg: #141624;
+            --nav-sticky-bg: rgba(10, 11, 20, 0.8);
             --logo-text: #ffffff;
             --nav-text: #6b7280;
             --nav-hover-bg: rgba(255, 255, 255, 0.04);
-            --scrollbar-thumb: rgba(147, 51, 234, 0.1);
+            --scrollbar-thumb: rgba(147, 51, 234, 0.15);
+            --whiskey-gold: #ffffff;
+            --vibrant-gradient: linear-gradient(90deg, #9333ea 0%, #d946ef 100%);
         }
 
         .light-mode {
@@ -62,7 +65,19 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-whiskey { 
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            color: white;
+        }
+
+        .text-vibrant {
+            background: var(--vibrant-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
 
         /* Main Dashboard Grid */
         .dashboard-container {
@@ -241,15 +256,14 @@
         <!-- SIDEBAR -->
         <aside class="sidebar py-10 px-6 flex flex-col gap-14 overflow-hidden">
             <!-- Logo area -->
-            <a href="{{ url('/') }}" class="flex items-center gap-4 px-2 overflow-visible shrink-0 group">
-                <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-[1.2rem] flex items-center justify-center shadow-[0_0_30px_rgba(147,51,234,0.2)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                    <i data-lucide="zap" class="w-6 h-6 text-white fill-white animate-pulse"></i>
+            <div class="px-8 flex items-center gap-3 mb-10">
+                <div class="w-10 h-10 bg-vibrant rounded-xl flex items-center justify-center text-white shadow-lg shadow-purple-500/20">
+                    <i data-lucide="zap" class="w-6 h-6 fill-white"></i>
                 </div>
-                <div class="orbitron font-black text-xl italic tracking-tighter sidebar-text flex flex-col leading-none" style="color: var(--logo-text)">
-                    <span class="text-white text-lg">EMPEROR</span>
-                    <span class="text-purple-500 text-sm tracking-[0.2em] -mt-1 uppercase not-italic font-bold">PREDICTOR</span>
+                <div class="font-bold-tight text-xl text-white">
+                    TERMINAL <span class="text-vibrant">PRO</span>
                 </div>
-            </a>
+            </div>
 
             <!-- Nav -->
             <nav class="flex-1 flex flex-col gap-1">
@@ -279,7 +293,7 @@
                     <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-purple-500/10 group-hover:text-purple-400 transition-colors">
                         <i data-lucide="chevron-left" class="w-4 h-4" id="toggle-icon"></i>
                     </div>
-                    <span class="text-[10px] font-black orbitron uppercase tracking-[0.2em] sidebar-text whitespace-nowrap">Collapse System</span>
+                    <span class="text-[10px] font-black font-whiskey uppercase tracking-[0.2em] sidebar-text whitespace-nowrap">Collapse System</span>
                 </button>
             </div>
         </aside>
@@ -293,16 +307,16 @@
             <div class="flex items-center gap-10 flex-1">
                 <!-- Global Navigation Integrations (desktop only) -->
                 <div class="hidden xl:flex items-center gap-7 pr-10 border-r border-white/10">
-                    <a href="{{ url('/') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap" style="color: var(--nav-text)">
+                    <a href="{{ url('/') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap" style="color: var(--nav-text)">
                         <i data-lucide="home" class="w-3.5 h-3.5 transition-colors"></i> Home
                     </a>
-                    <a href="{{ url('/about') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap" style="color: var(--nav-text)">
+                    <a href="{{ url('/about') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap" style="color: var(--nav-text)">
                         <i data-lucide="info" class="w-3.5 h-3.5 transition-colors"></i> About
                     </a>
-                    {{-- <a href="{{ url('/terminal/free') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
+                    {{-- <a href="{{ url('/terminal/free') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
                         <i data-lucide="bar-chart-2" class="w-3.5 h-3.5 group-hover:text-purple-500 transition-colors"></i> Signals
                     </a> --}}
-                    {{-- <a href="{{ url('/terminal/premium') }}" class="group flex items-center gap-2 text-[10px] font-bold orbitron text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
+                    {{-- <a href="{{ url('/terminal/premium') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
                         <i data-lucide="trending-up" class="w-3.5 h-3.5 group-hover:text-purple-500 transition-colors"></i> Tips
                     </a> --}}
                 </div>
@@ -327,7 +341,7 @@
                 <!-- Profile -->
                 <div class="relative group/user">
                     <button class="flex items-center gap-4 py-1.5 pl-1.5 pr-5 rounded-2xl border border-white/[0.08] hover:bg-white/[0.08] hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(147,51,234,0.15)] transition-all duration-300 group-hover/user:scale-[1.02]" style="background: var(--input-bg)">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-xs font-black orbitron text-white italic shadow-lg group-hover/user:shadow-purple-500/20 transition-all overflow-hidden relative">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-xs font-black font-whiskey text-white italic shadow-lg group-hover/user:shadow-purple-500/20 transition-all overflow-hidden relative">
                             <img src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : '' }}" 
                                  alt="User" 
                                  class="w-full h-full object-cover global-user-photo {{ !Auth::user()->profile_photo ? 'hidden' : '' }}">
@@ -337,7 +351,7 @@
                             <p class="global-username text-[11px] font-black uppercase tracking-tight group-hover/user:text-purple-400 transition-colors" style="color: var(--text-white)">{{ Auth::user()->username }}</p>
                             <div class="flex items-center gap-1.5 mt-0.5">
                                 <span class="w-1 h-1 rounded-full bg-emerald-500 shadow-[0_0_5px_#10b981]"></span>
-                                <span class="text-[8px] font-bold orbitron text-emerald-500 tracking-widest uppercase">ACCOUNT ACTIVE</span>
+                                <span class="text-[8px] font-bold font-whiskey text-emerald-500 tracking-widest uppercase">ACCOUNT ACTIVE</span>
                             </div>
                         </div>
                         <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-600 group-hover/user:text-white group-hover/user:rotate-180 transition-all duration-300"></i>
@@ -345,20 +359,20 @@
 
                     <div class="absolute right-0 top-full mt-3 w-56 rounded-2xl border border-white/[0.08] overflow-hidden opacity-0 invisible group-hover/user:opacity-100 group-hover/user:visible transition-all translate-y-2 group-hover/user:translate-y-0 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_20px_rgba(147,51,234,0.1)] z-[2000]" style="background: var(--dropdown-bg)">
                         <div class="p-4 border-b border-white/[0.05]">
-                            <p class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-widest">Signed in as</p>
+                            <p class="text-[9px] font-black font-whiskey text-gray-500 uppercase tracking-widest">Signed in as</p>
                             <p class="text-[11px] font-bold mt-1" style="color: var(--text-white)">{{ Auth::user()->email }}</p>
                         </div>
                         <div class="p-2">
-                            <a href="{{ route('account.profile') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] rounded-xl text-[10px] font-bold orbitron uppercase transition-all" style="color: var(--text-muted)">
+                            <a href="{{ route('account.profile') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] rounded-xl text-[10px] font-bold font-whiskey uppercase transition-all" style="color: var(--text-muted)">
                                 <i data-lucide="settings-2" class="w-4 h-4 text-purple-500"></i> Settings
                             </a>
-                            <a href="{{ route('account.subscription-history') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] rounded-xl text-[10px] font-bold orbitron uppercase transition-all" style="color: var(--text-muted)">
+                            <a href="{{ route('account.subscription-history') }}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] rounded-xl text-[10px] font-bold font-whiskey uppercase transition-all" style="color: var(--text-muted)">
                                 <i data-lucide="credit-card" class="w-4 h-4 text-amber-500"></i> Subscription
                             </a>
                             <div class="h-px bg-white/[0.05] my-2 mx-2"></div>
                              <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-rose-500/10 rounded-xl text-[10px] font-black orbitron text-rose-500 uppercase text-left transition-all">
+                                <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-rose-500/10 rounded-xl text-[10px] font-black font-whiskey text-rose-500 uppercase text-left transition-all">
                                     <i data-lucide="power" class="w-4 h-4"></i> Sign Out
                                 </button>
                             </form>

@@ -9,7 +9,7 @@
             <i data-lucide="chevron-left" class="w-5 h-5"></i>
         </a>
         <div>
-            <h1 class="text-3xl font-black orbitron italic uppercase tracking-tighter text-white">
+            <h1 class="text-3xl font-black font-whiskey italic uppercase tracking-tighter text-white">
                 REFINE <span class="text-purple-500 text-glow">PACKAGE</span>
             </h1>
             <p class="text-gray-400 text-sm font-medium mt-1 uppercase tracking-widest leading-none">Modify protocol: {{ $premiumPackage->name }}</p>
@@ -26,7 +26,7 @@
                         <i data-lucide="power" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <p class="text-[10px] font-black orbitron text-white uppercase tracking-widest">Protocol Status</p>
+                        <p class="text-[10px] font-black font-whiskey text-white uppercase tracking-widest">Protocol Status</p>
                         <p class="text-[9px] text-gray-500 uppercase tracking-widest">Toggle active state for this package</p>
                     </div>
                 </div>
@@ -38,13 +38,13 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Package Name</label>
-                    <input type="text" name="name" required value="{{ $premiumPackage->name }}" placeholder="e.g. ELITE TRADER" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all">
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Package Name</label>
+                    <input type="text" name="name" required value="{{ $premiumPackage->name }}" placeholder="e.g. ELITE TRADER" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-xs outline-none focus:border-purple-500/50 transition-all">
                 </div>
 
                 <!-- Multi-Tags Section -->
                 <div class="space-y-4 md:col-span-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Dynamic Feature Tags</label>
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Dynamic Feature Tags</label>
                     <div id="tags-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         @if($premiumPackage->tags_json && count($premiumPackage->tags_json) > 0)
                             @foreach($premiumPackage->tags_json as $t)
@@ -62,31 +62,31 @@
                             </div>
                         @endif
                     </div>
-                    <button type="button" onclick="addTag()" class="px-6 py-2 rounded-xl border border-white/5 text-[8px] font-black orbitron text-gray-400 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest flex items-center gap-2 mt-2">
+                    <button type="button" onclick="addTag()" class="px-6 py-2 rounded-xl border border-white/5 text-[8px] font-black font-whiskey text-gray-400 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest flex items-center gap-2 mt-2">
                         <i data-lucide="plus" class="w-3.5 h-3.5"></i> Append Protocol Tag
                     </button>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Price (INR)</label>
-                    <input type="number" name="price" required value="{{ $premiumPackage->price }}" placeholder="4999" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all">
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Price (INR)</label>
+                    <input type="number" name="price" required value="{{ $premiumPackage->price }}" placeholder="4999" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-xs outline-none focus:border-purple-500/50 transition-all">
                 </div>
                 <div class="space-y-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Upgrade Button Color</label>
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Upgrade Button Color</label>
                     <div class="flex gap-4 items-center h-[58px]">
                         <input type="color" name="button_color" value="{{ $premiumPackage->button_color ?? '#fbbf24' }}" class="w-12 h-12 bg-transparent border-none cursor-pointer">
-                        <span class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest">Select Visual Theme</span>
+                        <span class="text-[10px] font-bold font-whiskey text-gray-500 uppercase tracking-widest">Select Visual Theme</span>
                     </div>
                 </div>
                 <div class="space-y-2 md:col-span-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Payment Instructions</label>
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Payment Instructions</label>
                     <textarea name="payment_info" rows="3" placeholder="Step-by-step payment protocol..." class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-medium text-xs outline-none focus:border-purple-500/50 transition-all">{{ $premiumPackage->payment_info }}</textarea>
                 </div>
                 <div class="space-y-2 md:col-span-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Duration Protocol</label>
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Duration Protocol</label>
                     <div class="grid grid-cols-2 gap-4">
-                        <input type="number" id="duration_val" required value="{{ $premiumPackage->duration_days }}" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all">
-                        <select id="duration_unit" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-[10px] outline-none focus:border-purple-500/50 transition-all uppercase tracking-widest">
+                        <input type="number" id="duration_val" required value="{{ $premiumPackage->duration_days }}" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-xs outline-none focus:border-purple-500/50 transition-all">
+                        <select id="duration_unit" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-[10px] outline-none focus:border-purple-500/50 transition-all uppercase tracking-widest">
                             <option value="1" selected>Days</option>
                             <option value="30">Months</option>
                             <option value="365">Years</option>
@@ -96,13 +96,13 @@
                     <p class="text-[9px] text-gray-500 mt-2 ml-1 uppercase tracking-widest">Calculated: <span id="days_preview" class="text-purple-400 font-black">{{ $premiumPackage->duration_days }}</span> Days</p>
                 </div>
                 <div class="space-y-2 md:col-span-2">
-                    <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Protocol Description</label>
-                    <input type="text" name="description" value="{{ $premiumPackage->description }}" placeholder="Advanced neural analytics access" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold orbitron text-xs outline-none focus:border-purple-500/50 transition-all">
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Protocol Description</label>
+                    <input type="text" name="description" value="{{ $premiumPackage->description }}" placeholder="Advanced neural analytics access" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-xs outline-none focus:border-purple-500/50 transition-all">
                 </div>
             </div>
 
             <div class="space-y-4">
-                <label class="block text-[10px] font-black orbitron text-gray-500 uppercase tracking-widest ml-1">Feature Matrix</label>
+                <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Feature Matrix</label>
                 <div id="features-container" class="space-y-3">
                     @if($premiumPackage->features && count($premiumPackage->features) > 0)
                         @foreach($premiumPackage->features as $feature)
@@ -118,13 +118,13 @@
                         </div>
                     @endif
                 </div>
-                <button type="button" onclick="addFeature()" class="px-6 py-2.5 rounded-xl border border-white/5 text-[9px] font-black orbitron text-gray-500 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest flex items-center gap-2">
+                <button type="button" onclick="addFeature()" class="px-6 py-2.5 rounded-xl border border-white/5 text-[9px] font-black font-whiskey text-gray-500 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest flex items-center gap-2">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i> Append Feature Row
                 </button>
             </div>
         </div>
 
-        <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-[2rem] text-white font-black orbitron uppercase tracking-[0.2em] text-xs hover:scale-[1.02] transition-all shadow-2xl shadow-purple-500/20 italic">
+        <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-[2rem] text-white font-black font-whiskey uppercase tracking-[0.2em] text-xs hover:scale-[1.02] transition-all shadow-2xl shadow-purple-500/20 italic">
             Synchronize Protocol Updates
         </button>
     </form>

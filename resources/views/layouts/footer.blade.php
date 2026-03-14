@@ -5,12 +5,12 @@
                 <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center">
                     <i data-lucide="zap" class="w-6 h-6 text-white fill-white"></i>
                 </div>
-                <div class="orbitron font-black text-xl italic tracking-tighter text-white">
-                    EMPEROR STOCK <span class="text-purple-500">PREDICTOR</span>
+                <div class="font-professional text-xl text-white">
+                    EMPEROR STOCK <span class="text-vibrant">PREDICTOR</span>
                 </div>
             </a>
             
-            <div class="flex justify-center flex-wrap gap-10 text-[10px] font-bold orbitron text-slate-500 tracking-widest">
+            <div class="flex justify-center flex-wrap gap-10 text-[10px] font-bold text-slate-500 tracking-widest">
                 <a href="{{ url('/') }}" class="hover:text-white transition-colors uppercase">Home</a>
                 @auth
                 {{-- <a href="{{ url('/terminal/free') }}" class="hover:text-white transition-colors uppercase">Signals</a> --}}
@@ -30,7 +30,7 @@
         </div>
 
         <div class="text-center">
-            <p class="text-[9px] font-bold orbitron text-slate-700 tracking-[0.4em] uppercase mb-4">Neural Interface v3.2.0 • Secured by AES-256</p>
+            <p class="text-[9px] font-bold text-slate-700 tracking-[0.4em] uppercase mb-4">Neural Interface v3.2.0 • Secured by AES-256</p>
             <p class="text-slate-600 text-[10px] font-medium">&copy; {{ date('Y') }} Emperor Stock Predictor. All rights reserved. Registered Digital Asset Protocol.</p>
         </div>
     </div>

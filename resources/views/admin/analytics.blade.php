@@ -1,32 +1,32 @@
 @extends('layouts.admin')
 
-@section('title', 'NEURAL ANALYTICS')
+@section('title', 'Analytics Overview')
 
 @section('content')
-<div class="space-y-12 max-w-[1400px] mx-auto pb-20 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+<div class="space-y-12 max-w-[1600px] mx-auto pb-20">
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
             <div class="flex items-center gap-2 mb-3">
                 <span class="w-8 h-[1px] bg-purple-500"></span>
-                <span class="text-[10px] font-black orbitron text-purple-500 uppercase tracking-[0.3em]">DATA EXTRACTION LAYER</span>
+                <span class="text-[10px] font-semibold font-whiskey text-purple-500 uppercase tracking-widest">ANALYTICS ENGINE</span>
             </div>
-            <h1 class="text-4xl font-black orbitron italic uppercase tracking-tighter text-white">
-                SYNERGIC <span class="text-purple-500 text-glow">ANALYTICS</span>
+            <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
+                PLATFORM <span class="text-purple-500 text-glow">ANALYTICS</span>
             </h1>
-            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Visualizing Growth Metrics and Neural Efficiency</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Visualizing Growth Metrics and System Performance</p>
         </div>
         
         <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
             <div class="flex items-center gap-2.5">
                 <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#a855f7]"></span>
-                <span class="text-[10px] font-black orbitron text-purple-400 uppercase tracking-widest text-glow-sm">LIVE FEED ACTIVE</span>
+                <span class="text-[10px] font-semibold font-whiskey text-purple-400 uppercase tracking-widest text-glow-sm">LIVE DATA ACTIVE</span>
             </div>
         </div>
     </div>
 
     <!-- Analytics Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- New Users Chart Card -->
         <div class="lg:col-span-2 glass-card p-10 rounded-[2.5rem] border border-white/5 flex flex-col gap-8 shadow-2xl relative overflow-hidden group">
             <div class="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -34,12 +34,12 @@
             </div>
             <div class="flex justify-between items-start">
                 <div>
-                    <h3 class="orbitron text-xs font-black tracking-[0.2em] uppercase text-gray-400">Node Population</h3>
-                    <div class="text-4xl font-black orbitron text-white italic mt-2">{{ $total_users }} <span class="text-purple-500 text-xl font-bold not-italic font-sans tracking-tight ml-1">+12%</span></div>
+                    <h3 class="font-whiskey text-xs font-semibold tracking-widest uppercase text-gray-400">User Population</h3>
+                    <div class="text-4xl font-black font-whiskey text-white italic mt-2">{{ $total_users }} <span class="text-purple-500 text-xl font-bold not-italic font-sans tracking-tight ml-1">+12%</span></div>
                 </div>
-                <div class="bg-purple-600/10 border border-purple-500/20 px-3 py-1.5 rounded-xl text-[9px] font-black orbitron text-purple-400 uppercase tracking-widest leading-none mt-1">Growth Matrix</div>
+                <div class="bg-purple-600/10 border border-purple-500/20 px-3 py-1.5 rounded-xl text-[9px] font-semibold font-whiskey text-purple-400 uppercase tracking-widest leading-none mt-1">Growth Stats</div>
             </div>
-            <div class="h-64 w-full">
+            <div class="h-64 h-full">
                 <canvas id="growthChart"></canvas>
             </div>
         </div>
@@ -51,12 +51,12 @@
             </div>
             <div class="flex justify-between items-start">
                 <div>
-                    <h3 class="orbitron text-xs font-black tracking-[0.2em] uppercase text-gray-400">Signal Ingress</h3>
-                    <div class="text-4xl font-black orbitron text-white italic mt-2">{{ $active_signals }} <span class="text-indigo-500 text-xl font-bold not-italic font-sans tracking-tight ml-1">Live Signals</span></div>
+                    <h3 class="font-whiskey text-xs font-semibold tracking-widest uppercase text-gray-400">Signal Activity</h3>
+                    <div class="text-4xl font-black font-whiskey text-white italic mt-2">{{ $active_signals }} <span class="text-indigo-500 text-xl font-bold not-italic font-sans tracking-tight ml-1">Live Signals</span></div>
                 </div>
-                <div class="bg-indigo-600/10 border border-indigo-500/20 px-3 py-1.5 rounded-xl text-[9px] font-black orbitron text-indigo-400 uppercase tracking-widest leading-none mt-1">Distribution</div>
+                <div class="bg-indigo-600/10 border border-indigo-500/20 px-3 py-1.5 rounded-xl text-[9px] font-semibold font-whiskey text-indigo-400 uppercase tracking-widest leading-none mt-1">Distribution</div>
             </div>
-            <div class="h-64 w-full">
+            <div class="h-64 h-full">
                 <canvas id="signalChart"></canvas>
             </div>
         </div>
@@ -71,8 +71,8 @@
                     <i data-lucide="trending-up" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <h2 class="orbitron text-sm font-black tracking-[0.2em] uppercase text-white leading-none">Financial Trajectory</h2>
-                    <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Net Revenue Synchronization</p>
+                    <h2 class="font-whiskey text-sm font-black tracking-widest uppercase text-white leading-none">Financial Performance</h2>
+                    <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Revenue Overview</p>
                 </div>
             </div>
             <div class="h-80 w-full mb-8">
@@ -80,16 +80,16 @@
             </div>
             <div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/5">
                 <div class="text-center">
-                    <div class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-widest mb-1">Total Yield</div>
-                    <div class="text-xl font-black orbitron text-white">{{ $net_revenue }}</div>
+                    <div class="text-[9px] font-semibold font-whiskey text-gray-500 uppercase tracking-widest mb-1">Total Revenue</div>
+                    <div class="text-xl font-black font-whiskey text-white">{{ $net_revenue }}</div>
                 </div>
                 <div class="text-center border-x border-white/5">
-                    <div class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-widest mb-1">Efficiency</div>
-                    <div class="text-xl font-black orbitron text-emerald-400">{{ $ai_accuracy }}%</div>
+                    <div class="text-[9px] font-black font-whiskey text-gray-500 uppercase tracking-widest mb-1">Efficiency</div>
+                    <div class="text-xl font-black font-whiskey text-emerald-400">{{ $ai_accuracy }}%</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-[9px] font-black orbitron text-gray-500 uppercase tracking-widest mb-1">Active Nodes</div>
-                    <div class="text-xl font-black orbitron text-white">{{ $total_users }}</div>
+                    <div class="text-[9px] font-semibold font-whiskey text-gray-500 uppercase tracking-widest mb-1">Active Users</div>
+                    <div class="text-xl font-black font-whiskey text-white">{{ $total_users }}</div>
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@
         <div class="glass-card p-10 rounded-[2.5rem] border border-white/5 shadow-2xl flex flex-col items-center justify-center text-center gap-8 relative overflow-hidden group">
             <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
             
-            <h2 class="orbitron text-xs font-black tracking-[0.4em] uppercase text-gray-500">Neural Precision Factor</h2>
+            <h2 class="font-whiskey text-xs font-semibold tracking-widest uppercase text-gray-500">Prediction Accuracy</h2>
             
             <div class="relative w-56 h-56 flex items-center justify-center">
                 <svg class="w-full h-full transform -rotate-90">
@@ -106,23 +106,23 @@
                     <circle cx="112" cy="112" r="100" stroke="currentColor" stroke-width="12" fill="transparent" stroke-dasharray="628" stroke-dashoffset="{{ 628 - (628 * (float)$ai_accuracy / 100) }}" stroke-linecap="round" class="text-purple-500 shadow-[0_0_20px_#a855f7]"></circle>
                 </svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                    <span class="text-5xl font-black orbitron text-white italic tracking-tighter">{{ $ai_accuracy }}%</span>
-                    <span class="text-[9px] font-black orbitron text-purple-400 uppercase tracking-[0.2em] mt-1 shadow-purple-500/50">Optimal Range</span>
+                    <span class="text-5xl font-black font-whiskey text-white italic tracking-tighter">{{ $ai_accuracy }}%</span>
+                    <span class="text-[9px] font-semibold font-whiskey text-purple-400 uppercase tracking-widest mt-1 shadow-purple-500/50">Target Range</span>
                 </div>
             </div>
 
             <p class="text-[10px] font-medium text-gray-400 uppercase tracking-widest max-w-[200px] leading-relaxed">
-                Platform operational efficiency is currently stabilized within optimal neural parameters.
+                Platform operational efficiency is currently stabilized within optimal performance parameters.
             </p>
 
             <div class="w-full grid grid-cols-2 gap-4 mt-4">
                 <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-2">
-                    <div class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest mb-1">CPU Load</div>
-                    <div class="text-sm font-black orbitron text-white">2.4%</div>
+                    <div class="text-[8px] font-semibold font-whiskey text-gray-500 uppercase tracking-widest mb-1">CPU Load</div>
+                    <div class="text-sm font-black font-whiskey text-white">2.4%</div>
                 </div>
                 <div class="bg-white/5 border border-white/10 rounded-2xl py-4 px-2">
-                    <div class="text-[8px] font-black orbitron text-gray-500 uppercase tracking-widest mb-1">Latency</div>
-                    <div class="text-sm font-black orbitron text-white font-mono">14ms</div>
+                    <div class="text-[8px] font-semibold font-whiskey text-gray-500 uppercase tracking-widest mb-1">Latency</div>
+                    <div class="text-sm font-black font-whiskey text-white font-mono">14ms</div>
                 </div>
             </div>
         </div>
@@ -152,14 +152,22 @@
         const commonOptions = {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#0c0518',
+                    titleFont: { family: 'Inter', size: 12 },
+                    bodyFont: { family: 'Inter', size: 12 },
+                    padding: 12,
+                }
+            },
             scales: {
                 y: { display: false },
                 x: {
                     grid: { display: false },
                     ticks: {
                         color: '#4B5563',
-                        font: { family: 'Orbitron', size: 9, weight: 'bold' }
+                        font: { family: 'Inter', size: 9, weight: 'bold' }
                     }
                 }
             },
@@ -221,7 +229,7 @@
                         grid: { color: 'rgba(255, 255, 255, 0.05)' },
                         ticks: {
                             color: '#4B5563',
-                            font: { family: 'Orbitron', size: 8 },
+                            font: { family: 'Inter', size: 8 },
                             callback: value => '₹' + (value/1000) + 'K'
                         }
                     },

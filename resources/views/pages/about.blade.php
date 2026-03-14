@@ -13,14 +13,14 @@
         {{-- HERO --}}
         {{-- ═══════════════════════════════════════════ --}}
         <div class="text-center max-w-4xl mx-auto mb-28 fade-in-up">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-black orbitron uppercase tracking-[0.3em] mb-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">
                 <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping"></span>
                 Smart Trading Systems
             </div>
-            <h1 class="text-5xl md:text-8xl font-black leading-[0.95] orbitron uppercase italic mb-8">
-                <span class="block text-white">REDEFINING</span>
-                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-500">TRADING</span>
-                <span class="text-white">WITH</span> <span class="text-purple-600/50">AI</span>
+            <h1 class="text-5xl md:text-7xl font-professional leading-tight mb-8">
+                <span class="block text-white">Redefining</span>
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-500">Trading</span>
+                <span class="text-white">with AI</span>
             </h1>
             <p class="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
                 Emperor Stock Predictor uses advanced AI systems and smart risk management to help regular traders with high-level market insights.
@@ -32,20 +32,20 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-28 fade-in-up">
             <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center group hover:border-purple-500/20 transition-all">
-                <div class="text-4xl font-black text-white orbitron tracking-tighter mb-2">5K+</div>
-                <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Active Traders</div>
+                <div class="text-4xl font-professional text-white tracking-tighter mb-2">5K+</div>
+                <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Active Traders</div>
             </div>
             <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center group hover:border-emerald-500/20 transition-all">
-                <div class="text-4xl font-black text-white orbitron tracking-tighter mb-2">89%</div>
-                <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Win Rate</div>
+                <div class="text-4xl font-professional text-white tracking-tighter mb-2">89%</div>
+                <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Win Rate</div>
             </div>
             <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center group hover:border-blue-500/20 transition-all">
-                <div class="text-4xl font-black text-white orbitron tracking-tighter mb-2">₹12Cr+</div>
-                <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Profits Generated</div>
+                <div class="text-4xl font-professional text-white tracking-tighter mb-2">₹12Cr+</div>
+                <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Profits Generated</div>
             </div>
             <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center group hover:border-amber-500/20 transition-all">
-                <div class="text-4xl font-black text-white orbitron tracking-tighter mb-2">24/7</div>
-                <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Market Monitoring</div>
+                <div class="text-4xl font-professional text-white tracking-tighter mb-2">24/7</div>
+                <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Market Monitoring</div>
             </div>
         </div>
 
@@ -61,7 +61,7 @@
                         <i data-lucide="target" class="w-7 h-7 text-purple-400"></i>
                     </div>
                     <div>
-                        <h2 class="orbitron text-2xl font-black uppercase italic text-white tracking-tight">Our Mission</h2>
+                        <h2 class="font-professional text-2xl text-white tracking-tight">Our Mission</h2>
                         <div class="h-1 w-16 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full mt-2"></div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                         <i data-lucide="eye" class="w-7 h-7 text-emerald-400"></i>
                     </div>
                     <div>
-                        <h2 class="orbitron text-2xl font-black uppercase italic text-white tracking-tight">Our Vision</h2>
+                        <h2 class="font-professional text-2xl text-white tracking-tight">Our Vision</h2>
                         <div class="h-1 w-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2"></div>
                     </div>
                 </div>
@@ -121,8 +121,8 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="mb-28 fade-in-up">
             <div class="text-center mb-16">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Genesis</span>
-                <h2 class="orbitron text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase">
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Genesis</span>
+                <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
                     Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Story</span>
                 </h2>
             </div>
@@ -152,8 +152,8 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="mb-28 fade-in-up">
             <div class="text-center mb-16">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">AI Process</span>
-                <h2 class="orbitron text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase">
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">AI Process</span>
+                <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
                     How Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">AI</span> Works
                 </h2>
             </div>
@@ -164,8 +164,8 @@
                     <div class="w-16 h-16 rounded-2xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center mx-auto mb-6">
                         <i data-lucide="database" class="w-8 h-8 text-purple-400"></i>
                     </div>
-                    <div class="text-[10px] font-black orbitron text-purple-400 uppercase tracking-widest mb-3">Step 01</div>
-                    <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight mb-4">Market Data</h3>
+                    <div class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-3">Step 01</div>
+                    <h3 class="font-professional text-lg text-white tracking-tight mb-4">Market Data</h3>
                     <p class="text-sm text-slate-400 leading-relaxed">We collect real-time data from stock exchanges, news systems, and social trends — over 2M data points daily.</p>
                 </div>
 
@@ -174,8 +174,8 @@
                     <div class="w-16 h-16 rounded-2xl bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center mx-auto mb-6">
                         <i data-lucide="brain" class="w-8 h-8 text-emerald-400"></i>
                     </div>
-                    <div class="text-[10px] font-black orbitron text-emerald-400 uppercase tracking-widest mb-3">Step 02</div>
-                    <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight mb-4">AI Processing</h3>
+                    <div class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-3">Step 02</div>
+                    <h3 class="font-professional text-lg text-white tracking-tight mb-4">AI Processing</h3>
                     <p class="text-sm text-slate-400 leading-relaxed">Our advanced AI system analyzes patterns and trends using smart technology trained on more than 15 years of market history.</p>
                 </div>
 
@@ -184,8 +184,8 @@
                     <div class="w-16 h-16 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center mx-auto mb-6">
                         <i data-lucide="send" class="w-8 h-8 text-blue-400"></i>
                     </div>
-                    <div class="text-[10px] font-black orbitron text-blue-400 uppercase tracking-widest mb-3">Step 03</div>
-                    <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight mb-4">Signal Delivery</h3>
+                    <div class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-3">Step 03</div>
+                    <h3 class="font-professional text-lg text-white tracking-tight mb-4">Signal Delivery</h3>
                     <p class="text-sm text-slate-400 leading-relaxed">High-confidence signals with entry, stop-loss, and target levels are delivered in real-time through our dashboard, email, and Telegram channels.</p>
                 </div>
             </div>
@@ -196,8 +196,8 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="mb-28 fade-in-up">
             <div class="text-center mb-16">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Protocol</span>
-                <h2 class="orbitron text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase">
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Protocol</span>
+                <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
                     What We <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Stand For</span>
                 </h2>
             </div>
@@ -207,7 +207,7 @@
                     <div class="w-14 h-14 rounded-2xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center mx-auto mb-5">
                         <i data-lucide="shield-check" class="w-7 h-7 text-purple-400"></i>
                     </div>
-                    <h4 class="orbitron text-sm font-black text-white uppercase italic tracking-tight mb-3">Transparency</h4>
+                    <h4 class="font-professional text-sm text-white tracking-tight mb-3">Transparency</h4>
                     <p class="text-[13px] text-slate-400 leading-relaxed">Every signal comes with a clear reason, accuracy estimate, and risk details. No hidden math.</p>
                 </div>
 
@@ -215,7 +215,7 @@
                     <div class="w-14 h-14 rounded-2xl bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center mx-auto mb-5">
                         <i data-lucide="lock" class="w-7 h-7 text-emerald-400"></i>
                     </div>
-                    <h4 class="orbitron text-sm font-black text-white uppercase italic tracking-tight mb-3">Security</h4>
+                    <h4 class="font-professional text-sm text-white tracking-tight mb-3">Security</h4>
                     <p class="text-[13px] text-slate-400 leading-relaxed">AES-256 encryption, GDPR compliance, and zero data sharing. Your privacy is non-negotiable.</p>
                 </div>
 
@@ -223,7 +223,7 @@
                     <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center mx-auto mb-5">
                         <i data-lucide="zap" class="w-7 h-7 text-blue-400"></i>
                     </div>
-                    <h4 class="orbitron text-sm font-black text-white uppercase italic tracking-tight mb-3">Innovation</h4>
+                    <h4 class="font-professional text-sm text-white tracking-tight mb-3">Innovation</h4>
                     <p class="text-[13px] text-slate-400 leading-relaxed">We constantly improve our models with daily updates and the latest AI technology.</p>
                 </div>
 
@@ -231,7 +231,7 @@
                     <div class="w-14 h-14 rounded-2xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center mx-auto mb-5">
                         <i data-lucide="users" class="w-7 h-7 text-amber-400"></i>
                     </div>
-                    <h4 class="orbitron text-sm font-black text-white uppercase italic tracking-tight mb-3">Community</h4>
+                    <h4 class="font-professional text-sm text-white tracking-tight mb-3">Community</h4>
                     <p class="text-[13px] text-slate-400 leading-relaxed">A thriving ecosystem of traders helping each other grow through shared insights and strategies.</p>
                 </div>
             </div>
@@ -242,8 +242,8 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="mb-28 fade-in-up">
             <div class="text-center mb-16">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Infrastructure</span>
-                <h2 class="orbitron text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase">
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Infrastructure</span>
+                <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
                     Built on <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Solid Ground</span>
                 </h2>
             </div>
@@ -255,8 +255,8 @@
                             <i data-lucide="cpu" class="w-6 h-6 text-purple-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-black orbitron text-white uppercase italic tracking-tight">AI Systems</div>
-                            <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Technology</div>
+                            <div class="text-sm font-professional text-white tracking-tight">AI Systems</div>
+                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Technology</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 group">
@@ -264,8 +264,8 @@
                             <i data-lucide="server" class="w-6 h-6 text-emerald-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-black orbitron text-white uppercase italic tracking-tight">AWS Cloud</div>
-                            <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Infrastructure</div>
+                            <div class="text-sm font-professional text-white tracking-tight">AWS Cloud</div>
+                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Infrastructure</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 group">
@@ -273,8 +273,8 @@
                             <i data-lucide="globe" class="w-6 h-6 text-blue-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-black orbitron text-white uppercase italic tracking-tight">Real-time APIs</div>
-                            <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Data Feeds</div>
+                            <div class="text-sm font-professional text-white tracking-tight">Real-time APIs</div>
+                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Data Feeds</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 group">
@@ -282,8 +282,8 @@
                             <i data-lucide="bar-chart-3" class="w-6 h-6 text-amber-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-black orbitron text-white uppercase italic tracking-tight">15+ Years</div>
-                            <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Training Data</div>
+                            <div class="text-sm font-professional text-white tracking-tight">15+ Years</div>
+                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Training Data</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 group">
@@ -291,8 +291,8 @@
                             <i data-lucide="refresh-cw" class="w-6 h-6 text-rose-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-black orbitron text-white uppercase italic tracking-tight">Weekly Retraining</div>
-                            <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Model Updates</div>
+                            <div class="text-sm font-professional text-white tracking-tight">Weekly Retraining</div>
+                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Model Updates</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 group">
@@ -300,8 +300,8 @@
                             <i data-lucide="activity" class="w-6 h-6 text-indigo-400"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-black orbitron text-white uppercase italic tracking-tight">2M+ Daily</div>
-                            <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">Data Points</div>
+                            <div class="text-sm font-professional text-white tracking-tight">2M+ Daily</div>
+                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Data Points</div>
                         </div>
                     </div>
                 </div>
@@ -313,8 +313,8 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="mb-28 fade-in-up">
             <div class="text-center mb-16">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Growth Log</span>
-                <h2 class="orbitron text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase">
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Growth Log</span>
+                <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
                     Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Journey</span>
                 </h2>
             </div>
@@ -339,8 +339,8 @@
                         <span class="w-2 h-2 rounded-full bg-{{ $m['color'] }}-500"></span>
                     </div>
                     <div class="glass-panel p-6 rounded-2xl border border-white/5 flex-grow hover:border-{{ $m['color'] }}-500/20 transition-all">
-                        <div class="text-[10px] font-black orbitron text-{{ $m['color'] }}-400 uppercase tracking-widest mb-2">{{ $m['year'] }}</div>
-                        <h4 class="orbitron text-base font-black text-white uppercase italic tracking-tight mb-2">{{ $m['title'] }}</h4>
+                        <div class="text-[10px] font-bold text-{{ $m['color'] }}-400 uppercase tracking-widest mb-2">{{ $m['year'] }}</div>
+                        <h4 class="font-professional text-base text-white tracking-tight mb-2">{{ $m['title'] }}</h4>
                         <p class="text-sm text-slate-400 leading-relaxed">{{ $m['desc'] }}</p>
                     </div>
                 </div>
@@ -353,17 +353,17 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="glass-panel p-6 sm:p-12 md:p-20 rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 text-center relative overflow-hidden fade-in-up">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-600/10 blur-[120px] -z-10"></div>
-            <h2 class="orbitron text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase mb-6">
+            <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white mb-6">
                 Ready to <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Trade Smarter</span>?
             </h2>
             <p class="text-slate-400 max-w-2xl mx-auto mb-12 text-sm leading-relaxed">
                 Join thousands of traders already using Emperor Stock Predictor's AI trading system. Start your journey and get premium features.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="{{ url('/register') }}" class="px-12 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-widest rounded-2xl hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all uppercase">
+                <a href="{{ url('/register') }}" class="px-12 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-professional text-[10px] tracking-widest rounded-2xl hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all uppercase">
                     Start Trading
                 </a>
-                <a href="{{ url('/contact') }}" class="px-12 py-5 glass-panel border border-white/10 text-white font-black orbitron text-[10px] tracking-widest rounded-2xl hover:bg-white/5 transition-all uppercase">
+                <a href="{{ url('/contact') }}" class="px-12 py-5 glass-panel border border-white/10 text-white font-professional text-[10px] tracking-widest rounded-2xl hover:bg-white/5 transition-all uppercase">
                     Contact Us
                 </a>
             </div>

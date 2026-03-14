@@ -35,11 +35,11 @@
                             <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4">
                                 <i data-lucide="zap" class="w-5 h-5 text-purple-400"></i>
                             </div>
-                            <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight">1 Day</h3>
+                            <h3 class="font-bold text-white uppercase tracking-[0.05em] text-base">1 Day</h3>
                             <p class="text-gray-500 text-xs mt-1">Try before you commit</p>
                         </div>
                         <div class="mb-6">
-                            <span class="text-4xl font-black text-white orbitron">₹200</span>
+                            <span class="text-4xl font-bold text-white tracking-tight">₹200</span>
                             <span class="text-xs text-gray-500 ml-1">/ day</span>
                         </div>
                         <ul class="space-y-3 mb-8 flex-1 text-sm text-gray-400">
@@ -61,11 +61,11 @@
                             <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-4">
                                 <i data-lucide="calendar" class="w-5 h-5 text-indigo-400"></i>
                             </div>
-                            <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight">1 Week</h3>
+                            <h3 class="font-bold text-white uppercase tracking-[0.05em] text-base">1 Week</h3>
                             <p class="text-gray-500 text-xs mt-1">Great for short-term traders</p>
                         </div>
                         <div class="mb-6">
-                            <span class="text-4xl font-black text-white orbitron">₹2,800</span>
+                            <span class="text-4xl font-bold text-white tracking-tight">₹2,800</span>
                             <span class="text-xs text-gray-500 ml-1">/ week</span>
                         </div>
                         <ul class="space-y-3 mb-8 flex-1 text-sm text-gray-400">
@@ -85,7 +85,7 @@
                     <!-- Glow ring -->
                     <div class="absolute -inset-px rounded-3xl" style="background: linear-gradient(135deg, #7c3aed, #6366f1); opacity: 0.7;"></div>
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                        <span class="text-[9px] font-black orbitron uppercase tracking-[0.2em] text-white px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap" style="background: linear-gradient(135deg, #7c3aed, #6366f1);">Most Popular</span>
+                        <span class="text-[10px] font-bold uppercase tracking-[0.15em] text-white px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap" style="background: linear-gradient(135deg, #7c3aed, #4f46e5);">Most Popular</span>
                     </div>
                     <div class="relative h-full rounded-3xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-2" style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
 
@@ -93,11 +93,11 @@
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(99,102,241,0.2)); border: 1px solid rgba(124,58,237,0.4);">
                                 <i data-lucide="star" class="w-5 h-5 text-purple-300"></i>
                             </div>
-                            <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight">1 Month</h3>
+                            <h3 class="font-bold text-white uppercase tracking-[0.05em] text-base">1 Month</h3>
                             <p class="text-purple-300/70 text-xs mt-1">Best value for traders</p>
                         </div>
                         <div class="mb-6">
-                            <span class="text-4xl font-black text-white orbitron">₹3,000</span>
+                            <span class="text-4xl font-bold text-white tracking-tight">₹3,000</span>
                             <span class="text-xs text-purple-300/70 ml-1">/ month</span>
                         </div>
                         <ul class="space-y-3 mb-8 flex-1 text-sm text-gray-300">
@@ -116,14 +116,14 @@
                 <div class="relative group">
                     <div class="h-full rounded-3xl border border-amber-500/20 p-8 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/40 hover:shadow-[0_0_40px_rgba(245,158,11,0.08)]" style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
                         <div class="mb-6">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4">
-                                <i data-lucide="crown" class="w-5 h-5 text-amber-400"></i>
+                            <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-4">
+                                <i data-lucide="crown" class="w-5 h-5 text-white"></i>
                             </div>
-                            <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight">1 Year</h3>
-                            <p class="text-amber-400/60 text-xs mt-1">Maximum savings &amp; access</p>
+                            <h3 class="font-bold text-white uppercase tracking-[0.05em] text-base">1 Year</h3>
+                            <p class="text-white/60 text-xs mt-1">Maximum savings &amp; access</p>
                         </div>
                         <div class="mb-1">
-                            <span class="text-4xl font-black text-white orbitron">₹30,000</span>
+                            <span class="text-4xl font-bold text-white tracking-tight">₹30,000</span>
                             <span class="text-xs text-gray-500 ml-1">/ year</span>
                         </div>
                         <p class="text-xs text-emerald-400 mb-6">Save ₹6,000 vs monthly</p>
@@ -133,7 +133,7 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Entry, Target &amp; Stop Loss</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Full historical archive</li>
                         </ul>
-                        <a href="{{ $getLink($p365) }}" class="block w-full py-3.5 rounded-2xl text-center text-sm font-bold text-white border border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50 transition-all">
+                        <a href="{{ $getLink($p365) }}" class="block w-full py-3.5 rounded-2xl text-center text-sm font-bold text-white border border-white/30 hover:bg-white/10 hover:border-white/50 transition-all">
                             Get Started
                         </a>
                     </div>
@@ -158,11 +158,11 @@
                                 <div class="w-10 h-10 rounded-xl bg-{{ $style['color'] }}-500/10 border border-{{ $style['color'] }}-500/20 flex items-center justify-center mb-4">
                                     <i data-lucide="{{ $style['icon'] }}" class="w-5 h-5 text-{{ $style['color'] }}-400"></i>
                                 </div>
-                                <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight">{{ $package->name }}</h3>
+                                <h3 class="font-bold text-white uppercase tracking-[0.05em] text-base">{{ $package->name }}</h3>
                                 <p class="text-gray-500 text-xs mt-1">{{ str_replace('_', ' ', $package->description ?? 'Admin Package') }}</p>
                             </div>
                             <div class="mb-6">
-                                <span class="text-4xl font-black text-white orbitron">₹{{ number_format($package->price) }}</span>
+                                <span class="text-4xl font-bold text-white tracking-tight">₹{{ number_format($package->price) }}</span>
                                 <span class="text-xs text-gray-500 ml-1">/ {{ $package->duration_days }} days</span>
                             </div>
                             <ul class="space-y-3 mb-8 flex-1 text-sm text-gray-400">

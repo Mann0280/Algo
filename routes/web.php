@@ -121,6 +121,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/broadcast-notification', [DashboardController::class, 'broadcastNotification'])->name('broadcast-notification');
         Route::resource('predictions', PredictionController::class);
         Route::resource('users', UserController::class);
+        Route::post('/users/{user}/update-plan', [UserController::class, 'updatePlan'])->name('users.update-plan');
         Route::resource('premium-packages', PremiumPackageController::class)->names([
             'index' => 'premium-packages.index',
             'create' => 'premium-packages.create',
@@ -167,6 +168,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // New Subscription Payment Requests
         Route::get('/payment-requests', [\App\Http\Controllers\PaymentController::class, 'adminPaymentRequests'])->name('payment-requests.index');
+
+        // Contact Message Management
+        Route::get('/contact-messages', [\App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('contact-messages.index');
+        Route::delete('/contact-messages/{contactMessage}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
     });
 });
 

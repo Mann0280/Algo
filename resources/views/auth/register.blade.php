@@ -14,15 +14,15 @@
             <div class="w-14 h-14 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/25 mb-5 group-hover:shadow-purple-500/40 transition-shadow duration-500">
                 <i data-lucide="crown" class="w-7 h-7 text-white"></i>
             </div>
-            <div class="orbitron font-black text-xl tracking-tight">
+            <div class="font-whiskey font-black text-xl tracking-tight">
                 <span class="text-white">EMPEROR</span> <span class="text-purple-500 text-glow">STOCK</span>
             </div>
-            <p class="text-gray-600 text-[8px] font-bold orbitron uppercase tracking-[0.3em] mt-2">Create Account</p>
+            <p class="text-gray-600 text-[8px] font-bold font-whiskey uppercase tracking-[0.3em] mt-2">Create Account</p>
         </div>
 
         <!-- Errors -->
         @if ($errors->any())
-            <div class="bg-red-500/10 border border-red-500/15 text-red-400 text-[9px] font-bold p-3.5 rounded-xl mb-5 text-center orbitron uppercase tracking-widest animate-shake">
+            <div class="bg-red-500/10 border border-red-500/15 text-red-400 text-[9px] font-bold p-3.5 rounded-xl mb-5 text-center font-whiskey uppercase tracking-widest animate-shake">
                 @foreach ($errors->all() as $error)
                     <p>{{ $error }}</p>
                 @endforeach
@@ -35,7 +35,7 @@
 
             <!-- Username -->
             <div class="space-y-1.5">
-                <label class="block text-[9px] font-black text-gray-500 orbitron uppercase tracking-[0.2em] pl-1">Username</label>
+                <label class="block text-[9px] font-black text-gray-500 font-whiskey uppercase tracking-[0.2em] pl-1">Username</label>
                 <div class="relative group/input">
                     <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-purple-500/8 flex items-center justify-center group-focus-within/input:bg-purple-500/15 transition-colors">
                         <i data-lucide="user" class="w-3.5 h-3.5 text-purple-400/50"></i>
@@ -47,7 +47,7 @@
 
             <!-- Email -->
             <div class="space-y-1.5">
-                <label class="block text-[9px] font-black text-gray-500 orbitron uppercase tracking-[0.2em] pl-1">Email Address</label>
+                <label class="block text-[9px] font-black text-gray-500 font-whiskey uppercase tracking-[0.2em] pl-1">Email Address</label>
                 <div class="relative group/input">
                     <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-purple-500/8 flex items-center justify-center group-focus-within/input:bg-purple-500/15 transition-colors">
                         <i data-lucide="mail" class="w-3.5 h-3.5 text-purple-400/50"></i>
@@ -59,7 +59,7 @@
 
             <!-- Referral Code -->
             <div class="space-y-1.5">
-                <label class="block text-[9px] font-black text-gray-500 orbitron uppercase tracking-[0.2em] pl-1">Referral Code <span class="text-gray-700">(Optional)</span></label>
+                <label class="block text-[9px] font-black text-gray-500 font-whiskey uppercase tracking-[0.2em] pl-1">Referral Code <span class="text-gray-700">(Optional)</span></label>
                 <div class="relative group/input">
                     <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-purple-500/8 flex items-center justify-center group-focus-within/input:bg-purple-500/15 transition-colors">
                         <i data-lucide="gift" class="w-3.5 h-3.5 text-purple-400/50"></i>
@@ -71,7 +71,7 @@
 
             <!-- Password -->
             <div class="space-y-1.5">
-                <label class="block text-[9px] font-black text-gray-500 orbitron uppercase tracking-[0.2em] pl-1">Password</label>
+                <label class="block text-[9px] font-black text-gray-500 font-whiskey uppercase tracking-[0.2em] pl-1">Password</label>
                 <div class="relative group/input">
                     <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-purple-500/8 flex items-center justify-center group-focus-within/input:bg-purple-500/15 transition-colors">
                         <i data-lucide="lock" class="w-3.5 h-3.5 text-purple-400/50"></i>
@@ -87,7 +87,7 @@
 
             <!-- Confirm Password -->
             <div class="space-y-1.5">
-                <label class="block text-[9px] font-black text-gray-500 orbitron uppercase tracking-[0.2em] pl-1">Confirm Password</label>
+                <label class="block text-[9px] font-black text-gray-500 font-whiskey uppercase tracking-[0.2em] pl-1">Confirm Password</label>
                 <div class="relative group/input">
                     <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-purple-500/8 flex items-center justify-center group-focus-within/input:bg-purple-500/15 transition-colors">
                         <i data-lucide="shield-check" class="w-3.5 h-3.5 text-purple-400/50"></i>
@@ -101,12 +101,12 @@
                 </div>
             </div>
 
-            <button type="submit" id="registerSubmitBtn" class="auth-btn w-full py-4 rounded-xl text-white font-black orbitron text-[10px] tracking-[0.2em] uppercase italic flex items-center justify-center gap-2.5 mt-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+            <button type="submit" id="registerSubmitBtn" class="auth-btn w-full py-4 rounded-xl text-white font-black font-whiskey text-[10px] tracking-[0.2em] uppercase italic flex items-center justify-center gap-2.5 mt-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                 <i data-lucide="user-plus" class="w-4 h-4"></i>
                 <span id="btnText">Create Account</span>
             </button>
             <div id="throttleMsg" class="hidden text-center mt-4 animate-in fade-in zoom-in duration-300">
-                <p class="text-[9px] font-black orbitron text-purple-400 uppercase tracking-[0.2em]">
+                <p class="text-[9px] font-black font-whiskey text-purple-400 uppercase tracking-[0.2em]">
                     Security lock active. Next attempt in <span id="throttleTimer" class="text-white text-xs ml-1">30</span>s
                 </p>
             </div>
@@ -120,7 +120,7 @@
         <!-- Bottom Security Badge -->
         <div class="flex items-center justify-center gap-2 mt-5 relative z-10">
             <i data-lucide="shield-check" class="w-3 h-3 text-emerald-500/40"></i>
-            <span class="text-[7px] font-bold orbitron text-gray-700 uppercase tracking-[0.2em]">Encrypted Session</span>
+            <span class="text-[7px] font-bold font-whiskey text-gray-700 uppercase tracking-[0.2em]">Encrypted Session</span>
         </div>
     </div>
 </div>

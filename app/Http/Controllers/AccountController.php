@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ReferralService;
 
 class AccountController extends Controller
 {
@@ -116,6 +117,9 @@ class AccountController extends Controller
                 'purchased_at' => now(),
                 'expires_at' => $expiry,
             ]);
+
+            // Process Referral Reward
+            ReferralService::processReward($user, $package, $amount);
 
             \Illuminate\Support\Facades\DB::commit();
             return response()->json([

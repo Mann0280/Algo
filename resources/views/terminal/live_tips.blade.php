@@ -60,24 +60,24 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
         <div>
             <div class="flex items-center gap-3 mb-2">
-                <span class="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[9px] font-bold orbitron uppercase tracking-widest">
+                <span class="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[9px] font-bold font-whiskey uppercase tracking-widest">
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
                     LIVE TELEMETRY ACTIVE
                 </span>
-                <span id="refresh-counter" class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">REFRESHING IN 5s</span>
-                <span id="last-sync-time" class="text-[9px] font-bold text-slate-600 orbitron uppercase tracking-widest ml-4 opacity-70">LAST SYNC: INITIALIZING...</span>
+                <span id="refresh-counter" class="text-[9px] font-bold text-slate-500 font-whiskey uppercase tracking-widest">REFRESHING IN 5s</span>
+                <span id="last-sync-time" class="text-[9px] font-bold text-slate-600 font-whiskey uppercase tracking-widest ml-4 opacity-70">LAST SYNC: INITIALIZING...</span>
             </div>
-            <h1 class="orbitron text-4xl font-black italic tracking-tighter uppercase" style="color: var(--text-white)">
+            <h1 class="font-whiskey text-4xl font-black italic tracking-tighter uppercase" style="color: var(--text-white)">
                 BreakEven <span class="text-purple-500">Live Tips</span>
             </h1>
             <div class="flex flex-wrap items-center gap-6 mt-4">
                 <div class="flex items-center gap-2">
-                    <span class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest">Breakevenpoint :</span>
-                    <span id="display-breakeven" class="text-sm font-black text-purple-400 orbitron tracking-tighter">{{ $settings['breakeven_point'] ?? '2500.00' }}</span>
+                    <span class="text-[10px] font-bold text-slate-500 font-whiskey uppercase tracking-widest">Breakevenpoint :</span>
+                    <span id="display-breakeven" class="text-sm font-black text-purple-400 font-whiskey tracking-tighter">{{ $settings['breakeven_point'] ?? '2500.00' }}</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span class="text-[10px] font-bold text-slate-500 orbitron uppercase tracking-widest">Date:</span>
-                    <span id="display-date" class="text-sm font-black orbitron tracking-tighter" style="color: var(--text-white)">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M, Y') }}</span>
+                    <span class="text-[10px] font-bold text-slate-500 font-whiskey uppercase tracking-widest">Date:</span>
+                    <span id="display-date" class="text-sm font-black font-whiskey tracking-tighter" style="color: var(--text-white)">{{ \Carbon\Carbon::parse($settings['breakeven_date'] ?? now())->format('d M, Y') }}</span>
                 </div>
             </div>
         </div>
@@ -85,8 +85,8 @@
         <div class="flex items-center gap-4">
             <div class="glass-panel px-6 py-3 rounded-2xl border border-white/5 flex items-center gap-4">
                 <div class="text-right">
-                    <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest mb-1">Active Signals</div>
-                    <div id="total-active" class="text-xl font-black orbitron tracking-tighter" style="color: var(--text-white)">00</div>
+                    <div class="text-[9px] font-bold text-slate-500 font-whiskey uppercase tracking-widest mb-1">Active Signals</div>
+                    <div id="total-active" class="text-xl font-black font-whiskey tracking-tighter" style="color: var(--text-white)">00</div>
                 </div>
                 <div class="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400">
                     <i data-lucide="activity" class="w-5 h-5"></i>
@@ -103,7 +103,7 @@
         <div id="table-loader" class="absolute inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity text-white">
             <div class="flex flex-col items-center gap-4">
                 <div class="w-10 h-10 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin"></div>
-                <span class="text-[10px] font-bold orbitron text-purple-400 tracking-widest uppercase">Syncing...</span>
+                <span class="text-[10px] font-bold font-whiskey text-purple-400 tracking-widest uppercase">Syncing...</span>
             </div>
         </div>
 
@@ -113,7 +113,7 @@
             <div class="w-20 h-20 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-600">
                 <i data-lucide="alert-circle" class="w-10 h-10"></i>
             </div>
-            <h3 class="orbitron font-bold text-xl mb-2 uppercase" style="color: var(--text-white)">No Signals Detected</h3>
+            <h3 class="font-whiskey font-bold text-xl mb-2 uppercase" style="color: var(--text-white)">No Signals Detected</h3>
             <p class="text-slate-500 text-sm max-w-xs mx-auto italic">Our neural pathways are currently scanning the market. Stay synchronized for new breakouts.</p>
         </div>
     </div>
@@ -134,9 +134,9 @@
             ...TABULATOR_BASE_CONFIG,
             data: [],
             columns: [
-                {title: "#", field: "id", width: 80, resizable: false, headerSort: false, formatter: "rownum", cssClass: "font-bold orbitron text-slate-500 text-xs px-8 py-6"},
+                {title: "#", field: "id", width: 80, resizable: false, headerSort: false, formatter: "rownum", cssClass: "font-bold font-whiskey text-slate-500 text-xs px-8 py-6"},
                 {title: "Stock Name", field: "stock_name", widthGrow: 2, minWidth: 160, resizable: false, sorter: "string", formatter: (cell) => `
-                    <div class="font-black orbitron text-sm tracking-tight uppercase" style="color: var(--text-white)">${cell.getValue()}</div>`
+                    <div class="font-black font-whiskey text-sm tracking-tight uppercase" style="color: var(--text-white)">${cell.getValue()}</div>`
                 },
                 {title: "Entry Price", field: "entry_price", width: 140, sorter: "number", formatter: (cell) => {
                     const v = parseFloat(cell.getValue());
@@ -153,7 +153,7 @@
                 {title: "Signal Status", field: "status", width: 150, resizable: false, hozAlign: "center", formatter: (cell) => {
                     const status = cell.getValue();
                     const cls = `status-${status.toLowerCase().replace(' ', '_')}`;
-                    return `<span class="status-badge glow-badge orbitron ${cls}">${status}</span>`;
+                    return `<span class="status-badge glow-badge font-whiskey ${cls}">${status}</span>`;
                 }},
                 {title: "Last Updated", field: "updated_at", width: 140, hozAlign: "right", formatter: (cell) => `
                     <div class="font-mono text-[10px] text-slate-500">

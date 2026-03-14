@@ -64,8 +64,9 @@ class WalletController extends Controller
         $user = Auth::user();
         $pendingWithdraw = WithdrawRequest::where('user_id', $user->id)->where('status', 'pending')->sum('amount');
         $availableBalance = $user->wallet_balance - $pendingWithdraw;
+        $minWithdraw = \App\Models\SiteSetting::getValue('min_withdrawal_amount', 1);
 
-        return view('account.withdraw', compact('user', 'availableBalance'));
+        return view('account.withdraw', compact('user', 'availableBalance', 'minWithdraw'));
     }
 
     /**
@@ -77,9 +78,10 @@ class WalletController extends Controller
         
         $pendingWithdraw = WithdrawRequest::where('user_id', $user->id)->where('status', 'pending')->sum('amount');
         $availableBalance = $user->wallet_balance - $pendingWithdraw;
+        $minWithdraw = \App\Models\SiteSetting::getValue('min_withdrawal_amount', 1);
 
         $request->validate([
-            'amount' => 'required|numeric|min:500|max:' . $availableBalance,
+            'amount' => 'required|numeric|min:' . $minWithdraw . '|max:' . $availableBalance,
             'bank_name' => 'required|string|max:255',
             'account_number' => 'required|string|max:255',
             'ifsc_code' => 'required|string|max:20',

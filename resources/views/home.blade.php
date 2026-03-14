@@ -62,12 +62,11 @@
         gap: 0.625rem;
         padding: 1rem 2rem;
         color: white;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 900;
-        font-size: 10px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 11px;
         text-transform: uppercase;
-        letter-spacing: 0.2em;
-        font-style: italic;
+        letter-spacing: 0.1em;
         white-space: nowrap;
     }
     .hero-glow {
@@ -122,15 +121,15 @@
         <!-- Left Column -->
         <div class="w-full lg:w-5/12 flex flex-col gap-8">
             <div class="relative z-20 space-y-8">
-                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-panel border border-purple-500/20 text-purple-400 text-[10px] font-bold orbitron uppercase tracking-[0.2em] hero-stagger opacity-0">
+                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-panel border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-[0.2em] hero-stagger opacity-0">
                     <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
                     Join 15k+ traders using AI Trading
                 </div>
                 
-                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] orbitron uppercase italic">
-                    <span class="block text-gradient hero-stagger opacity-0">TRADE</span>
-                    <span class="block text-white hero-stagger opacity-0">SMARTER</span>
-                    <span class="block text-purple-600/50 hero-stagger opacity-0">NOT HARDER</span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-professional text-white leading-tight">
+                    <span class="block hero-stagger opacity-0">Trade</span>
+                    <span class="block hero-stagger opacity-0">Smarter</span>
+                    <span class="block text-vibrant hero-stagger opacity-0">Not Harder</span>
                 </h1>
 
                 <p class="text-slate-400 text-sm sm:text-lg md:text-xl leading-relaxed max-w-xl hero-stagger opacity-0 font-medium">
@@ -143,11 +142,11 @@
                         <div class="border-spinner"></div>
                         <div class="border-fill"></div>
                         <span class="btn-content">
-                            <i data-lucide="crown" class="w-4 h-4 group-hover:rotate-12 transition-transform"></i>
+                            <i data-lucide="crown" class="w-4 h-4"></i>
                             Upgrade To Premium
                         </span>
                     </a>
-                    <a href="#signals" class="w-full sm:w-auto glass-panel border border-white/10 hover:bg-white/5 text-white font-black py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all transform hover:-translate-y-1 orbitron text-[10px] uppercase tracking-widest flex items-center justify-center gap-3">
+                    <a href="#signals" class="w-full sm:w-auto glass-panel border border-white/10 hover:bg-white/5 text-white font-bold py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all transform hover:-translate-y-1 text-[11px] uppercase tracking-wider flex items-center justify-center gap-3">
                         Explore Signals
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
@@ -160,20 +159,20 @@
         <!-- Right Column: AI Terminal -->
         <div class="w-full lg:w-6/12 relative flex items-center justify-center">
              <!-- Floating Crypto Assets -->
-             <div class="absolute -top-10 -left-10 w-20 h-20 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.2">
+             <!-- <div class="absolute -top-10 -left-10 w-20 h-20 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.2">
                 <i data-lucide="bitcoin" class="w-10 h-10 text-amber-500"></i>
-             </div>
-             <div class="absolute bottom-10 -right-4 w-16 h-16 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.5">
+             </div> -->
+             <!-- <div class="absolute bottom-10 -right-4 w-16 h-16 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.5">
                 <i data-lucide="coins" class="w-8 h-8 text-blue-400"></i>
-             </div>
-             <div class="absolute top-1/2 -right-12 w-14 h-14 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.8">
+             </div> -->
+             <!-- <div class="absolute top-1/2 -right-12 w-14 h-14 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.8">
                 <i data-lucide="dollar-sign" class="w-6 h-6 text-emerald-400"></i>
-             </div>
+             </div> -->
 
              <!-- Floating Badges -->
              <div class="absolute top-0 right-10 glass-panel rounded-full py-2 px-4 hidden sm:flex items-center gap-2 z-20 hero-stagger opacity-0 border border-purple-500/30">
                 <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-                <span class="text-[9px] font-bold text-slate-200 orbitron tracking-widest uppercase">LIVE TRADING ACTIVE</span>
+                <span class="text-[9px] font-bold text-slate-200 font-whiskey tracking-widest uppercase">LIVE TRADING ACTIVE</span>
             </div>
 
             <!-- Premium Terminal Device Frame -->
@@ -201,7 +200,7 @@
                         <div class="flex justify-between items-center mb-10 relative z-10">
                             <div class="flex items-center gap-2 text-purple-500">
                                 <i data-lucide="zap" class="w-5 h-5 fill-purple-500"></i>
-                                <span class="text-[9px] font-black orbitron tracking-widest uppercase">NEURAL PATHWAY</span>
+                                <span class="text-[9px] font-bold tracking-widest uppercase">NEURAL PATHWAY</span>
                             </div>
                             <div class="flex gap-2">
                                  <div class="w-2 h-2 rounded-full bg-rose-500/50"></div>
@@ -211,9 +210,9 @@
                         </div>
 
                         <div class="mb-10 relative z-10">
-                            <div class="text-slate-500 text-[9px] orbitron tracking-[0.3em] font-bold mb-2">SCANNING MARKET DEPTH</div>
+                            <div class="text-slate-500 text-[9px] tracking-[0.3em] font-bold mb-2">SCANNING MARKET DEPTH</div>
                             <div class="flex items-end gap-3">
-                                 <div class="text-5xl font-black text-white orbitron tracking-tighter" id="accuracy-counter">98.4%</div>
+                                 <div class="text-5xl font-professional text-white tracking-tighter" id="accuracy-counter">98.4%</div>
                                  <div class="text-emerald-400 text-[10px] font-bold pb-2">+2.45%</div>
                             </div>
                         </div>
@@ -238,8 +237,8 @@
                             </svg>
                         </div>
 
-                        <div class="mt-6 flex justify-between items-center text-[9px] orbitron font-bold text-slate-600 relative z-10">
-                            <span>EST 2024</span>
+                        <div class="mt-6 flex justify-between items-center text-[9px] font-bold text-slate-600 relative z-10">
+                            <span>Est 2024</span>
                             <div class="flex items-center gap-2">
                                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                  SYSTEM OPERATIONAL
@@ -264,7 +263,7 @@
             @endphp
             @foreach ($all_ticker as $item)
                 <div class="inline-flex items-center gap-6 px-12 border-r border-white/5">
-                    <span class="orbitron font-bold text-slate-400 text-sm tracking-widest uppercase">{{ $item }}</span>
+                    <span class="font-bold text-slate-400 text-sm tracking-widest uppercase">{{ $item }}</span>
                     <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
                 </div>
             @endforeach
@@ -275,10 +274,10 @@
     <section id="signals" class="py-16 sm:py-32 container mx-auto px-4 sm:px-6 relative z-10">
         <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div class="max-w-2xl">
-                <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6 uppercase">See what our AI is detecting <span class="text-purple-500">right now</span></h2>
-                <p class="text-slate-400 leading-relaxed text-sm sm:text-lg">Our intelligent trading engine continuously scans market data to detect high-probability setups.</p>
+                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6">Live <span class="text-vibrant">Market Signals</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-medium">Real-time intelligence streams providing validated entry and exit points for global assets.</p>
             </div>
-            <a href="{{ url('/register') }}" class="group flex items-center gap-3 text-purple-400 font-bold orbitron text-xs tracking-widest">
+            <a href="{{ url('/register') }}" class="group flex items-center gap-3 text-white font-bold text-xs tracking-widest">
                 EXPLORE ALL SIGNALS 
                 <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-2 transition-transform"></i>
             </a>
@@ -311,7 +310,7 @@
                                     <div class="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500">
                                         <i data-lucide="bitcoin" class="w-4 h-4"></i>
                                     </div>
-                                    <span class="font-black orbitron text-xs text-white uppercase tracking-tighter">{{ $signal->stock_symbol }}</span>
+                                    <span class="font-bold text-xs text-white uppercase tracking-tighter">{{ $signal->stock_symbol }}</span>
                                 </div>
                             </td>
                             <td class="text-right font-mono text-sm text-white">₹{{ number_format($signal->entry_price, 1) }}</td>
@@ -323,22 +322,22 @@
                                     $conf = $signal->confidence_level;
                                     $confClass = $conf >= 80 ? 'conf-high' : ($conf >= 60 ? 'conf-mid' : 'conf-low');
                                 @endphp
-                                <span class="px-3 py-1 rounded-lg text-[10px] font-black orbitron {{ $confClass }}">{{ $conf }}%</span>
+                                <span class="px-3 py-1 rounded-lg text-[10px] font-bold {{ $confClass }}">{{ $conf }}%</span>
                             </td>
                             <td class="text-center text-[10px] text-slate-500 font-bold uppercase">{{ $signal->created_at->format('h:i A') }}</td>
                             <td class="text-center">
                                 <div class="flex items-center justify-center gap-2">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
-                                    <span class="text-[9px] font-black orbitron text-emerald-400 uppercase">ACTIVE</span>
+                                    <span class="text-[9px] font-bold text-emerald-400 uppercase">ACTIVE</span>
                                 </div>
                             </td>
-                            <td class="text-right font-black orbitron text-[10px] text-cyan-400 italic uppercase">PENDING</td>
+                            <td class="text-right font-bold text-[10px] text-cyan-400 uppercase">PENDING</td>
                         </tr>
                         @empty
                         <tr>
                             <td colspan="9" class="py-20 text-center">
                                 <i data-lucide="search-x" class="w-12 h-12 text-slate-700 mx-auto mb-4"></i>
-                                <p class="orbitron text-slate-500 text-xs uppercase font-bold">No AI signals detected right now.</p>
+                                <p class="text-slate-500 text-xs uppercase font-bold">No AI signals detected right now.</p>
                             </td>
                         </tr>
                         @endforelse
@@ -353,13 +352,13 @@
                     <div class="flex justify-between items-center pb-3 border-b border-white/5">
                         <div class="flex items-center gap-3">
                             <i data-lucide="bitcoin" class="w-5 h-5 text-orange-400"></i>
-                            <span class="font-black orbitron text-base text-white uppercase">{{ $signal->stock_symbol }}</span>
+                            <span class="font-bold text-base text-white uppercase">{{ $signal->stock_symbol }}</span>
                         </div>
                         @php
                             $conf = $signal->confidence_level;
                             $confClass = $conf >= 80 ? 'conf-high' : ($conf >= 60 ? 'conf-mid' : 'conf-low');
                         @endphp
-                        <span class="px-2 py-0.5 rounded-md text-[9px] font-black orbitron {{ $confClass }}">{{ $conf }}%</span>
+                        <span class="px-2 py-0.5 rounded-md text-[9px] font-bold {{ $confClass }}">{{ $conf }}%</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -378,20 +377,20 @@
                             <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Status</div>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                <span class="text-[9px] font-black orbitron text-emerald-400 uppercase">ACTIVE</span>
+                                <span class="text-[9px] font-bold text-emerald-400 uppercase">ACTIVE</span>
                             </div>
                         </div>
                     </div>
                     <div class="flex justify-between items-center pt-3 border-t border-white/5">
                         <div class="text-[9px] text-slate-500 font-bold uppercase">{{ $signal->created_at->format('h:i A') }}</div>
-                        <div class="font-black orbitron text-[10px] text-cyan-400 italic uppercase">PENDING</div>
+                        <div class="font-bold text-[10px] text-cyan-400 uppercase">PENDING</div>
                     </div>
                 </div>
                 @endforeach
             </div>
 
             <div class="p-6 border-t border-white/5 flex justify-center">
-                <a href="{{ url('/signals') }}" class="group bg-purple-600/10 hover:bg-purple-600 border border-purple-500/30 text-purple-400 hover:text-white px-8 py-3 rounded-xl font-black orbitron text-[10px] tracking-widest transition-all shadow-[0_0_20px_rgba(147,51,234,0.1)] hover:shadow-purple-500/40 uppercase">
+                <a href="{{ url('/signals') }}" class="group bg-purple-600/10 hover:bg-purple-600 border border-purple-500/30 text-purple-400 hover:text-white px-8 py-3 rounded-xl font-bold text-[10px] tracking-widest transition-all shadow-[0_0_20px_rgba(147,51,234,0.1)] hover:shadow-purple-500/40 uppercase">
                     Explore All Signals
                 </a>
             </div>
@@ -432,11 +431,11 @@
                 <div class="w-12 h-12 bg-amber-400 text-black rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl shadow-amber-400/20 animate-bounce">
                     <i data-lucide="lock" class="w-6 h-6"></i>
                 </div>
-                <h3 class="orbitron font-bold text-xl text-white mb-2 uppercase">Neural Prediction Stream Restricted</h3>
+                <h3 class="font-professional text-xl text-white mb-2 uppercase">Neural Prediction Stream Restricted</h3>
                 <p class="text-slate-400 text-sm mb-8 max-w-lg mx-auto italic">Full data terminal access is reserved for Premium King members only. Precision levels and real-time execution alerts currently blurred.</p>
                 <div class="flex justify-center gap-4">
-                    <a href="{{ url('/pricing') }}" class="bg-amber-400 text-black font-black py-4 px-10 rounded-2xl text-[10px] orbitron hover:scale-105 transition-all shadow-lg shadow-amber-400/20 uppercase">Unlock Terminal</a>
-                    <a href="{{ url('/register') }}" class="glass-panel text-white font-bold py-4 px-10 rounded-2xl text-[10px] orbitron hover:bg-white/10 transition-all uppercase">Initialize Terminal</a>
+                    <a href="{{ url('/pricing') }}" class="bg-black text-white font-bold py-4 px-10 rounded-2xl text-[10px] hover:scale-105 transition-all shadow-lg shadow-white/20 uppercase">Unlock Terminal</a>
+                    <a href="{{ url('/register') }}" class="glass-panel text-white font-bold py-4 px-10 rounded-2xl text-[10px] hover:bg-white/10 transition-all uppercase">Initialize Terminal</a>
                 </div>
             </div>
             @endif
@@ -448,9 +447,9 @@
     <section class="py-20 sm:py-32 relative">
         <div class="container mx-auto px-4 sm:px-6">
             <div class="text-center mb-16">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Choose Your Plan</span>
-                <h2 class="orbitron text-3xl md:text-5xl font-black mb-6 uppercase italic tracking-tighter text-white">Upgrade Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Trading Edge</span></h2>
-                <p class="text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed">Unlock premium signals, real-time alerts, and institutional-grade AI predictions with a plan that fits your trading style.</p>
+                <span class="font-whiskey text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Choose Your Plan</span>
+                <h2 class="text-3xl md:text-5xl font-bold-tight text-white mb-6 uppercase">Powerful <span class="text-vibrant">AI Features</span></h2>
+            <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-medium">Precision-engineered tools designed for modern market conditions, providing you with a definitive edge.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
@@ -460,17 +459,17 @@
                     <div class="relative glass-panel p-8 sm:p-10 rounded-[2.5rem] border {{ $isMiddle ? 'border-[#734C89]/30' : 'border-white/10' }} overflow-hidden transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">
                         @if($isMiddle)
                         <div class="absolute top-5 right-5">
-                            <span class="text-[7px] font-black orbitron uppercase tracking-[0.2em] text-white px-3 py-1.5 rounded-full" style="background: linear-gradient(135deg, #734C89, #9333ea);">Popular</span>
+                            <span class="text-[7px] font-black font-whiskey uppercase tracking-[0.2em] text-white px-3 py-1.5 rounded-full" style="background: linear-gradient(135deg, #734C89, #9333ea);">Popular</span>
                         </div>
                         @endif
 
                         <!-- Package Name -->
                         <div class="mb-6">
-                            <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight">{{ $package->name }}</h3>
+                            <h3 class="font-whiskey text-lg font-black text-white uppercase italic tracking-tight">{{ $package->name }}</h3>
                             @if($package->tags_json && count($package->tags_json) > 0)
                             <div class="flex flex-wrap gap-1.5 mt-3">
                                 @foreach(array_slice($package->tags_json, 0, 2) as $tag)
-                                <span class="text-[7px] font-bold orbitron uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10" style="background-color: {{ $tag['color'] ?? '#9333ea' }}20; color: {{ $tag['color'] ?? '#9333ea' }};">{{ $tag['name'] ?? $tag }}</span>
+                                <span class="text-[7px] font-bold font-whiskey uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10" style="background-color: {{ $tag['color'] ?? '#9333ea' }}20; color: {{ $tag['color'] ?? '#9333ea' }};">{{ $tag['name'] ?? $tag }}</span>
                                 @endforeach
                             </div>
                             @endif
@@ -478,12 +477,12 @@
 
                         <!-- Price -->
                         <div class="mb-6">
-                            <span class="text-4xl font-black text-white orbitron">&#8377;{{ number_format($package->price, 0) }}</span>
+                            <span class="text-4xl font-black text-white font-whiskey">&#8377;{{ number_format($package->price, 0) }}</span>
                             <span class="text-xs text-gray-500 font-medium ml-1">/ {{ $package->duration_days }} days</span>
                         </div>
 
                         <!-- Description -->
-                        <p class="text-[10px] font-bold orbitron text-gray-500 uppercase tracking-widest mb-6 leading-relaxed">{{ $package->description }}</p>
+                        <p class="text-[10px] font-bold font-whiskey text-gray-500 uppercase tracking-widest mb-6 leading-relaxed">{{ $package->description }}</p>
 
                         <!-- Features -->
                         @if($package->features && count($package->features) > 0)
@@ -498,7 +497,7 @@
                         @endif
 
                         <!-- CTA -->
-                        <a href="{{ url('/pricing') }}" class="block w-full py-4 rounded-2xl text-center font-black orbitron text-[10px] tracking-[0.2em] uppercase italic transition-all hover:scale-[1.02] active:scale-[0.98] {{ $isMiddle ? 'text-white hover:shadow-[0_0_30px_rgba(115,76,137,0.4)]' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-purple-500/30' }}" style="{{ $isMiddle ? 'background: linear-gradient(135deg, #734C89, #9333ea);' : '' }}">
+                        <a href="{{ url('/pricing') }}" class="block w-full py-4 rounded-2xl text-center font-black font-whiskey text-[10px] tracking-[0.2em] uppercase italic transition-all hover:scale-[1.02] active:scale-[0.98] {{ $isMiddle ? 'text-white hover:shadow-[0_0_30px_rgba(115,76,137,0.4)]' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-purple-500/30' }}" style="{{ $isMiddle ? 'background: linear-gradient(135deg, #734C89, #9333ea);' : '' }}">
                             Get Started
                         </a>
                     </div>
@@ -508,7 +507,7 @@
 
             <!-- View All Link -->
             <div class="text-center mt-12">
-                <a href="{{ url('/pricing') }}" class="inline-flex items-center gap-2 text-[10px] font-black orbitron text-purple-400 uppercase tracking-[0.2em] hover:text-white transition-colors group">
+                <a href="{{ url('/pricing') }}" class="inline-flex items-center gap-2 text-[10px] font-black font-whiskey text-purple-400 uppercase tracking-[0.2em] hover:text-white transition-colors group">
                     View All Plans
                     <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                 </a>
@@ -526,8 +525,8 @@
     <section id="features" class="py-32 relative bg-white/[0.01]">
         <div class="container mx-auto px-6">
              <div class="text-center mb-20">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Advantages</span>
-                <h2 class="orbitron text-4xl md:text-5xl font-black mb-6 uppercase italic tracking-tighter text-white">Why Our AI is <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Powerful</span></h2>
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Advantages</span>
+                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6 uppercase">Why Our AI is <span class="text-vibrant">Powerful</span></h2>
                 <p class="text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed">Built on years of quantitative research and advanced machine learning, our neural engine delivers institutional-grade analysis to every trader.</p>
              </div>
              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -544,7 +543,7 @@
                     <div class="w-14 h-14 bg-{{ $f['color'] }}-500/10 rounded-2xl flex items-center justify-center text-{{ $f['color'] }}-400 mb-8 group-hover:bg-{{ $f['color'] }}-500 group-hover:text-white transition-all border border-{{ $f['color'] }}-500/20">
                         <i data-lucide="{{ $f['icon'] }}" class="w-7 h-7"></i>
                     </div>
-                    <h3 class="orbitron font-black text-base mb-4 text-white uppercase italic tracking-tight">{{ $f['title'] }}</h3>
+                    <h3 class="font-professional text-base mb-4 text-white tracking-tight">{{ $f['title'] }}</h3>
                     <p class="text-slate-400 text-sm leading-relaxed">{{ $f['desc'] }}</p>
                 </div>
                 @endforeach
@@ -561,9 +560,9 @@
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-20 items-center">
                     <div class="reveal-left">
-                        <h2 class="orbitron text-3xl md:text-6xl font-black mb-6 sm:mb-8 leading-[1.1] uppercase tracking-tighter">
-                            <span class="text-white block">NEVER MISS AN</span>
-                            <span class="bg-gradient-to-r from-purple-500 to-magenta-500 bg-clip-text text-transparent block" style="background-image: linear-gradient(90deg, #9333ea, #d946ef);">OPPORTUNITY</span>
+                        <h2 class="text-3xl md:text-6xl font-professional mb-8 leading-[1.1]">
+                            <span class="text-white block">Never Miss An</span>
+                            <span class="text-vibrant block">Opportunity</span>
                         </h2>
                         <p class="text-slate-400 text-sm sm:text-lg mb-8 sm:mb-12 max-w-md font-medium leading-relaxed">Our multi-channel alert system ensures you are always connected to the market pulse.</p>
                         
@@ -572,19 +571,19 @@
                                 <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
                                     <i data-lucide="smartphone" class="w-5 h-5"></i>
                                 </div>
-                                <span class="orbitron font-bold text-[11px] tracking-[0.2em] text-slate-200 uppercase">MOBILE PUSH NOTIFICATIONS</span>
+                                <span class="font-bold text-[11px] tracking-[0.2em] text-slate-200 uppercase">MOBILE PUSH NOTIFICATIONS</span>
                             </div>
                             <div class="flex items-center gap-6 p-5 glass-panel rounded-2xl border border-white/5 border-l-4 border-l-purple-500 group/item hover:bg-white/10 transition-all cursor-default">
                                 <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
                                     <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                                 </div>
-                                <span class="orbitron font-bold text-[11px] tracking-[0.2em] text-slate-200 uppercase">DASHBOARD LIVE ALERTS</span>
+                                <span class="font-bold text-[11px] tracking-[0.2em] text-slate-200 uppercase">DASHBOARD LIVE ALERTS</span>
                             </div>
                             <div class="flex items-center gap-6 p-5 glass-panel rounded-2xl border border-white/5 border-l-4 border-l-blue-500 group/item hover:bg-white/10 transition-all cursor-default">
                                 <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
                                     <i data-lucide="mail" class="w-5 h-5"></i>
                                 </div>
-                                <span class="orbitron font-bold text-[11px] tracking-[0.2em] text-slate-200 uppercase">REAL-TIME EMAIL INSIGHTS</span>
+                                <span class="font-bold text-[11px] tracking-[0.2em] text-slate-200 uppercase">REAL-TIME EMAIL INSIGHTS</span>
                             </div>
                         </div>
                     </div>
@@ -604,30 +603,30 @@
                                     <i data-lucide="bell" class="w-6 h-6 text-white relative z-10"></i>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="text-purple-400 text-[8px] font-black orbitron uppercase tracking-[0.4em] mb-1 leading-none">System Core</span>
-                                    <span class="orbitron font-black text-[12px] tracking-[0.2em] text-white uppercase italic">NEW SIGNAL ALERT</span>
+                                    <span class="text-purple-400 text-[8px] font-bold uppercase tracking-[0.4em] mb-1 leading-none">System Core</span>
+                                    <span class="font-professional text-[12px] tracking-[0.2em] text-white uppercase">NEW SIGNAL ALERT</span>
                                 </div>
                             </div>
                             
                             <div class="space-y-6 relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div class="flex flex-col">
-                                        <span class="text-gray-500 text-[9px] font-black orbitron uppercase tracking-widest mb-1">Pair</span>
-                                        <span class="text-white text-xl font-black orbitron italic">BTC/USDT</span>
+                                        <span class="text-gray-500 text-[9px] font-bold uppercase tracking-widest mb-1">Pair</span>
+                                        <span class="text-white text-xl font-professional">RELIANCE</span>
                                     </div>
-                                    <div class="text-right flex flex-col">
-                                        <span class="text-gray-500 text-[9px] font-black orbitron uppercase tracking-widest mb-1">Status</span>
-                                        <span class="text-emerald-400 text-sm font-black orbitron animate-pulse">● LONG / BUY</span>
-                                    </div>
+                                    <!-- <div class="text-right flex flex-col">
+                                        <span class="text-gray-500 text-[9px] font-black font-whiskey uppercase tracking-widest mb-1">Status</span>
+                                        <span class="text-emerald-400 text-sm font-black font-whiskey animate-pulse">● LONG / BUY</span>
+                                    </div> -->
                                 </div>
                                 
-                                <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
-                                    <span class="text-gray-500 text-[9px] font-black orbitron uppercase tracking-widest">Entry Price</span>
-                                    <span class="text-white text-lg font-black orbitron tracking-tight">$64,250.75</span>
-                                </div>
+                                <!-- <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                                    <span class="text-gray-500 text-[9px] font-black font-whiskey uppercase tracking-widest">Entry Price</span>
+                                        <span class="text-white text-lg font-black font-whiskey tracking-tight">PROTECTED</span>
+                                </div> -->
 
                                 <div class="pt-4">
-                                    <div class="w-full py-4 bg-purple-600/20 rounded-2xl border border-purple-500/30 text-center text-[9px] font-black orbitron uppercase tracking-[0.2em] italic text-purple-400">
+                                    <div class="w-full py-4 bg-purple-600/20 rounded-2xl border border-purple-500/30 text-center text-[9px] font-bold uppercase tracking-[0.2em] text-purple-400">
                                         STOCHASTIC RSI OVERBOUGHT
                                     </div>
                                 </div>
@@ -643,8 +642,8 @@
     <section id="how-it-works" class="py-32 relative overflow-hidden">
         <div class="container mx-auto px-6 text-center">
             <div class="mb-24">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Simple Process</span>
-                <h2 class="orbitron text-4xl md:text-5xl font-black mb-6 uppercase italic tracking-tighter text-white">HOW IT <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">WORKS</span></h2>
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Simple Process</span>
+                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6 uppercase">How It <span class="text-vibrant">Works</span></h2>
                 <p class="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">Master the market in three simplified steps — from connecting your dashboard to executing profitable trades.</p>
             </div>
 
@@ -665,12 +664,12 @@
                     @foreach($steps as $s)
                     <div class="glass-panel p-10 rounded-[3rem] text-center reveal-step group hover:border-purple-500/40 transition-all duration-500 border border-white/5">
                         <div class="relative mb-10 inline-block">
-                             <div class="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-purple-600/30 orbitron text-2xl font-black italic relative z-10 group-hover:scale-110 transition-transform">
+                             <div class="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-purple-600/30 font-professional text-2xl font-bold relative z-10 group-hover:scale-110 transition-transform">
                                 {{ $s['n'] }}
                             </div>
                             <div class="absolute inset-0 bg-purple-500 blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
                         </div>
-                        <h3 class="orbitron font-black text-base mb-4 text-white uppercase italic tracking-tight">{{ $s['t'] }}</h3>
+                        <h3 class="font-professional text-base mb-4 text-white tracking-tight">{{ $s['t'] }}</h3>
                         <p class="text-slate-400 text-sm leading-relaxed max-w-[260px] mx-auto">{{ $s['d'] }}</p>
                     </div>
                     @endforeach
@@ -682,8 +681,8 @@
     <!-- Testimonials -->
     <section class="py-24 container mx-auto px-6">
         <div class="text-center mb-20">
-            <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Social Proof</span>
-            <h2 class="orbitron text-3xl md:text-5xl font-black uppercase italic tracking-tighter text-white">Traders Trust <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Data</span>, Not Noise</h2>
+            <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Social Proof</span>
+            <h2 class="text-3xl md:text-5xl font-professional text-white mb-6 uppercase">Traders Trust <span class="text-vibrant">Data</span>, Not Noise</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @php 
@@ -705,10 +704,10 @@
                 </div>
                 <p class="text-slate-300 text-sm leading-relaxed mb-8">"{{ $r['text'] }}"</p>
                 <div class="flex items-center gap-4 pt-6 border-t border-white/5">
-                    <div class="w-11 h-11 rounded-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-xs orbitron">{{ $r['initials'] }}</div>
+                    <div class="w-11 h-11 rounded-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-xs">{{ $r['initials'] }}</div>
                     <div>
                         <div class="text-sm font-bold text-white">{{ $r['name'] }}</div>
-                        <div class="text-[10px] font-bold orbitron text-slate-500 tracking-widest uppercase">{{ $r['role'] }}</div>
+                        <div class="text-[10px] font-bold text-slate-500 tracking-widest uppercase">{{ $r['role'] }}</div>
                     </div>
                 </div>
             </div>
@@ -720,14 +719,14 @@
     <section class="py-24 relative">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Asset Coverage</span>
-                <h2 class="orbitron text-3xl md:text-5xl font-black uppercase italic tracking-tighter text-white mb-4">
-                    Markets We <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Cover</span>
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Asset Coverage</span>
+                <h2 class="font-professional text-3xl md:text-5xl uppercase tracking-tighter text-white mb-4">
+                    Indian Equities Market We <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Cover</span>
                 </h2>
                 <p class="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">Our neural engine monitors a diverse range of asset classes across global exchanges to identify the highest-probability setups.</p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
+            <!-- <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
                 @php
                 $markets = [
                     ['icon' => 'trending-up', 'name' => 'Indian Equities', 'sub' => 'NSE / BSE', 'color' => 'purple'],
@@ -743,11 +742,11 @@
                     <div class="w-12 h-12 rounded-xl bg-{{ $m['color'] }}-500/10 border border-{{ $m['color'] }}-500/20 flex items-center justify-center mx-auto mb-4 group-hover/market:bg-{{ $m['color'] }}-500 group-hover/market:text-white transition-all">
                         <i data-lucide="{{ $m['icon'] }}" class="w-6 h-6 text-{{ $m['color'] }}-400 group-hover/market:text-white transition-colors"></i>
                     </div>
-                    <div class="orbitron text-xs font-black text-white uppercase italic tracking-tight mb-1">{{ $m['name'] }}</div>
-                    <div class="text-[9px] font-bold text-slate-500 orbitron uppercase tracking-widest">{{ $m['sub'] }}</div>
+                    <div class="font-whiskey text-xs font-black text-white uppercase italic tracking-tight mb-1">{{ $m['name'] }}</div>
+                    <div class="text-[9px] font-bold text-slate-500 font-whiskey uppercase tracking-widest">{{ $m['sub'] }}</div>
                 </div>
                 @endforeach
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -759,13 +758,13 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div>
-                        <span class="orbitron text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Live Telemetry</span>
-                        <h2 class="orbitron text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-white mb-6">
+                        <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Live Telemetry</span>
+                        <h2 class="font-professional text-3xl md:text-4xl uppercase tracking-tighter text-white mb-6">
                             Platform <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Performance</span>
                         </h2>
                         <p class="text-slate-400 text-sm leading-relaxed mb-8">Our infrastructure processes millions of data points across global exchanges, delivering real-time signals with sub-second latency.</p>
                         <div class="flex gap-4">
-                            <a href="{{ url('/register') }}" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-widest rounded-xl hover:scale-105 transition-all uppercase">
+                            <a href="{{ url('/register') }}" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-[10px] tracking-widest rounded-xl hover:scale-105 transition-all uppercase">
                                 Start Free Trial
                             </a>
                         </div>
@@ -775,30 +774,30 @@
                         <div class="glass-panel p-6 rounded-2xl border border-white/5">
                             <div class="flex items-center gap-2 mb-3">
                                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span class="text-[9px] font-black orbitron text-slate-500 uppercase tracking-widest">Uptime</span>
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Uptime</span>
                             </div>
-                            <div class="text-3xl font-black text-white orbitron tracking-tighter">99.9%</div>
+                            <div class="text-3xl font-professional text-white tracking-tighter">99.9%</div>
                         </div>
                         <div class="glass-panel p-6 rounded-2xl border border-white/5">
                             <div class="flex items-center gap-2 mb-3">
-                                <i data-lucide="zap" class="w-3 h-3 text-amber-500"></i>
-                                <span class="text-[9px] font-black orbitron text-slate-500 uppercase tracking-widest">Latency</span>
+                                    <i data-lucide="shield" class="w-5 h-5 text-white"></i>
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Latency</span>
                             </div>
-                            <div class="text-3xl font-black text-white orbitron tracking-tighter">14<span class="text-xs text-slate-500 ml-1">ms</span></div>
+                            <div class="text-3xl font-professional text-white tracking-tighter">14<span class="text-xs text-slate-500 ml-1">ms</span></div>
                         </div>
                         <div class="glass-panel p-6 rounded-2xl border border-white/5">
                             <div class="flex items-center gap-2 mb-3">
                                 <i data-lucide="database" class="w-3 h-3 text-purple-500"></i>
-                                <span class="text-[9px] font-black orbitron text-slate-500 uppercase tracking-widest">Daily Data</span>
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Daily Data</span>
                             </div>
-                            <div class="text-3xl font-black text-white orbitron tracking-tighter">2M<span class="text-xs text-slate-500 ml-1">pts</span></div>
+                            <div class="text-3xl font-professional text-white tracking-tighter">2M<span class="text-xs text-slate-500 ml-1">pts</span></div>
                         </div>
                         <div class="glass-panel p-6 rounded-2xl border border-white/5">
                             <div class="flex items-center gap-2 mb-3">
                                 <i data-lucide="cpu" class="w-3 h-3 text-blue-500"></i>
-                                <span class="text-[9px] font-black orbitron text-slate-500 uppercase tracking-widest">Nodes</span>
+                                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Nodes</span>
                             </div>
-                            <div class="text-3xl font-black text-white orbitron tracking-tighter">12<span class="text-xs text-slate-500 ml-1">active</span></div>
+                            <div class="text-3xl font-professional text-white tracking-tighter">12<span class="text-xs text-slate-500 ml-1">active</span></div>
                         </div>
                     </div>
                 </div>
@@ -807,7 +806,7 @@
     </section>
 
     <!-- Newsletter / Quick CTA -->
-    <section class="py-16 relative">
+    <!-- <section class="py-16 relative">
         <div class="container mx-auto px-6">
             <div class="glass-panel p-6 sm:p-8 md:p-12 rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
                 <div class="flex items-center gap-6">
@@ -815,25 +814,26 @@
                         <i data-lucide="mail" class="w-7 h-7 text-purple-400"></i>
                     </div>
                     <div>
-                        <h3 class="orbitron text-lg font-black text-white uppercase italic tracking-tight">Stay in the Loop</h3>
+                        <h3 class="font-whiskey text-lg font-black text-white uppercase italic tracking-tight">Stay in the Loop</h3>
                         <p class="text-sm text-slate-400">Get weekly market analysis and top signals delivered to your inbox.</p>
                     </div>
                 </div>
                 <div class="flex gap-4 w-full md:w-auto">
                     <input type="email" placeholder="your@email.com" class="w-full md:w-64 bg-white/5 border border-white/10 rounded-xl px-5 py-3 focus:outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm font-medium text-white placeholder:text-gray-600">
-                    <button class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black orbitron text-[10px] tracking-widest rounded-xl hover:scale-105 transition-all uppercase flex-shrink-0">
+                    <button class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black font-whiskey text-[10px] tracking-widest rounded-xl hover:scale-105 transition-all uppercase flex-shrink-0">
                         Subscribe
                     </button>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Premium CTA Section -->
     <section class="py-32 relative overflow-hidden group">
         <!-- Background Blobs -->
         <div class="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-purple-600/20 blur-[120px] -z-10 animate-pulse rounded-full"></div>
-        <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] -z-10 rounded-full"></div>
+                <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] -z-10 rounded-full"></div>
+                <div class="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] bg-white/5 blur-[120px] rounded-full"></div>
 
         <div class="container mx-auto px-6 relative z-10">
             <div class="glass-panel p-8 sm:p-16 md:p-32 rounded-[2rem] sm:rounded-[4rem] text-center border border-white/5 relative overflow-hidden reveal-section">
@@ -841,33 +841,33 @@
                 <div id="cta-particles" class="absolute inset-0 -z-10"></div>
                 
                 <div class="relative z-20">
-                    <h2 class="orbitron text-3xl sm:text-4xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white uppercase italic">
-                        STOP GUESSING. <br>
-                        START <span class="text-gradient">TRADING</span>.
+                    <h2 class="font-professional text-3xl sm:text-4xl md:text-7xl mb-8 leading-tight text-white">
+                        Stop Guessing. <br>
+                        Start <span class="text-gradient">Trading</span>.
                     </h2>
                     <p class="text-slate-400 text-sm sm:text-lg md:text-xl mb-8 sm:mb-12 max-w-2xl mx-auto font-medium">
                         Join the elite circle of traders using our Neural Prediction Stream to maintain a consistent edge in the market.
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center gap-6">
-                        <a href="{{ url('/pricing') }}" class="bg-white text-black font-black py-5 px-14 rounded-2xl text-[10px] uppercase orbitron tracking-[0.2em] hover:bg-purple-600 hover:text-white transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:shadow-purple-600/50 transform hover:-translate-y-1">
+                        <a href="{{ url('/pricing') }}" class="bg-black text-white font-bold py-5 px-14 rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:bg-purple-600 hover:text-white transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:shadow-purple-600/50 transform hover:-translate-y-1">
                             Get Premium Access
                         </a>
-                        <a href="{{ url('/register') }}" class="glass-panel border border-white/10 text-white font-black py-5 px-14 rounded-2xl text-[10px] uppercase orbitron tracking-[0.2em] hover:bg-white/5 transition-all transform hover:-translate-y-1">
+                        <a href="{{ url('/register') }}" class="glass-panel border border-white/10 text-white font-bold py-5 px-14 rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:bg-white/5 transition-all transform hover:-translate-y-1">
                             Initialize Terminal
                         </a>
                     </div>
 
                     <!-- Trust Indicators -->
                     <div class="mt-10 sm:mt-16 pt-10 sm:pt-16 border-t border-white/5 flex flex-wrap justify-center gap-6 sm:gap-12 opacity-40">
-                         <div class="orbitron font-bold text-[9px] tracking-widest uppercase flex items-center gap-2">
+                         <div class="font-bold text-[9px] tracking-widest uppercase flex items-center gap-2 text-white">
                              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
                              ENCRYPTED DATA
                          </div>
-                         <div class="orbitron font-bold text-[9px] tracking-widest uppercase flex items-center gap-2">
+                         <div class="font-bold text-[9px] tracking-widest uppercase flex items-center gap-2 text-white">
                              <i data-lucide="zap" class="w-4 h-4 text-purple-500"></i>
                              NEURAL PIPELINE
                          </div>
-                         <div class="orbitron font-bold text-[9px] tracking-widest uppercase flex items-center gap-2">
+                         <div class="font-bold text-[9px] tracking-widest uppercase flex items-center gap-2 text-white">
                              <i data-lucide="clock" class="w-4 h-4 text-indigo-500"></i>
                              24/7 MONITORING
                          </div>
@@ -893,17 +893,29 @@
         border-collapse: separate;
         border-spacing: 0;
     }
+    .hero-content h1 {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        font-weight: 900;
+        line-height: 0.95;
+        letter-spacing: -3px;
+        margin-bottom: 2rem;
+        background: linear-gradient(to right, #ffffff, #9333ea);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+        font-style: italic;
+    }
     .signals-table th {
         padding: 1.5rem 1rem;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 0.65rem;
-        font-weight: 900;
+        background: rgba(255, 255, 255, 0.02);
+        color: #94a3b8;
+        font-weight: 700;
+        font-size: 11px;
         text-transform: uppercase;
-        letter-spacing: 0.15em;
-        color: #64748b;
+        letter-spacing: 0.1em;
+        text-align: left;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        cursor: pointer;
-        transition: all 0.3s;
     }
     .signals-table th:hover { color: #a855f7; background: rgba(147, 51, 234, 0.02); }
     .signals-table td {

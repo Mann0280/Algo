@@ -3,13 +3,13 @@
  * Applied across all tables to ensure consistent behavior and UI protection.
  */
 const TABULATOR_BASE_CONFIG = {
-    layout: "fitColumns",
-    responsiveLayout: "collapse",
+    layout: "fitDataStretch",
+    responsiveLayout: false,
     movableColumns: true,
     resizableColumns: true,
     columnDefaults: {
-        minWidth: 120,
-        maxWidth: 320,
+        minWidth: 90,
+        maxWidth: 500,
         headerSort: true
     },
     placeholder: "<div style='padding:20px;text-align:center;color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;font-family:Orbitron,monospace;'>No data available</div>",

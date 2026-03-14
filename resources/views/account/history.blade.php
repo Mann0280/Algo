@@ -7,12 +7,12 @@
     <!-- Header Section -->
     <div class="flex items-center justify-between">
         <div>
-            <h2 class="text-3xl font-black orbitron uppercase italic tracking-wider text-white">Link History</h2>
-            <p class="text-[11px] font-bold orbitron text-gray-500 uppercase tracking-[0.3em] mt-1">Temporal Subscription Logs • Protocol v4.2</p>
+            <h2 class="text-3xl font-black font-whiskey uppercase italic tracking-wider text-white">Link History</h2>
+            <p class="text-[11px] font-bold font-whiskey text-gray-500 uppercase tracking-[0.3em] mt-1">Temporal Subscription Logs • Protocol v4.2</p>
         </div>
         <div class="px-6 py-3 rounded-2xl bg-purple-500/5 border border-purple-500/10 flex items-center gap-4">
             <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#9333ea]"></div>
-            <span class="text-[10px] font-black orbitron text-purple-400 uppercase tracking-widest">Neural Sync Active</span>
+            <span class="text-[10px] font-black font-whiskey text-purple-400 uppercase tracking-widest">Neural Sync Active</span>
         </div>
     </div>
 
@@ -21,9 +21,9 @@
         <div class="p-8 border-b border-white/[0.05] bg-white/[0.01] flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <i data-lucide="database" class="w-5 h-5 text-gray-500"></i>
-                <h3 class="text-sm font-black orbitron text-gray-400 uppercase tracking-widest">Transaction Records</h3>
+                <h3 class="text-sm font-black font-whiskey text-gray-400 uppercase tracking-widest">Transaction Records</h3>
             </div>
-            <div class="text-[10px] font-bold orbitron text-gray-600 uppercase tracking-widest">
+            <div class="text-[10px] font-bold font-whiskey text-gray-600 uppercase tracking-widest">
                 Showing {{ $history->count() }} entry(s)
             </div>
         </div>
@@ -32,12 +32,12 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-white/[0.02]">
-                        <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Purchase Date</th>
-                        <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Protocol Plan</th>
-                        <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Amount</th>
-                        <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Termination</th>
-                        <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Status</th>
-                        <th class="px-8 py-5 text-[10px] font-black orbitron text-gray-500 uppercase tracking-[0.2em]">Action</th>
+                        <th class="px-8 py-5 text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-[0.2em]">Purchase Date</th>
+                        <th class="px-8 py-5 text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-[0.2em]">Protocol Plan</th>
+                        <th class="px-8 py-5 text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-[0.2em]">Amount</th>
+                        <th class="px-8 py-5 text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-[0.2em]">Termination</th>
+                        <th class="px-8 py-5 text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-[0.2em]">Status</th>
+                        <th class="px-8 py-5 text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-[0.2em]">Action</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/[0.02]">
@@ -54,19 +54,19 @@
                                 <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
                                     <i data-lucide="zap" class="w-4 h-4 text-indigo-400"></i>
                                 </div>
-                                <span class="text-sm font-black orbitron text-white italic group-hover:text-indigo-400 transition-colors uppercase">{{ $record->plan_name }}</span>
+                                <span class="text-sm font-black font-whiskey text-white italic group-hover:text-indigo-400 transition-colors uppercase">{{ $record->plan_name }}</span>
                             </div>
                         </td>
                         <td class="px-8 py-6">
-                            <span class="text-sm font-bold orbitron text-white">₹{{ number_format($record->amount, 0) }}</span>
+                            <span class="text-sm font-bold font-whiskey text-white">₹{{ number_format($record->amount, 0) }}</span>
                         </td>
                         <td class="px-8 py-6">
-                            <span class="text-xs font-bold orbitron {{ $record->expires_at && $record->expires_at->isPast() ? 'text-gray-600' : 'text-emerald-500' }}">
+                            <span class="text-xs font-bold font-whiskey {{ $record->expires_at && $record->expires_at->isPast() ? 'text-gray-600' : 'text-emerald-500' }}">
                                 {{ $record->expires_at ? $record->expires_at->format('d M Y') : 'UNLIMITED' }}
                             </span>
                         </td>
                         <td class="px-8 py-6">
-                            <span class="px-4 py-1.5 rounded-full text-[9px] font-black orbitron uppercase tracking-widest {{ $record->status === 'Completed' ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-500' : 'bg-rose-500/10 border border-rose-500/20 text-rose-500' }}">
+                            <span class="px-4 py-1.5 rounded-full text-[9px] font-black font-whiskey uppercase tracking-widest {{ $record->status === 'Completed' ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-500' : 'bg-rose-500/10 border border-rose-500/20 text-rose-500' }}">
                                 {{ $record->status }}
                             </span>
                         </td>
@@ -81,7 +81,7 @@
                         <td colspan="6" class="px-8 py-20 text-center">
                             <div class="flex flex-col items-center gap-4 opacity-30">
                                 <i data-lucide="ghost" class="w-12 h-12"></i>
-                                <span class="text-[11px] font-black orbitron uppercase tracking-[0.3em]">No Temporal Records Identified</span>
+                                <span class="text-[11px] font-black font-whiskey uppercase tracking-[0.3em]">No Temporal Records Identified</span>
                             </div>
                         </td>
                     </tr>
@@ -98,7 +98,7 @@
                 <i data-lucide="shield-alert" class="w-10 h-10 text-amber-500"></i>
             </div>
             <div>
-                <h4 class="text-xl font-black orbitron text-white uppercase italic tracking-tight">Security Protocol Advisory</h4>
+                <h4 class="text-xl font-black font-whiskey text-white uppercase italic tracking-tight">Security Protocol Advisory</h4>
                 <p class="text-xs text-gray-500 mt-2 leading-relaxed">
                     Transaction records are immutable once confirmed by the neural network. If you identify a synchronization error in your temporal logs, please initiate a support ticket immediately for manual verification.
                 </p>
@@ -106,8 +106,8 @@
         </div>
         
         <div class="glass-panel p-10 rounded-[2.5rem] border-white/[0.05] flex flex-col justify-center items-center text-center group">
-            <p class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Total Investment</p>
-            <p class="text-4xl font-black orbitron text-white mt-1 group-hover:text-purple-500 transition-colors">
+            <p class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-widest">Total Investment</p>
+            <p class="text-4xl font-black font-whiskey text-white mt-1 group-hover:text-purple-500 transition-colors">
                 ₹{{ number_format($history->where('status', 'Completed')->sum('amount'), 0) }}
             </p>
         </div>
@@ -123,32 +123,32 @@
             <div class="w-16 h-16 rounded-3xl bg-purple-600/20 border border-purple-500/20 flex items-center justify-center mx-auto mb-6">
                 <i data-lucide="shield-check" class="w-8 h-8 text-purple-500"></i>
             </div>
-            <h2 class="orbitron font-black text-xl text-white italic tracking-tighter uppercase mb-2">Neural Receipt</h2>
-            <div id="receipt-id" class="text-[9px] font-black orbitron text-gray-600 tracking-[0.3em] uppercase">TX_ID: LOADING...</div>
+            <h2 class="font-whiskey font-black text-xl text-white italic tracking-tighter uppercase mb-2">Neural Receipt</h2>
+            <div id="receipt-id" class="text-[9px] font-black font-whiskey text-gray-600 tracking-[0.3em] uppercase">TX_ID: LOADING...</div>
         </div>
 
         <!-- Receipt Body -->
         <div class="p-10 space-y-8">
             <div class="space-y-6">
                 <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                    <span class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Designation</span>
-                    <span id="receipt-plan" class="text-sm font-black orbitron text-white uppercase italic">PREMIUM</span>
+                    <span class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-widest">Designation</span>
+                    <span id="receipt-plan" class="text-sm font-black font-whiskey text-white uppercase italic">PREMIUM</span>
                 </div>
                 <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                    <span class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Amount Paid</span>
-                    <span id="receipt-amount" class="text-sm font-black orbitron text-emerald-400">₹3,499</span>
+                    <span class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-widest">Amount Paid</span>
+                    <span id="receipt-amount" class="text-sm font-black font-whiskey text-emerald-400">₹3,499</span>
                 </div>
                 <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                    <span class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Protocol Type</span>
-                    <span class="text-[10px] font-black orbitron text-purple-400 uppercase tracking-widest">SYNC_PAYMENT</span>
+                    <span class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-widest">Protocol Type</span>
+                    <span class="text-[10px] font-black font-whiskey text-purple-400 uppercase tracking-widest">SYNC_PAYMENT</span>
                 </div>
                 <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-black orbitron text-gray-600 uppercase tracking-widest">Timestamp</span>
+                    <span class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-widest">Timestamp</span>
                     <span id="receipt-date" class="text-[11px] font-bold text-gray-400">07 MAR 2026</span>
                 </div>
             </div>
 
-            <button id="receipt-print-btn" class="w-full py-5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black orbitron text-white uppercase tracking-[0.25em] hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+            <button id="receipt-print-btn" class="w-full py-5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black font-whiskey text-white uppercase tracking-[0.25em] hover:bg-white/10 transition-all flex items-center justify-center gap-3">
                 <i data-lucide="printer" class="w-4 h-4"></i> Print Protocol
             </button>
         </div>

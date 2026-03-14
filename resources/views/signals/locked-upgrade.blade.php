@@ -5,7 +5,9 @@
 <div class="relative mt-4">
 
     {{-- Blurred Preview Table --}}
-    <div id="locked-signals-preview" class="overflow-hidden rounded-2xl border border-white/[0.03]" style="filter: blur(6px); pointer-events: none; user-select: none;"></div>
+    <div class="table-wrapper">
+        <div id="locked-signals-preview" class="overflow-hidden rounded-2xl border border-white/[0.03]" style="filter: blur(6px); pointer-events: none; user-select: none;"></div>
+    </div>
 
 @push('scripts')
 <script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
@@ -22,20 +24,21 @@
         new Tabulator("#locked-signals-preview", {
             ...TABULATOR_BASE_CONFIG,
             data: dummyData,
-            layout: "fitColumns",
+            layout: "fitDataStretch",
+            responsiveLayout: false,
             columns: [
-                {title: "STOCK", field: "stock", widthGrow: 1, formatter: (cell) => `<div class="text-white font-bold">${cell.getValue()}</div>`},
-                {title: "SIGNAL", field: "signal", width: 80, formatter: (cell) => {
+                {title: "STOCK", field: "stock", minWidth: 120, formatter: (cell) => `<div class="text-white font-bold">${cell.getValue()}</div>`},
+                {title: "SIGNAL", field: "signal", minWidth: 90, formatter: (cell) => {
                     const val = cell.getValue();
                     const cls = val === 'BUY' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400';
-                    return `<span class="px-3 py-1 rounded-lg text-[9px] font-black orbitron ${cls}">${val}</span>`;
+                    return `<span class="px-3 py-1 rounded-lg text-[9px] font-bold ${cls}">${val}</span>`;
                 }},
-                {title: "ENTRY", field: "entry", width: 100},
-                {title: "SL", field: "sl", width: 100},
-                {title: "TARGET 1", field: "t1", width: 100},
-                {title: "TARGET 2", field: "t2", width: 100},
-                {title: "CONFIDENCE", field: "conf", width: 100},
-                {title: "STATUS", field: "status", width: 80},
+                {title: "ENTRY", field: "entry", minWidth: 110},
+                {title: "SL", field: "sl", minWidth: 100},
+                {title: "TARGET 1", field: "t1", minWidth: 110},
+                {title: "TARGET 2", field: "t2", minWidth: 110},
+                {title: "CONFIDENCE", field: "conf", minWidth: 100},
+                {title: "STATUS", field: "status", minWidth: 110},
             ]
         });
     });
@@ -54,14 +57,14 @@
                 </svg>
             </div>
 
-            <h3 class="text-lg font-black orbitron uppercase tracking-tight text-white mb-2">
+            <h3 class="text-lg font-bold uppercase tracking-tight text-white mb-2">
                 Premium <span class="text-purple-400">Access Required</span>
             </h3>
             <p class="text-gray-500 text-sm leading-relaxed mb-6">
                 Upgrade to Premium to unlock real-time AI trading signals. Get precision entry points, stop losses, targets, and AI confidence scores.
             </p>
 
-            <a href="{{ route('pricing') }}" class="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-xs font-bold orbitron uppercase tracking-widest transition-all shadow-[0_4px_24px_rgba(124,58,237,0.3)] hover:shadow-[0_4px_32px_rgba(124,58,237,0.5)] hover:-translate-y-0.5">
+            <a href="{{ route('pricing') }}" class="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-xs font-bold uppercase tracking-widest transition-all shadow-[0_4px_24px_rgba(124,58,237,0.3)] hover:shadow-[0_4px_32px_rgba(124,58,237,0.5)] hover:-translate-y-0.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
                 Upgrade to Premium
             </a>

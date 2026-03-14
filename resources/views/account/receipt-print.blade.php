@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ESP-{{ $record->transaction_id ?? $record->id }} | Payment Receipt</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -126,10 +126,10 @@
         }
 
         .platform-name {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 18px;
             font-weight: 900;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
             text-transform: uppercase;
         }
 
@@ -138,11 +138,12 @@
         }
 
         .receipt-title {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 24px;
             font-weight: 900;
             color: var(--text-main);
             margin-bottom: 8px;
+            letter-spacing: -1px;
         }
 
         .tx-id {

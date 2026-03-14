@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-12 max-w-4xl relative z-10">
     <div class="text-center mb-10">
-        <h1 class="orbitron text-3xl sm:text-4xl font-black mb-2 tracking-tighter text-white uppercase italic">
+        <h1 class="font-whiskey text-3xl sm:text-4xl font-black mb-2 tracking-tighter text-white uppercase italic">
             SECURE <span class="text-purple-500">PAYMENT</span>
         </h1>
         <p class="text-gray-400 text-sm font-medium uppercase tracking-[0.2em]">Complete your upgrade sequence</p>
@@ -20,10 +20,10 @@
                 
                 <div class="relative z-10">
                     <div class="mb-8">
-                        <span class="text-[10px] font-black orbitron text-purple-400 uppercase tracking-widest px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 mb-4 inline-block">Plan Selected</span>
-                        <h2 class="orbitron text-2xl font-black text-white italic uppercase tracking-tight">{{ $package->name }}</h2>
+                        <span class="text-[10px] font-black font-whiskey text-purple-400 uppercase tracking-widest px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 mb-4 inline-block">Plan Selected</span>
+                        <h2 class="font-whiskey text-2xl font-black text-white italic uppercase tracking-tight">{{ $package->name }}</h2>
                         <div class="mt-2 flex items-baseline gap-1">
-                            <span class="text-3xl font-black text-white orbitron">₹{{ number_format($package->price) }}</span>
+                            <span class="text-3xl font-black text-white font-whiskey">₹{{ number_format($package->price) }}</span>
                             <span class="text-xs text-gray-500 font-bold uppercase tracking-wider">/ {{ $package->duration_days }} Days</span>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
         <div class="space-y-6">
             <div class="glass-panel border-white/10 rounded-[2.5rem] p-8 h-full">
                 <div class="mb-8">
-                    <h3 class="orbitron text-xl font-black text-white italic uppercase tracking-tight">VERIFY <span class="text-purple-500">PAYMENT</span></h3>
+                    <h3 class="font-whiskey text-xl font-black text-white italic uppercase tracking-tight">VERIFY <span class="text-purple-500">PAYMENT</span></h3>
                     <p class="text-gray-500 text-xs mt-1">Submit your transaction details for synchronization</p>
                 </div>
 
@@ -88,7 +88,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Plan Reference</label>
                         <div class="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 flex items-center justify-between">
                             <span class="text-sm font-bold text-white uppercase">{{ $package->name }}</span>
-                            <span class="text-sm font-black text-purple-400 orbitron">₹{{ number_format($package->price) }}</span>
+                            <span class="text-sm font-black text-purple-400 font-whiskey">₹{{ number_format($package->price) }}</span>
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@
                     </div>
 
                     <div class="pt-4">
-                        <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-[1.5rem] font-black orbitron uppercase italic tracking-wider text-sm transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(147,51,234,0.4)] active:scale-[0.98] flex items-center justify-center gap-3">
+                        <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-[1.5rem] font-black font-whiskey uppercase italic tracking-wider text-sm transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(147,51,234,0.4)] active:scale-[0.98] flex items-center justify-center gap-3">
                             <span>Submit Neural Upgrade Request</span>
                             <i data-lucide="zap" class="w-5 h-5"></i>
                         </button>
