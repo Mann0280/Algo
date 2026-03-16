@@ -80,7 +80,7 @@
                                     {{ $item->display_reference ?: 'NO_REF' }}
                                 </span>
                                 @if($item->display_proof)
-                                <button onclick="viewProof('{{ asset($item->display_proof) }}')" class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/20 transition-all group/btn">
+                                <button onclick="viewProof('{{ str_starts_with($item->display_proof, 'uploads/') ? asset($item->display_proof) : asset('storage/' . $item->display_proof) }}')" class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/20 transition-all group/btn">
                                     <i data-lucide="image" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
                                 </button>
                                 @endif

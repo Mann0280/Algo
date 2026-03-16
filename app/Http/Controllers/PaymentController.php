@@ -50,9 +50,8 @@ class PaymentController extends Controller
         ];
 
         if ($request->hasFile('screenshot')) {
-            $imageName = time() . '_' . $user->id . '.' . $request->screenshot->extension();
-            $request->screenshot->move(public_path('uploads/payments'), $imageName);
-            $data['payment_screenshot'] = 'uploads/payments/' . $imageName;
+            $path = $request->file('screenshot')->store('payments', 'public');
+            $data['payment_screenshot'] = $path;
         }
 
         PaymentRequest::create($data);
@@ -101,9 +100,8 @@ class PaymentController extends Controller
         $data['status'] = 'pending';
 
         if ($request->hasFile('screenshot')) {
-            $imageName = time() . '.' . $request->screenshot->extension();
-            $request->screenshot->move(public_path('uploads/payments'), $imageName);
-            $data['screenshot'] = 'uploads/payments/' . $imageName;
+            $path = $request->file('screenshot')->store('payments', 'public');
+            $data['screenshot'] = $path;
         }
 
         Payment::create($data);

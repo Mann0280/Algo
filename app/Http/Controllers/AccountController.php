@@ -152,9 +152,7 @@ class AccountController extends Controller
         $screenshotPath = null;
 
         if ($request->hasFile('screenshot')) {
-            $imageName = 'p2p_' . time() . '.' . $request->screenshot->extension();
-            $request->screenshot->move(public_path('uploads/p2p'), $imageName);
-            $screenshotPath = 'uploads/p2p/' . $imageName;
+            $screenshotPath = $request->file('screenshot')->store('p2p', 'public');
         }
 
         \App\Models\PaymentRequest::create([
@@ -325,9 +323,7 @@ class AccountController extends Controller
 
         $screenshotPath = null;
         if ($request->hasFile('screenshot')) {
-            $imageName = 'topup_' . time() . '.' . $request->screenshot->extension();
-            $request->screenshot->move(public_path('uploads/topups'), $imageName);
-            $screenshotPath = 'uploads/topups/' . $imageName;
+            $screenshotPath = $request->file('screenshot')->store('topups', 'public');
         }
 
         $paymentRequest->update([
