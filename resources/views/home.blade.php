@@ -274,7 +274,7 @@
     <section id="signals" class="pt-16 sm:pt-32 pb-8 sm:pb-16 container mx-auto px-4 sm:px-6 relative z-10">
         <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div class="max-w-2xl">
-                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6">Live <span class="text-vibrant">Market Signals</span></h2>
+                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6"> <span class="text-vibrant">Market Signals</span></h2>
                 <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-medium">Real-time intelligence streams providing validated entry and exit points for global assets.</p>
             </div>
             <a href="{{ url('/signals/past') }}" class="group flex items-center gap-3 text-white font-bold text-xs tracking-widest">
