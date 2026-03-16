@@ -103,8 +103,10 @@ class SignalController extends Controller
         })->count();
 
         $defaultCapital = 100000;
-        $totalPnl = $signals->sum(function($s) use ($defaultCapital) {
-            $qty = ($s->entry > 0) ? floor($defaultCapital / $s->entry) : 0;
+        $leverage = 5;
+        $tradeCapital = $defaultCapital * $leverage;
+        $totalPnl = $signals->sum(function($s) use ($tradeCapital) {
+            $qty = ($s->entry > 0) ? floor($tradeCapital / $s->entry) : 0;
             return $qty * ($s->pnl ?? 0);
         });
         
