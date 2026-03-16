@@ -619,7 +619,7 @@
                         return `<span style="color:${color}; font-weight:900; font-size:10px;">${val}</span>`;
                     }},
                     {title: "Entry", field: "entry", hozAlign: "right", minWidth: 110, formatter: function(cell){
-                        return "₹" + cell.getValue().toLocaleString();
+                        return "<span style='color:white;'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
                     {title: "Target", field: "target", hozAlign: "right", minWidth: 110, formatter: function(cell){
                         return "<span style='color:#10b981'>₹" + cell.getValue().toLocaleString() + "</span>";
@@ -657,7 +657,8 @@
                     }},
                     {title: "Qty", field: "quantity", hozAlign: "center", minWidth: 110, formatter: function(cell){
                         let val = cell.getValue();
-                        return val && val > 0 ? Math.floor(val).toLocaleString() : "---";
+                        let display = val && val > 0 ? Math.floor(val).toLocaleString() : "---";
+                        return `<span style="color:white;">${display}</span>`;
                     }},
                     {title: "PNL", field: "sim_pnl", hozAlign: "right", minWidth: 120, formatter: function(cell){
                         let value = cell.getValue();
