@@ -307,22 +307,30 @@
 
                     <div class="space-y-4 max-h-[400px] overflow-y-auto no-scrollbar pr-2">
                         @foreach($sessions as $session)
-                        <div class="p-4 bg-white/[0.02] border border-white/[0.05] rounded-xl hover:bg-white/[0.04] transition-all flex items-center justify-between gap-4">
-                            <div class="flex items-center gap-4 min-w-0">
-                                <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-purple-500 shrink-0">
-                                    <i data-lucide="{{ str_contains($session->device, 'PC') ? 'monitor' : 'smartphone' }}" class="w-5 h-5"></i>
-                                </div>
-                                <div class="min-w-0">
-                                    <p class="text-sm font-bold text-white truncate">{{ $session->device }}</p>
-                                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest break-all leading-tight">{{ $session->ip_address }}</p>
-                                </div>
+                        <div class="p-5 bg-white/[0.03] border border-white/[0.08] rounded-2xl hover:bg-white/[0.05] hover:border-purple-500/20 transition-all flex items-center gap-5 relative group">
+                            <!-- Device Icon -->
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500 shrink-0 group-hover:scale-105 transition-transform duration-500">
+                                <i data-lucide="{{ str_contains($session->device, 'PC') ? 'monitor' : 'smartphone' }}" class="w-6 h-6"></i>
                             </div>
+                            
+                            <!-- Session Detail -->
+                            <div class="flex-1 min-w-0 space-y-1.5">
+                                <div class="flex items-center gap-3">
+                                    <p class="text-xs font-black text-white uppercase tracking-tight truncate">{{ $session->device }}</p>
+                                    @if($session->is_current_device)
+                                        <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-500 rounded-lg text-[7px] font-black uppercase tracking-widest border border-emerald-500/20 animate-pulse">Current Node</span>
+                                    @endif
+                                </div>
+                                <p class="text-[9px] text-gray-500 font-mono font-medium tracking-normal break-all leading-relaxed select-all selection:bg-purple-500 selection:text-white">{{ $session->ip_address }}</p>
+                            </div>
+
+                            <!-- Action Zone -->
                             @if(!$session->is_current_device)
-                                <button onclick="terminateSession('{{ $session->id }}', this)" class="p-2 text-rose-500/50 hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-all">
-                                    <i data-lucide="power" class="w-4 h-4"></i>
+                                <button onclick="terminateSession('{{ $session->id }}', this)" 
+                                        class="w-10 h-10 flex items-center justify-center text-rose-500/40 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all border border-transparent hover:border-rose-500/20 shrink-0 group/btn" 
+                                        title="Terminate Secure Signal">
+                                    <i data-lucide="power" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
                                 </button>
-                            @else
-                                <span class="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[8px] font-bold uppercase tracking-widest border border-emerald-500/20">Current</span>
                             @endif
                         </div>
                         @endforeach
