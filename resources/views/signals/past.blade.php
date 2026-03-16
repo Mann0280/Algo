@@ -468,9 +468,11 @@
                     </div>
                 </div>
 
-                <div id="sim-result-container" class="hidden min-w-[240px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-inner">
+                <div id="sim-result-container" class="{{ isset($totalPnl) ? '' : 'hidden' }} min-w-[240px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-inner">
                     <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1">PROFIT RESULT</p>
-                    <div id="profitResult" class="text-2xl font-bold">₹0.00</div>
+                    <div id="profitResult" class="text-2xl font-bold {{ (isset($totalPnl) && $totalPnl >= 0) ? 'text-emerald-400' : 'text-rose-400' }}">
+                        {{ ($totalPnl ?? 0) >= 0 ? '+' : '-' }}₹{{ number_format(abs($totalPnl ?? 0), 2) }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -557,12 +559,22 @@
             $tradeCapital = $defaultCapital * $leverage;
             $tableData = $signals->map(function($s) use ($tradeCapital) {
                 $qty = ($s->entry > 0) ? floor($tradeCapital / $s->entry) : 0;
+                $entry = (float)($s->entry ?? 0);
+                $exit = (float)($s->close_price ?? 0);
+                $simPnl = 0;
+                if ($qty > 0) {
+                    if (strtoupper($s->signal_type ?? '') === 'BUY') {
+                        $simPnl = ($exit - $entry) * $qty;
+                    } else {
+                        $simPnl = ($entry - $exit) * $qty;
+                    }
+                }
                 return [
                     'id' => $s->id,
                     'stock' => (string)($s->stock_name ?? '---'),
                     'type' => (string)($s->signal_type ?? '---'),
-                    'entry' => (float)($s->entry ?? 0),
-                    'exit' => (float)($s->close_price ?? 0),
+                    'entry' => $entry,
+                    'exit' => $exit,
                     'target' => (float)($s->target ?? 0),
                     'sl' => (float)($s->sl ?? 0),
                     'breakeven' => (float)($s->breakeven ?? 0),
@@ -570,7 +582,7 @@
                     'time' => (string)($s->entry_time ?? '---'),
                     'quantity' => $qty,
                     'pnl' => (float)($s->pnl ?? 0),
-                    'sim_pnl' => (float)($qty * ($s->pnl ?? 0)),
+                    'sim_pnl' => (float)$simPnl,
                     'result' => (string)($s->result ?? '---'),
                 ];
             });
@@ -673,7 +685,9 @@
                         capitalInput.value = 100000;
                     }
                 }
-                setTimeout(calculateSimulation, 300); // Slight delay to ensure table is ready
+                // Small delay to ensure Tabulator is ready to give us data if needed, 
+                // though we already have rawData.
+                setTimeout(calculateSimulation, 100); 
             });
 
             // Fallback for immediate load

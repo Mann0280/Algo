@@ -106,8 +106,17 @@ class SignalController extends Controller
         $leverage = 5;
         $tradeCapital = $defaultCapital * $leverage;
         $totalPnl = $signals->sum(function($s) use ($tradeCapital) {
-            $qty = ($s->entry > 0) ? floor($tradeCapital / $s->entry) : 0;
-            return $qty * ($s->pnl ?? 0);
+            if ($s->entry <= 0) return 0;
+            
+            $qty = floor($tradeCapital / $s->entry);
+            $entry = (float)$s->entry;
+            $exit = (float)($s->close_price ?? 0);
+            
+            if (strtoupper($s->signal_type ?? '') === 'BUY') {
+                return ($exit - $entry) * $qty;
+            } else {
+                return ($entry - $exit) * $qty;
+            }
         });
         
         $winRate = $totalSignals > 0 ? round(($totalWin / $totalSignals) * 100, 1) . '%' : '0%';
