@@ -215,12 +215,12 @@
             <section class="glass-panel rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 border-white/[0.05] relative overflow-hidden group h-full">
                 <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                 <div class="relative z-10">
-                    <div class="mb-8 flex items-center justify-between">
+                    <div class="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div>
-                            <h3 class="text-xl font-bold text-white tracking-wide">Subscription</h3>
+                            <h3 class="text-xl font-bold text-white tracking-wide uppercase">Subscription</h3>
                             <p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest font-bold">Node ID: {{ substr(md5($user->id), 0, 8) }}</p>
                         </div>
-                        <div id="subscription-timer" class="whitespace-nowrap text-3xl font-black font-whiskey italic tracking-tighter text-purple-500 drop-shadow-[0_0_15px_rgba(147,51,234,0.4)]">
+                        <div id="subscription-timer" class="whitespace-nowrap text-xl sm:text-2xl font-black font-whiskey italic tracking-tighter text-purple-500 drop-shadow-[0_0_15px_rgba(147,51,234,0.4)]">
                             00h 00m 00s
                         </div>
                     </div>
@@ -307,37 +307,37 @@
 
                     <div class="space-y-4 max-h-[400px] overflow-y-auto no-scrollbar pr-2">
                         @foreach($sessions as $session)
-                        <div class="session-row p-5 bg-white/[0.03] border border-white/[0.08] rounded-[1.8rem] hover:bg-white/[0.05] hover:border-purple-500/30 transition-all flex items-center gap-5 relative group/row overflow-hidden">
+                        <div class="session-row p-4 sm:p-5 bg-white/[0.03] border border-white/[0.08] rounded-[1.8rem] hover:bg-white/[0.05] hover:border-purple-500/30 transition-all flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-5 relative group/row overflow-hidden">
                             <!-- Ambient Hover Glow -->
                             <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent opacity-0 group-hover/row:opacity-100 transition-opacity"></div>
                             
                             <!-- Device Icon -->
-                            <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0 group-hover/row:scale-110 transition-all duration-500 shadow-lg">
-                                <i data-lucide="{{ str_contains($session->device, 'PC') ? 'monitor' : 'smartphone' }}" class="w-7 h-7"></i>
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0 group-hover/row:scale-110 transition-all duration-500 shadow-lg">
+                                <i data-lucide="{{ str_contains($session->device, 'PC') ? 'monitor' : 'smartphone' }}" class="w-6 h-6 sm:w-7 sm:h-7"></i>
                             </div>
                             
                             <!-- Session Detail -->
-                            <div class="flex-1 min-w-0 space-y-1">
-                                <div class="flex items-center gap-3">
-                                    <p class="text-xs font-black text-white uppercase tracking-wider truncate">{{ $session->device }}</p>
+                            <div class="flex-1 min-w-0 space-y-1 text-center sm:text-left">
+                                <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3">
+                                    <p class="text-xs font-black text-white uppercase tracking-wider truncate max-w-full">{{ $session->device }}</p>
                                     @if($session->is_current_device)
                                         <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[7px] font-black uppercase tracking-widest border border-emerald-500/20 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.2)]">Primary Node</span>
                                     @endif
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-1 h-1 rounded-full bg-slate-700"></div>
-                                    <p class="text-[10px] text-slate-500 font-mono font-medium tracking-tight break-all leading-none select-all selection:bg-purple-500 selection:text-white">{{ $session->ip_address }}</p>
+                                <div class="flex items-center justify-center sm:justify-start gap-2">
+                                    <div class="w-1 h-1 rounded-full bg-slate-700 hidden sm:block"></div>
+                                    <p class="text-[9px] sm:text-[10px] text-slate-500 font-mono font-medium tracking-tight break-all leading-normal select-all lowercase">{{ $session->ip_address }}</p>
                                 </div>
                             </div>
 
                             <!-- Action Zone -->
-                            <div class="shrink-0 flex items-center gap-4">
+                            <div class="shrink-0 flex items-center justify-center sm:justify-end gap-4 w-full sm:w-auto pt-2 sm:pt-0 border-t border-white/5 sm:border-0">
                                 @if(!$session->is_current_device)
                                     <button onclick="terminateSession('{{ $session->id }}', this)" 
-                                            class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/5 bg-white/5 text-rose-500/60 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all group/btn shadow-xl" 
+                                            class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 sm:px-4 sm:py-2.5 rounded-xl border border-white/5 bg-white/5 text-rose-500/60 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all group/btn shadow-xl" 
                                             title="Terminate Secure Signal">
                                         <i data-lucide="power" class="w-4 h-4 transition-transform group-hover/btn:scale-110"></i>
-                                        <span class="text-[9px] font-black uppercase tracking-widest hidden sm:inline">Terminate</span>
+                                        <span class="text-[9px] font-black uppercase tracking-widest">Terminate</span>
                                     </button>
                                 @else
                                     <div class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
