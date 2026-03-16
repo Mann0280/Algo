@@ -102,7 +102,12 @@ class SignalController extends Controller
             return $res === 'EOD';
         })->count();
 
-        $totalPnl = $signals->sum('pnl');
+        $defaultCapital = 100000;
+        $totalPnl = $signals->sum(function($s) use ($defaultCapital) {
+            $qty = ($s->entry > 0) ? floor($defaultCapital / $s->entry) : 0;
+            return $qty * ($s->pnl ?? 0);
+        });
+        
         $winRate = $totalSignals > 0 ? round(($totalWin / $totalSignals) * 100, 1) . '%' : '0%';
 
         // Pass data to the Blade view

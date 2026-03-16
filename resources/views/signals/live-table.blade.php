@@ -144,7 +144,7 @@
     </div>
 
     {{-- Main Table --}}
-    <div id="market-closed-notice" class="hidden py-24 glass-card border-white/5 flex flex-col items-center justify-center text-center">
+    <div id="market-closed-notice" class="hidden py-16 glass-card border-white/5 flex flex-col items-center justify-center text-center">
         <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10 group">
              <i data-lucide="clock-4" class="w-8 h-8 text-gray-600 transition-colors group-hover:text-purple-400"></i>
         </div>

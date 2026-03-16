@@ -391,7 +391,7 @@
 @endpush
 
 @section('content')
-<main class="relative min-h-screen pt-12 pb-24 px-6 md:px-12">
+<main class="relative min-h-screen pt-8 pb-16 px-6 md:px-12">
     <!-- Header Section -->
     <div class="max-w-7xl mx-auto mb-12">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -559,7 +559,9 @@
             lucide.createIcons();
         }
         @php
-            $tableData = $signals->map(function($s) {
+            $defaultCapital = 100000;
+            $tableData = $signals->map(function($s) use ($defaultCapital) {
+                $qty = ($s->entry > 0) ? floor($defaultCapital / $s->entry) : 0;
                 return [
                     'id' => $s->id,
                     'stock' => (string)($s->stock_name ?? '---'),
@@ -570,9 +572,9 @@
                     'breakeven' => (float)($s->breakeven ?? 0),
                     'date' => (string)($s->entry_date ?? '---'),
                     'time' => (string)($s->entry_time ?? '---'),
-                    'qty' => 0,
+                    'qty' => $qty,
                     'pnl' => (float)($s->pnl ?? 0),
-                    'sim_pnl' => (float)($s->pnl ?? 0),
+                    'sim_pnl' => (float)($qty * ($s->pnl ?? 0)),
                     'result' => (string)($s->result ?? '---'),
                 ];
             });
@@ -596,7 +598,7 @@
                 pagination: "local",
                 paginationSize: 20,
                 paginationSizeSelector: [10, 20, 50, 100],
-                placeholder: "<div class='text-gray-600 py-32 text-[10px] font-bold uppercase tracking-[0.4em]'>NO HISTORY FOUND</div>",
+                placeholder: "<div class='text-gray-600 py-16 text-[10px] font-bold uppercase tracking-[0.4em]'>NO HISTORY FOUND</div>",
                 resizableColumns: true,
                 columnHeaderVertAlign: "bottom",
                 columns: [
@@ -667,9 +669,13 @@
             });
 
             // Initial simulation check
+            // Initial simulation check
             setTimeout(() => {
-                if (document.getElementById('sim-capital').value) calculateSimulation();
-            }, 500);
+                const capitalInput = document.getElementById('sim-capital');
+                if (capitalInput && capitalInput.value) {
+                    calculateSimulation();
+                }
+            }, 50);
 
         } catch (err) {
             console.error("Initialization Failure:", err);
@@ -716,7 +722,7 @@
         const capital = parseFloat(capitalInput.value);
         if (isNaN(capital) || capital <= 0) return;
 
-        const tradingCapital = capital * 5;
+        const tradingCapital = capital; // Changed from capital * 5 to match "Capital Per Trade" exactly
         let totalNetPnl = 0;
 
         const updatedData = window.signalsTable.getData().map(row => {
@@ -748,10 +754,16 @@
         const topPnl = document.getElementById('stat-total-pnl-top');
         if (topPnl) {
             const pnlColor = totalNetPnl >= 0 ? '#34d399' : '#fb7185';
-            topPnl.textContent = (totalNetPnl >= 0 ? '+' : '') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            topPnl.textContent = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 0})}`;
             topPnl.style.color = pnlColor;
-            document.getElementById('stat-pnl-card').style.borderColor = totalNetPnl >= 0 ? 'rgba(16,185,129,0.4)' : 'rgba(244,63,94,0.4)';
-            document.getElementById('stat-pnl-label').style.color = pnlColor;
+            
+            const pnlCard = document.getElementById('stat-pnl-card');
+            const pnlLabel = document.getElementById('stat-pnl-label');
+            if (pnlCard) pnlCard.style.borderColor = totalNetPnl >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)';
+            if (pnlLabel) {
+                pnlLabel.textContent = 'SIMULATED PNL';
+                pnlLabel.style.color = pnlColor;
+            }
         }
     }
 

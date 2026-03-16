@@ -66,28 +66,11 @@
 
                         <!-- Notification Bell -->
                         @if($isPremium)
-                        <div class="relative" id="notification-wrapper">
-                            <button id="notification-bell" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-all relative group">
+                        <div class="relative">
+                            <button class="notification-trigger w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-all relative group">
                                 <i data-lucide="bell" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
-                                <span id="notification-dot" class="hidden absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full shadow-[0_0_10px_#f43f5e]"></span>
+                                <span class="notification-dot hidden absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full shadow-[0_0_10px_#f43f5e]"></span>
                             </button>
-
-                            <!-- Notification Dropdown -->
-                            <div id="notification-dropdown" class="absolute top-[120%] right-0 w-80 bg-[#0a0a12]/95 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-2xl transition-all duration-300 transform scale-95 opacity-0 invisible z-[110] overflow-hidden">
-                                <div class="p-6 border-b border-white/5 flex justify-between items-center">
-                                    <h3 class="font-professional text-[10px] font-bold text-white uppercase tracking-widest">Notifications</h3>
-                                    <span id="unread-badge" class="px-2 py-0.5 rounded-full bg-white text-black text-[8px] font-bold hidden">0 NEW</span>
-                                </div>
-                                <div id="notification-list" class="max-h-[400px] overflow-y-auto custom-scrollbar p-2 space-y-1">
-                                    <div class="py-10 text-center opacity-30 flex flex-col items-center gap-2">
-                                        <i data-lucide="inbox" class="w-8 h-8"></i>
-                                        <span class="text-[8px] font-bold uppercase tracking-[0.2em]">No new notifications</span>
-                                    </div>
-                                </div>
-                                <div class="p-4 border-t border-white/5 text-center">
-                                    <a href="{{ url('/account/notifications') }}" class="text-[8px] font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-widest">View History</a>
-                                </div>
-                            </div>
                         </div>
                         @endif
 
@@ -128,6 +111,33 @@
                     <i data-lucide="menu" class="w-5 h-5" id="menu-icon"></i>
                     <i data-lucide="x" class="w-5 h-5 hidden" id="close-icon"></i>
                 </button>
+
+                <!-- Notification Dropdown (Global) -->
+                @if($isPremium)
+                <div id="notification-dropdown" class="fixed lg:absolute top-[85px] lg:top-[120%] left-1/2 lg:left-auto lg:right-0 -translate-x-1/2 lg:translate-x-0 w-[calc(100vw-32px)] sm:w-96 max-w-lg lg:max-w-none bg-[#0a0a12]/98 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-[0_20px_80px_-15px_rgba(0,0,0,1)] transition-all duration-300 transform scale-95 opacity-0 invisible z-[999] overflow-hidden">
+                    <div class="p-8 border-b border-white/5 flex justify-between items-center bg-white/[0.03]">
+                        <div class="flex flex-col">
+                            <h3 class="font-professional text-[11px] font-black text-white uppercase tracking-[0.25em]">Neural Center</h3>
+                            <p class="text-[8px] text-gray-500 font-bold uppercase tracking-widest mt-1 opacity-60">System Synchronized</p>
+                        </div>
+                        <span id="unread-badge" class="px-3 py-1.5 rounded-xl bg-purple-500 text-white text-[10px] font-black tracking-tighter hidden shadow-[0_0_15px_rgba(168,85,247,0.4)]">0 NEW</span>
+                    </div>
+                    <div id="notification-list" class="max-h-[50vh] lg:max-h-[450px] overflow-y-auto no-scrollbar p-4 space-y-2">
+                        <div class="py-20 text-center flex flex-col items-center gap-4">
+                            <div class="w-16 h-16 rounded-3xl bg-white/[0.02] border border-white/5 flex items-center justify-center">
+                                <i data-lucide="bell-off" class="w-8 h-8 text-gray-700"></i>
+                            </div>
+                            <span class="text-[10px] font-black font-whiskey uppercase tracking-[0.3em] text-gray-600">No Neural Transmissions</span>
+                        </div>
+                    </div>
+                    <div class="p-8 border-t border-white/5 text-center bg-white/[0.02]">
+                        <a href="{{ url('/account/notifications') }}" class="inline-flex items-center gap-2 text-[10px] font-black text-purple-400 hover:text-white transition-all uppercase tracking-[0.2em]">
+                            <span class="border-b border-purple-500/30 pb-0.5">Explore Full Feed</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -159,6 +169,15 @@
                     </div>
                     <span class="font-bold text-xs text-white tracking-wide uppercase">About Us</span>
                 </a>
+                @if($isPremium)
+                <a href="{{ url('/account/notifications') }}" class="mobile-menu-item flex items-center justify-between py-3 px-4 rounded-xl bg-purple-500/10 border border-purple-500/20 hover:border-purple-500/40 hover:bg-purple-500/20 transition-all">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="bell" class="w-4 h-4 text-purple-400"></i>
+                        <span class="text-[10px] font-bold text-white uppercase tracking-widest">Notifications</span>
+                    </div>
+                    <span id="mobile-unread-badge" class="hidden px-2 py-0.5 rounded-lg bg-rose-500 text-white text-[8px] font-black tracking-tight shadow-[0_0_10px_rgba(244,63,94,0.4)]">0</span>
+                </a>
+                @endif
                 <a href="{{ url('/contact') }}" class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/10 transition-all">
                     <div class="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
                         <i data-lucide="mail" class="w-4 h-4"></i>
@@ -182,6 +201,19 @@
                         <i data-lucide="crown" class="w-4 h-4"></i>
                     </div>
                     <span class="font-bold text-xs text-amber-400 tracking-wide uppercase">Pricing</span>
+                </a>
+                
+                {{-- WhatsApp Support Integration --}}
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', App\Models\SiteSetting::getValue('whatsapp_number', '91XXXXXXXXXX')) }}" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-[#25D366]/5 border border-[#25D366]/20 hover:border-[#25D366]/40 hover:bg-[#25D366]/10 transition-all">
+                    <div class="w-9 h-9 rounded-lg bg-[#25D366]/10 flex items-center justify-center text-[#25D366] shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" style="fill: #25D366 !important;" viewBox="0 0 24 24">
+                            <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.195 1.594 6.021L.188 23.813l5.885-1.547a11.968 11.968 0 0 0 5.958 1.594h.005c6.641 0 12.031-5.385 12.031-12.031 0-6.646-5.385-12.031-12.036-12.031zM19.042 16.927c-.292.818-1.464 1.563-2.026 1.636-.542.068-1.182.26-3.76-.807-3.13-1.296-5.141-4.526-5.292-4.729-.151-.203-1.266-1.688-1.266-3.219 0-1.531.792-2.286 1.078-2.589.286-.302.625-.375.833-.375s.417 0 .599.01c.193.01.448-.073.703.542.266.646.911 2.224.995 2.391.083.167.141.359.036.568-.104.208-.156.339-.313.526-.156.188-.328.396-.469.542-.156.167-.318.354-.135.672.182.318.813 1.349 1.745 2.177 1.203 1.073 2.193 1.406 2.516 1.563.323.156.51.135.703-.094.193-.229.833-.969 1.057-1.302.224-.333.443-.276.734-.167.292.109 1.844.87 2.156 1.026.313.156.521.234.599.365.078.13.078.755-.214 1.573z"/>
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xs text-[#25D366] tracking-wide uppercase">Support / WhatsApp</span>
                 </a>
             </div>
         </div>
@@ -259,6 +291,7 @@
     function toggleMenu() {
         isMenuOpen = !isMenuOpen;
         if (isMenuOpen) {
+            document.body.classList.add('menu-open');
             mobileMenu.classList.remove('invisible', 'opacity-0');
             mobileMenu.classList.add('visible', 'opacity-100');
             menuIcon.classList.add('hidden');
@@ -281,6 +314,7 @@
                 }
             );
         } else {
+            document.body.classList.remove('menu-open');
             mobileMenu.classList.add('invisible', 'opacity-0');
             mobileMenu.classList.remove('visible', 'opacity-100');
             menuIcon.classList.remove('hidden');
@@ -300,10 +334,10 @@
     });
 
     @if($isPremium)
-    const bell = document.getElementById('notification-bell');
     const dropdown = document.getElementById('notification-dropdown');
-    const dot = document.getElementById('notification-dot');
+    const dots = document.querySelectorAll('.notification-dot');
     const badge = document.getElementById('unread-badge');
+    const mobileBadge = document.getElementById('mobile-unread-badge');
     const list = document.getElementById('notification-list');
 
     async function fetchNotifications() {
@@ -312,27 +346,42 @@
             const data = await response.json();
             
             if (data.unreadCount > 0) {
-                dot.classList.remove('hidden');
-                badge.classList.remove('hidden');
-                badge.textContent = `${data.unreadCount} NEW`;
+                dots.forEach(dot => dot.classList.remove('hidden'));
+                if(badge) {
+                    badge.classList.remove('hidden');
+                    badge.textContent = `${data.unreadCount} NEW`;
+                }
+                if(mobileBadge) {
+                    mobileBadge.classList.remove('hidden');
+                    mobileBadge.textContent = data.unreadCount;
+                }
             } else {
-                dot.classList.add('hidden');
-                badge.classList.add('hidden');
+                dots.forEach(dot => dot.classList.add('hidden'));
+                if(badge) badge.classList.add('hidden');
+                if(mobileBadge) mobileBadge.classList.add('hidden');
             }
 
             if (data.notifications.length > 0) {
                 list.innerHTML = data.notifications.map(n => `
-                    <div class="p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all cursor-pointer group/item" onclick="markRead(${n.id}, this)">
-                        <div class="flex gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover/item:bg-purple-500/20 transition-all">
-                                <i data-lucide="${n.icon || 'bell'}" class="w-5 h-5"></i>
+                    <div class="p-4 rounded-[1.5rem] hover:bg-white/[0.04] border border-white/[0.03] transition-all cursor-pointer group/item relative overflow-hidden" 
+                         onclick="handleNotificationClick(${n.id}, \`${n.title.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, \`${n.message.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, '${n.created_at}', '${n.icon}', this)">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500/[0.05] to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity"></div>
+                        <div class="flex gap-5 relative z-10">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover/item:bg-purple-500/20 group-hover/item:scale-105 transition-all shrink-0">
+                                <i data-lucide="${n.icon || 'bell'}" class="w-6 h-6"></i>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="text-[10px] font-bold text-white leading-none mb-1 uppercase tracking-wider">${n.title}</h4>
-                                <p class="text-[10px] text-gray-500 font-medium leading-relaxed">${n.message}</p>
-                                <span class="text-[8px] font-bold text-gray-700 uppercase mt-2 block tracking-widest">${new Date(n.created_at).toLocaleTimeString()}</span>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between gap-3 mb-1.5">
+                                    <h4 class="text-[11px] font-black text-white uppercase tracking-wider truncate">${n.title}</h4>
+                                    ${!n.read_at ? '<div class="unread-dot w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_10px_#fbbf24] shrink-0"></div>' : ''}
+                                </div>
+                                <p class="text-[11px] text-gray-500 font-medium leading-[1.6] line-clamp-2 pr-4 break-all">${n.message}</p>
+                                <div class="flex items-center gap-3 mt-3">
+                                    <span class="text-[9px] font-bold text-gray-700 uppercase tracking-[0.15em]">${new Date(n.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                    <div class="w-1 h-1 rounded-full bg-white/10"></div>
+                                    <span class="text-[9px] font-bold text-purple-500/50 uppercase tracking-[0.15em] group-hover/item:text-purple-400 transition-colors">Dispatch Node</span>
+                                </div>
                             </div>
-                            ${!n.read_at ? '<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1 shadow-[0_0_5px_#fbbf24]"></div>' : ''}
                         </div>
                     </div>
                 `).join('');
@@ -343,8 +392,35 @@
         }
     }
 
+    async function handleNotificationClick(id, title, message, time, icon, el) {
+        // Mark as read
+        markRead(id, el);
+        
+        // Open Detail Modal
+        const modal = document.getElementById('notification-detail-modal');
+        const modalTitle = document.getElementById('detail-modal-title');
+        const modalMessage = document.getElementById('detail-modal-message');
+        const modalTime = document.getElementById('detail-modal-time');
+        const modalIcon = document.getElementById('detail-modal-icon');
+
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+        modalTime.textContent = new Date(time).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+        modalIcon.innerHTML = `<i data-lucide="${icon || 'bell'}" class="w-6 h-6"></i>`;
+        lucide.createIcons();
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        
+        // Close the dropdown
+        dropdown.classList.add('invisible', 'opacity-0', 'scale-95');
+    }
+
     async function markRead(id, el) {
         try {
+            const hasUnread = el.querySelector('.unread-dot');
+            if (!hasUnread) return;
+
             await fetch(`/api/notifications/${id}/read`, {
                 method: 'POST',
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
@@ -353,11 +429,23 @@
         } catch (e) {}
     }
 
-    bell.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle('invisible');
-        dropdown.classList.toggle('opacity-0');
-        dropdown.classList.toggle('scale-95');
+    window.closeNotificationDetail = function() {
+        const modal = document.getElementById('notification-detail-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    document.querySelectorAll('.notification-trigger').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = !dropdown.classList.contains('invisible');
+            
+            if (isOpen) {
+                dropdown.classList.add('invisible', 'opacity-0', 'scale-95');
+            } else {
+                dropdown.classList.remove('invisible', 'opacity-0', 'scale-95');
+            }
+        });
     });
 
     document.addEventListener('click', () => {
@@ -371,3 +459,34 @@
     setInterval(fetchNotifications, 30000);
     @endif
 </script>
+
+@if($isPremium)
+<!-- Notification Detail Modal -->
+<div id="notification-detail-modal" class="fixed inset-0 z-[999999] hidden items-center justify-center p-6 sm:p-0">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeNotificationDetail()"></div>
+    <div class="glass-card w-full max-w-lg rounded-[2.5rem] border border-white/10 relative z-10 overflow-hidden shadow-2xl">
+        <div class="p-8 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div id="detail-modal-icon" class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                    <!-- Icon injected via JS -->
+                </div>
+                <div>
+                    <h2 id="detail-modal-title" class="text-sm font-black text-white uppercase tracking-wider leading-none mb-1">NOTIFICATION</h2>
+                    <p id="detail-modal-time" class="text-[9px] font-bold text-gray-500 uppercase tracking-widest"></p>
+                </div>
+            </div>
+            <button onclick="closeNotificationDetail()" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white transition-all">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div class="p-8">
+            <div id="detail-modal-message" class="text-xs text-gray-300 leading-relaxed font-medium bg-white/[0.01] p-6 rounded-2xl border border-white/[0.03] max-h-[40vh] overflow-y-auto no-scrollbar whitespace-pre-wrap">
+                <!-- Message injected via JS -->
+            </div>
+        </div>
+        <div class="p-8 pt-0">
+            <button onclick="closeNotificationDetail()" class="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black text-white hover:bg-white/10 transition-all uppercase tracking-[0.2em]">Close Transmission</button>
+        </div>
+    </div>
+</div>
+@endif

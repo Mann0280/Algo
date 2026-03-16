@@ -81,8 +81,8 @@
             <div class="space-y-4 pt-4 border-t border-white/5">
                 <form method="POST" action="{{ route('verification.send') }}" id="resendForm">
                     @csrf
-                    <button type="submit" id="resendBtn" disabled class="text-[10px] font-black font-whiskey text-gray-500 hover:text-white uppercase tracking-[0.2em] transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                        Resend Code <span id="timer" class="text-purple-500 ml-2">(60s)</span>
+                    <button type="submit" id="resendBtn" class="text-[10px] font-black font-whiskey text-purple-500 hover:text-white uppercase tracking-[0.2em] transition-all">
+                        Resend Code
                     </button>
                 </form>
 
@@ -146,71 +146,15 @@
         // Initialize first input focus
         inputs[0].focus();
 
-        // Timer Logic
-        let timeLeft = 60;
-        const timerElement = document.getElementById('timer');
-        const resendBtn = document.getElementById('resendBtn');
-
-        const updateTimer = () => {
-            if (timeLeft > 0) {
-                timerElement.innerText = `(${timeLeft}s)`;
-                timeLeft--;
-                setTimeout(updateTimer, 1000);
-            } else {
-                timerElement.innerText = '';
-                resendBtn.removeAttribute('disabled');
-                resendBtn.classList.remove('text-gray-500');
-                resendBtn.classList.add('text-purple-500');
-            }
-        };
-
-        updateTimer();
-
-        // Submit Button Throttle Logic
+        // Prevent double-click on OTP verification
         const otpForm = document.getElementById('otpForm');
         const submitBtn = document.getElementById('otpSubmitBtn');
         const btnText = document.getElementById('btnText');
-        const throttleMsg = document.getElementById('throttleMsg');
-        const throttleTimerSpan = document.getElementById('throttleTimer');
-        const THROTTLE_TIME = 30000; // 30 seconds
-        const STORAGE_KEY = 'auth_otp_throttle';
-
-        const startSubmitCountdown = (remaining) => {
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            throttleMsg.classList.remove('hidden');
-            
-            const timer = setInterval(() => {
-                remaining -= 1000;
-                const seconds = Math.ceil(remaining / 1000);
-                throttleTimerSpan.textContent = seconds;
-
-                if (remaining <= 0) {
-                    clearInterval(timer);
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                    btnText.textContent = 'Verify Access Protocol';
-                    throttleMsg.classList.add('hidden');
-                    localStorage.removeItem(STORAGE_KEY);
-                }
-            }, 1000);
-        };
-
-        const lastSubmit = localStorage.getItem(STORAGE_KEY);
-        if (lastSubmit) {
-            const timePassed = Date.now() - parseInt(lastSubmit);
-            if (timePassed < THROTTLE_TIME) {
-                startSubmitCountdown(THROTTLE_TIME - timePassed);
-            } else {
-                localStorage.removeItem(STORAGE_KEY);
-            }
-        }
 
         otpForm.addEventListener('submit', (e) => {
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             btnText.textContent = 'Verifying Protocol...';
-            localStorage.setItem(STORAGE_KEY, Date.now().toString());
         });
     });
 </script>

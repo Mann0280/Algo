@@ -27,8 +27,8 @@
                 <svg width="26" height="26" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
             <div>
-                <div class="rcpt-brand">Stock Predictor</div>
-                <div class="rcpt-brand-sub">Neural Financial Intelligence</div>
+                <div class="rcpt-brand" style="font-family: 'Cinzel Decorative', serif;">Emperor Stock Predictor</div>
+                <div class="rcpt-brand-sub">Elite Neural Trading Intelligence</div>
             </div>
         </div>
         <div class="rcpt-hdr-right">
@@ -99,8 +99,13 @@
     {{-- ── SUMMARY ── --}}
     <div class="rcpt-summary">
         <div class="rcpt-notes">
-            <div class="rcpt-notes-hd">Note</div>
-            <div class="rcpt-notes-body">This is an electronically generated invoice. Payment has been received and your subscription is now active. No physical signature required.</div>
+            <div class="rcpt-notes-hd">Terms & Conditions</div>
+            <div class="rcpt-notes-body">
+                1. This subscription is valid for 30 days from issued date.<br>
+                2. Signals are for educational purposes based on neural data.<br>
+                3. No physical signature is required as this is a digital invoice.<br>
+                <strong>GSTIN:</strong> 27AABCE1234F1Z5 (Sample)
+            </div>
         </div>
         <div class="rcpt-totals">
             <div class="rcpt-row"><span>Subtotal</span><span class="rcpt-mono">₹{{ number_format($record->amount, 2) }}</span></div>
@@ -129,13 +134,16 @@
      ═══════════════════════════════════════════════ --}}
 <style>
 /* ── Font Import ───────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── Global Style ──────────────────────────── */
+body{
+    background:#080a18!important;
+    background-image: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.05) 0%, transparent 50%)!important;
+}
 
 /* ── Hide WhatsApp on this page ────────────── */
 .whatsapp-float{display:none!important}
-
-/* ── Page background ───────────────────────── */
-body{background:#080a18!important}
 
 /* ── Action bar ────────────────────────────── */
 .rcpt-actions{

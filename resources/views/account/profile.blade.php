@@ -34,12 +34,17 @@
             <section class="glass-panel rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 border-white/[0.05] relative overflow-hidden group h-full">
                 <div class="absolute inset-0 bg-gradient-to-br from-purple-600/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                 <div class="relative z-10">
-                    <div class="flex items-center justify-between gap-6 mb-8">
+                    <div class="flex items-center justify-between gap-6 mb-10 pb-6 border-b border-white/5">
                         <div class="flex items-center gap-4">
-                            <i data-lucide="fingerprint" class="w-6 h-6 text-purple-500"></i>
-                            <h3 class="text-xl font-bold text-white tracking-wide">Profile</h3>
+                            <div class="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center border border-purple-500/20">
+                                <i data-lucide="fingerprint" class="w-5 h-5 text-purple-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white tracking-tight">Profile</h3>
+                                <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-0.5">Identity Settings</p>
+                            </div>
                         </div>
-                        <button id="save-changes-btn" class="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl text-xs font-bold hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all">Save Changes</button>
+                        <button id="save-changes-btn" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all active:scale-95 shadow-xl shadow-purple-900/20">Save Changes</button>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
@@ -67,22 +72,26 @@
                         </div>
 
                         <!-- Data Grid -->
-                        <div class="flex-1 w-full space-y-6">
+                        <div class="flex-1 w-full space-y-8">
                             <!-- Field: Username -->
-                            <div class="space-y-2">
-                                <label class="text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">Username</label>
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] pl-1">Username</label>
                                 <div class="relative group/field">
-                                    <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                    <input type="text" name="username" value="{{ Auth::user()->username }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-12 pr-4 py-3 text-white text-sm font-medium focus:outline-none focus:border-purple-500/40 transition-all">
+                                    <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-3 pr-4 border-r border-white/5">
+                                        <i data-lucide="user" class="w-4 h-4 text-slate-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                    </div>
+                                    <input type="text" name="username" value="{{ Auth::user()->username }}" class="w-full bg-white/[0.02] border border-white/10 rounded-2xl pl-16 pr-6 py-4 text-white text-sm font-semibold focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.04] focus:shadow-[0_0_40px_rgba(147,51,234,0.1)] transition-all placeholder:text-slate-700" placeholder="Your account nickname">
                                 </div>
                             </div>
 
                             <!-- Field: Email -->
-                            <div class="space-y-2">
-                                <label class="text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">Email Address</label>
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] pl-1">Email Address</label>
                                 <div class="relative group/field">
-                                    <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                    <input type="email" name="email" value="{{ Auth::user()->email }}" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-12 pr-4 py-3 text-white text-sm font-medium focus:outline-none focus:border-purple-500/40 transition-all">
+                                    <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-3 pr-4 border-r border-white/5">
+                                        <i data-lucide="mail" class="w-4 h-4 text-slate-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                    </div>
+                                    <input type="email" name="email" value="{{ Auth::user()->email }}" class="w-full bg-white/[0.02] border border-white/10 rounded-2xl pl-16 pr-6 py-4 text-white text-sm font-semibold focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.04] focus:shadow-[0_0_40px_rgba(147,51,234,0.1)] transition-all placeholder:text-slate-700" placeholder="primary@interface.io">
                                 </div>
                             </div>
                         </div>
@@ -102,30 +111,39 @@
                     </div>
 
                     <div class="space-y-6">
-                        <div class="space-y-2">
-                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">Current Password</label>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] pl-1">Current Password</label>
                             <div class="relative group/field">
-                                <i data-lucide="key" class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                <input type="password" id="current_password" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-12 pr-4 py-3 text-white text-sm font-medium focus:outline-none focus:border-purple-500/40 transition-all" placeholder="••••••••">
+                                <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-3 pr-4 border-r border-white/5">
+                                    <i data-lucide="key" class="w-4 h-4 text-slate-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                </div>
+                                <input type="password" id="current_password" class="w-full bg-white/[0.02] border border-white/10 rounded-2xl pl-16 pr-6 py-4 text-white text-sm font-semibold focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.04] focus:shadow-[0_0_40px_rgba(147,51,234,0.1)] transition-all placeholder:text-slate-700" placeholder="••••••••">
                             </div>
                         </div>
 
-                        <div class="space-y-2">
-                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">New Password</label>
-                            <div class="relative group/field">
-                                <i data-lucide="shield-plus" class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                <input type="password" id="new_password" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-12 pr-4 py-3 text-white text-sm font-medium focus:outline-none focus:border-purple-500/40 transition-all" placeholder="••••••••">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] pl-1">New Password</label>
+                                <div class="relative group/field">
+                                    <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-3 pr-4 border-r border-white/5">
+                                        <i data-lucide="shield-plus" class="w-4 h-4 text-slate-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                    </div>
+                                    <input type="password" id="new_password" class="w-full bg-white/[0.02] border border-white/10 rounded-2xl pl-16 pr-6 py-4 text-white text-sm font-semibold focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.04] focus:shadow-[0_0_40px_rgba(147,51,234,0.1)] transition-all placeholder:text-slate-700" placeholder="••••••••">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="space-y-2">
-                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">Confirm New Password</label>
-                            <div class="relative group/field">
-                                <i data-lucide="check-circle-2" class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-600 group-hover/field:text-purple-500 transition-colors"></i>
-                                <input type="password" id="new_password_confirmation" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-12 pr-4 py-3 text-white text-sm font-medium focus:outline-none focus:border-purple-500/40 transition-all" placeholder="••••••••">
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] pl-1">Confirm New Password</label>
+                                <div class="relative group/field">
+                                    <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-3 pr-4 border-r border-white/5">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-slate-600 group-hover/field:text-purple-500 transition-colors"></i>
+                                    </div>
+                                    <input type="password" id="new_password_confirmation" class="w-full bg-white/[0.02] border border-white/10 rounded-2xl pl-16 pr-6 py-4 text-white text-sm font-semibold focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.04] focus:shadow-[0_0_40px_rgba(147,51,234,0.1)] transition-all placeholder:text-slate-700" placeholder="••••••••">
+                                </div>
                             </div>
                         </div>
-                        <button onclick="updatePassword()" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all">Update Security Protocol</button>
+                        
+                        <button onclick="updatePassword()" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all shadow-xl shadow-purple-900/20 active:scale-95">Update Security Protocol</button>
                     </div>
 
                     <!-- Requirements & Status -->
@@ -290,13 +308,13 @@
                     <div class="space-y-4 max-h-[400px] overflow-y-auto no-scrollbar pr-2">
                         @foreach($sessions as $session)
                         <div class="p-4 bg-white/[0.02] border border-white/[0.05] rounded-xl hover:bg-white/[0.04] transition-all flex items-center justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-purple-500">
+                            <div class="flex items-center gap-4 min-w-0">
+                                <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-purple-500 shrink-0">
                                     <i data-lucide="{{ str_contains($session->device, 'PC') ? 'monitor' : 'smartphone' }}" class="w-5 h-5"></i>
                                 </div>
-                                <div>
-                                    <p class="text-sm font-bold text-white">{{ $session->device }}</p>
-                                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">{{ $session->ip_address }}</p>
+                                <div class="min-w-0">
+                                    <p class="text-sm font-bold text-white truncate">{{ $session->device }}</p>
+                                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest break-all leading-tight">{{ $session->ip_address }}</p>
                                 </div>
                             </div>
                             @if(!$session->is_current_device)

@@ -105,11 +105,6 @@
                 <i data-lucide="user-plus" class="w-4 h-4"></i>
                 <span id="btnText">Create Account</span>
             </button>
-            <div id="throttleMsg" class="hidden text-center mt-4 animate-in fade-in zoom-in duration-300">
-                <p class="text-[9px] font-black font-whiskey text-purple-400 uppercase tracking-[0.2em]">
-                    Security lock active. Next attempt in <span id="throttleTimer" class="text-white text-xs ml-1">30</span>s
-                </p>
-            </div>
         </form>
 
         <!-- Footer Link -->
@@ -139,56 +134,17 @@
         lucide.createIcons();
     }
 
-    // Button Throttle Logic
+    // Prevent double-click on registration
     document.addEventListener('DOMContentLoaded', () => {
         const registerForm = document.querySelector('form');
         const submitBtn = document.getElementById('registerSubmitBtn');
         const btnText = document.getElementById('btnText');
-        const throttleMsg = document.getElementById('throttleMsg');
-        const timerSpan = document.getElementById('throttleTimer');
-        const THROTTLE_TIME = 30000; // 30 seconds
-        const STORAGE_KEY = 'auth_register_throttle';
-
-        const startCountdown = (remaining) => {
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            throttleMsg.classList.remove('hidden');
-            
-            const timer = setInterval(() => {
-                remaining -= 1000;
-                const seconds = Math.ceil(remaining / 1000);
-                timerSpan.textContent = seconds;
-
-                if (remaining <= 0) {
-                    clearInterval(timer);
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                    btnText.textContent = 'Create Account';
-                    throttleMsg.classList.add('hidden');
-                    localStorage.removeItem(STORAGE_KEY);
-                }
-            }, 1000);
-        };
-
-        // Check if throttle is active on page load
-        const lastSubmit = localStorage.getItem(STORAGE_KEY);
-        if (lastSubmit) {
-            const timePassed = Date.now() - parseInt(lastSubmit);
-            if (timePassed < THROTTLE_TIME) {
-                startCountdown(THROTTLE_TIME - timePassed);
-            } else {
-                localStorage.removeItem(STORAGE_KEY);
-            }
-        }
 
         registerForm.addEventListener('submit', (e) => {
             // Immediate visual feedback to prevent double-click
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             btnText.textContent = 'Processing Protocol...';
-            
-            // Set throttle timestamp
-            localStorage.setItem(STORAGE_KEY, Date.now().toString());
         });
     });
 

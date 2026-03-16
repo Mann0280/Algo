@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Signal;
+use App\Models\StockSignal;
 use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,10 +20,17 @@ class HomeController extends Controller
         $user = Auth::user();
         $isPremium = $user ? ($user->role === 'premium' || $user->role === 'admin') : false;
 
-        // Preview signals for the landing page
-        $signals = Signal::orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get();
+        // Preview signals for the landing page (Show last 10 from past page with simulation)
+        $defaultCapital = 100000;
+        $signals = StockSignal::orderByRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') DESC")
+            ->orderBy('entry_time', 'DESC')
+            ->limit(10)
+            ->get()
+            ->map(function($s) use ($defaultCapital) {
+                $s->qty = ($s->entry > 0) ? floor($defaultCapital / $s->entry) : 0;
+                $s->sim_pnl = $s->qty * ($s->pnl ?? 0);
+                return $s;
+            });
 
         // Get up to 4 packages for homepage
         $packages = \App\Models\PremiumPackage::where('is_active', true)->orderBy('price', 'asc')->limit(4)->get();

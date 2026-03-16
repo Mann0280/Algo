@@ -3,7 +3,7 @@
 @section('title', 'About Us | Emperor Stock Predictor — Algorithmic Excellence')
 
 @section('content')
-<main class="relative pt-32 pb-20">
+<main class="relative pt-16 pb-12">
     {{-- Grid Background --}}
     <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
 
@@ -12,7 +12,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- HERO --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="text-center max-w-4xl mx-auto mb-28 fade-in-up">
+        <div class="text-center max-w-4xl mx-auto mb-16 fade-in-up">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">
                 <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping"></span>
                 Smart Trading Systems
@@ -30,7 +30,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- KEY METRICS --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-28 fade-in-up">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 fade-in-up">
             <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center group hover:border-purple-500/20 transition-all">
                 <div class="text-4xl font-professional text-white tracking-tighter mb-2">5K+</div>
                 <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Active Traders</div>
@@ -52,7 +52,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- MISSION & VISION --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-28">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
             {{-- Mission --}}
             <div class="glass-panel p-10 md:p-14 rounded-[2.5rem] border border-white/5 relative overflow-hidden fade-in-up group hover:border-purple-500/20 transition-all">
                 <div class="absolute top-0 right-0 w-48 h-48 bg-purple-600/5 blur-[80px] -z-10"></div>
@@ -119,7 +119,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- OUR STORY --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="mb-28 fade-in-up">
+        <div class="mb-16 fade-in-up">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Genesis</span>
                 <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
@@ -150,7 +150,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- HOW IT WORKS --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="mb-28 fade-in-up">
+        <div class="mb-16 fade-in-up">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">AI Process</span>
                 <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
@@ -194,7 +194,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- CORE VALUES --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="mb-28 fade-in-up">
+        <div class="mb-16 fade-in-up">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Protocol</span>
                 <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
@@ -240,7 +240,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- TECHNOLOGY STACK OVERVIEW --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="mb-28 fade-in-up">
+        <div class="mb-16 fade-in-up">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Infrastructure</span>
                 <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
@@ -249,70 +249,70 @@
             </div>
 
             <div class="glass-panel p-6 sm:p-10 md:p-14 rounded-[3rem] border border-white/5 max-w-5xl mx-auto shadow-2xl">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-5">
                     {{-- AI Systems --}}
-                    <div class="flex items-center gap-6 group">
-                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-purple-500/30 transition-all flex-shrink-0">
-                            <i data-lucide="cpu" class="w-7 h-7 text-purple-400"></i>
+                    <div class="flex items-center gap-4 py-3 group">
+                        <div class="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="cpu" class="w-7 h-7 text-purple-400 opacity-90 group-hover:opacity-100 transition-opacity"></i>
                         </div>
-                        <div>
-                            <div class="text-xl font-professional text-white tracking-tight mb-1">AI Systems</div>
-                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Technology</div>
+                        <div class="flex flex-col">
+                            <h4 class="text-lg font-semibold text-white leading-none m-0 m-0">AI Systems</h4>
+                            <p class="text-[12px] font-bold text-slate-500 uppercase tracking-[1px] opacity-70 mt-[2px] mb-0">Technology</p>
                         </div>
                     </div>
 
                     {{-- AWS Cloud --}}
-                    <div class="flex items-center gap-6 group">
-                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-emerald-500/30 transition-all flex-shrink-0">
-                            <i data-lucide="server" class="w-7 h-7 text-emerald-400"></i>
+                    <div class="flex items-center gap-4 py-3 group">
+                        <div class="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="server" class="w-7 h-7 text-emerald-400 opacity-90 group-hover:opacity-100 transition-opacity"></i>
                         </div>
-                        <div>
-                            <div class="text-xl font-professional text-white tracking-tight mb-1">AWS Cloud</div>
-                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Infrastructure</div>
+                        <div class="flex flex-col">
+                            <h4 class="text-lg font-semibold text-white leading-none m-0 m-0">AWS Cloud</h4>
+                            <p class="text-[12px] font-bold text-slate-500 uppercase tracking-[1px] opacity-70 mt-[2px] mb-0">Infrastructure</p>
                         </div>
                     </div>
 
                     {{-- Real-time APIs --}}
-                    <div class="flex items-center gap-6 group">
-                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-blue-500/30 transition-all flex-shrink-0">
-                            <i data-lucide="globe" class="w-7 h-7 text-blue-400"></i>
+                    <div class="flex items-center gap-4 py-3 group">
+                        <div class="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="globe" class="w-7 h-7 text-blue-400 opacity-90 group-hover:opacity-100 transition-opacity"></i>
                         </div>
-                        <div>
-                            <div class="text-xl font-professional text-white tracking-tight mb-1">Real-time APIs</div>
-                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Data Feeds</div>
+                        <div class="flex flex-col">
+                            <h4 class="text-lg font-semibold text-white leading-none m-0 m-0">Real-time APIs</h4>
+                            <p class="text-[12px] font-bold text-slate-500 uppercase tracking-[1px] opacity-70 mt-[2px] mb-0">Data Feeds</p>
                         </div>
                     </div>
 
                     {{-- 15+ Years --}}
-                    <div class="flex items-center gap-6 group">
-                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-amber-500/30 transition-all flex-shrink-0">
-                            <i data-lucide="bar-chart-3" class="w-7 h-7 text-amber-400"></i>
+                    <div class="flex items-center gap-4 py-3 group">
+                        <div class="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="bar-chart-3" class="w-7 h-7 text-amber-400 opacity-90 group-hover:opacity-100 transition-opacity"></i>
                         </div>
-                        <div>
-                            <div class="text-xl font-professional text-white tracking-tight mb-1">15+ Years</div>
-                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Training Data</div>
+                        <div class="flex flex-col">
+                            <h4 class="text-lg font-semibold text-white leading-none m-0 m-0">15+ Years</h4>
+                            <p class="text-[12px] font-bold text-slate-500 uppercase tracking-[1px] opacity-70 mt-[2px] mb-0">Training Data</p>
                         </div>
                     </div>
 
                     {{-- Weekly Retraining --}}
-                    <div class="flex items-center gap-6 group">
-                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-rose-500/30 transition-all flex-shrink-0">
-                            <i data-lucide="refresh-cw" class="w-7 h-7 text-rose-400"></i>
+                    <div class="flex items-center gap-4 py-3 group">
+                        <div class="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="refresh-cw" class="w-7 h-7 text-rose-400 opacity-90 group-hover:opacity-100 transition-opacity"></i>
                         </div>
-                        <div>
-                            <div class="text-xl font-professional text-white tracking-tight mb-1">Weekly Retraining</div>
-                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Model Updates</div>
+                        <div class="flex flex-col">
+                            <h4 class="text-lg font-semibold text-white leading-none m-0 m-0">Weekly Retraining</h4>
+                            <p class="text-[12px] font-bold text-slate-500 uppercase tracking-[1px] opacity-70 mt-[2px] mb-0">Model Updates</p>
                         </div>
                     </div>
 
                     {{-- 2M+ Daily --}}
-                    <div class="flex items-center gap-6 group">
-                        <div class="w-14 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-indigo-500/30 transition-all flex-shrink-0">
-                            <i data-lucide="activity" class="w-7 h-7 text-indigo-400"></i>
+                    <div class="flex items-center gap-4 py-3 group">
+                        <div class="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="activity" class="w-7 h-7 text-indigo-400 opacity-90 group-hover:opacity-100 transition-opacity"></i>
                         </div>
-                        <div>
-                            <div class="text-xl font-professional text-white tracking-tight mb-1">2M+ Daily</div>
-                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Data Points</div>
+                        <div class="flex flex-col">
+                            <h4 class="text-lg font-semibold text-white leading-none m-0 m-0">2M+ Daily</h4>
+                            <p class="text-[12px] font-bold text-slate-500 uppercase tracking-[1px] opacity-70 mt-[2px] mb-0">Data Points</p>
                         </div>
                     </div>
                 </div>
@@ -322,7 +322,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         {{-- TIMELINE --}}
         {{-- ═══════════════════════════════════════════ --}}
-        <div class="mb-28 fade-in-up">
+        <div class="mb-16 fade-in-up">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Growth Log</span>
                 <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">

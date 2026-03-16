@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin Panel') | Emperor Stock Predictor</title>
     
     <!-- Styles -->
@@ -259,6 +260,11 @@
                 <a href="{{ route('admin.tutorial-videos.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.tutorial-videos.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
                     <i data-lucide="play-circle" class="w-5 h-5 {{ request()->routeIs('admin.tutorial-videos.*') ? 'text-purple-500' : '' }}"></i>
                     <span class="font-whiskey text-[11px] font-semibold uppercase tracking-[0.1em]">Tutorials</span>
+                </a>
+
+                <a href="{{ route('admin.broadcast-notification.show') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.broadcast-notification.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
+                    <i data-lucide="megaphone" class="w-5 h-5 {{ request()->routeIs('admin.broadcast-notification.*') ? 'text-purple-500' : '' }}"></i>
+                    <span class="font-whiskey text-[11px] font-semibold uppercase tracking-[0.1em]">Broadcast</span>
                 </a>
 
                 <div class="px-4 mt-10 mb-4 text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-widest leading-none">Financials</div>

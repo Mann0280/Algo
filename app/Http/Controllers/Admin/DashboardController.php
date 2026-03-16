@@ -125,6 +125,11 @@ class DashboardController extends Controller
         return redirect()->back()->with('success', 'Neural signal broadcasted and notifications deployed.');
     }
 
+    public function showBroadcastNotification()
+    {
+        return view('admin.notifications.broadcast');
+    }
+
     public function broadcastNotification(Request $request)
     {
         $request->validate([

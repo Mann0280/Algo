@@ -18,7 +18,7 @@
 @endphp
 
 <!-- Premium Plans Section -->
-<section class="py-20 sm:py-32 relative overflow-hidden">
+<section class="pt-8 sm:pt-16 pb-20 sm:pb-32 relative overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 relative z-10">
         <!-- Header removed as requested to avoid duplication on pricing page -->
 

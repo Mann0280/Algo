@@ -271,13 +271,13 @@
     </div>
 
     <!-- Signals Section -->
-    <section id="signals" class="py-16 sm:py-32 container mx-auto px-4 sm:px-6 relative z-10">
+    <section id="signals" class="pt-16 sm:pt-32 pb-8 sm:pb-16 container mx-auto px-4 sm:px-6 relative z-10">
         <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div class="max-w-2xl">
                 <h2 class="text-3xl md:text-5xl font-professional text-white mb-6">Live <span class="text-vibrant">Market Signals</span></h2>
                 <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-medium">Real-time intelligence streams providing validated entry and exit points for global assets.</p>
             </div>
-            <a href="{{ url('/register') }}" class="group flex items-center gap-3 text-white font-bold text-xs tracking-widest">
+            <a href="{{ url('/signals/past') }}" class="group flex items-center gap-3 text-white font-bold text-xs tracking-widest">
                 EXPLORE ALL SIGNALS 
                 <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-2 transition-transform"></i>
             </a>
@@ -289,49 +289,62 @@
                 <table class="signals-table signals-table-desktop">
                     <thead>
                         <tr>
-                            <th onclick="sortSignals('pair')">Pair <i data-lucide="chevron-down" class="w-3 h-3 inline opacity-30"></i></th>
+                            <th onclick="sortSignals('stock')">Stock <i data-lucide="chevron-down" class="w-3 h-3 inline opacity-30"></i></th>
+                            <th class="text-center">Type</th>
                             <th class="text-right">Entry</th>
-                            <th class="text-right">SL</th>
-                            <th class="text-right">TP1</th>
-                            <th class="text-right">TP2</th>
-                            <th onclick="sortSignals('confidence')" class="text-center">AI Confidence <i data-lucide="chevron-down" class="w-3 h-3 inline opacity-30"></i></th>
-                            <th onclick="sortSignals('time')" class="text-center">Time <i data-lucide="chevron-down" class="w-3 h-3 inline opacity-30"></i></th>
-                            <th class="text-center">Status</th>
-                            <th class="text-right">Profit</th>
+                            <th class="text-right">Stop Loss</th>
+                            <th class="text-right">Target</th>
+                            <th class="text-right">Breakeven</th>
+                            <th onclick="sortSignals('time')" class="text-center">Date/Time <i data-lucide="chevron-down" class="w-3 h-3 inline opacity-30"></i></th>
+                            <th class="text-center">Result</th>
+                            <th class="text-right">Qty</th>
+                            <th class="text-right">PNL</th>
                         </tr>
                     </thead>
                     <tbody id="signals-tbody">
-                        @forelse($signals->take(5) as $signal)
-                        <tr class="signal-row" 
-                            data-confidence="{{ $signal->confidence_level }}" 
-                            data-time="{{ $signal->created_at->timestamp }}">
-                            <td>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500">
-                                        <i data-lucide="bitcoin" class="w-4 h-4"></i>
-                                    </div>
-                                    <span class="font-bold text-xs text-white uppercase tracking-tighter">{{ $signal->stock_symbol }}</span>
-                                </div>
+                        @forelse($signals as $signal)
+                        @php
+                            $timestamp = strtotime($signal->entry_date . ' ' . $signal->entry_time);
+                        @endphp
+                        <tr class="signal-row hover:bg-white/[0.02] transition-colors" 
+                            data-time="{{ $timestamp }}">
+                            <td class="py-4">
+                                <span class="font-bold text-xs text-white uppercase tracking-tighter">{{ $signal->stock_name }}</span>
                             </td>
-                            <td class="text-right font-mono text-sm text-white">₹{{ number_format($signal->entry_price, 1) }}</td>
-                            <td class="text-right font-mono text-xs text-slate-500">₹{{ number_format($signal->stop_loss, 1) }}</td>
-                            <td class="text-right font-mono text-sm text-purple-400">₹{{ number_format($signal->target_1, 1) }}</td>
-                            <td class="text-right font-mono text-sm text-purple-400">₹{{ number_format($signal->target_2, 1) }}</td>
                             <td class="text-center">
                                 @php
-                                    $conf = $signal->confidence_level;
-                                    $confClass = $conf >= 80 ? 'conf-high' : ($conf >= 60 ? 'conf-mid' : 'conf-low');
+                                    $type = strtoupper($signal->signal_type ?? 'BUY');
+                                    $typeColor = $type === 'BUY' ? 'text-emerald-400' : 'text-rose-400';
                                 @endphp
-                                <span class="px-3 py-1 rounded-lg text-[10px] font-bold {{ $confClass }}">{{ $conf }}%</span>
+                                <span class="text-[10px] font-black {{ $typeColor }}">{{ $type }}</span>
                             </td>
-                            <td class="text-center text-[10px] text-slate-500 font-bold uppercase">{{ $signal->created_at->format('h:i A') }}</td>
+                            <td class="text-right font-mono text-sm text-white">₹{{ number_format($signal->entry, 1) }}</td>
+                            <td class="text-right font-mono text-xs text-rose-500/80">₹{{ number_format($signal->sl, 1) }}</td>
+                            <td class="text-right font-mono text-sm text-emerald-400">₹{{ number_format($signal->target, 1) }}</td>
+                            <td class="text-right font-mono text-sm text-blue-400">₹{{ number_format($signal->breakeven, 1) }}</td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center gap-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
-                                    <span class="text-[9px] font-bold text-emerald-400 uppercase">ACTIVE</span>
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] text-white font-bold">{{ $signal->entry_date }}</span>
+                                    <span class="text-[9px] text-slate-500 uppercase">{{ date('h:i A', $timestamp) }}</span>
                                 </div>
                             </td>
-                            <td class="text-right font-bold text-[10px] text-cyan-400 uppercase">PENDING</td>
+                            <td class="text-center">
+                                @php
+                                    $res = (strtoupper($signal->result ?: 'ACTIVE'));
+                                    if (in_array($res, ['WIN', 'TP HIT', 'ACTIVE'])) {
+                                        $resCls = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                                    } elseif (in_array($res, ['LOSS', 'SL HIT'])) {
+                                        $resCls = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+                                    } else {
+                                        $resCls = 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+                                    }
+                                @endphp
+                                <span class="px-2 py-0.5 rounded text-[9px] font-black border {{ $resCls }}">{{ $res }}</span>
+                            </td>
+                            <td class="text-right font-mono text-xs text-slate-400">{{ $signal->qty }}</td>
+                            <td class="text-right font-bold text-sm {{ $signal->sim_pnl >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">
+                                {{ $signal->sim_pnl >= 0 ? '+' : '' }}₹{{ number_format($signal->sim_pnl, 1) }}
+                            </td>
                         </tr>
                         @empty
                         <tr>
@@ -347,50 +360,59 @@
 
             {{-- Mobile Card Layout --}}
             <div class="signals-mobile-cards p-4">
-                @foreach($signals->take(5) as $signal)
+                @foreach($signals as $signal)
+                @php
+                    $timestamp = strtotime($signal->entry_date . ' ' . $signal->entry_time);
+                    $res = (strtoupper($signal->result ?: 'ACTIVE'));
+                    $resCls = in_array($res, ['WIN', 'TP HIT', 'ACTIVE']) ? 'text-emerald-400' : (in_array($res, ['LOSS', 'SL HIT']) ? 'text-rose-400' : 'text-blue-400');
+                @endphp
                 <div class="signal-card space-y-4">
                     <div class="flex justify-between items-center pb-3 border-b border-white/5">
                         <div class="flex items-center gap-3">
-                            <i data-lucide="bitcoin" class="w-5 h-5 text-orange-400"></i>
-                            <span class="font-bold text-base text-white uppercase">{{ $signal->stock_symbol }}</span>
+                            <span class="font-bold text-base text-white uppercase">{{ $signal->stock_name }}</span>
                         </div>
-                        @php
-                            $conf = $signal->confidence_level;
-                            $confClass = $conf >= 80 ? 'conf-high' : ($conf >= 60 ? 'conf-mid' : 'conf-low');
-                        @endphp
-                        <span class="px-2 py-0.5 rounded-md text-[9px] font-bold {{ $confClass }}">{{ $conf }}%</span>
+                        <span class="text-[10px] font-black uppercase {{ $signal->signal_type === 'BUY' ? 'text-emerald-400' : 'text-rose-400' }}">
+                            {{ $signal->signal_type }}
+                        </span>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Entry Price</div>
-                            <div class="font-mono text-sm text-white">₹{{ number_format($signal->entry_price, 1) }}</div>
+                            <div class="font-mono text-sm text-white">₹{{ number_format($signal->entry, 1) }}</div>
                         </div>
                         <div>
                             <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Stop Loss</div>
-                            <div class="font-mono text-sm text-rose-500/80">₹{{ number_format($signal->stop_loss, 1) }}</div>
+                            <div class="font-mono text-sm text-rose-500/80">₹{{ number_format($signal->sl, 1) }}</div>
                         </div>
                         <div>
-                            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Targets</div>
-                            <div class="font-mono text-sm text-purple-400">T1: ₹{{ number_format($signal->target_1, 1) }}</div>
+                            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Target / BE</div>
+                            <div class="font-mono text-[10px] text-emerald-400">T: ₹{{ number_format($signal->target, 1) }}</div>
+                            <div class="font-mono text-[10px] text-blue-400 border-t border-white/5 mt-1 pt-1">B: ₹{{ number_format($signal->breakeven, 1) }}</div>
                         </div>
                         <div>
-                            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Status</div>
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                <span class="text-[9px] font-bold text-emerald-400 uppercase">ACTIVE</span>
+                            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">Result / Qty</div>
+                            <div class="flex items-center gap-1.5 pt-1">
+                                <span class="w-1.5 h-1.5 rounded-full {{ str_replace('text-', 'bg-', $resCls) }} animate-pulse"></span>
+                                <span class="text-[10px] font-black {{ $resCls }} uppercase">{{ $res }}</span>
                             </div>
+                            <div class="text-[10px] text-slate-500 font-bold mt-1">QTY: {{ $signal->qty }}</div>
                         </div>
                     </div>
                     <div class="flex justify-between items-center pt-3 border-t border-white/5">
-                        <div class="text-[9px] text-slate-500 font-bold uppercase">{{ $signal->created_at->format('h:i A') }}</div>
-                        <div class="font-bold text-[10px] text-cyan-400 uppercase">PENDING</div>
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-slate-400 font-bold">{{ $signal->entry_date }}</span>
+                            <span class="text-[8px] text-slate-600 font-bold uppercase">{{ date('h:i A', $timestamp) }}</span>
+                        </div>
+                        <div class="font-bold text-sm {{ $signal->sim_pnl >= 0 ? 'text-emerald-400' : 'text-rose-400' }}">
+                            {{ $signal->sim_pnl >= 0 ? '+' : '' }}₹{{ number_format($signal->sim_pnl, 1) }}
+                        </div>
                     </div>
                 </div>
                 @endforeach
             </div>
 
             <div class="p-6 border-t border-white/5 flex justify-center">
-                <a href="{{ url('/signals') }}" class="group bg-purple-600/10 hover:bg-purple-600 border border-purple-500/30 text-purple-400 hover:text-white px-8 py-3 rounded-xl font-bold text-[10px] tracking-widest transition-all shadow-[0_0_20px_rgba(147,51,234,0.1)] hover:shadow-purple-500/40 uppercase">
+                <a href="{{ url('/signals/past') }}" class="group bg-purple-600/10 hover:bg-purple-600 border border-purple-500/30 text-purple-400 hover:text-white px-8 py-3 rounded-xl font-bold text-[10px] tracking-widest transition-all shadow-[0_0_20px_rgba(147,51,234,0.1)] hover:shadow-purple-500/40 uppercase">
                     Explore All Signals
                 </a>
             </div>
@@ -406,17 +428,19 @@
 
                     rows.sort((a, b) => {
                         let valA, valB;
-                        if (field === 'confidence') {
-                            valA = parseInt(a.dataset.confidence);
-                            valB = parseInt(b.dataset.confidence);
-                        } else if (field === 'time') {
+                        if (field === 'time') {
                             valA = parseInt(a.dataset.time);
                             valB = parseInt(b.dataset.time);
+                        } else if (field === 'stock') {
+                            valA = a.cells[0].innerText.trim().toLowerCase();
+                            valB = b.cells[0].innerText.trim().toLowerCase();
                         } else {
-                            valA = a.cells[0].innerText.trim();
-                            valB = b.cells[0].innerText.trim();
+                            // Default for numeric or other text
+                            valA = a.innerText.trim().toLowerCase();
+                            valB = b.innerText.trim().toLowerCase();
                         }
 
+                        if (valA === valB) return 0;
                         if (direction === 'asc') return valA > valB ? 1 : -1;
                         return valA < valB ? 1 : -1;
                     });
@@ -522,7 +546,7 @@
 
     <!-- Why Our AI -->
 
-    <section id="features" class="py-32 relative bg-white/[0.01]">
+    <section id="features" class="pt-16 sm:pt-24 pb-16 sm:pb-24 relative bg-white/[0.01]">
         <div class="container mx-auto px-6">
              <div class="text-center mb-20">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Advantages</span>
@@ -552,7 +576,7 @@
     </section>
 
     <!-- Alert Feature -->
-    <section class="py-32 relative overflow-hidden">
+    <section class="pt-16 sm:pt-24 pb-16 sm:pb-24 relative overflow-hidden">
         <div class="container mx-auto px-6">
             <div class="p-6 sm:p-12 md:p-20 rounded-[2rem] sm:rounded-[5rem] bg-[#0c0518] border border-white/5 relative overflow-hidden group shadow-2xl">
                 <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-600/10 blur-[130px] -z-10 group-hover:bg-purple-600/15 transition-all duration-700"></div>
@@ -639,7 +663,7 @@
     </section>
 
     <!-- How It Works -->
-    <section id="how-it-works" class="py-32 relative overflow-hidden">
+    <section id="how-it-works" class="pt-16 sm:pt-24 pb-16 sm:pb-24 relative overflow-hidden">
         <div class="container mx-auto px-6 text-center">
             <div class="mb-24">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Simple Process</span>
@@ -648,9 +672,8 @@
             </div>
 
             <div class="relative mt-24">
-                <!-- Progress Line -->
+                <!-- Progress Line placeholder removed -->
                 <div class="absolute top-1/2 left-0 w-full h-[1px] bg-white/10 -translate-y-1/2 hidden lg:block">
-                    <div class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 w-0 timeline-progress"></div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
@@ -679,8 +702,8 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="py-24 container mx-auto px-6">
-        <div class="text-center mb-20">
+    <section class="pt-16 pb-16 container mx-auto px-6">
+        <div class="text-center mb-12">
             <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Social Proof</span>
             <h2 class="text-3xl md:text-5xl font-professional text-white mb-6 uppercase">Traders Trust <span class="text-vibrant">Data</span>, Not Noise</h2>
         </div>
@@ -716,9 +739,9 @@
     </section>
 
     <!-- Supported Markets -->
-    <section class="py-24 relative">
+    <section class="pt-16 pb-16 relative">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
+            <div class="text-center mb-12">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Asset Coverage</span>
                 <h2 class="font-professional text-3xl md:text-5xl uppercase tracking-tighter text-white mb-4">
                     Indian Equities Market We <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Cover</span>
@@ -751,7 +774,7 @@
     </section>
 
     <!-- Platform Performance -->
-    <section class="py-24 relative">
+    <section class="pt-16 pb-16 relative">
         <div class="container mx-auto px-6">
             <div class="glass-panel p-6 sm:p-10 md:p-16 rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-600/3 via-transparent to-indigo-600/3 -z-10"></div>
@@ -829,14 +852,14 @@
     </section> -->
 
     <!-- Premium CTA Section -->
-    <section class="py-32 relative overflow-hidden group">
+    <section class="pt-16 pb-32 relative overflow-hidden group">
         <!-- Background Blobs -->
         <div class="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-purple-600/20 blur-[120px] -z-10 animate-pulse rounded-full"></div>
                 <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-600/20 blur-[120px] -z-10 rounded-full"></div>
                 <div class="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] bg-white/5 blur-[120px] rounded-full"></div>
 
         <div class="container mx-auto px-6 relative z-10">
-            <div class="glass-panel p-8 sm:p-16 md:p-32 rounded-[2rem] sm:rounded-[4rem] text-center border border-white/5 relative overflow-hidden reveal-section">
+            <div class="glass-panel p-8 sm:p-16 md:p-20 rounded-[2rem] sm:rounded-[4rem] text-center border border-white/5 relative overflow-hidden reveal-section">
                 <!-- Particle Background Container -->
                 <div id="cta-particles" class="absolute inset-0 -z-10"></div>
                 
@@ -1048,17 +1071,6 @@
                     start: "top 90%",
                 }
             });
-        });
-
-        // 4. How It Works Timeline Progress
-        gsap.to(".timeline-progress", {
-            width: "100%",
-            scrollTrigger: {
-                trigger: "#how-it-works",
-                start: "top center",
-                end: "bottom center",
-                scrub: 1
-            }
         });
 
         // 5. Section & Card Reveals

@@ -3,14 +3,14 @@
 @section('title', 'Contact Us | Emperor Stock Predictor')
 
 @section('content')
-<main class="relative pt-32 pb-20">
+<main class="relative pt-16 pb-12">
     {{-- Grid Background --}}
     <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
 
     <div class="container mx-auto px-6 relative z-10 max-w-7xl">
 
         {{-- Hero Section --}}
-        <div class="text-center max-w-3xl mx-auto mb-20 fade-in-up">
+        <div class="text-center max-w-3xl mx-auto mb-12 fade-in-up">
             <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Contact Portal</span>
             <h1 class="font-professional text-4xl md:text-6xl text-white mb-6 leading-tight uppercase">
                 Get in Touch With <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Emperor Stock Predictor</span>
@@ -21,7 +21,7 @@
         </div>
 
         {{-- Stats Bar --}}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20 fade-in-up">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 fade-in-up">
             <div class="glass-panel p-6 rounded-2xl border border-white/5 text-center">
                 <div class="text-2xl font-professional text-white tracking-tighter mb-1">&lt;2hr</div>
                 <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Avg Response</div>
@@ -41,7 +41,7 @@
         </div>
 
         {{-- Main Content: Form + Contact Info --}}
-        <div class="grid grid-cols-1 xl:grid-cols-5 gap-12 items-start mb-24">
+        <div class="grid grid-cols-1 xl:grid-cols-5 gap-12 items-start mb-16">
             {{-- Left: Contact Form --}}
             <div class="xl:col-span-3 fade-in-up" id="contact-form-container">
                 <div class="glass-panel p-8 md:p-12 rounded-[2.5rem] border border-white/10 relative overflow-hidden">
@@ -215,7 +215,7 @@
         </div>
 
         {{-- FAQ Section --}}
-        <div class="mb-24 fade-in-up">
+        <div class="mb-16 fade-in-up">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Knowledge Base</span>
                 <h2 class="font-professional text-3xl md:text-5xl text-white uppercase">

@@ -120,6 +120,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/analytics', [DashboardController::class, 'analytics'])->name('analytics');
         Route::post('/broadcast-tip', [DashboardController::class, 'broadcastTip'])->name('broadcast-tip');
+        Route::get('/broadcast-notification', [DashboardController::class, 'showBroadcastNotification'])->name('broadcast-notification.show');
         Route::post('/broadcast-notification', [DashboardController::class, 'broadcastNotification'])->name('broadcast-notification');
         Route::resource('predictions', PredictionController::class);
         Route::resource('users', UserController::class);

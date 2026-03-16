@@ -213,11 +213,6 @@
         .fade-in-up { opacity: 0; transform: translateY(30px); }
         .slide-in-right { opacity: 0; transform: translateX(30px); }
 
-        .scroll-progress {
-            position: fixed; top: 0; left: 0; width: 0%; height: 3px;
-            background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
-            z-index: 10000;
-        }
 
         .price-up { animation: flashGreen 1.5s ease-out; }
         .price-down { animation: flashRed 1.5s ease-out; }
@@ -238,7 +233,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
             animation: whatsappPulse 2.5s infinite;
         }
 
@@ -258,11 +253,22 @@
             70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
+
+        /* Hide floating button when mobile menu is active with smooth transition */
+        .whatsapp-float-hardcoded {
+            transition: opacity 0.3s ease, visibility 0.3s ease !important;
+        }
+
+        body.menu-open .whatsapp-float,
+        body.menu-open .whatsapp-float-hardcoded {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
     </style>
     @stack('styles')
 </head>
 <body class="selection:bg-purple-500 selection:text-white">
-    <div class="scroll-progress"></div>
 
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#0a0514] via-[#050208] to-[#020105]"></div>
@@ -300,11 +306,6 @@
         }
         requestAnimationFrame(raf);
         
-        gsap.to(".scroll-progress", {
-            width: "100%",
-            ease: "none",
-            scrollTrigger: { scrub: 0.3 }
-        });
 
         // Global scroll refresh on load
         window.addEventListener('load', () => {
@@ -314,6 +315,7 @@
     @stack('scripts')
 
     <!-- WhatsApp Floating Button -->
+    @if (!request()->is('account/*'))
     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', App\Models\SiteSetting::getValue('whatsapp_number', '91XXXXXXXXXX')) }}" 
        style="position: fixed !important; bottom: 30px !important; right: 30px !important; z-index: 99999999 !important; background-color: #25d366 !important; width: 60px !important; height: 60px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; box-shadow: 0 10px 25px rgba(37,211,102,0.4) !important;"
        class="whatsapp-float-hardcoded hover:scale-110 transition-transform duration-300"
@@ -324,5 +326,6 @@
             <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.195 1.594 6.021L.188 23.813l5.885-1.547a11.968 11.968 0 0 0 5.958 1.594h.005c6.641 0 12.031-5.385 12.031-12.031 0-6.646-5.385-12.031-12.036-12.031zM19.042 16.927c-.292.818-1.464 1.563-2.026 1.636-.542.068-1.182.26-3.76-.807-3.13-1.296-5.141-4.526-5.292-4.729-.151-.203-1.266-1.688-1.266-3.219 0-1.531.792-2.286 1.078-2.589.286-.302.625-.375.833-.375s.417 0 .599.01c.193.01.448-.073.703.542.266.646.911 2.224.995 2.391.083.167.141.359.036.568-.104.208-.156.339-.313.526-.156.188-.328.396-.469.542-.156.167-.318.354-.135.672.182.318.813 1.349 1.745 2.177 1.203 1.073 2.193 1.406 2.516 1.563.323.156.51.135.703-.094.193-.229.833-.969 1.057-1.302.224-.333.443-.276.734-.167.292.109 1.844.87 2.156 1.026.313.156.521.234.599.365.078.13.078.755-.214 1.573z"/>
         </svg>
     </a>
+    @endif
 </body>
 </html>
