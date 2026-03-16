@@ -79,8 +79,13 @@ class LiveTipsController extends Controller
             ]);
         }
 
-        $tips = \App\Models\StockSignal::where('entry_date', $today)
-            ->orderBy('created_at', 'desc')
+        $query = \App\Models\StockSignal::where('entry_date', $today);
+
+        if (request()->filled('search')) {
+            $query->where('stock_name', 'LIKE', '%' . strtoupper(request('search')) . '%');
+        }
+
+        $tips = $query->orderBy('created_at', 'desc')
             ->get()
             ->map(function ($signal) {
                 $entry = (float)$signal->entry;

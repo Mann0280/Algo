@@ -361,32 +361,33 @@
             <button class="lg:hidden w-10 h-10 rounded-xl border border-white/[0.05] flex items-center justify-center text-gray-400 hover:text-[var(--text-white)] transition-all shrink-0" style="background: var(--input-bg)" id="mobile-sidebar-toggle">
                 <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
-            <div class="flex items-center gap-10 flex-1">
+            <div class="flex-1 flex items-center justify-start gap-10">
                 <!-- Global Navigation Integrations (desktop only) -->
-                <div class="hidden xl:flex items-center gap-7 pr-10 border-r border-white/10">
+                <div class="hidden xl:flex items-center gap-7">
                     <a href="{{ url('/') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap" style="color: var(--nav-text)">
                         <i data-lucide="home" class="w-3.5 h-3.5 transition-colors"></i> Home
                     </a>
                     <a href="{{ url('/about') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap" style="color: var(--nav-text)">
                         <i data-lucide="info" class="w-3.5 h-3.5 transition-colors"></i> About
                     </a>
-                    {{-- <a href="{{ url('/terminal/free') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
-                        <i data-lucide="bar-chart-2" class="w-3.5 h-3.5 group-hover:text-purple-500 transition-colors"></i> Signals
-                    </a> --}}
-                    {{-- <a href="{{ url('/terminal/premium') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey text-gray-500 hover:text-white transition-all uppercase tracking-widest whitespace-nowrap">
-                        <i data-lucide="trending-up" class="w-3.5 h-3.5 group-hover:text-purple-500 transition-colors"></i> Tips
-                    </a> --}}
-                </div>
-
-                <div class="relative max-w-md w-full group hidden sm:block">
-                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-purple-500 transition-colors"></i>
-                    <input type="text" placeholder="Search parameters, signals, or help..." 
-                           class="w-full border border-white/[0.05] rounded-xl py-3 pl-12 pr-4 text-[11px] font-medium focus:outline-none focus:border-purple-500/30 transition-all placeholder:text-gray-600"
-                           style="background: var(--input-bg); color: var(--text-white)">
+                    <a href="{{ route('signals') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey {{ Request::routeIs('signals') ? 'text-purple-500' : 'text-gray-500' }} hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap">
+                        <i data-lucide="bar-chart-2" class="w-3.5 h-3.5 transition-colors"></i> Live Signals
+                    </a>
+                    <a href="{{ route('signals.past') }}" class="group flex items-center gap-2 text-[10px] font-bold font-whiskey {{ Request::routeIs('signals.past') ? 'text-purple-500' : 'text-gray-500' }} hover:text-purple-500 transition-all uppercase tracking-widest whitespace-nowrap">
+                        <i data-lucide="history" class="w-3.5 h-3.5 transition-colors"></i> History
+                    </a>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3 sm:gap-8">
+            <!-- Status Indicator (Centered) -->
+            <div class="flex-1 hidden md:flex items-center justify-center">
+                <div class="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] shadow-[0_0_20px_rgba(147,51,234,0.05)]">
+                    <div class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse shadow-[0_0_8px_#9333ea]"></div>
+                    <span class="text-[9px] font-black font-whiskey text-gray-400 uppercase tracking-[0.25em]">Neural Intelligence Active</span>
+                </div>
+            </div>
+
+            <div class="flex-1 flex items-center justify-end gap-3 sm:gap-8">
 
 
                 <!-- Notifications -->

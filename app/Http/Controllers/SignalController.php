@@ -50,8 +50,8 @@ class SignalController extends Controller
             $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') <= STR_TO_DATE(?, '%Y-%m-%d')", [$request->end_date]);
         }
 
-        if ($request->filled('symbol')) {
-            $query->where('stock_name', 'LIKE', '%' . strtoupper($request->symbol) . '%');
+        if ($request->filled('symbol') || $request->filled('search')) {
+            $query->where('stock_name', 'LIKE', '%' . strtoupper($request->symbol ?? $request->search) . '%');
         }
 
         if ($request->filled('signal_type')) {
