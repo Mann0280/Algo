@@ -13,6 +13,7 @@
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
@@ -205,6 +206,40 @@
                 width: 100%;
             }
         }
+
+        /* Action Buttons */
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+            outline: none;
+        }
+
+        .edit-btn {
+            background: #7b2cff;
+            color: white !important;
+        }
+
+        .edit-btn:hover {
+            background: #9c4dff;
+            transform: translateY(-2px);
+        }
+
+        .delete-btn {
+            background: #ff3b3b;
+            color: white !important;
+        }
+
+        .delete-btn:hover {
+            background: #ff5c5c;
+            transform: translateY(-2px);
+        }
     </style>
     @stack('styles')
 </head>
@@ -274,9 +309,16 @@
                     <span class="font-whiskey text-[10px] font-bold uppercase tracking-[0.2em]">Pricing Plans</span>
                 </a>
 
-                <a href="{{ route('admin.payment-requests.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.payment-requests.index') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
-                    <i data-lucide="bell" class="w-5 h-5 {{ request()->routeIs('admin.payment-requests.index') ? 'text-purple-500' : '' }}"></i>
-                    <span class="font-whiskey text-[11px] font-semibold uppercase tracking-[0.1em]">Subscription Requests</span>
+                <a href="{{ route('admin.payment-requests.index') }}" class="flex items-center justify-between px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.payment-requests.index') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
+                    <div class="flex items-center gap-4">
+                        <i data-lucide="bell" class="w-5 h-5 {{ request()->routeIs('admin.payment-requests.index') ? 'text-purple-500' : '' }}"></i>
+                        <span class="font-whiskey text-[11px] font-semibold uppercase tracking-[0.1em]">Subscription Requests</span>
+                    </div>
+                    @if($pendingPaymentsCount > 0)
+                    <span class="flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-purple-600 text-white text-[9px] font-black font-whiskey rounded-full shadow-[0_0_10px_rgba(147,51,234,0.5)] animate-pulse">
+                        {{ $pendingPaymentsCount }}
+                    </span>
+                    @endif
                 </a>
 
                 <a href="{{ route('admin.payments.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.payments.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
@@ -289,9 +331,16 @@
                     <span class="font-whiskey text-[10px] font-bold uppercase tracking-[0.2em]">Referrals</span>
                 </a>
 
-                <a href="{{ route('admin.withdraw-requests.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.withdraw-requests.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
-                    <i data-lucide="external-link" class="w-5 h-5 {{ request()->routeIs('admin.withdraw-requests.*') ? 'text-purple-500' : '' }}"></i>
-                    <span class="font-whiskey text-[10px] font-bold uppercase tracking-[0.2em]">Withdrawals</span>
+                <a href="{{ route('admin.withdraw-requests.index') }}" class="flex items-center justify-between px-4 py-3.5 rounded-xl transition-all group {{ request()->routeIs('admin.withdraw-requests.*') ? 'sidebar-item-active text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5' }}">
+                    <div class="flex items-center gap-4">
+                        <i data-lucide="external-link" class="w-5 h-5 {{ request()->routeIs('admin.withdraw-requests.*') ? 'text-purple-500' : '' }}"></i>
+                        <span class="font-whiskey text-[10px] font-bold uppercase tracking-[0.2em]">Withdrawals</span>
+                    </div>
+                    @if($pendingWithdrawsCount > 0)
+                    <span class="flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-red-600 text-white text-[9px] font-black font-whiskey rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse">
+                        {{ $pendingWithdrawsCount }}
+                    </span>
+                    @endif
                 </a>
 
                 <div class="px-4 mt-10 mb-4 text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-widest leading-none">Configuration</div>
@@ -370,10 +419,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-        // Global Icon Init
-        const initIcons = () => {
+        // Global Icon Init Function
+        window.initIcons = () => {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
+                console.log('Neural Icons Initialized');
             }
         };
 

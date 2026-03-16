@@ -60,15 +60,15 @@
                 </div>
 
                 <div class="mt-8 pt-8 border-t border-white/5 flex gap-3">
-                    <button onclick='openEditModal(@json($video))' class="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[9px] font-semibold font-whiskey uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all italic flex items-center justify-center gap-2">
-                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                    <button onclick='openEditModal(@json($video))' class="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl text-[9px] font-semibold font-whiskey uppercase tracking-widest text-blue-500 hover:text-white hover:bg-blue-500/10 hover:border-blue-500/20 transition-all italic flex items-center justify-center gap-2">
+                        <i class="fas fa-pen text-[11px]"></i>
                         Edit Video
                     </button>
-                    <form action="{{ route('admin.tutorial-videos.destroy', $video->id) }}" method="POST" onsubmit="return confirm('Delete this video?')" class="flex shrink-0">
+                    <form action="{{ route('admin.tutorial-videos.destroy', $video->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?')" class="flex shrink-0">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="w-12 h-12 flex items-center justify-center rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 hover:bg-rose-500 hover:text-white transition-all group/btn">
-                            <i data-lucide="trash-2" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
+                            <i class="fas fa-trash text-[14px] group-hover/btn:scale-110 transition-transform"></i>
                         </button>
                     </form>
                 </div>

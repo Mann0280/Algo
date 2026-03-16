@@ -140,14 +140,14 @@
                 {title: "Actions", field: "id", hozAlign: "right", headerHozAlign: "right", width: 120, formatter: function(cell) {
                     let data = cell.getData();
                     return `<div class="flex justify-end gap-2 py-1">
-                                <a href="${data.edit_url}" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-gray-500 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 transition-all">
-                                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                <a href="${data.edit_url}" class="action-btn edit-btn">
+                                    <i class="fas fa-pen text-[13px]"></i>
                                 </a>
-                                <form action="${data.delete_url}" method="POST" onsubmit="return confirm('Delete this user account?')" style="display:inline">
+                                <form action="${data.delete_url}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?')" style="display:inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-500 hover:bg-rose-500 hover:text-white transition-all">
-                                        <i data-lucide="user-minus" class="w-3.5 h-3.5"></i>
+                                    <button type="submit" class="action-btn delete-btn">
+                                        <i class="fas fa-trash text-[13px]"></i>
                                     </button>
                                 </form>
                             </div>`;

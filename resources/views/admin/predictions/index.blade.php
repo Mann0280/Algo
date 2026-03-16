@@ -101,8 +101,9 @@
                     </select>
                 </div>
                 <div class="flex items-end gap-2">
-                    <button type="submit" class="flex-1 px-4 py-3 bg-[#9333ea] text-white font-semibold font-whiskey text-[10px] uppercase italic tracking-widest rounded-xl shadow-lg hover:shadow-purple-500/40 transition-all">
-                        FILTER RECORDS
+                    <button type="submit" class="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold font-whiskey text-[10px] uppercase italic tracking-widest rounded-xl shadow-lg shadow-purple-900/40 hover:shadow-purple-500/50 hover:-translate-y-0.5 transition-all active:scale-95 group relative overflow-hidden">
+                        <span class="relative z-10">FILTER RECORDS</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </button>
                     <a href="{{ route('admin.predictions.index') }}" class="px-4 py-3 bg-white/5 text-gray-400 font-black font-whiskey text-[10px] uppercase tracking-widest rounded-xl border border-white/5 flex items-center justify-center hover:bg-white/10">
                         <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
@@ -159,6 +160,7 @@
                     'time' => (string)($s->entry_time ?? '---'),
                     'result' => (string)($s->result ?? '---'),
                     'pnl' => (float)($s->pnl ?? 0),
+                    'edit_route' => route('admin.predictions.edit', $s->id),
                     'destroy_route' => route('admin.predictions.destroy', $s->id)
                 ];
             });
@@ -248,14 +250,17 @@
                                     <div class="w-4 h-[1px] bg-white/10 mt-1"></div>
                                 </div>`;
                     }},
-                    {title: "Actions", field: "id", hozAlign: "right", headerHozAlign: "right", minWidth: 100, formatter: function(cell){
+                    {title: "Actions", field: "id", hozAlign: "right", headerHozAlign: "right", minWidth: 120, formatter: function(cell){
                         let data = cell.getData();
-                        return `<div class="flex justify-end gap-3 py-1">
-                                    <form action="${data.destroy_route}" method="POST" onsubmit="return confirm('Permanently delete this signal?')" style="display:inline">
+                        return `<div class="flex justify-end gap-2 py-1">
+                                    <a href="${data.edit_route}" class="action-btn edit-btn">
+                                        <i class="fas fa-pen text-[13px]"></i>
+                                    </a>
+                                    <form action="${data.destroy_route}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?')" style="display:inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="w-10 h-10 flex items-center justify-center rounded-2xl bg-rose-500/5 border border-rose-500/10 text-rose-500/60 hover:text-rose-500 hover:bg-rose-500/20 hover:border-rose-500/40 transition-all shadow-lg shadow-rose-900/10">
-                                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                        <button type="submit" class="action-btn delete-btn">
+                                            <i class="fas fa-trash text-[13px]"></i>
                                         </button>
                                     </form>
                                 </div>`;

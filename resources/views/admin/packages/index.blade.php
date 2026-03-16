@@ -80,15 +80,15 @@
                             </div>
                         </td>
                         <td class="px-10 py-8">
-                            <div class="flex justify-end gap-3">
-                                <a href="{{ route('admin.premium-packages.edit', $package) }}" class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-gray-500 hover:text-white hover:bg-purple-600/20 hover:border-purple-500/30 transition-all group/btn">
-                                    <i data-lucide="edit-3" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
+                            <div class="flex justify-end gap-2 text-right">
+                                <a href="{{ route('admin.premium-packages.edit', $package) }}" class="action-btn edit-btn ml-auto">
+                                    <i class="fas fa-pen text-[13px]"></i>
                                 </a>
-                                <form action="{{ route('admin.premium-packages.destroy', $package) }}" method="POST" onsubmit="return confirm('Delete this pricing plan?')">
+                                <form action="{{ route('admin.premium-packages.destroy', $package) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-gray-500 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all group/btn">
-                                        <i data-lucide="trash-2" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
+                                    <button type="submit" class="action-btn delete-btn">
+                                        <i class="fas fa-trash text-[13px]"></i>
                                     </button>
                                 </form>
                             </div>

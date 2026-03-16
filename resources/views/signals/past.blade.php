@@ -519,8 +519,9 @@
                     </select>
                 </div>
                 <div class="flex items-end gap-2">
-                    <button type="submit" class="flex-1 px-4 py-2.5 bg-black text-white font-bold text-xs uppercase tracking-widest rounded-xl shadow-lg hover:bg-gray-100 transition-colors">
-                        Apply
+                    <button type="submit" class="flex-1 px-4 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs uppercase tracking-widest rounded-xl shadow-lg shadow-purple-900/40 hover:shadow-purple-500/50 hover:-translate-y-0.5 transition-all active:scale-95 group relative overflow-hidden">
+                        <span class="relative z-10">Apply</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </button>
                     <a href="{{ route('signals.past') }}" class="px-4 py-2.5 bg-white/5 text-gray-400 font-bold text-xs uppercase tracking-widest rounded-xl border border-white/5 flex items-center justify-center hover:bg-white/10">
                         <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
