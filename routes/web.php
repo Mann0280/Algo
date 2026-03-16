@@ -187,24 +187,3 @@ Route::middleware('auth')->group(function () {
 // Past Signals Management
 Route::get('/signals/past', [\App\Http\Controllers\SignalController::class, 'pastSignals'])->name('signals.past');
 Route::get('/api/past-signals', [\App\Http\Controllers\Api\PastSignalsController::class, 'index'])->name('api.past-signals')->middleware('throttle:60,1');
-
-// Production Storage Link Workaround (Temporary)
-Route::get('/create-storage-link', function () {
-    $target = storage_path('app/public');
-    $shortcut = public_path('storage');
-    
-    // Check if shortcut already exists
-    if (file_exists($shortcut)) {
-        return "The [public/storage] link already exists. If images are not showing, confirm the link points to: " . $target;
-    }
-
-    try {
-        if (symlink($target, $shortcut)) {
-            return "The [public/storage] link has been connected to [$target]. Success!";
-        } else {
-            return "Failed to create the symbolic link. Please contact server support.";
-        }
-    } catch (\Exception $e) {
-        return "Error creating link: " . $e->getMessage() . "<br><br>Target: $target<br>Shortcut: $shortcut";
-    }
-});
