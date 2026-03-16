@@ -307,31 +307,45 @@
 
                     <div class="space-y-4 max-h-[400px] overflow-y-auto no-scrollbar pr-2">
                         @foreach($sessions as $session)
-                        <div class="p-5 bg-white/[0.03] border border-white/[0.08] rounded-2xl hover:bg-white/[0.05] hover:border-purple-500/20 transition-all flex items-center gap-5 relative group">
+                        <div class="session-row p-5 bg-white/[0.03] border border-white/[0.08] rounded-[1.8rem] hover:bg-white/[0.05] hover:border-purple-500/30 transition-all flex items-center gap-5 relative group/row overflow-hidden">
+                            <!-- Ambient Hover Glow -->
+                            <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent opacity-0 group-hover/row:opacity-100 transition-opacity"></div>
+                            
                             <!-- Device Icon -->
-                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500 shrink-0 group-hover:scale-105 transition-transform duration-500">
-                                <i data-lucide="{{ str_contains($session->device, 'PC') ? 'monitor' : 'smartphone' }}" class="w-6 h-6"></i>
+                            <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0 group-hover/row:scale-110 transition-all duration-500 shadow-lg">
+                                <i data-lucide="{{ str_contains($session->device, 'PC') ? 'monitor' : 'smartphone' }}" class="w-7 h-7"></i>
                             </div>
                             
                             <!-- Session Detail -->
-                            <div class="flex-1 min-w-0 space-y-1.5">
+                            <div class="flex-1 min-w-0 space-y-1">
                                 <div class="flex items-center gap-3">
-                                    <p class="text-xs font-black text-white uppercase tracking-tight truncate">{{ $session->device }}</p>
+                                    <p class="text-xs font-black text-white uppercase tracking-wider truncate">{{ $session->device }}</p>
                                     @if($session->is_current_device)
-                                        <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-500 rounded-lg text-[7px] font-black uppercase tracking-widest border border-emerald-500/20 animate-pulse">Current Node</span>
+                                        <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[7px] font-black uppercase tracking-widest border border-emerald-500/20 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.2)]">Primary Node</span>
                                     @endif
                                 </div>
-                                <p class="text-[9px] text-gray-500 font-mono font-medium tracking-normal break-all leading-relaxed select-all selection:bg-purple-500 selection:text-white">{{ $session->ip_address }}</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1 h-1 rounded-full bg-slate-700"></div>
+                                    <p class="text-[10px] text-slate-500 font-mono font-medium tracking-tight break-all leading-none select-all selection:bg-purple-500 selection:text-white">{{ $session->ip_address }}</p>
+                                </div>
                             </div>
 
                             <!-- Action Zone -->
-                            @if(!$session->is_current_device)
-                                <button onclick="terminateSession('{{ $session->id }}', this)" 
-                                        class="w-10 h-10 flex items-center justify-center text-rose-500/40 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all border border-transparent hover:border-rose-500/20 shrink-0 group/btn" 
-                                        title="Terminate Secure Signal">
-                                    <i data-lucide="power" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
-                                </button>
-                            @endif
+                            <div class="shrink-0 flex items-center gap-4">
+                                @if(!$session->is_current_device)
+                                    <button onclick="terminateSession('{{ $session->id }}', this)" 
+                                            class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/5 bg-white/5 text-rose-500/60 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all group/btn shadow-xl" 
+                                            title="Terminate Secure Signal">
+                                        <i data-lucide="power" class="w-4 h-4 transition-transform group-hover/btn:scale-110"></i>
+                                        <span class="text-[9px] font-black uppercase tracking-widest hidden sm:inline">Terminate</span>
+                                    </button>
+                                @else
+                                    <div class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                                        <span class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">Active</span>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                         @endforeach
                     </div>
@@ -378,36 +392,43 @@
     function terminateSession(sessionId, btn) {
         if (!confirm('Permanently terminate this secure link?')) return;
         
-        const container = btn.closest('.p-4');
+        const container = btn.closest('.session-row');
+        const originalContent = btn.innerHTML;
+        
         btn.disabled = true;
-        btn.innerHTML = '<i data-lucide="loader-2" class="w-3 h-3 animate-spin mx-auto"></i>';
-        lucide.createIcons();
+        btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin mx-auto"></i>';
+        if (window.lucide) lucide.createIcons();
         
         fetch(`/account/profile/sessions/${sessionId}/terminate`, {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         })
         .then(response => response.json())
         .then(result => {
             if (result.success) {
                 notify(result.message, 'success');
-                container.style.transform = 'translateX(20px)';
-                container.style.opacity = '0';
-                setTimeout(() => container.remove(), 300);
+                if (container) {
+                    container.style.transform = 'translateY(10px)';
+                    container.style.opacity = '0';
+                    setTimeout(() => container.remove(), 300);
+                }
             } else {
                 notify('Session termination failed.', 'error');
                 btn.disabled = false;
-                btn.innerText = 'Logout';
+                btn.innerHTML = originalContent;
+                if (window.lucide) lucide.createIcons();
             }
         })
         .catch(error => {
             console.error('Error:', error);
             notify('Neural link error.', 'error');
             btn.disabled = false;
-            btn.innerText = 'Logout';
+            btn.innerHTML = originalContent;
+            if (window.lucide) lucide.createIcons();
         });
     }
     window.terminateSession = terminateSession;
