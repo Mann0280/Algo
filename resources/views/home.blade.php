@@ -262,9 +262,9 @@
                 $all_ticker = array_merge($ticker_items, $ticker_items, $ticker_items, $ticker_items);
             @endphp
             @foreach ($all_ticker as $item)
-                <div class="inline-flex items-center gap-6 px-12 border-r border-white/5">
-                    <span class="font-bold text-slate-400 text-sm tracking-widest uppercase">{{ $item }}</span>
-                    <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+                <div class="inline-flex items-center gap-6 px-12 border-r border-white/5 group/ticker">
+                    <span class="font-bold text-slate-400 group-hover/ticker:text-white transition-colors text-xs tracking-[0.2em] uppercase">{{ $item }}</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_10px_#a855f7] animate-pulse"></span>
                 </div>
             @endforeach
         </div>
@@ -902,7 +902,11 @@
 
 @push('styles')
 <style>
-    .animate-ticker { animation: ticker 40s linear infinite; }
+    .animate-ticker { animation: ticker 15s linear infinite; }
+    @media (max-width: 640px) {
+        .animate-ticker { animation-duration: 8s; }
+    }
+    .animate-ticker:hover { animation-play-state: paused; }
     @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
     /* AI Signals Table Styles */
