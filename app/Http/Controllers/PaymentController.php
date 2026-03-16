@@ -50,7 +50,7 @@ class PaymentController extends Controller
         ];
 
         if ($request->hasFile('screenshot')) {
-            $path = $request->file('screenshot')->store('payments', 'public');
+            $path = $request->file('screenshot')->store('payment_proofs', 'public');
             $data['payment_screenshot'] = $path;
         }
 
@@ -100,7 +100,7 @@ class PaymentController extends Controller
         $data['status'] = 'pending';
 
         if ($request->hasFile('screenshot')) {
-            $path = $request->file('screenshot')->store('payments', 'public');
+            $path = $request->file('screenshot')->store('payment_proofs', 'public');
             $data['screenshot'] = $path;
         }
 

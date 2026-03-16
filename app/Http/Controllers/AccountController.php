@@ -152,7 +152,7 @@ class AccountController extends Controller
         $screenshotPath = null;
 
         if ($request->hasFile('screenshot')) {
-            $screenshotPath = $request->file('screenshot')->store('p2p', 'public');
+            $screenshotPath = $request->file('screenshot')->store('payment_proofs', 'public');
         }
 
         \App\Models\PaymentRequest::create([
@@ -323,7 +323,7 @@ class AccountController extends Controller
 
         $screenshotPath = null;
         if ($request->hasFile('screenshot')) {
-            $screenshotPath = $request->file('screenshot')->store('topups', 'public');
+            $screenshotPath = $request->file('screenshot')->store('payment_proofs', 'public');
         }
 
         $paymentRequest->update([

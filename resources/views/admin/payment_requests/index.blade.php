@@ -63,7 +63,7 @@
                         </td>
                         <td class="px-10 py-8">
                             @if($request->payment_screenshot)
-                            <button onclick="viewProof('{{ str_starts_with($request->payment_screenshot, 'uploads/') ? asset($request->payment_screenshot) : asset('storage/' . $request->payment_screenshot) }}')" class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/20 transition-all group/btn">
+                            <button onclick="viewProof('{{ str_starts_with($request->payment_screenshot, 'uploads/') ? asset($request->payment_screenshot) : (str_starts_with($request->payment_screenshot, 'http') ? $request->payment_screenshot : Storage::disk('public')->url($request->payment_screenshot)) }}')" class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/20 transition-all group/btn">
                                 <i data-lucide="image" class="w-4 h-4"></i>
                             </button>
                             @else
