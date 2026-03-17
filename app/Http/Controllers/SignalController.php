@@ -51,7 +51,7 @@ class SignalController extends Controller
         }
 
         if ($request->filled('symbol') || $request->filled('search')) {
-            $query->where('stock_name', 'LIKE', '%' . strtoupper($request->symbol ?? $request->search) . '%');
+            $query->where('symbol', 'LIKE', '%' . strtoupper($request->symbol ?? $request->search) . '%');
         }
 
         if ($request->filled('signal_type')) {
@@ -103,20 +103,8 @@ class SignalController extends Controller
         })->count();
 
         $defaultCapital = 100000;
-        $leverage = 5;
-        $tradeCapital = $defaultCapital * $leverage;
-        $totalPnl = $signals->sum(function($s) use ($tradeCapital) {
-            if ($s->entry <= 0) return 0;
-            
-            $qty = floor($tradeCapital / $s->entry);
-            $entry = (float)$s->entry;
-            $exit = (float)($s->close_price ?? 0);
-            
-            if (strtoupper($s->signal_type ?? '') === 'BUY') {
-                return ($exit - $entry) * $qty;
-            } else {
-                return ($entry - $exit) * $qty;
-            }
+        $totalPnl = $signals->sum(function($s) use ($defaultCapital) {
+            return $s->getCalculatedSimPnl($defaultCapital);
         });
         
         $winRate = $totalSignals > 0 ? round(($totalWin / $totalSignals) * 100, 1) . '%' : '0%';

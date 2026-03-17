@@ -12,52 +12,64 @@ class StockSignalSeeder extends Seeder
      */
     public function run(): void
     {
-        \DB::table('stock_signals')->insert([
-            [
-                'stock_name' => 'RELIANCE',
-                'signal_type' => 'BUY',
-                'entry' => 2500.00,
-                'target' => 2650.00,
-                'sl' => 2420.00,
-                'breakeven' => 2550.00,
-                'close_price' => null,
-                'result' => 'RUNNING',
-                'entry_time' => '10:30 AM',
-                'entry_date' => now()->format('Y-m-d'),
-                'pnl' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'stock_name' => 'TATASTEEL',
-                'signal_type' => 'BUY',
-                'entry' => 1150.50,
-                'target' => 1280.00,
-                'sl' => 1090.00,
-                'breakeven' => 1200.00,
-                'close_price' => 1270.50,
-                'result' => 'WIN',
-                'entry_time' => '11:15 AM',
-                'entry_date' => '2026-03-06',
-                'pnl' => 120.00,
-                'created_at' => now()->subDay(),
-                'updated_at' => now()->subDay(),
-            ],
-            [
-                'stock_name' => 'HDFCBANK',
-                'signal_type' => 'SELL',
-                'entry' => 1650.00,
-                'target' => 1500.00, // Adjusted target for SELL
-                'sl' => 1720.00, // Adjusted sl for SELL
-                'breakeven' => 1600.00,
-                'close_price' => 1665.50,
-                'result' => 'LOSS',
-                'entry_time' => '02:00 PM',
-                'entry_date' => '2026-03-05',
-                'pnl' => -15.50,
-                'created_at' => now()->subDays(2),
-                'updated_at' => now()->subDays(2),
-            ],
-        ]);
+        $sqlFilePath = 'c:\Users\Mann\Downloads\stock_signals (3).sql';
+
+        if (!file_exists($sqlFilePath)) {
+            $this->command->warn("SQL file not found at: $sqlFilePath. Skipping import.");
+            return;
+        }
+
+        $content = file_get_contents($sqlFilePath);
+
+        // Extract the part between "VALUES" and ";"
+        if (!preg_match('/INSERT INTO `stock_signals` .* VALUES\s*(.*);/s', $content, $matches)) {
+            $this->command->error("Could not find INSERT statement in SQL file.");
+            return;
+        }
+
+        $valuesPart = trim($matches[1]);
+        preg_match_all('/\((.*?)\)(?:,|\s*;)/s', $valuesPart, $recordMatches);
+        $records = $recordMatches[1];
+
+        \DB::table('stock_signals')->truncate();
+        $inserted = 0;
+
+        foreach ($records as $recordStr) {
+            $values = str_getcsv($recordStr, ',', "'", "\\");
+            
+            $cleanValues = array_map(function($val) {
+                $v = trim($val);
+                if ($v === 'NULL') return null;
+                return $v;
+            }, $values);
+
+            if (count($cleanValues) < 14) continue;
+
+            $entryDate = $cleanValues[10];
+            if (preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $entryDate, $dMatches)) {
+                $entryDate = sprintf('%04d-%02d-%02d', $dMatches[1], $dMatches[2], $dMatches[3]);
+            }
+
+            \App\Models\StockSignal::create([
+                'id'           => (int)$cleanValues[0],
+                'symbol'       => $cleanValues[1],
+                'signal_type'  => $cleanValues[2],
+                'entry'        => (float)$cleanValues[3],
+                'target'       => (float)$cleanValues[4],
+                'sl'           => (float)$cleanValues[5],
+                'close_price'  => $cleanValues[6] === null ? null : (float)$cleanValues[6],
+                'result'       => $cleanValues[7],
+                'breakeven'    => (float)$cleanValues[8],
+                'qty'          => 0,
+                'entry_time'   => $cleanValues[9],
+                'entry_date'   => $entryDate,
+                'pnl'          => $cleanValues[11] === null ? null : (float)$cleanValues[11],
+                'created_at'   => $cleanValues[12],
+                'updated_at'   => $cleanValues[13],
+            ]);
+            $inserted++;
+        }
+
+        $this->command->info("Successfully truncated and imported $inserted records.");
     }
 }

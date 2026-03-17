@@ -463,16 +463,22 @@
                 <div class="flex flex-wrap items-end gap-4">
                     <div class="space-y-2">
                         <label class="text-[10px] font-bold text-purple-400 uppercase tracking-widest ml-1">Investment Per Trade (₹)</label>
-                        <input type="number" id="investment" placeholder="e.g. 100000" value="100000"
+                        <input type="number" id="capital-input" placeholder="e.g. 100000" value="100000"
                                class="input-cyber w-full sm:w-64 font-bold text-sm">
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="calculateSimulation()" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg hover:shadow-purple-500/40 transform hover:-translate-y-1">
+                            Calculate Profit
+                        </button>
+                        <button onclick="resetSimulation()" class="px-5 py-3 bg-white/5 text-gray-400 font-bold text-xs uppercase tracking-widest rounded-xl transition-all border border-white/5 hover:bg-white/10">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 </div>
 
-                <div id="sim-result-container" class="{{ isset($totalPnl) ? '' : 'hidden' }} min-w-[240px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-inner">
+                <div id="sim-result-container" class="hidden min-w-[240px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 shadow-inner">
                     <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1">PROFIT RESULT</p>
-                    <div id="profitResult" class="text-2xl font-bold {{ (isset($totalPnl) && $totalPnl >= 0) ? 'text-emerald-400' : 'text-rose-400' }}">
-                        {{ ($totalPnl ?? 0) >= 0 ? '+' : '-' }}₹{{ number_format(abs($totalPnl ?? 0), 2) }}
-                    </div>
+                    <div id="sim-total-pnl" class="text-2xl font-bold">₹0.00</div>
                 </div>
             </div>
         </div>
@@ -555,34 +561,21 @@
         }
         @php
             $defaultCapital = 100000;
-            $leverage = 5;
-            $tradeCapital = $defaultCapital * $leverage;
-            $tableData = $signals->map(function($s) use ($tradeCapital) {
-                $qty = ($s->entry > 0) ? floor($tradeCapital / $s->entry) : 0;
-                $entry = (float)($s->entry ?? 0);
-                $exit = (float)($s->close_price ?? 0);
-                $simPnl = 0;
-                if ($qty > 0) {
-                    if (strtoupper($s->signal_type ?? '') === 'BUY') {
-                        $simPnl = ($exit - $entry) * $qty;
-                    } else {
-                        $simPnl = ($entry - $exit) * $qty;
-                    }
-                }
+            $tableData = $signals->map(function($s) use ($defaultCapital) {
                 return [
                     'id' => $s->id,
-                    'stock' => (string)($s->stock_name ?? '---'),
+                    'stock' => (string)($s->symbol ?? '---'),
                     'type' => (string)($s->signal_type ?? '---'),
-                    'entry' => $entry,
-                    'exit' => $exit,
+                    'entry' => (float)($s->entry ?? 0),
+                    'exit' => (float)($s->close_price ?? 0),
                     'target' => (float)($s->target ?? 0),
                     'sl' => (float)($s->sl ?? 0),
                     'breakeven' => (float)($s->breakeven ?? 0),
                     'date' => (string)($s->entry_date ?? '---'),
                     'time' => (string)($s->entry_time ?? '---'),
-                    'quantity' => $qty,
+                    'quantity' => $s->getCalculatedQty($defaultCapital),
                     'pnl' => (float)($s->pnl ?? 0),
-                    'sim_pnl' => (float)$simPnl,
+                    'sim_pnl' => $s->getCalculatedSimPnl($defaultCapital),
                     'result' => (string)($s->result ?? '---'),
                 ];
             });
@@ -621,6 +614,9 @@
                     {title: "Entry", field: "entry", hozAlign: "right", minWidth: 110, formatter: function(cell){
                         return "<span style='color:white;'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
+                    {title: "Exit", field: "exit", hozAlign: "right", minWidth: 110, formatter: function(cell){
+                        return "<span style='color:#94a3b8'>₹" + (cell.getValue() || 0).toLocaleString() + "</span>";
+                    }},
                     {title: "Target", field: "target", hozAlign: "right", minWidth: 110, formatter: function(cell){
                         return "<span style='color:#10b981'>₹" + cell.getValue().toLocaleString() + "</span>";
                     }},
@@ -655,6 +651,11 @@
                         
                         return val !== '---' ? `<span class="status-badge ${cls}">${val}</span>` : '---';
                     }},
+                    {title: "Points", field: "pnl", hozAlign: "right", minWidth: 100, formatter: function(cell){
+                        let val = cell.getValue();
+                        let color = val > 0 ? '#10b981' : (val < 0 ? '#ef4444' : '#94a3b8');
+                        return `<span style="color:${color}; font-weight:bold;">${val > 0 ? '+' : ''}${val}</span>`;
+                    }},
                     {title: "Qty", field: "quantity", hozAlign: "center", minWidth: 110, formatter: function(cell){
                         let val = cell.getValue();
                         let display = val && val > 0 ? Math.floor(val).toLocaleString() : "---";
@@ -679,22 +680,11 @@
             });
 
             // Initial simulation check
-            document.addEventListener("DOMContentLoaded", function () {
-                const capitalInput = document.getElementById("investment");
-                if (capitalInput) {
-                    if (!capitalInput.value) {
-                        capitalInput.value = 100000;
-                    }
-                }
-                // Small delay to ensure Tabulator is ready to give us data if needed, 
-                // though we already have rawData.
-                setTimeout(calculateSimulation, 100); 
-            });
-
-            // Fallback for immediate load
-            setTimeout(() => {
-                calculateSimulation();
-            }, 800);
+            const capitalInput = document.getElementById("capital-input");
+            if (capitalInput) {
+                capitalInput.value = 100000;
+            }
+            calculateSignals(); // unified calculation function
 
         } catch (err) {
             console.error("Initialization Failure:", err);
@@ -713,9 +703,9 @@
         }
 
         // Recalculate When Capital Changes
-        const capInput = document.getElementById("investment");
+        const capInput = document.getElementById("capital-input");
         if (capInput) {
-            capInput.addEventListener("input", calculateSimulation);
+            capInput.addEventListener("input", calculateSignals);
             
             // Sync with stat card
             capInput.addEventListener('input', function() {
@@ -739,76 +729,42 @@
     });
 
     function calculateSignals() {
+        if(!window.signalsTable) return;
         const capitalInput = document.getElementById('capital-input');
         const capital = parseFloat(capitalInput.value) || 100000;
+        const effectiveCapital = capital * 5; // 5x Leverage as per user formula
 
+        let totalNetPnl = 0;
         const tableData = window.signalsTable.getData();
 
         tableData.forEach(row => {
             const entry = parseFloat(row.entry);
+            const pnlPerUnit = parseFloat(row.pnl);
 
             if (!entry || entry <= 0) {
                 row.quantity = 0;
+                row.sim_pnl = 0;
                 return;
             }
 
-            row.quantity = capital / entry;
+            // Formula: Quantity = (Capital * 5) / Entry
+            row.quantity = Math.floor(effectiveCapital / entry);
+            // Formula: PNL = Points * Quantity
+            row.sim_pnl = row.quantity * pnlPerUnit;
+            totalNetPnl += row.sim_pnl;
         });
 
         window.signalsTable.replaceData(tableData);
-    }
 
-    function calculateSimulation() {
-        if(!window.signalsTable) return;
-        const capitalInput = document.getElementById('investment');
-        const capital = parseFloat(capitalInput.value);
-        if (isNaN(capital) || capital <= 0) {
-            // If capital is invalid or 0, we should still show something
-            document.getElementById('profitResult').textContent = "₹0.00";
-            document.getElementById('stat-total-pnl-top').textContent = "₹0";
-            return;
+        // Update UI Summary Result (Simulator Container)
+        const summaryVal = document.getElementById('sim-total-pnl');
+        if (summaryVal) {
+            summaryVal.textContent = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            summaryVal.className = `text-2xl font-bold ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+            document.getElementById('sim-result-container').classList.remove('hidden');
         }
 
-        const leverage = 5;
-        const tradeCapital = capital * leverage;
-        let totalNetPnl = 0;
-
-        const updatedData = window.signalsTable.getData().map(row => {
-            if (row.entry > 0) {
-                const qty = Math.floor(tradeCapital / row.entry);
-                
-                let pnl = 0;
-                const entry = parseFloat(row.entry);
-                const exit = parseFloat(row.exit) || 0;
-
-                if (row.type === "BUY") {
-                    pnl = (exit - entry) * qty;
-                } else {
-                    pnl = (entry - exit) * qty;
-                }
-
-                totalNetPnl += pnl;
-                return { ...row, quantity: qty, sim_pnl: pnl };
-            }
-            return row;
-        });
-
-        window.signalsTable.updateData(updatedData);
-
-        const summaryVal = document.getElementById('profitResult');
-        summaryVal.textContent = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        summaryVal.className = `text-2xl font-bold ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-        document.getElementById('sim-result-container').classList.remove('hidden');
-        
-        // Format Capital Display accurately
-        let capitalDisplay = '';
-        if (capital >= 1000) {
-            capitalDisplay = `₹${(capital / 1000).toFixed(1).replace(/\.0$/, '')}K`;
-        } else {
-            capitalDisplay = `₹${capital}`;
-        }
-        document.getElementById('stat-total-capital').textContent = capitalDisplay;
-        
+        // Update Top Stat Cards
         const topPnl = document.getElementById('stat-total-pnl-top');
         if (topPnl) {
             const pnlColor = totalNetPnl >= 0 ? '#34d399' : '#fb7185';
@@ -819,10 +775,14 @@
             const pnlLabel = document.getElementById('stat-pnl-label');
             if (pnlCard) pnlCard.style.borderColor = totalNetPnl >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)';
             if (pnlLabel) {
-                pnlLabel.textContent = 'SIMULATED PNL';
+                pnlLabel.textContent = 'PNL (5X)';
                 pnlLabel.style.color = pnlColor;
             }
         }
+    }
+
+    function calculateSimulation() {
+        calculateSignals();
     }
 
     function resetSimulation() {
