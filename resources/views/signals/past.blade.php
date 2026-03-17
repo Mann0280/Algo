@@ -564,7 +564,7 @@
             $tableData = $signals->map(function($s) use ($defaultCapital) {
                 return [
                     'id' => $s->id,
-                    'stock' => (string)($s->symbol ?? '---'),
+                    'stock' => (string)($s->symbol ?: $s->stock_name ?: '---'),
                     'type' => (string)($s->signal_type ?? '---'),
                     'entry' => (float)($s->entry ?? 0),
                     'exit' => (float)($s->close_price ?? 0),

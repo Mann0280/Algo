@@ -23,6 +23,19 @@ class StockSignal extends Model
     ];
 
     /**
+     * Fallback for symbol/stock_name to ensure compatibility
+     */
+    public function getStockNameAttribute($value)
+    {
+        return $value ?: $this->attributes['symbol'] ?? null;
+    }
+
+    public function getSymbolAttribute($value)
+    {
+        return $value ?: $this->attributes['stock_name'] ?? null;
+    }
+
+    /**
      * Calculate quantity based on 5x leverage formula.
      * Quantity = (Capital * 5) / Entry
      */

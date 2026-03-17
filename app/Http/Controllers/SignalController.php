@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StockSignal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 
 class SignalController extends Controller
 {
@@ -50,8 +51,16 @@ class SignalController extends Controller
             $query->whereRaw("STR_TO_DATE(entry_date, '%Y-%m-%d') <= STR_TO_DATE(?, '%Y-%m-%d')", [$request->end_date]);
         }
 
-        if ($request->filled('symbol') || $request->filled('search')) {
-            $query->where('symbol', 'LIKE', '%' . strtoupper($request->symbol ?? $request->search) . '%');
+        // Updated filtering logic for symbol and stock_name
+        if ($request->filled('symbol') || $request->filled('search') || $request->filled('stock_name')) {
+            $searchTerm = strtoupper($request->symbol ?? $request->search ?? $request->stock_name);
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('symbol', 'LIKE', '%' . $searchTerm . '%');
+                // Check if stock_name column exists to avoid error on different environments
+                if (Schema::hasColumn('stock_signals', 'stock_name')) {
+                    $q->orWhere('stock_name', 'LIKE', '%' . $searchTerm . '%');
+                }
+            });
         }
 
         if ($request->filled('signal_type')) {
