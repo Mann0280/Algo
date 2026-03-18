@@ -270,7 +270,8 @@
         </div>
     </div>
 
-    Signals Section
+    <!-- Signals Section -->
+    @if(false)
     <section id="signals" class="pt-16 sm:pt-32 pb-8 sm:pb-16 container mx-auto px-4 sm:px-6 relative z-10">
         <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div class="max-w-2xl">
@@ -465,6 +466,7 @@
             @endif
         </div>
     </section>
+    @endif
 
     {{-- Pricing Packages Section (hidden from home page)
     @if(isset($packages) && $packages->count() > 0)
