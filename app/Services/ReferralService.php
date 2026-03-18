@@ -19,7 +19,7 @@ class ReferralService
     {
         // 1. Check if user was referred
         $referral = Referral::where('referred_user_id', $user->id)
-            ->where('status', 'pending')
+            ->whereIn('status', ['pending', 'rewarded'])
             ->first();
 
         if (!$referral) {
@@ -35,7 +35,7 @@ class ReferralService
         $rewardAmount = 0;
         if ($amount >= 30000) $rewardAmount = 5000;
         elseif ($amount >= 3000) $rewardAmount = 500;
-        elseif ($amount >= 2800) $rewardAmount = 400;
+        elseif ($amount >= 1500) $rewardAmount = 250;
         elseif ($amount >= 200) $rewardAmount = 50;
 
         if ($rewardAmount <= 0) {
@@ -60,7 +60,7 @@ class ReferralService
         $referral->update([
             'plan_name' => $planName,
             'plan_amount' => $amount,
-            'reward_amount' => $rewardAmount,
+            'reward_amount' => $referral->reward_amount + $rewardAmount,
             'status' => 'rewarded'
         ]);
     }
