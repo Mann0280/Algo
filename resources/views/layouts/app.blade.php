@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Emperor Stock Predictor | Advanced Neural Trading Signals')</title>
+    <title>@yield('title', 'Emperor Stock Predictor | Advanced Algo Trading Signals')</title>
     
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

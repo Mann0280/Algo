@@ -327,7 +327,7 @@
                     $navItems = [
                         // ['icon' => 'layout-dashboard', 'label' => 'Terminal', 'url' => url('/terminal'), 'active' => Request::is('terminal*')],
                         ['icon' => 'activity', 'label' => 'Signals', 'url' => url('/signals'), 'active' => Request::is('signals*')],
-                        ['icon' => 'wallet', 'label' => 'Neural Wallet', 'url' => route('account.wallet'), 'active' => Request::is('account/wallet*')],
+                        ['icon' => 'wallet', 'label' => 'Algo Wallet', 'url' => route('account.wallet'), 'active' => Request::is('account/wallet*')],
                         ['icon' => 'gift', 'label' => 'Refer & Earn', 'url' => route('account.referral'), 'active' => Request::is('account/referral*')],
                         ['icon' => 'credit-card', 'label' => 'Link History', 'url' => route('account.subscription-history'), 'active' => Request::is('account/history*')],
                         ['icon' => 'bell', 'label' => 'Notifications', 'url' => route('account.notifications'), 'active' => Request::is('account/notifications*')],
@@ -383,7 +383,7 @@
             <div class="flex-1 hidden md:flex items-center justify-center">
                 <div class="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] shadow-[0_0_20px_rgba(147,51,234,0.05)]">
                     <div class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse shadow-[0_0_8px_#9333ea]"></div>
-                    <span class="text-[9px] font-black font-whiskey text-gray-400 uppercase tracking-[0.25em]">Neural Intelligence Active</span>
+                    <span class="text-[9px] font-black font-whiskey text-gray-400 uppercase tracking-[0.25em]">Algo Intelligence Active</span>
                 </div>
             </div>
 

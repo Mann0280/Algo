@@ -28,7 +28,7 @@
             </div>
             <div>
                 <div class="rcpt-brand" style="font-family: 'Cinzel Decorative', serif;">Emperor Stock Predictor</div>
-                <div class="rcpt-brand-sub">Elite Neural Trading Intelligence</div>
+                <div class="rcpt-brand-sub">Elite Algo Trading Intelligence</div>
             </div>
         </div>
         <div class="rcpt-hdr-right">
@@ -88,7 +88,7 @@
                 <td class="rcpt-td">1</td>
                 <td class="rcpt-td">
                     <strong>{{ $record->plan_name }} Plan — Subscription</strong>
-                    <span class="rcpt-td-sub">Access to live signals, neural analytics & premium terminal.</span>
+                    <span class="rcpt-td-sub">Access to live signals, algo analytics & premium terminal.</span>
                 </td>
                 <td class="rcpt-td rcpt-c"><span class="rcpt-plan-pill">{{ strtoupper($record->plan_name) }}</span></td>
                 <td class="rcpt-td rcpt-r rcpt-mono rcpt-bold">₹{{ number_format($record->amount, 2) }}</td>
@@ -102,7 +102,7 @@
             <div class="rcpt-notes-hd">Terms & Conditions</div>
             <div class="rcpt-notes-body">
                 1. This subscription is valid for 30 days from issued date.<br>
-                2. Signals are for educational purposes based on neural data.<br>
+                2. Signals are for educational purposes based on algo data.<br>
                 3. No physical signature is required as this is a digital invoice.<br>
                 <strong>GSTIN:</strong> 27AABCE1234F1Z5 (Sample)
             </div>

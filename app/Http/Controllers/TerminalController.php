@@ -80,7 +80,7 @@ class TerminalController extends Controller
         ];
 
         $node_logs = [
-            ['time' => now()->subMinutes(2)->format('H:i:s'), 'msg' => 'Neural link established with NSE-MAIN-NODE'],
+            ['time' => now()->subMinutes(2)->format('H:i:s'), 'msg' => 'Algo link established with NSE-MAIN-NODE'],
             ['time' => now()->subMinutes(5)->format('H:i:s'), 'msg' => 'Pattern match found: Bullish Divergence in Sector-5'],
             ['time' => now()->subMinutes(12)->format('H:i:s'), 'msg' => 'Volume spike detected in ELITE assets. Analyzing...'],
             ['time' => now()->subMinutes(18)->format('H:i:s'), 'msg' => 'AI Model v4.2 updated with latest volatility metrics'],

@@ -114,7 +114,7 @@
                 <i data-lucide="alert-circle" class="w-10 h-10"></i>
             </div>
             <h3 class="font-whiskey font-bold text-xl mb-2 uppercase" style="color: var(--text-white)">No Signals Detected</h3>
-            <p class="text-slate-500 text-sm max-w-xs mx-auto italic">Our neural pathways are currently scanning the market. Stay synchronized for new breakouts.</p>
+            <p class="text-slate-500 text-sm max-w-xs mx-auto italic">Our algo pathways are currently scanning the market. Stay synchronized for new breakouts.</p>
         </div>
     </div>
 </div>
@@ -163,11 +163,11 @@
             ]
         });
 
-        syncNeuralTelemetry();
+        syncAlgoTelemetry();
         setInterval(runCountdown, 1000);
     });
 
-    async function syncNeuralTelemetry() {
+    async function syncAlgoTelemetry() {
         if (syncInProgress || !tipsTable) return;
         syncInProgress = true;
 
@@ -179,7 +179,7 @@
 
         try {
             const response = await fetch(`/api/live-tips?nocache=${new Date().getTime()}`);
-            if (!response.ok) throw new Error(`Neural Network Error: ${response.status}`);
+            if (!response.ok) throw new Error(`Algo Engine Error: ${response.status}`);
             const result = await response.json();
 
             if (result.success) {
@@ -227,7 +227,7 @@
         const timerEl = document.getElementById('refresh-counter');
         if (nextSync <= 0) {
             nextSync = 5;
-            syncNeuralTelemetry();
+            syncAlgoTelemetry();
         }
         if (timerEl) timerEl.innerText = `REFRESHING IN ${nextSync}s`;
         nextSync--;

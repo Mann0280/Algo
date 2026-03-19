@@ -60,7 +60,7 @@ class AuthController extends Controller
                 ? redirect()->route('admin.dashboard')
                 : redirect()->intended('/');
 
-            return $response->withCookie(cookie('neural_token', $token, 1440, null, null, false, false));
+            return $response->withCookie(cookie('algo_token', $token, 1440, null, null, false, false));
         }
 
         return back()->withErrors([
@@ -93,7 +93,7 @@ class AuthController extends Controller
             ]);
 
             return redirect()->route('admin.dashboard')
-                ->withCookie(cookie('neural_token', $token, 1440, null, null, false, false));
+                ->withCookie(cookie('algo_token', $token, 1440, null, null, false, false));
         }
 
         return back()->withErrors([

@@ -451,7 +451,7 @@ class AccountController extends Controller
             'default_allocation' => 'sometimes|string',
             'sl_threshold' => 'sometimes|numeric|min:0|max:100',
             'signal_sensitivity' => 'sometimes|numeric|min:0|max:1',
-            'neural_confidence' => 'sometimes|integer|min:0|max:100',
+            'algo_confidence' => 'sometimes|integer|min:0|max:100',
             'learning_rate' => 'sometimes|numeric|min:0|max:1',
             'pattern_depth' => 'sometimes|string',
             'profile_photo' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -470,7 +470,7 @@ class AccountController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Neural protocols synchronized successfully',
+            'message' => 'Algo protocols synchronized successfully',
             'user' => [
                 'username' => $user->username,
                 'email' => $user->email,

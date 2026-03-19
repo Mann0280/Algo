@@ -68,9 +68,35 @@
                         @if($isPremium)
                         <div class="relative">
                             <button class="notification-trigger w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-all relative group">
-                                <i data-lucide="bell" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
-                                <span class="notification-dot hidden absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full shadow-[0_0_10px_#f43f5e]"></span>
+                                <div class="relative flex items-center justify-center">
+                                    <i data-lucide="bell" class="w-5 h-5 group-hover:rotate-12 transition-transform origin-top"></i>
+                                    <span class="notification-dot hidden absolute -top-0.5 -right-0.5 w-[9px] h-[9px] bg-rose-500 border-2 border-[#151120] rounded-full shadow-[0_0_10px_rgba(244,63,94,0.6)]"></span>
+                                </div>
                             </button>
+                            
+                            <!-- Notification Dropdown -->
+                            <div id="notification-dropdown" style="background: linear-gradient(135deg, #180a33 0%, #000000 100%);" class="absolute top-[calc(100%+16px)] right-0 w-[400px] border border-white/10 rounded-[2.5rem] shadow-[0_30px_80px_-10px_rgba(0,0,0,0.9)] transition-all duration-300 transform origin-top-right scale-95 opacity-0 invisible z-[999] overflow-hidden">
+                                <div class="p-6 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
+                                    <div class="flex flex-col">
+                                        <h3 class="font-professional text-[11px] font-black text-white uppercase tracking-[0.25em]">Algo Center</h3>
+                                        <p class="text-[8px] text-gray-500 font-bold uppercase tracking-widest mt-1 opacity-60">System Synchronized</p>
+                                    </div>
+                                    <span id="unread-badge" class="px-3 py-1.5 rounded-xl bg-purple-500 text-white text-[10px] font-black tracking-tighter hidden shadow-[0_0_15px_rgba(168,85,247,0.4)]">0 NEW</span>
+                                </div>
+                                <div id="notification-list" class="max-h-[60vh] lg:max-h-[450px] overflow-y-auto custom-scrollbar p-4 space-y-2">
+                                    <div class="py-20 text-center flex flex-col items-center gap-4">
+                                        <div class="w-16 h-16 rounded-3xl bg-white/[0.02] border border-white/5 flex items-center justify-center">
+                                            <i data-lucide="bell-off" class="w-8 h-8 text-gray-700"></i>
+                                        </div>
+                                        <span class="text-[10px] font-black font-whiskey uppercase tracking-[0.3em] text-gray-600">No Algo Transmissions</span>
+                                    </div>
+                                </div>
+                                <div class="p-4 border-t border-white/5 text-center bg-white/[0.02]">
+                                    <a href="{{ url('/account/notifications') }}" class="inline-flex items-center justify-center w-full py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] text-[10px] font-black text-purple-400 hover:text-white transition-all uppercase tracking-[0.2em] gap-2">
+                                        Explore Full Feed <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         @endif
 
@@ -111,33 +137,6 @@
                     <i data-lucide="menu" class="w-5 h-5" id="menu-icon"></i>
                     <i data-lucide="x" class="w-5 h-5 hidden" id="close-icon"></i>
                 </button>
-
-                <!-- Notification Dropdown (Global) -->
-                @if($isPremium)
-                <div id="notification-dropdown" class="fixed lg:absolute top-[85px] lg:top-[120%] left-1/2 lg:left-auto lg:right-0 -translate-x-1/2 lg:translate-x-0 w-[calc(100vw-32px)] sm:w-96 max-w-lg lg:max-w-none bg-[#0a0a12]/98 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-[0_20px_80px_-15px_rgba(0,0,0,1)] transition-all duration-300 transform scale-95 opacity-0 invisible z-[999] overflow-hidden">
-                    <div class="p-8 border-b border-white/5 flex justify-between items-center bg-white/[0.03]">
-                        <div class="flex flex-col">
-                            <h3 class="font-professional text-[11px] font-black text-white uppercase tracking-[0.25em]">Neural Center</h3>
-                            <p class="text-[8px] text-gray-500 font-bold uppercase tracking-widest mt-1 opacity-60">System Synchronized</p>
-                        </div>
-                        <span id="unread-badge" class="px-3 py-1.5 rounded-xl bg-purple-500 text-white text-[10px] font-black tracking-tighter hidden shadow-[0_0_15px_rgba(168,85,247,0.4)]">0 NEW</span>
-                    </div>
-                    <div id="notification-list" class="max-h-[50vh] lg:max-h-[450px] overflow-y-auto no-scrollbar p-4 space-y-2">
-                        <div class="py-20 text-center flex flex-col items-center gap-4">
-                            <div class="w-16 h-16 rounded-3xl bg-white/[0.02] border border-white/5 flex items-center justify-center">
-                                <i data-lucide="bell-off" class="w-8 h-8 text-gray-700"></i>
-                            </div>
-                            <span class="text-[10px] font-black font-whiskey uppercase tracking-[0.3em] text-gray-600">No Neural Transmissions</span>
-                        </div>
-                    </div>
-                    <div class="p-8 border-t border-white/5 text-center bg-white/[0.02]">
-                        <a href="{{ url('/account/notifications') }}" class="inline-flex items-center gap-2 text-[10px] font-black text-purple-400 hover:text-white transition-all uppercase tracking-[0.2em]">
-                            <span class="border-b border-purple-500/30 pb-0.5">Explore Full Feed</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </a>
-                    </div>
-                </div>
-                @endif
             </div>
         </div>
     </div>
@@ -454,6 +453,10 @@
         dropdown.classList.add('scale-95');
     });
 
+    dropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
     // Fetch every 30 seconds
     fetchNotifications();
     setInterval(fetchNotifications, 30000);
@@ -462,9 +465,9 @@
 
 @if($isPremium)
 <!-- Notification Detail Modal -->
-<div id="notification-detail-modal" class="fixed inset-0 z-[999999] hidden items-center justify-center p-6 sm:p-0">
+<div id="notification-detail-modal" class="fixed inset-0 z-[999999] hidden items-center justify-center p-6 sm:p-0 transition-all duration-300">
     <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeNotificationDetail()"></div>
-    <div class="glass-card w-full max-w-lg rounded-[2.5rem] border border-white/10 relative z-10 overflow-hidden shadow-2xl">
+    <div style="background: linear-gradient(135deg, #180a33 0%, #000000 100%);" class="w-full max-w-lg rounded-[2.5rem] border border-white/10 relative z-10 overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.8)]">
         <div class="p-8 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
             <div class="flex items-center gap-4">
                 <div id="detail-modal-icon" class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">

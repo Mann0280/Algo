@@ -14,7 +14,7 @@
             <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
                 WALLET <span class="text-purple-500 text-glow">PROTOCOL</span>
             </h1>
-            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Manage Neural Credit Nodes and P2P Reception Gateways</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Manage Algo Credit Nodes and P2P Reception Gateways</p>
         </div>
         
         <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
@@ -44,7 +44,7 @@
                             </div>
                             <div>
                                 <h2 class="font-whiskey text-sm font-black tracking-[0.2em] uppercase text-white leading-none">Gateway Credentials</h2>
-                                <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Authorization parameters for neural transfers</p>
+                                <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Authorization parameters for algo transfers</p>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                             <!-- UPI ID -->
                             <div class="space-y-4">
-                                <label class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-[0.2em] pl-1">Neural UPI Endpoint</label>
+                                <label class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-[0.2em] pl-1">Algo UPI Endpoint</label>
                                 <div class="relative group/input">
                                     <div class="absolute inset-y-0 left-5 flex items-center text-gray-700 group-focus-within/input:text-purple-500 transition-colors">
                                         <i data-lucide="hash" class="w-4 h-4"></i>

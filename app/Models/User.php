@@ -27,7 +27,7 @@ class User extends Authenticatable
         'default_allocation',
         'sl_threshold',
         'signal_sensitivity',
-        'neural_confidence',
+        'algo_confidence',
         'learning_rate',
         'pattern_depth',
         'profile_photo',

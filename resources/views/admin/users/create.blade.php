@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Neural Initialization | New User')
+@section('title', 'Algo Initialization | New User')
 
 @section('content')
 <div class="max-w-2xl mx-auto space-y-8">
@@ -44,7 +44,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-bold font-whiskey text-gray-500 uppercase tracking-widest mb-3 px-1">Neural Relay (Email)</label>
+                    <label class="block text-[10px] font-bold font-whiskey text-gray-500 uppercase tracking-widest mb-3 px-1">Algo Relay (Email)</label>
                     <div class="relative group">
                         <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-purple-500 transition-colors"></i>
                         <input type="email" name="email" value="{{ old('email') }}" required 

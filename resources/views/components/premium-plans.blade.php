@@ -30,7 +30,8 @@
                 <!-- Fixed/Hardcoded plans (Fallback) -->
                 <!-- 1 Day -->
                 <div class="relative group">
-                    <div class="h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-purple-500/30 hover:shadow-[0_0_40px_rgba(147,51,234,0.12)]" style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
+                    <div class="absolute -inset-px rounded-3xl bg-gradient-to-r from-purple-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]"></div>
+                    <div class="relative h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:#6a5bf6; --accent-to:#9a4dff; --accent-border:rgba(138,92,246,0.42); background: rgba(10, 5, 20, 0.95); backdrop-filter: blur(10px);">
                         <div class="mb-6">
                             <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4">
                                 <i data-lucide="zap" class="w-5 h-5 text-purple-400"></i>
@@ -48,15 +49,14 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Entry, Target &amp; Stop Loss</li>
                             <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-gray-600 shrink-0"></i> <span class="text-gray-600">Historical archive</span></li>
                         </ul>
-                        <a href="{{ $getLink($p1) }}" class="block w-full py-3.5 rounded-2xl text-center text-sm font-bold text-white border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition-all">
-                            Get Started
-                        </a>
+                        <a href="{{ $getLink($p1) }}" class="plan-button">Get Started</a>
                     </div>
                 </div>
 
                 <!-- 1 Week -->
                 <div class="relative group">
-                    <div class="h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-purple-500/30 hover:shadow-[0_0_40px_rgba(147,51,234,0.12)]" style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
+                    <div class="absolute -inset-px rounded-3xl bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]"></div>
+                    <div class="relative h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:#5f7cf6; --accent-to:#b04dff; --accent-border:rgba(135,92,255,0.46); background: rgba(10, 5, 20, 0.95); backdrop-filter: blur(10px);">
                         <div class="mb-6">
                             <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-4">
                                 <i data-lucide="calendar" class="w-5 h-5 text-indigo-400"></i>
@@ -74,20 +74,18 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Entry, Target &amp; Stop Loss</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> 7-day signal history</li>
                         </ul>
-                        <a href="{{ $getLink($p7) }}" class="block w-full py-3.5 rounded-2xl text-center text-sm font-bold text-white border border-white/10 hover:border-purple-500/40 hover:bg-purple-500/10 transition-all">
-                            Get Started
-                        </a>
+                        <a href="{{ $getLink($p7) }}" class="plan-button">Get Started</a>
                     </div>
                 </div>
 
                 <!-- 1 Month — Most Popular -->
                 <div class="relative group">
                     <!-- Glow ring -->
-                    <div class="absolute -inset-px rounded-3xl" style="background: linear-gradient(135deg, #7c3aed, #6366f1); opacity: 0.7;"></div>
+                    <div class="absolute -inset-px rounded-3xl transition-opacity duration-500 opacity-70 group-hover:opacity-100 blur-[1px]" style="background: linear-gradient(135deg, #7c3aed, #6366f1);"></div>
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                         <span class="text-[10px] font-bold uppercase tracking-[0.15em] text-white px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap" style="background: linear-gradient(135deg, #7c3aed, #4f46e5);">Most Popular</span>
                     </div>
-                    <div class="relative h-full rounded-3xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-2" style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
+                    <div class="relative h-full rounded-3xl p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:#f2b75c; --accent-to:#d98b2b; --accent-border:rgba(240,180,90,0.55); background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
 
                         <div class="mb-6 mt-2">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(99,102,241,0.2)); border: 1px solid rgba(124,58,237,0.4);">
@@ -106,15 +104,14 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Entry, Target &amp; Stop Loss</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Full historical archive</li>
                         </ul>
-                        <a href="{{ $getLink($p30) }}" class="block w-full py-3.5 rounded-2xl text-center text-sm font-bold text-white transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(124,58,237,0.4)]" style="background: linear-gradient(135deg, #7c3aed, #6366f1);">
-                            Get Started
-                        </a>
+                        <a href="{{ $getLink($p30) }}" class="plan-button">Get Started</a>
                     </div>
                 </div>
 
                 <!-- 1 Year -->
                 <div class="relative group">
-                    <div class="h-full rounded-3xl border border-amber-500/20 p-8 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/40 hover:shadow-[0_0_40px_rgba(245,158,11,0.08)]" style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
+                    <div class="absolute -inset-px rounded-3xl bg-gradient-to-r from-amber-500 to-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]"></div>
+                    <div class="relative h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:#f59e0b; --accent-to:#fbbf24; --accent-border:rgba(245,158,11,0.5); background: rgba(10, 5, 20, 0.95); backdrop-filter: blur(10px);">
                         <div class="mb-6">
                             <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-4">
                                 <i data-lucide="crown" class="w-5 h-5 text-white"></i>
@@ -133,9 +130,7 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Entry, Target &amp; Stop Loss</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Full historical archive</li>
                         </ul>
-                        <a href="{{ $getLink($p365) }}" class="block w-full py-3.5 rounded-2xl text-center text-sm font-bold text-white border border-white/30 hover:bg-white/10 hover:border-white/50 transition-all">
-                            Get Started
-                        </a>
+                        <a href="{{ $getLink($p365) }}" class="plan-button">Get Started</a>
                     </div>
                 </div>
             @endif
@@ -146,14 +141,23 @@
                     @php
                         // Cycle through styles for dynamic cards to distinguish them
                         $styles = [
-                            ['color' => 'purple', 'glow' => 'rgba(147,51,234,0.12)', 'icon' => 'zap'],
-                            ['color' => 'indigo', 'glow' => 'rgba(99,102,241,0.12)', 'icon' => 'calendar'],
-                            ['color' => 'amber', 'glow' => 'rgba(245,158,11,0.08)', 'icon' => 'crown']
+                            ['color' => 'purple', 'glow' => 'rgba(147,51,234,0.12)', 'icon' => 'zap', 'from' => '#6a5bf6', 'to' => '#9a4dff', 'border' => 'rgba(138,92,246,0.42)'],
+                            ['color' => 'indigo', 'glow' => 'rgba(99,102,241,0.12)', 'icon' => 'calendar', 'from' => '#5f7cf6', 'to' => '#b04dff', 'border' => 'rgba(135,92,255,0.46)'],
+                            ['color' => 'amber', 'glow' => 'rgba(245,158,11,0.08)', 'icon' => 'crown', 'from' => '#f59e0b', 'to' => '#fbbf24', 'border' => 'rgba(245,158,11,0.5)'],
                         ];
                         $style = $styles[$index % count($styles)];
                     @endphp
+                    @php
+                        $glowColors = [
+                            'purple' => 'from-purple-500 to-indigo-600',
+                            'indigo' => 'from-indigo-500 to-purple-500',
+                            'amber' => 'from-amber-500 to-yellow-300'
+                        ];
+                        $glowClass = $glowColors[$style['color']] ?? 'from-purple-500 to-indigo-600';
+                    @endphp
                     <div class="relative group">
-                        <div class="h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-{{ $style['color'] }}-500/30 hover:shadow-[0_0_40px_{{ $style['glow'] }}]" style="background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
+                        <div class="absolute -inset-px rounded-3xl bg-gradient-to-r {{ $glowClass }} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]"></div>
+                        <div class="relative h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:{{ $style['from'] }}; --accent-to:{{ $style['to'] }}; --accent-border:{{ $style['border'] }}; background: rgba(10, 5, 20, 0.95); backdrop-filter: blur(10px);">
                             <div class="mb-6">
                                 <div class="w-10 h-10 rounded-xl bg-{{ $style['color'] }}-500/10 border border-{{ $style['color'] }}-500/20 flex items-center justify-center mb-4">
                                     <i data-lucide="{{ $style['icon'] }}" class="w-5 h-5 text-{{ $style['color'] }}-400"></i>
@@ -174,9 +178,7 @@
                                     <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Premium signal access</li>
                                 @endif
                             </ul>
-                            <a href="@auth {{ route('payment.show', ['package' => $package->id]) }} @else {{ route('login') }} @endauth" class="block w-full py-3.5 rounded-2xl text-center text-sm font-bold text-white border border-white/10 hover:border-{{ $style['color'] }}-500/40 hover:bg-{{ $style['color'] }}-500/10 transition-all">
-                                Get Started
-                            </a>
+                            <a href="@auth {{ route('payment.show', ['package' => $package->id]) }} @else {{ route('login') }} @endauth" class="plan-button">Get Started</a>
                         </div>
                     </div>
                 @endforeach
@@ -209,6 +211,58 @@
 
 @push('styles')
 <style>
+    /* Card outline glow without flood fill */
+    .relative.group > .absolute {
+        pointer-events: none;
+        padding: 1px;
+        border-radius: 1.5rem;
+        filter: blur(0);
+        opacity: 0;
+        background-clip: padding-box, border-box;
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        transition: opacity 0.25s ease, filter 0.25s ease;
+    }
+    .relative.group:hover > .absolute {
+        opacity: 0.9;
+        filter: blur(2px);
+    }
+    /* Card lift without inheriting to button */
+    .relative.group > .relative.h-full {
+        transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+    .relative.group:hover > .relative.h-full {
+        transform: translateY(-6px);
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.38);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+    .plan-button {
+        display: block;
+        width: 100%;
+        padding: 0.9rem 1.2rem;
+        border-radius: 1rem;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, color 0.25s ease;
+    }
+    .plan-button:hover,
+    .plan-button:focus-visible {
+        background: linear-gradient(120deg, var(--accent-from, #7c3aed), var(--accent-to, #6366f1));
+        color: #0c0a1a;
+        border-color: transparent;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), 0 0 16px var(--accent-border, rgba(124,58,237,0.4));
+        transform: translateY(-2px);
+    }
+    .plan-button:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.25);
+        outline-offset: 3px;
+    }
+
     .step-indicator.active {
         background: linear-gradient(135deg, #f59e0b, #ea580c);
         color: white;

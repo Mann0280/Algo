@@ -32,7 +32,7 @@
 
             <div class="space-y-6">
                 <p class="text-gray-400 text-sm leading-relaxed max-w-sm mx-auto">
-                    A celestial handshake has been sent to your transmission relay. Please verify your email address to initialize your neural connection.
+                    A celestial handshake has been sent to your transmission relay. Please verify your email address to initialize your algo connection.
                 </p>
 
                 @if (session('status') == 'verification-link-sent')

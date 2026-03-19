@@ -27,7 +27,7 @@
         user-select: none;
     }
 
-    /* Mobile Neural Pathway (iPhone View) */
+    /* Mobile Signal Pathway (iPhone View) */
     .mobile-phone-frame {
         background: #000000;
         border: 4px solid #1a1a1a;
@@ -74,7 +74,7 @@
         background: radial-gradient(circle at 30% 30%, #1a1a5a 0%, #000 70%);
         opacity: 0.6;
     }
-    .neural-card {
+    .algo-card {
         background: linear-gradient(180deg, #2a0a4e 0%, #0a0514 30%, #05020a 100%);
         border-radius: 3.2rem;
         padding: 2.5rem 2rem;
@@ -84,7 +84,7 @@
         border: 1px solid rgba(147, 51, 234, 0.15);
         box-shadow: inset 0 20px 40px rgba(0,0,0,0.4);
     }
-    .neural-wave {
+    .algo-wave {
         width: 100%;
         height: 120px;
         fill: none;
@@ -93,7 +93,7 @@
         stroke-linecap: round;
         filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.5));
     }
-    .neural-wave-fill {
+    .algo-wave-fill {
         fill: url(#wave-gradient);
         opacity: 0.3;
     }
@@ -126,14 +126,14 @@
                 <div class="island-dot"></div>
             </div>
 
-            <div class="neural-card">
+            <div class="algo-card">
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-10">
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
                             <i data-lucide="zap" class="w-5 h-5 text-white fill-white"></i>
                         </div>
-                        <span class="font-whiskey font-black text-xs italic tracking-tighter text-purple-500">NEURAL PATHWAY</span>
+                        <span class="font-whiskey font-black text-xs italic tracking-tighter text-purple-500">SIGNAL PATHWAY</span>
                     </div>
                     <div class="flex gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-red-500/40"></span>
@@ -156,14 +156,14 @@
 
                 <!-- Animated Wave Chart -->
                 <div class="relative h-[180px] -mx-8 mt-4">
-                    <svg viewBox="0 0 400 180" class="w-full h-full neural-wave animate-wave">
+                    <svg viewBox="0 0 400 180" class="w-full h-full algo-wave animate-wave">
                         <defs>
                             <linearGradient id="wave-gradient" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="0%" stop-color="#a855f7" stop-opacity="0.6" />
                                 <stop offset="100%" stop-color="#9333ea" stop-opacity="0" />
                             </linearGradient>
                         </defs>
-                        <path d="M0,130 C50,120 80,160 140,100 C200,40 280,150 340,70 C370,30 400,100 450,120 L450,180 L0,180 Z" class="neural-wave-fill" />
+                        <path d="M0,130 C50,120 80,160 140,100 C200,40 280,150 340,70 C370,30 400,100 450,120 L450,180 L0,180 Z" class="algo-wave-fill" />
                         <path d="M0,130 C50,120 80,160 140,100 C200,40 280,150 340,70 C370,30 400,100 450,120" />
                         <!-- Tooltip Point -->
                         <circle cx="340" cy="70" r="4" fill="#fff" class="shadow-lg" />
@@ -197,7 +197,7 @@
                     <div class="text-[9px] font-black text-white font-whiskey">SYSTEM UPDATE</div>
                     <span class="text-[10px] text-gray-600 uppercase">Just Now</span>
                 </div>
-                <p class="text-xs text-gray-300 leading-relaxed">AI Neural Engine has successfully scanned 500+ NSE symbols. New signals generated.</p>
+                <p class="text-xs text-gray-300 leading-relaxed">Algo Engine has successfully scanned 500+ NSE symbols. New signals generated.</p>
             </div>
         </div>
     </div>
@@ -367,11 +367,11 @@
         });
 
         // Initial Sync
-        syncNeuralTelemetry();
+        syncAlgoTelemetry();
         setInterval(runCountdown, 1000);
     });
 
-    async function syncNeuralTelemetry() {
+    async function syncAlgoTelemetry() {
         if (syncInProgress || !tipsTable) return;
         syncInProgress = true;
 
@@ -416,7 +416,7 @@
         const timerEl = document.getElementById('refresh-counter');
         if (nextSync <= 0) {
             nextSync = 5;
-            syncNeuralTelemetry();
+            syncAlgoTelemetry();
         }
         if (timerEl) timerEl.innerText = `REFRESHING IN ${nextSync}s`;
         nextSync--;

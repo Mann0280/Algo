@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Neural Notifications | System Protocol')
+@section('title', 'Algo Notifications | System Protocol')
 
 @section('content')
 <div class="px-6 py-8">
@@ -10,7 +10,7 @@
         <div class="flex items-center justify-between mb-8 opacity-0 translate-y-4" id="notif-header">
             <div>
                 <h1 class="text-3xl font-black text-white tracking-tight uppercase leading-none mb-2">
-                    Neural <span class="text-purple-500">Alert Stream</span>
+                    Algo <span class="text-purple-500">Alert Stream</span>
                 </h1>
                 <p class="text-gray-400 text-sm font-medium">Real-time intelligence and system protocol synchronization.</p>
             </div>
@@ -32,7 +32,7 @@
                         <i data-lucide="activity" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-white font-bold text-sm mb-1 uppercase tracking-wider">Stream Status</h3>
-                    <p class="text-gray-500 text-[11px] font-medium leading-relaxed mb-4">Neural node connection is active and monitoring signal patterns.</p>
+                    <p class="text-gray-500 text-[11px] font-medium leading-relaxed mb-4">Algo node connection is active and monitoring signal patterns.</p>
                     
                     <div class="space-y-3">
                         <div class="flex items-center justify-between text-[11px]">
@@ -62,7 +62,7 @@
                         <div class="flex gap-3">
                             <div class="w-1 h-8 rounded-full bg-purple-500/40"></div>
                             <div>
-                                <p class="text-white text-[10px] font-bold">Neural Link</p>
+                                <p class="text-white text-[10px] font-bold">Algo Link</p>
                                 <p class="text-gray-500 text-[9px]">Encryption encrypted</p>
                             </div>
                         </div>
@@ -81,9 +81,9 @@
                         </div>
                     </div>
                     <h3 class="text-3xl font-black text-white uppercase tracking-tight mb-4">Protocol Restricted</h3>
-                    <p class="text-gray-400 text-sm max-w-sm mx-auto mb-10 leading-relaxed font-medium uppercase tracking-tight">The Neural Notification Stream is exclusive to Premium Elite Nodes. Upgrade to initialize the high-frequency connection.</p>
+                    <p class="text-gray-400 text-sm max-w-sm mx-auto mb-10 leading-relaxed font-medium uppercase tracking-tight">The Algo Notification Stream is exclusive to Premium Elite Nodes. Upgrade to initialize the high-frequency connection.</p>
                     <a href="{{ route('pricing') }}" class="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-amber-500 text-black font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-amber-500/20">
-                        <i data-lucide="zap" class="w-4 h-4"></i> Upgrade Neural Access
+                        <i data-lucide="zap" class="w-4 h-4"></i> Upgrade Algo Access
                     </a>
                 </div>
                 @elseif($notifications->isEmpty())
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <h3 class="text-2xl font-black text-white uppercase tracking-tight mb-3">Matrix Clear</h3>
-                    <p class="text-gray-500 text-[11px] font-bold uppercase tracking-widest">No neural signals detected in the current stream.</p>
+                    <p class="text-gray-500 text-[11px] font-bold uppercase tracking-widest">No algo signals detected in the current stream.</p>
                 </div>
                 @else
                     @foreach($notifications as $notification)

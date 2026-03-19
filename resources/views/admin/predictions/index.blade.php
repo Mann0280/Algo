@@ -277,7 +277,7 @@
             });
         } catch (err) {
             console.error("Admin Table Failure:", err);
-            document.getElementById('admin-predictions-table').innerHTML = `<div class='p-10 text-rose-500 font-whiskey text-[10px] uppercase'>NEURAL LINK ERROR: ${err.message}</div>`;
+            document.getElementById('admin-predictions-table').innerHTML = `<div class='p-10 text-rose-500 font-whiskey text-[10px] uppercase'>ALGO LINK ERROR: ${err.message}</div>`;
         }
     });
 </script>

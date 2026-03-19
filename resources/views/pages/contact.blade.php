@@ -109,12 +109,9 @@
                             <textarea name="message" rows="5" required placeholder="Describe your query in detail..." class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all text-sm font-medium text-white placeholder:text-gray-700 resize-none"></textarea>
                         </div>
 
-                        <button type="submit" class="relative w-full group overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl transition-all duration-300 group-hover:blur-md opacity-30"></div>
-                            <div class="relative py-4 px-8 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-[10px] tracking-[0.2em] transform transition-all active:scale-95 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] flex items-center justify-center gap-3 rounded-xl uppercase">
-                                <span>Send Message</span>
-                                <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
-                            </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-4 px-8 rounded-xl text-[10px] tracking-[0.2em] uppercase transform transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_26px_rgba(79,70,229,0.35)] active:scale-95 flex items-center justify-center gap-3">
+                            <span>Send Message</span>
+                            <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
                         </button>
                     </form>
                 </div>

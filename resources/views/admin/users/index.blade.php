@@ -65,7 +65,7 @@
     <div class="flex flex-col md:flex-row gap-6 items-center">
         <div class="relative flex-1 w-full">
             <i data-lucide="search" class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4"></i>
-            <input type="text" id="user-search" placeholder="SCAN NEURAL DATABASE FOR SUBJECTS..." class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-14 pr-6 outline-none focus:border-purple-500/50 transition-all text-[10px] font-black font-whiskey tracking-widest text-white placeholder:text-gray-800 uppercase">
+            <input type="text" id="user-search" placeholder="SCAN ALGO DATABASE FOR SUBJECTS..." class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-14 pr-6 outline-none focus:border-purple-500/50 transition-all text-[10px] font-black font-whiskey tracking-widest text-white placeholder:text-gray-800 uppercase">
         </div>
         <div class="flex gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-2 md:pb-0">
             @php $roles = ['all', 'premium', 'user', 'admin']; @endphp

@@ -1,13 +1,13 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Neural Wallet | Emperor Stock Predictor')
+@section('title', 'Algo Wallet | Emperor Stock Predictor')
 
 @section('content')
 <div class="space-y-10">
     <!-- Header/Quick Stats -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-            <h2 class="text-3xl font-bold text-white tracking-tighter uppercase">NEURAL <span class="text-purple-500">WALLET</span></h2>
+            <h2 class="text-3xl font-bold text-white tracking-tighter uppercase">ALGO <span class="text-purple-500">WALLET</span></h2>
             <p class="text-sm text-gray-500 mt-1 uppercase tracking-widest font-bold">Financial Protocol Dashboard</p>
         </div>
         <div class="flex items-center gap-4">

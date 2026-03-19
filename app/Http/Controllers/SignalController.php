@@ -111,6 +111,11 @@ class SignalController extends Controller
             return $res === 'EOD';
         })->count();
 
+        $totalEODWin = $signals->filter(function($s) {
+            $res = strtoupper($s->result ?? '');
+            return $res === 'EOD' && $s->pnl > 0;
+        })->count();
+
         $defaultCapital = 100000;
         $totalPnl = $signals->sum(function($s) use ($defaultCapital) {
             return $s->getCalculatedSimPnl($defaultCapital);
@@ -119,6 +124,6 @@ class SignalController extends Controller
         $winRate = $totalSignals > 0 ? round(($totalWin / $totalSignals) * 100, 1) . '%' : '0%';
 
         // Pass data to the Blade view
-        return view('signals.past', compact('signals', 'totalSignals', 'totalWin', 'totalLoss', 'totalEOD', 'totalPnl', 'winRate', 'userState'));
+        return view('signals.past', compact('signals', 'totalSignals', 'totalWin', 'totalLoss', 'totalEOD', 'totalEODWin', 'totalPnl', 'winRate', 'userState'));
     }
 }

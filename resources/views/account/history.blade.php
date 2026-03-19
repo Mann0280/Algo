@@ -12,7 +12,7 @@
         </div>
         <div class="px-6 py-3 rounded-2xl bg-purple-500/5 border border-purple-500/10 flex items-center gap-4">
             <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#9333ea]"></div>
-            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Neural Sync Active</span>
+            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Algo Sync Active</span>
         </div>
     </div>
 
@@ -100,7 +100,7 @@
             <div>
                 <h4 class="text-xl font-bold text-white uppercase tracking-tight">Security Protocol Advisory</h4>
                 <p class="text-xs text-gray-500 mt-2 leading-relaxed">
-                    Transaction records are immutable once confirmed by the neural network. If you identify a synchronization error in your temporal logs, please initiate a support ticket immediately for manual verification.
+                    Transaction records are immutable once confirmed by the algo network. If you identify a synchronization error in your temporal logs, please initiate a support ticket immediately for manual verification.
                 </p>
             </div>
         </div>

@@ -111,6 +111,20 @@
         from { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); }
         to { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); }
     }
+    /* Past Signals CTA */
+    .btn-past-signals {
+        background: rgba(255, 255, 255, 0.04) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        transition: background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease, color 0.28s ease;
+    }
+    .btn-past-signals:hover,
+    .btn-past-signals:focus-visible {
+        background: linear-gradient(135deg, #c026d3, #4f46e5) !important;
+        border-color: transparent !important;
+        box-shadow: 0 10px 26px rgba(79, 70, 229, 0.35) !important;
+        transform: translateY(-2px);
+        color: #ffffff;
+    }
 </style>
 @endpush
 
@@ -146,8 +160,8 @@
                             Upgrade To Premium
                         </span>
                     </a>
-                    <a href="#signals" class="w-full sm:w-auto glass-panel border border-white/10 hover:bg-white/5 text-white font-bold py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all transform hover:-translate-y-1 text-[11px] uppercase tracking-wider flex items-center justify-center gap-3">
-                        Explore Signals
+                    <a href="{{ url('/signals/past') }}" class="w-full sm:w-auto glass-panel btn-past-signals text-white font-bold py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all text-[11px] uppercase tracking-wider flex items-center justify-center gap-3">
+                        Past Signals
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -200,7 +214,7 @@
                         <div class="flex justify-between items-center mb-10 relative z-10">
                             <div class="flex items-center gap-2 text-purple-500">
                                 <i data-lucide="zap" class="w-5 h-5 fill-purple-500"></i>
-                                <span class="text-[9px] font-bold tracking-widest uppercase">NEURAL PATHWAY</span>
+                                <span class="text-[9px] font-bold tracking-widest uppercase">SIGNAL PATHWAY</span>
                             </div>
                             <div class="flex gap-2">
                                  <div class="w-2 h-2 rounded-full bg-rose-500/50"></div>
@@ -456,7 +470,7 @@
                 <div class="w-12 h-12 bg-amber-400 text-black rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl shadow-amber-400/20 animate-bounce">
                     <i data-lucide="lock" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-professional text-xl text-white mb-2 uppercase">Neural Prediction Stream Restricted</h3>
+                <h3 class="font-professional text-xl text-white mb-2 uppercase">Advanced Signal Stream Restricted</h3>
                 <p class="text-slate-400 text-sm mb-8 max-w-lg mx-auto italic">Full data terminal access is reserved for Premium King members only. Precision levels and real-time execution alerts currently blurred.</p>
                 <div class="flex justify-center gap-4">
                     <a href="{{ url('/pricing') }}" class="bg-black text-white font-bold py-4 px-10 rounded-2xl text-[10px] hover:scale-105 transition-all shadow-lg shadow-white/20 uppercase">Unlock Terminal</a>
@@ -553,12 +567,12 @@
              <div class="text-center mb-20">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Advantages</span>
                 <h2 class="text-3xl md:text-5xl font-professional text-white mb-6 uppercase">Why Our AI is <span class="text-vibrant">Powerful</span></h2>
-                <p class="text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed">Built on years of quantitative research and advanced machine learning, our neural engine delivers institutional-grade analysis to every trader.</p>
+                <p class="text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed">Built on years of quantitative research and advanced machine learning, our algo engine delivers institutional-grade analysis to every trader.</p>
              </div>
              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 @php 
                 $feats = [
-                    ['icon' => 'brain', 'title' => 'Neural Accuracy', 'desc' => 'Multi-layered LSTM and transformer models trained on 15+ years of market microstructure data for pattern-level precision.', 'color' => 'purple'],
+                    ['icon' => 'brain', 'title' => 'Advanced Accuracy', 'desc' => 'Multi-layered LSTM and transformer models trained on 15+ years of market microstructure data for pattern-level precision.', 'color' => 'purple'],
                     ['icon' => 'shield-check', 'title' => 'Risk Governance', 'desc' => 'Automated stop-loss algorithms and position sizing models designed to protect your capital in volatile conditions.', 'color' => 'emerald'],
                     ['icon' => 'bell-ring', 'title' => 'Real-time Alerts', 'desc' => 'Multi-channel delivery via dashboard, Telegram, and email ensures you never miss a high-probability trade entry.', 'color' => 'blue'],
                     ['icon' => 'trending-up', 'title' => 'Market Intelligence', 'desc' => 'Sentiment analysis, volume profiling, and volatility metrics distilled into actionable, easy-to-read insights.', 'color' => 'amber']
@@ -681,7 +695,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
                     @php 
                     $steps = [
-                        ['n' => '01', 'icon' => 'link', 't' => 'Connect Terminal', 'd' => 'Create your account and access the neural trading dashboard. Link your watchlist or follow signals manually in real-time.'],
+                        ['n' => '01', 'icon' => 'link', 't' => 'Connect Terminal', 'd' => 'Create your account and access the advanced trading dashboard. Link your watchlist or follow signals manually in real-time.'],
                         ['n' => '02', 'icon' => 'brain', 't' => 'AI Analysis', 'd' => 'Our engine scans 500+ data points per second using LSTM models to identify the highest-probability entry and exit zones.'],
                         ['n' => '03', 'icon' => 'rocket', 't' => 'Execute & Profit', 'd' => 'Receive instant multi-channel alerts. Execute trades with precision entry levels, calculated stop losses, and multi-target exits.']
                     ];
@@ -748,7 +762,7 @@
                 <h2 class="font-professional text-3xl md:text-5xl uppercase tracking-tighter text-white mb-4">
                     Indian Equities Market We <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Cover</span>
                 </h2>
-                <p class="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">Our neural engine monitors a diverse range of asset classes across global exchanges to identify the highest-probability setups.</p>
+                <p class="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">Our algo engine monitors a diverse range of asset classes across global exchanges to identify the highest-probability setups.</p>
             </div>
 
             <!-- <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
@@ -871,14 +885,14 @@
                         Start <span class="text-gradient">Trading</span>.
                     </h2>
                     <p class="text-slate-400 text-sm sm:text-lg md:text-xl mb-8 sm:mb-12 max-w-2xl mx-auto font-medium">
-                        Join the elite circle of traders using our Neural Prediction Stream to maintain a consistent edge in the market.
+                        Join the elite circle of traders using our Advanced Signal Stream to maintain a consistent edge in the market.
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center gap-6">
                         <a href="{{ url('/pricing') }}" class="bg-black text-white font-bold py-5 px-14 rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:bg-purple-600 hover:text-white transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:shadow-purple-600/50 transform hover:-translate-y-1">
                             Get Premium Access
                         </a>
-                        <a href="{{ url('/register') }}" class="glass-panel border border-white/10 text-white font-bold py-5 px-14 rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:bg-white/5 transition-all transform hover:-translate-y-1">
-                            Initialize Terminal
+                        <a href="{{ url('/signals/past') }}" class="glass-panel border border-white/10 btn-past-signals text-white font-bold py-5 px-14 rounded-2xl text-[10px] uppercase tracking-[0.2em] transition-all transform hover:-translate-y-1">
+                            Past Signals
                         </a>
                     </div>
 
@@ -890,7 +904,7 @@
                          </div>
                          <div class="font-bold text-[9px] tracking-widest uppercase flex items-center gap-2 text-white">
                              <i data-lucide="zap" class="w-4 h-4 text-purple-500"></i>
-                             NEURAL PIPELINE
+                             SIGNAL PIPELINE
                          </div>
                          <div class="font-bold text-[9px] tracking-widest uppercase flex items-center gap-2 text-white">
                              <i data-lucide="clock" class="w-4 h-4 text-indigo-500"></i>

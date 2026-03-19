@@ -355,15 +355,15 @@
     </div>
 </div>
 
-    <!-- GLOBAL NEURAL NOTIFICATION SYSTEM -->
-    <div id="neural-toast-container" class="fixed bottom-12 right-12 z-[100] space-y-4 pointer-events-none"></div>
+    <!-- GLOBAL ALGO NOTIFICATION SYSTEM -->
+    <div id="algo-toast-container" class="fixed bottom-12 right-12 z-[100] space-y-4 pointer-events-none"></div>
 @endsection
 
 @push('scripts')
 <script>
-    // --- NEURAL UI UTILS ---
+    // --- ALGO UI UTILS ---
     function notify(message, type = 'info') {
-        const container = document.getElementById('neural-toast-container');
+        const container = document.getElementById('algo-toast-container');
         const toast = document.createElement('div');
         const colors = {
             info: 'border-purple-500/30 text-purple-400 bg-purple-500/5',
@@ -425,7 +425,7 @@
         })
         .catch(error => {
             console.error('Error:', error);
-            notify('Neural link error.', 'error');
+            notify('Algo link error.', 'error');
             btn.disabled = false;
             btn.innerHTML = originalContent;
             if (window.lucide) lucide.createIcons();
@@ -554,7 +554,7 @@
                             });
                         }
                     } else {
-                        notify('Protocol sync failed. Please verify neural link.', 'error');
+                        notify('Protocol sync failed. Please verify algo link.', 'error');
                     }
                 })
                 .catch(error => {

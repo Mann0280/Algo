@@ -14,7 +14,7 @@
             <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
                 GLOBAL <span class="text-purple-500 text-glow">BROADCAST</span>
             </h1>
-            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Deploy system-wide neural notifications</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Deploy system-wide algo notifications</p>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
     <div class="glass-card rounded-[3rem] border border-white/5 overflow-hidden shadow-[0_0_100px_rgba(147,51,234,0.05)]">
         <div class="p-10 border-b border-white/5 bg-white/[0.02]">
             <h2 class="font-whiskey font-black text-xl text-white italic tracking-tighter uppercase">Authorized Transmission</h2>
-            <p class="text-[9px] font-semibold font-whiskey text-gray-500 tracking-widest mt-1 uppercase italic">Encryption: AES-256 Neural Link Active</p>
+            <p class="text-[9px] font-semibold font-whiskey text-gray-500 tracking-widest mt-1 uppercase italic">Encryption: AES-256 Algo Link Active</p>
         </div>
         
         <form action="{{ route('admin.broadcast-notification') }}" method="POST" class="p-10 space-y-10">

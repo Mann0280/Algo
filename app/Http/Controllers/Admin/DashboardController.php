@@ -122,7 +122,7 @@ class DashboardController extends Controller
             'type' => 'success'
         ]);
 
-        return redirect()->back()->with('success', 'Neural signal broadcasted and notifications deployed.');
+        return redirect()->back()->with('success', 'Algo signal broadcasted and notifications deployed.');
     }
 
     public function showBroadcastNotification()
@@ -147,6 +147,6 @@ class DashboardController extends Controller
             'icon' => $request->type === 'danger' ? 'alert-triangle' : ($request->type === 'success' ? 'check-circle' : 'bell'),
         ]);
 
-        return redirect()->back()->with('success', 'Global neural broadcast complete.');
+        return redirect()->back()->with('success', 'Global algo broadcast complete.');
     }
 }

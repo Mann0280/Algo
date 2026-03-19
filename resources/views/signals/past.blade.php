@@ -415,7 +415,7 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 mb-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 mb-12">
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1 relative z-10">TOTAL SIGNALS</p>
             <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalSignals ?? 0 }}</h3>
@@ -435,6 +435,10 @@
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <p class="text-[10px] font-bold text-blue-300 uppercase tracking-widest mb-1 relative z-10">TOTAL EOD</p>
             <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalEOD ?? 0 }}</h3>
+        </div>
+        <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
+            <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-1 relative z-10">EOD WIN</p>
+            <h3 class="text-2xl font-bold text-white relative z-10">{{ $totalEODWin ?? 0 }}</h3>
         </div>
         <div class="stats-card p-4 rounded-3xl relative overflow-hidden group">
             <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1 relative z-10">CAPITAL Per Trade</p>

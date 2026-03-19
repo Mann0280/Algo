@@ -266,7 +266,7 @@
             </div>
                     <div class="flex items-start gap-3">
                         <div class="w-7 h-7 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-purple-400">2</div>
-                        <div><div class="text-xs font-bold text-white mb-0.5">Pattern Recognition</div><p class="text-[10px] text-gray-400 leading-snug">Neural network v4.2 identifies candlestick patterns, Fibonacci levels, divergences, and support/resistance zones with 96.5% accuracy.</p></div>
+                        <div><div class="text-xs font-bold text-white mb-0.5">Pattern Recognition</div><p class="text-[10px] text-gray-400 leading-snug">Advanced algorithm v4.2 identifies candlestick patterns, Fibonacci levels, divergences, and support/resistance zones with 96.5% accuracy.</p></div>
                         </div>
             </div>
                     <div class="flex items-start gap-3">

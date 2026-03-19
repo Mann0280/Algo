@@ -53,6 +53,6 @@ class WalletSettingsController extends Controller
             SiteSetting::updateOrCreate(['key' => 'wallet_qr_code'], ['value' => $path]);
         }
 
-        return back()->with('success', 'Neural wallet protocols updated successfully.');
+        return back()->with('success', 'Algo wallet protocols updated successfully.');
     }
 }

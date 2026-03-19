@@ -15,7 +15,7 @@
 
         {{-- Message --}}
         <h2 class="text-xl font-bold uppercase tracking-tight text-white mb-3">
-            Neural Signal Stream <span class="text-purple-400">Restricted</span>
+            Advanced Signal Stream <span class="text-purple-400">Restricted</span>
         </h2>
         <p class="text-gray-500 text-sm leading-relaxed mb-8 max-w-md mx-auto">
             Login to see what our AI is detecting in the market. Real-time precision signals, execution alerts, and confidence levels are available to authenticated users.

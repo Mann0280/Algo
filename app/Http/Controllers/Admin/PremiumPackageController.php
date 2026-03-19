@@ -70,7 +70,7 @@ class PremiumPackageController extends Controller
         PremiumPackage::create($data);
 
         return redirect()->route('admin.premium-packages.index')
-            ->with('success', 'Neural package protocol initialized.');
+            ->with('success', 'Algo package protocol initialized.');
     }
 
     /**
@@ -127,7 +127,7 @@ class PremiumPackageController extends Controller
         $premiumPackage->update($data);
 
         return redirect()->route('admin.premium-packages.index')
-            ->with('success', 'Neural package protocol updated.');
+            ->with('success', 'Algo package protocol updated.');
     }
 
     /**
@@ -141,6 +141,6 @@ class PremiumPackageController extends Controller
         $premiumPackage->delete();
 
         return redirect()->route('admin.premium-packages.index')
-            ->with('success', 'Neural package protocol deconstructed.');
+            ->with('success', 'Algo package protocol deconstructed.');
     }
 }

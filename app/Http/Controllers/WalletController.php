@@ -132,7 +132,7 @@ class WalletController extends Controller
             $transaction->user->increment('wallet_balance', $transaction->amount);
 
             DB::commit();
-            return back()->with('success', 'Neural credits authorized. Wallet updated.');
+            return back()->with('success', 'Algo credits authorized. Wallet updated.');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Logic failure: ' . $e->getMessage());
@@ -149,6 +149,6 @@ class WalletController extends Controller
         }
 
         $transaction->update(['status' => 'rejected']);
-        return back()->with('success', 'Neural credit request rejected.');
+        return back()->with('success', 'Algo credit request rejected.');
     }
 }

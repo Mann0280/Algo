@@ -12,11 +12,11 @@
                     </div>
                 </a>
                 <p class="text-slate-400 text-xs leading-relaxed mb-6 font-medium">
-                    Premier neural intelligence protocols for global market forecasting and predictive asset analysis. Registered digital asset platform.
+                    Premier algo intelligence protocols for global market forecasting and predictive asset analysis. Registered digital asset platform.
                 </p>
                 <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg w-fit">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="text-[9px] font-black text-emerald-400 uppercase tracking-widest">Neural System Active</span>
+                    <span class="text-[9px] font-black text-emerald-400 uppercase tracking-widest">Algo System Active</span>
                 </div>
             </div>
 
@@ -24,13 +24,13 @@
             <div class="flex flex-col gap-4">
                 <h4 class="text-white text-[11px] font-black uppercase tracking-[0.2em] mb-2">Platform</h4>
                 <div class="flex flex-col gap-3 text-[10px] font-bold text-slate-500 tracking-widest">
-                    <a href="{{ url('/') }}" class="hover:text-vibrant transition-colors uppercase">Home Interface</a>
-                    <a href="{{ url('/signals/past') }}" class="hover:text-vibrant transition-colors uppercase">Historical Archive</a>
-                    <a href="{{ url('/pricing') }}" class="hover:text-vibrant transition-colors uppercase">Protocol Tiers</a>
+                    <a href="{{ url('/') }}" class="hover:text-white transition-all duration-300 transform hover:translate-x-1 uppercase">Home Interface</a>
+                    <a href="{{ url('/signals/past') }}" class="hover:text-white transition-all duration-300 transform hover:translate-x-1 uppercase">Historical Archive</a>
+                    <a href="{{ url('/pricing') }}" class="hover:text-white transition-all duration-300 transform hover:translate-x-1 uppercase">Protocol Tiers</a>
                     @auth
-                        <a href="{{ url('/account/dashboard') }}" class="hover:text-vibrant transition-colors uppercase">Neural Terminal</a>
+                        <a href="{{ url('/account/dashboard') }}" class="hover:text-white transition-all duration-300 transform hover:translate-x-1 uppercase">Algo Terminal</a>
                     @else
-                        <a href="{{ url('/login') }}" class="hover:text-vibrant transition-colors uppercase">Terminal Login</a>
+                        <a href="{{ url('/login') }}" class="hover:text-white transition-all duration-300 transform hover:translate-x-1 uppercase">Terminal Login</a>
                     @endauth
                 </div>
             </div>
@@ -39,10 +39,10 @@
             <div class="flex flex-col gap-4">
                 <h4 class="text-white text-[11px] font-black uppercase tracking-[0.2em] mb-2">Company</h4>
                 <div class="flex flex-col gap-3 text-[10px] font-bold text-slate-500 tracking-widest">
-                    <a href="{{ url('/about') }}" class="hover:text-vibrant transition-colors uppercase">About Protocol</a>
-                    <a href="{{ url('/contact') }}" class="hover:text-vibrant transition-colors uppercase">Contact Support</a>
+                    <a href="{{ url('/about') }}" class="hover:text-white transition-all duration-300 transform hover:translate-x-1 uppercase">About Protocol</a>
+                    <a href="{{ url('/contact') }}" class="hover:text-white transition-all duration-300 transform hover:translate-x-1 uppercase">Contact Support</a>
                     @auth
-                        <a href="{{ url('/account/history') }}" class="hover:text-vibrant transition-colors uppercase">Account History</a>
+                        <a href="{{ url('/account/history') }}" class="hover:text-white transition-all duration-300 transform hover:translate-x-1 uppercase">Account History</a>
                     @endauth
                 </div>
             </div>
@@ -73,7 +73,7 @@
             <p class="text-slate-600 text-[10px] font-medium">&copy; {{ date('Y') }} Emperor Stock Predictor. All rights reserved.</p>
             <div class="flex gap-8 text-[9px] font-bold text-slate-700 tracking-[0.2em] uppercase">
                 <span>Secured by AWS Cloud</span>
-                <span>Neural v3.2.0</span>
+                <span>Algo v3.2.0</span>
             </div>
         </div>
     </div>

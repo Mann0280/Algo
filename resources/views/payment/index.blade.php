@@ -126,7 +126,7 @@
 
                     <div class="pt-4">
                         <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-[1.5rem] font-black font-whiskey uppercase italic tracking-wider text-sm transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(147,51,234,0.4)] active:scale-[0.98] flex items-center justify-center gap-3">
-                            <span>Submit Neural Upgrade Request</span>
+                            <span>Submit Algo Upgrade Request</span>
                             <i data-lucide="zap" class="w-5 h-5"></i>
                         </button>
                     </div>

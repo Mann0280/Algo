@@ -28,6 +28,6 @@ class PremiumMiddleware
             }
         }
 
-        return redirect()->route('pricing')->with('error', 'Neural protocol rejected. Elite authentication required for this terminal node.');
+        return redirect()->route('pricing')->with('error', 'Algo protocol rejected. Elite authentication required for this terminal node.');
     }
 }

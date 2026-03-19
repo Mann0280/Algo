@@ -48,7 +48,7 @@
     {{-- Hero --}}
     <div class="signals-hero">
         <h1>See What Our AI Is <span>Detecting Right Now</span></h1>
-        <p>Real-Time Neural Trading Intelligence</p>
+        <p>Real-Time Advanced Trading Intelligence</p>
     </div>
 
     {{-- Conditional Views --}}

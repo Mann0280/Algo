@@ -70,7 +70,7 @@
                 </div>
                 <div class="space-y-2 md:col-span-2">
                     <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Protocol Description</label>
-                    <input type="text" name="description" placeholder="Advanced neural analytics access" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
+                    <input type="text" name="description" placeholder="Advanced algo analytics access" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
                 </div>
             </div>
 

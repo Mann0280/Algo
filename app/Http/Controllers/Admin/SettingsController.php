@@ -15,7 +15,7 @@ class SettingsController extends Controller
     {
         $settings = [
             'site_name'        => SiteSetting::getValue('site_name', 'Emperor Stock Predictor'),
-            'site_tagline'     => SiteSetting::getValue('site_tagline', 'Neural-Powered Trading Intelligence'),
+            'site_tagline'     => SiteSetting::getValue('site_tagline', 'Advanced Trading Intelligence'),
             'support_email'    => SiteSetting::getValue('support_email', 'support@emperorstock.ai'),
             'telegram_link'    => SiteSetting::getValue('telegram_link', ''),
             'whatsapp_number'  => SiteSetting::getValue('whatsapp_number', '91XXXXXXXXXX'),
@@ -26,7 +26,7 @@ class SettingsController extends Controller
             'maintenance_mode' => SiteSetting::getValue('maintenance_mode', '0'),
             'registration_open' => SiteSetting::getValue('registration_open', '1'),
             'subscription_header' => SiteSetting::getValue('subscription_header', 'Subscription Protocol'),
-            'subscription_subheader' => SiteSetting::getValue('subscription_subheader', 'Neural Access Monitoring'),
+            'subscription_subheader' => SiteSetting::getValue('subscription_subheader', 'Advanced Access Monitoring'),
             'net_revenue'      => SiteSetting::getValue('net_revenue', '154200.50'),
             'ai_accuracy'      => SiteSetting::getValue('ai_accuracy', '94.2'),
         ];

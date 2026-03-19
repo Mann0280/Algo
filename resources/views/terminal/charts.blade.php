@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Neural Market Charts | Emperor Stock Predictor')
+@section('title', 'Advanced Market Charts | Emperor Stock Predictor')
 
 @section('content')
 <main class="relative min-h-screen pt-32 pb-20 px-6">
     <div class="container mx-auto">
         <div class="flex items-center justify-between mb-12">
             <div>
-                <h1 class="font-whiskey text-3xl font-black text-white uppercase italic tracking-tighter">NEURAL <span class="text-purple-500">CHARTS</span></h1>
+                <h1 class="font-whiskey text-3xl font-black text-white uppercase italic tracking-tighter">ADVANCED <span class="text-purple-500">CHARTS</span></h1>
                 <p class="text-gray-500 text-sm italic">Real-time market visualization node.</p>
             </div>
             <div class="flex gap-4">
@@ -26,7 +26,7 @@
                         <i data-lucide="activity" class="w-8 h-8 text-purple-500"></i>
                     </div>
                     <h2 class="font-whiskey text-xl font-bold text-white mb-4 italic uppercase tracking-widest">Synchronizing Data...</h2>
-                    <p class="text-gray-500 text-sm mb-8 italic">TradingView Neural Engine Interface is being integrated. Standby for live market telemetrics.</p>
+                    <p class="text-gray-500 text-sm mb-8 italic">TradingView Algo Engine Interface is being integrated. Standby for live market telemetrics.</p>
                 </div>
             </div>
             

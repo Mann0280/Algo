@@ -100,6 +100,6 @@ class HomeController extends Controller
         ]);
 
         return redirect()->route('account.subscription-history')
-            ->with('success', 'Neural upgrade sequence complete. Welcome to ALGO-TRADE Elite.');
+            ->with('success', 'Algo upgrade sequence complete. Welcome to ALGO-TRADE Elite.');
     }
 }

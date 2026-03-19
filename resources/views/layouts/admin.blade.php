@@ -425,7 +425,7 @@
         window.initIcons = () => {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
-                console.log('Neural Icons Initialized');
+                console.log('Algo Icons Initialized');
             }
         };
 

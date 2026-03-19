@@ -102,7 +102,7 @@
             @csrf
             <div class="space-y-4">
                 <label class="text-[10px] font-semibold font-whiskey text-gray-600 uppercase tracking-widest ml-1">Video Title</label>
-                <input type="text" name="title" required placeholder="Mastering Neural Scalping" class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-[11px] font-bold tracking-tight text-white placeholder:text-gray-800">
+                <input type="text" name="title" required placeholder="Mastering Advanced Scalping" class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 px-6 outline-none transition-all text-[11px] font-bold tracking-tight text-white placeholder:text-gray-800">
             </div>
 
             <div class="space-y-4">

@@ -438,7 +438,7 @@
                         
                         <div class="absolute bottom-3 left-3 flex items-center gap-2 z-20">
                              <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse shadow-[0_0_8px_#f43f5e]"></div>
-                             <span class="text-[9px] font-black text-white uppercase tracking-[0.2em]">Neural Analysis</span>
+                             <span class="text-[9px] font-black text-white uppercase tracking-[0.2em]">Advanced Analysis</span>
                         </div>
                     </div>
                     <div>
