@@ -361,7 +361,10 @@
             }
 
             if (data.notifications.length > 0) {
-                list.innerHTML = data.notifications.map(n => `
+                // Display up to 3 latest notifications
+                const displayNodes = data.notifications.slice(0, 3);
+                
+                list.innerHTML = displayNodes.map(n => `
                     <div class="p-4 rounded-[1.5rem] hover:bg-white/[0.04] border border-white/[0.03] transition-all cursor-pointer group/item relative overflow-hidden" 
                          onclick="handleNotificationClick(${n.id}, \`${n.title.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, \`${n.message.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, '${n.created_at}', '${n.icon}', this)">
                         <div class="absolute inset-0 bg-gradient-to-r from-purple-500/[0.05] to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity"></div>

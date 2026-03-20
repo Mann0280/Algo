@@ -98,12 +98,16 @@ class SignalController extends Controller
         
         $totalWin = $signals->filter(function($s) {
             $res = strtoupper($s->result ?? '');
-            return in_array($res, ['WIN', 'TP HIT', 'BREAKEVEN']) || (empty($res) && $s->pnl > 0);
+            return in_array($res, ['WIN', 'TP HIT', 'BREAKEVEN']) 
+                || (empty($res) && $s->pnl > 0)
+                || ($res === 'EOD' && $s->pnl > 0);
         })->count();
 
         $totalLoss = $signals->filter(function($s) {
             $res = strtoupper($s->result ?? '');
-            return in_array($res, ['LOSS', 'SL HIT']) || (empty($res) && $s->pnl < 0);
+            return in_array($res, ['LOSS', 'SL HIT']) 
+                || (empty($res) && $s->pnl < 0)
+                || ($res === 'EOD' && $s->pnl <= 0);
         })->count();
 
         $totalEOD = $signals->filter(function($s) {

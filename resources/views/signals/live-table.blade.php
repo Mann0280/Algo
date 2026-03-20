@@ -11,33 +11,61 @@
         color: #e5e7eb;
     }
     .cyber-table thead th {
-        padding: 12px 16px;
-        font-bold uppercase text-[10px] text-gray-500 tracking-[0.2em] border-b border-white/[0.05];
+        padding: 16px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #94a3b8;
+        letter-spacing: 0.15em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         text-align: left;
+        white-space: nowrap;
     }
     .cyber-table tbody tr {
-        background: rgba(255, 255, 255, 0.02);
-        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.015);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        transform: scale(1); /* Forces exact container for absolute children in all browsers */
+        border-radius: 16px;
     }
     .cyber-table tbody tr:hover {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.04);
+        transform: translateZ(0) scale(1.005);
+        z-index: 50;
     }
     .cyber-table td {
-        padding: 16px;
-        font-size: 13px;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 20px 16px;
+        font-size: 14px;
+        color: #f1f5f9;
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        white-space: nowrap;
     }
     .cyber-table td:first-child {
-        border-left: 1px solid rgba(255, 255, 255, 0.05);
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
+        padding-left: 24px;
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
+        white-space: normal;
+        min-width: 250px;
     }
     .cyber-table td:last-child {
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
+        padding-right: 24px;
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
     }
+    
+    /* Ensure only top/bottom borders exist between rows initially to make the pulse look good */
+    .cyber-table td {
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .cyber-table td:first-child {
+        border-left: 1px solid transparent; /* Remove left border */
+    }
+    .cyber-table td:last-child {
+        border-right: 1px solid transparent; /* Remove right border */
+    }
+
     .ai-row {
         background: transparent !important;
     }
@@ -77,17 +105,26 @@
         background: rgba(255, 255, 255, 0.04);
         border-color: rgba(147, 51, 234, 0.2);
     }
-    .card-confidence {
+    .btn-copy-stock {
         position: absolute;
         top: 24px;
         right: 24px;
-        background: rgba(16, 185, 129, 0.1);
-        color: #10b981;
-        font-size: 10px;
+        background: rgba(147, 51, 234, 0.1);
+        color: #c084fc;
+        font-size: 9px;
         font-weight: 800;
-        padding: 4px 12px;
+        padding: 6px 10px;
         border-radius: 8px;
-        border: 1px solid rgba(16, 185, 129, 0.2);
+        border: 1px solid rgba(147, 51, 234, 0.2);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.3s ease;
+        z-index: 20;
+    }
+    .btn-copy-stock:hover {
+        background: rgba(147, 51, 234, 0.2);
     }
     .card-label {
         font-size: 10px;
@@ -117,6 +154,96 @@
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 0.1em;
+    }
+
+    /* 4-Span Border Trace Animation */
+    .row-border-anim {
+        /* Set to relative so absolute spans can position relative to the row/card */
+        position: relative;
+    }
+    
+    /* Hide overflow horizontally to prevent scrollbars, 
+       but we don't want to clip the glow vertically if we don't have to.
+       Applying border-radius to match the tr borders.
+    */
+    .border-anim-wrapper {
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0; 
+    }
+    
+    .border-anim-wrapper span {
+        position: absolute;
+        display: block;
+        z-index: 10;
+        filter: blur(1px);
+    }
+    /* Top Line */
+    .border-anim-wrapper span:nth-child(1) {
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #10b981, #34d399, #10b981);
+        animation: anim-top 4s linear infinite;
+    }
+    @keyframes anim-top {
+        0% { left: -100%; opacity: 0; }
+        5%, 95% { opacity: 1; }
+        100% { left: 100%; opacity: 0; }
+    }
+    /* Right Line */
+    .border-anim-wrapper span:nth-child(2) {
+        top: -100%;
+        right: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg, transparent, #10b981, #34d399, #10b981);
+        animation: anim-right 4s linear infinite;
+        animation-delay: 1s;
+    }
+    @keyframes anim-right {
+        0% { top: -100%; opacity: 0; }
+        5%, 95% { opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+    }
+    /* Bottom Line */
+    .border-anim-wrapper span:nth-child(3) {
+        bottom: 0;
+        right: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(270deg, transparent, #10b981, #34d399, #10b981);
+        animation: anim-bottom 4s linear infinite;
+        animation-delay: 2s;
+    }
+    @keyframes anim-bottom {
+        0% { right: -100%; opacity: 0; }
+        5%, 95% { opacity: 1; }
+        100% { right: 100%; opacity: 0; }
+    }
+    /* Left Line */
+    .border-anim-wrapper span:nth-child(4) {
+        bottom: -100%;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(360deg, transparent, #10b981, #34d399, #10b981);
+        animation: anim-left 4s linear infinite;
+        animation-delay: 3s;
+    }
+    @keyframes anim-left {
+        0% { bottom: -100%; opacity: 0; }
+        5%, 95% { opacity: 1; }
+        100% { bottom: 100%; opacity: 0; }
+    }
+
+    /* Modern Table Row Relative Support */
+    .cyber-table tbody tr {
+        position: relative;
     }
 </style>
 
@@ -159,19 +286,19 @@
         </div>
     </div>
 
-    <div id="table-container" class="overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
-        <div class="min-w-[800px]">
+    <div id="table-container" class="overflow-x-auto no-scrollbar pb-10">
+        <div class="min-w-[1000px] px-1">
             <table class="cyber-table">
                 <thead>
                     <tr>
-                        <th style="width: 15%">Stock</th>
+                        <th style="width: 25%">Stock</th>
                         <th style="width: 10%; text-align: center;">Signal</th>
-                        <th style="width: 10%; text-align: right;">Entry</th>
-                        <th style="width: 10%; text-align: right;">Stop Loss</th>
-                        <th style="width: 10%; text-align: right;">Target</th>
+                        <th style="width: 12%; text-align: right;">Entry</th>
+                        <th style="width: 12%; text-align: right;">Stop Loss</th>
+                        <th style="width: 12%; text-align: right;">Target</th>
                         <th style="width: 10%; text-align: right;">Breakeven</th>
-                        <th style="width: 12%; text-align: center;">Date</th>
-                        <th style="width: 10%; text-align: center;">Time</th>
+                        <th style="width: 10%; text-align: center;">Date</th>
+                        <th style="width: 9%; text-align: center;">Time</th>
                     </tr>
                 </thead>
                 <tbody id="signals-tbody">
@@ -249,38 +376,48 @@
                 'RUNNING': { bg: 'rgba(16,185,129,0.1)', clr: '#34d399', bdr: 'rgba(16,185,129,0.2)', label: 'RUNNING' },
                 'HIT_TARGET': { bg: 'rgba(234,179,8,0.1)', clr: '#fbbf24', bdr: 'rgba(234,179,8,0.2)', label: 'HIT TARGET' },
                 'SL_HIT': { bg: 'rgba(239,68,68,0.1)', clr: '#f87171', bdr: 'rgba(239,68,68,0.2)', label: 'SL HIT' },
-                'TP_HIT': { bg: 'rgba(234,179,8,0.1)', clr: '#fbbf24', bdr: 'rgba(234,179,8,0.2)', label: 'TP HIT' },
+                'TP_HIT': { bg: 'rgba(168,85,247,0.1)', clr: '#a855f7', bdr: 'rgba(168,85,247,0.2)', label: 'TP HIT' },
                 'EOD': { bg: 'rgba(148,163,184,0.1)', clr: '#94a3b8', bdr: 'rgba(148,163,184,0.2)', label: 'EOD' },
                 'BREAKEVEN': { bg: 'rgba(59,130,246,0.1)', clr: '#60a5fa', bdr: 'rgba(59,130,246,0.2)', label: 'BREAKEVEN' },
             };
             const s = statusMap[status] || statusMap['LIVE'];
 
             // 1. RENDER TABLE ROW (Desktop)
+            // The trick is to have the border-anim-wrapper *in* the first cell but stretch it across the row.
+            // However, a better way is to simply use positional values that stretch 100% of the closest relative parent (the TR).
             const mainRow = document.createElement('tr');
+            mainRow.className = 'row-border-anim group';
             mainRow.innerHTML = `
                 <td>
-                    <div class="flex flex-col">
-                        <span style="font-weight:800;color:#f1f5f9;font-size:13px;text-transform:uppercase;">${item.stock_symbol || '—'}</span>
-                        <span style="font-size:9px;color:#4b5563;font-family:monospace;letter-spacing:1px;">${item.date || '—'}</span>
+                    <!-- Place the animation wrapper inside the first TD, but make it absolute to the TR (since TR is relative and has transform) -->
+                    <div class="border-anim-wrapper">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="flex flex-col gap-0.5 relative z-20">
+                        <span style="font-weight:900;color:#fff;font-size:15px;letter-spacing:-0.02em;line-height:1.2;">${item.stock_symbol || '—'}</span>
+                        <span style="font-size:10px;color:#64748b;font-family:monospace;font-weight:600;">${item.date || '—'}</span>
                     </div>
                 </td>
-                <td style="text-align: center;">
+                <td style="text-align: center; position: relative; z-index: 10;">
                     <span style="display:inline-block;padding:4px 14px;border-radius:8px;font-family:'Inter',sans-serif;font-size:9px;font-weight:900;background:${signalBg};color:${signalColor};border:1px solid ${signalBdr};">${(item.signal_type || '').toUpperCase()}</span>
                 </td>
-                <td style="text-align: right; color:#d1d5db; font-weight:600;">₹${parseFloat(item.entry_price || 0).toFixed(2)}</td>
-                <td style="text-align: right; color:#f87171; font-weight:600;">₹${parseFloat(item.stop_loss || 0).toFixed(2)}</td>
-                <td style="text-align: right; color:#34d399; font-weight:600;">₹${parseFloat(item.target_price || 0).toFixed(2)}</td>
-                <td style="text-align: right; color:#60a5fa; font-weight:600;">${item.target_2 ? '₹' + parseFloat(item.target_2).toFixed(2) : '—'}</td>
-                <td style="text-align: center; color:#94a3b8; font-size:11px; font-family:monospace;">${item.date || '—'}</td>
-                <td style="text-align: center; color:#6b7280; font-size:11px; font-family:monospace;">${item.time || '—'}</td>
+                <td style="text-align: right; color:#d1d5db; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.entry_price || 0).toFixed(2)}</td>
+                <td style="text-align: right; color:#f87171; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.stop_loss || 0).toFixed(2)}</td>
+                <td style="text-align: right; color:#34d399; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.target_price || 0).toFixed(2)}</td>
+                <td style="text-align: right; color:#60a5fa; font-weight:600; position: relative; z-index: 10;">${item.target_2 ? '₹' + parseFloat(item.target_2).toFixed(2) : '—'}</td>
+                <td style="text-align: center; color:#94a3b8; font-size:11px; font-family:monospace; position: relative; z-index: 10;">${item.date || '—'}</td>
+                <td style="text-align: center; color:#6b7280; font-size:11px; font-family:monospace; position: relative; z-index: 10;">${item.time || '—'}</td>
             `;
             tbody.appendChild(mainRow);
 
             // 2. RENDER CARD (Mobile)
             const card = document.createElement('div');
-            card.className = 'signal-card';
+            card.className = 'signal-card row-border-anim group';
             card.innerHTML = `
-                <div class="flex items-center gap-3 mb-8">
+                <div class="border-anim-wrapper">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="flex items-center gap-3 mb-8 relative z-10">
                     <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
                         <span class="text-purple-500 font-black text-xs">${(item.stock_symbol || 'S').charAt(0)}</span>
                     </div>
@@ -290,7 +427,10 @@
                     </div>
                 </div>
                 
-                <div class="card-confidence">${item.confidence || 85}%</div>
+                <button class="btn-copy-stock" onclick="copyStock(this, '${(item.stock_symbol || '').replace(/'/g, "\\'")}')" title="Copy Stock Name">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>COPY</span>
+                </button>
 
                 <div class="grid grid-cols-2 gap-y-6">
                     <div>
@@ -456,6 +596,23 @@
     }
 
     window.refreshData = refreshData;
+
+    window.copyStock = function(btn, text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const span = btn.querySelector('span');
+            if(span) {
+                const originalText = span.textContent;
+                span.textContent = 'COPIED!';
+                btn.style.background = 'rgba(147, 51, 234, 0.25)';
+                setTimeout(() => {
+                    span.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    };
 
     let countdownValue = 5;
     const countdownEl = document.getElementById('countdown-timer');
