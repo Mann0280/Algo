@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PremiumPackageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
+use App\Http\Controllers\Api\FcmTokenController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -28,6 +29,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/email/verification-notification', [AuthController::class, 'resendVerification'])->middleware('throttle:6,1')->name('verification.send');
     Route::post('/register/cancel', [AuthController::class, 'cancelRegistration'])->name('register.cancel');
 });
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/test-email', function () {
     try {
@@ -59,7 +62,8 @@ Route::get('/test-email-config', function () {
     return response()->json(['smtp_config' => $config, 'status' => 'These are the active SMTP settings loaded from your .env']);
 });
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+
 use App\Http\Controllers\AccountController;
 
 use App\Http\Controllers\TerminalController;
@@ -105,6 +109,7 @@ Route::prefix('account')->name('account.')->middleware(['auth', \App\Http\Middle
     Route::get('/history', [AccountController::class, 'subscriptionHistory'])->name('subscription-history');
     Route::get('/receipt/{id}', [AccountController::class, 'receiptPrint'])->name('receipt');
     Route::get('/notifications', [AccountController::class, 'notifications'])->name('notifications');
+    Route::post('/fcm-token', [FcmTokenController::class, 'updateToken'])->name('fcm-token.update');
 });
 
 Route::get('/api/notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -120,8 +125,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/analytics', [DashboardController::class, 'analytics'])->name('analytics');
         Route::post('/broadcast-tip', [DashboardController::class, 'broadcastTip'])->name('broadcast-tip');
-        Route::get('/broadcast-notification', [DashboardController::class, 'showBroadcastNotification'])->name('broadcast-notification.show');
-        Route::post('/broadcast-notification', [DashboardController::class, 'broadcastNotification'])->name('broadcast-notification');
+        Route::get('/notifications/broadcast', [DashboardController::class, 'showBroadcastNotification'])->name('notifications.broadcast');
+        Route::post('/notifications/broadcast', [DashboardController::class, 'broadcastNotification']);
+        Route::post('/notifications/test-push', [DashboardController::class, 'testPush'])->name('notifications.test-push');
         Route::resource('predictions', PredictionController::class);
         Route::resource('users', UserController::class);
         Route::post('/users/{user}/update-plan', [UserController::class, 'updatePlan'])->name('users.update-plan');

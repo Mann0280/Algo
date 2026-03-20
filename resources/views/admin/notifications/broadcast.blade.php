@@ -69,6 +69,10 @@
             </div>
 
             <div class="pt-6">
+                <button id="test-push-btn" type="button" class="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-gray-400 font-whiskey uppercase tracking-[0.2em] text-[10px] hover:bg-white/10 transition-all flex items-center justify-center gap-3 mb-4">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    TEST FCM CONNECTION (FOR YOUR SESSION)
+                </button>
                 <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black font-whiskey uppercase tracking-[0.3em] text-[10px] hover:scale-[1.02] transition-all shadow-xl shadow-purple-900/40 italic flex items-center justify-center gap-3">
                     <i data-lucide="send" class="w-4 h-4"></i>
                     AUTHORIZE GLOBAL TRANSMISSION
@@ -92,4 +96,38 @@
         </div>
     </div>
 </div>
+</div>
+
+<script>
+    document.getElementById('test-push-btn').onclick = async () => {
+        const btn = document.getElementById('test-push-btn');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> TRANSMITTING...';
+        
+        try {
+            const response = await fetch("{{ route('admin.notifications.test-push') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            });
+            const data = await response.json();
+            
+            if (window.showAlgoNotification) {
+                window.showAlgoNotification(data.success ? 'Success' : 'Error', data.message, data.success ? 'success' : 'danger');
+            } else {
+                alert(data.message);
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Transmission failed. Ensure you are logged in and have granted notification permissions.');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            if (window.lucide) lucide.createIcons();
+        }
+    };
+</script>
 @endsection

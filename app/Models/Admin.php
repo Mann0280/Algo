@@ -17,6 +17,7 @@ class Admin extends Authenticatable
         'email',
         'password',
         'profile_photo',
+        'fcm_token',
     ];
 
     protected $hidden = [

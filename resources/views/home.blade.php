@@ -173,15 +173,15 @@
         <!-- Right Column: AI Terminal -->
         <div class="w-full lg:w-6/12 relative flex items-center justify-center">
              <!-- Floating Crypto Assets -->
-             <!-- <div class="absolute -top-10 -left-10 w-20 h-20 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.2">
+             <div class="absolute -top-10 -left-10 w-20 h-20 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.2">
                 <i data-lucide="bitcoin" class="w-10 h-10 text-amber-500"></i>
-             </div> -->
-             <!-- <div class="absolute bottom-10 -right-4 w-16 h-16 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.5">
+             </div>
+             <div class="absolute bottom-10 -right-4 w-16 h-16 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.5">
                 <i data-lucide="coins" class="w-8 h-8 text-blue-400"></i>
-             </div> -->
-             <!-- <div class="absolute top-1/2 -right-12 w-14 h-14 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.8">
+             </div>
+             <div class="absolute top-1/2 -right-12 w-14 h-14 glass-panel rounded-full hidden md:flex items-center justify-center z-20 floating-asset opacity-0" data-delay="0.8">
                 <i data-lucide="dollar-sign" class="w-6 h-6 text-emerald-400"></i>
-             </div> -->
+             </div>
 
              <!-- Floating Badges -->
              <div class="absolute top-0 right-10 glass-panel rounded-full py-2 px-4 hidden sm:flex items-center gap-2 z-20 hero-stagger opacity-0 border border-purple-500/30">
@@ -888,7 +888,7 @@
                         Join the elite circle of traders using our Advanced Signal Stream to maintain a consistent edge in the market.
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center gap-6">
-                        <a href="{{ url('/pricing') }}" class="bg-black text-white font-bold py-5 px-14 rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:bg-purple-600 hover:text-white transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:shadow-purple-600/50 transform hover:-translate-y-1">
+                        <a href="{{ url('/pricing') }}" class="bg-purple text-white font-bold py-5 px-14 rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:bg-purple-600 hover:text-white transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:shadow-purple-600/50 transform hover:-translate-y-1">
                             Get Premium Access
                         </a>
                         <a href="{{ url('/signals/past') }}" class="glass-panel border border-white/10 btn-past-signals text-white font-bold py-5 px-14 rounded-2xl text-[10px] uppercase tracking-[0.2em] transition-all transform hover:-translate-y-1">

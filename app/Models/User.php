@@ -40,6 +40,7 @@ class User extends Authenticatable
         'is_blocked',
         'otp',
         'otp_expires_at',
+        'fcm_token',
     ];
 
     /**
