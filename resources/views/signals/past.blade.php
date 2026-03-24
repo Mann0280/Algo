@@ -775,7 +775,7 @@
             const pnlLabel = document.getElementById('stat-pnl-label');
             if (pnlCard) pnlCard.style.borderColor = totalNetPnl >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)';
             if (pnlLabel) {
-                pnlLabel.textContent = 'PNL (5X)';
+                pnlLabel.textContent = 'TOTAL PNL';
                 pnlLabel.style.color = pnlColor;
             }
         }

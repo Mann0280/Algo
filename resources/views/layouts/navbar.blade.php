@@ -239,8 +239,8 @@
                 </div>
             @else
                 <div class="flex flex-col gap-2">
-                    <a href="{{ url('/login') }}" class="mobile-menu-item flex items-center justify-center py-4 px-5 rounded-2xl border border-white/10 bg-white/[0.03] font-bold text-white text-[11px] uppercase tracking-widest">Access Terminal</a>
-                    <a href="{{ url('/register') }}" class="mobile-menu-item flex items-center justify-center py-4 px-5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 font-bold text-white text-[11px] uppercase tracking-widest shadow-lg shadow-purple-500/20">Initialize Sync</a>
+                    <a href="{{ url('/login') }}" class="mobile-menu-item flex items-center justify-center py-4 px-5 rounded-2xl border border-white/10 bg-white/[0.03] font-bold text-white text-[11px] uppercase tracking-widest">LOGIN</a>
+                    <a href="{{ url('/register') }}" class="mobile-menu-item flex items-center justify-center py-4 px-5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 font-bold text-white text-[11px] uppercase tracking-widest shadow-lg shadow-purple-500/20"> Sign Up</a>
                 </div>
             @endif
         </div>
