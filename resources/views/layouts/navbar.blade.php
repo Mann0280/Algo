@@ -20,9 +20,7 @@
                 <a href="{{ url('/') }}" class="flex items-center gap-2 text-[11px] font-bold text-gray-400 hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
                 </a>
-                <a href="{{ route('account.profile') }}" class="flex items-center gap-2 text-[11px] font-bold {{ request()->is('account/profile*') ? 'text-white' : 'text-gray-400' }} hover:text-white transition-colors tracking-[0.1em] uppercase">
-                    <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i> Dashboard
-                </a>
+
                 <a href="{{ url('/about') }}" class="flex items-center gap-2 text-[11px] font-bold text-gray-400 hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="info" class="w-3.5 h-3.5"></i> About Us
                 </a>
@@ -135,6 +133,11 @@
                     <a href="{{ url('/register') }}" class="hidden lg:inline px-8 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-[10px] tracking-widest hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all uppercase">Sign Up</a>
                 @endauth
                 
+                <!-- Mobile Dashboard Link — visible only on mobile/tablet -->
+                <a href="{{ route('account.profile') }}" class="lg:hidden w-10 h-10 rounded-xl {{ request()->is('account/profile*') ? 'bg-purple-600 text-white' : 'bg-purple-600/10 text-purple-400' }} border border-purple-500/20 flex items-center justify-center hover:bg-purple-600/30 transition-all relative z-[110]" title="Dashboard">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                </a>
+
                 <!-- Hamburger Button — always visible on mobile -->
                 <button class="lg:hidden w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-300 hover:bg-purple-600/40 hover:text-white transition-all relative z-[110]" id="mobile-menu-btn">
                     <i data-lucide="menu" class="w-5 h-5" id="menu-icon"></i>
