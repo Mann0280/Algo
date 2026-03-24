@@ -310,7 +310,7 @@
         <div class="mobile-sidebar-backdrop lg:hidden" id="sidebar-backdrop"></div>
 
         <!-- SIDEBAR -->
-        <aside class="sidebar py-10 px-6 flex flex-col gap-14 overflow-hidden">
+        <aside class="sidebar py-10 px-6 flex flex-col gap-14 overflow-y-auto overscroll-contain">
             <!-- Logo area -->
             <div class="px-8 flex items-center gap-3 mb-10">
                 <div class="w-10 h-10 bg-vibrant rounded-xl flex items-center justify-center text-white shadow-lg shadow-purple-500/20">

@@ -63,11 +63,11 @@
             <form method="POST" action="{{ route('verification.verify') }}" class="space-y-8" id="otpForm">
                 @csrf
                 
-                <div class="flex justify-center gap-3 md:gap-4" dir="ltr">
+                <div class="flex justify-center gap-2 md:gap-4 mb-10" dir="ltr">
                     @for ($i = 0; $i < 6; $i++)
                         <input type="text" name="otp[]" maxlength="1" required
-                            class="otp-input w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-black font-whiskey bg-[#0c0518] border border-white/10 rounded-xl md:rounded-2xl text-white outline-none focus:border-purple-500 focus:shadow-[0_0_15px_rgba(147,51,234,0.3)] transition-all"
-                            autocomplete="off" pattern="[0-9]*" inputmode="numeric">
+                            class="otp-input w-12 h-14 md:w-16 md:h-20 text-center text-3xl font-black font-whiskey bg-[#0c0518]/50 border-2 border-white/5 rounded-2xl text-white outline-none focus:border-purple-500 focus:bg-purple-500/5 focus:shadow-[0_0_30px_rgba(147,51,234,0.2)] transition-all duration-300 transform focus:scale-110"
+                            autocomplete="one-time-code" pattern="[0-9]*" inputmode="numeric">
                     @endfor
                 </div>
 
@@ -107,56 +107,115 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const inputs = document.querySelectorAll('.otp-input');
+        const otpForm = document.getElementById('otpForm');
+        const submitBtn = document.getElementById('otpSubmitBtn');
+        const btnText = document.getElementById('btnText');
         
+        // Auto-focus first input
+        inputs[0].focus();
+
         inputs.forEach((input, index) => {
-            // Auto-focus next input
+            // Handle numeric input and numeric only
             input.addEventListener('input', (e) => {
-                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                const value = e.target.value;
+                if (value && !/^[0-9]$/.test(value)) {
+                    input.value = '';
+                    return;
+                }
+
+                if (value && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+
+                checkAndSubmit();
+            });
+
+            // Handle keys
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace') {
+                    if (!input.value && index > 0) {
+                        inputs[index - 1].focus();
+                        inputs[index - 1].value = '';
+                        e.preventDefault();
+                    }
+                } else if (e.key === 'ArrowLeft' && index > 0) {
+                    inputs[index - 1].focus();
+                } else if (e.key === 'ArrowRight' && index < inputs.length - 1) {
                     inputs[index + 1].focus();
                 }
             });
 
-            // Handle backspace
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                    inputs[index - 1].focus();
-                }
-            });
-
-            // Allow pasting full code
+            // Handle paste
             input.addEventListener('paste', (e) => {
                 e.preventDefault();
                 const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').substring(0, 6);
                 
                 if (pastedData) {
-                    for (let i = 0; i < pastedData.length; i++) {
+                    pastedData.split('').forEach((char, i) => {
                         if (inputs[i]) {
-                            inputs[i].value = pastedData[i];
+                            inputs[i].value = char;
                         }
-                    }
-                    if (pastedData.length < 6) {
-                        inputs[pastedData.length].focus();
-                    } else {
-                        inputs[5].focus();
-                    }
+                    });
+                    
+                    const nextIndex = Math.min(pastedData.length, inputs.length - 1);
+                    inputs[nextIndex].focus();
+                    
+                    checkAndSubmit();
                 }
+            });
+
+            // Visual active state focus logic
+            input.addEventListener('focus', () => {
+                input.select();
             });
         });
 
-        // Initialize first input focus
-        inputs[0].focus();
+        function checkAndSubmit() {
+            const code = Array.from(inputs).map(i => i.value).join('');
+            if (code.length === 6) {
+                // All fields filled, trigger form submit if not already submitting
+                if (!submitBtn.disabled) {
+                    otpForm.dispatchEvent(new Event('submit'));
+                    otpForm.submit();
+                }
+            }
+        }
 
-        // Prevent double-click on OTP verification
-        const otpForm = document.getElementById('otpForm');
-        const submitBtn = document.getElementById('otpSubmitBtn');
-        const btnText = document.getElementById('btnText');
-
+        // Handle form submission visuals
         otpForm.addEventListener('submit', (e) => {
+            if (submitBtn.disabled) {
+                e.preventDefault();
+                return;
+            }
             submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            btnText.textContent = 'Verifying Protocol...';
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed', 'animate-pulse');
+            btnText.textContent = 'Decrypting Sequence...';
+            
+            // Add a subtle scan animation to inputs on submit
+            inputs.forEach(input => {
+                input.classList.add('border-purple-500/50', 'bg-purple-500/10');
+                input.readOnly = true;
+            });
         });
+
+        // If there's an error message, shake the form
+        @if($errors->has('otp'))
+            const formContainer = otpForm.parentElement;
+            formContainer.classList.add('animate-shake');
+            setTimeout(() => formContainer.classList.remove('animate-shake'), 500);
+        @endif
     });
 </script>
+
+<style>
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+    }
+    .animate-shake {
+        animation: shake 0.4s ease-in-out;
+    }
+</style>
 @endpush
 @endsection

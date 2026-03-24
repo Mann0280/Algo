@@ -9,12 +9,12 @@
         <div>
             <div class="flex items-center gap-2 mb-3">
                 <span class="w-8 h-[1px] bg-purple-500"></span>
-                <span class="text-[10px] font-black font-whiskey text-purple-500 uppercase tracking-[0.3em]">FINANCIAL TRANSMISSION LAYER</span>
+                <span class="text-[10px] font-black font-whiskey text-purple-500 uppercase tracking-[0.3em]">WALLET CONFIGURATION</span>
             </div>
             <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
-                WALLET <span class="text-purple-500 text-glow">PROTOCOL</span>
+                FINANCIAL <span class="text-purple-500 text-glow">RECEPTION</span>
             </h1>
-            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Manage Algo Credit Nodes and P2P Reception Gateways</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Configure payment receive and withdrawal protocols.</p>
         </div>
         
         <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
@@ -43,58 +43,61 @@
                                 <i data-lucide="credit-card" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h2 class="font-whiskey text-sm font-black tracking-[0.2em] uppercase text-white leading-none">Gateway Credentials</h2>
-                                <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Authorization parameters for algo transfers</p>
+                                <h2 class="font-whiskey text-sm font-black tracking-[0.2em] uppercase text-white leading-none">Receiver Credentials</h2>
+                                <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Primary payment reception parameters</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="p-10 space-y-10">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <div class="grid grid-cols-1 gap-10">
                             <!-- UPI ID -->
-                            <div class="space-y-4">
-                                <label class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-[0.2em] pl-1">Algo UPI Endpoint</label>
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-[0.2em] pl-1">Business UPI ID</label>
                                 <div class="relative group/input">
                                     <div class="absolute inset-y-0 left-5 flex items-center text-gray-700 group-focus-within/input:text-purple-500 transition-colors">
                                         <i data-lucide="hash" class="w-4 h-4"></i>
                                     </div>
                                     <input type="text" name="wallet_upi_id" value="{{ $settings['upi_id'] }}" required 
                                         class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 pl-14 pr-6 outline-none transition-all text-sm font-black font-whiskey tracking-tight text-white shadow-inner placeholder:text-gray-800" 
-                                        placeholder="node_address@bank">
+                                        placeholder="address@upi">
                                 </div>
+                                <p class="text-[8px] font-bold text-gray-700 uppercase tracking-widest pl-1">The UPI ID where users will send payments.</p>
                             </div>
 
                             <!-- UPI Name -->
-                            <div class="space-y-4">
-                                <label class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-[0.2em] pl-1">Receiver Designation</label>
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-[0.2em] pl-1">Account Holder Name</label>
                                 <div class="relative group/input">
                                     <div class="absolute inset-y-0 left-5 flex items-center text-gray-700 group-focus-within/input:text-purple-500 transition-colors">
                                         <i data-lucide="user" class="w-4 h-4"></i>
                                     </div>
                                     <input type="text" name="wallet_upi_name" value="{{ $settings['upi_name'] }}" required 
                                         class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 pl-14 pr-6 outline-none transition-all text-sm font-black font-whiskey tracking-tight text-white shadow-inner placeholder:text-gray-800" 
-                                        placeholder="Legal Identity Name">
+                                        placeholder="Legal Name">
                                 </div>
+                                <p class="text-[8px] font-bold text-gray-700 uppercase tracking-widest pl-1">The name shown to users during payment.</p>
                             </div>
 
                             <!-- Min Withdrawal Amount -->
-                            <div class="space-y-4">
-                                <label class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-[0.2em] pl-1">Min Withdrawal (₹)</label>
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black font-whiskey text-gray-600 uppercase tracking-[0.2em] pl-1">Min Withdrawal Limit (₹)</label>
                                 <div class="relative group/input">
                                     <div class="absolute inset-y-0 left-5 flex items-center text-gray-700 group-focus-within/input:text-purple-500 transition-colors">
                                         <i data-lucide="indian-rupee" class="w-4 h-4"></i>
                                     </div>
                                     <input type="number" name="min_withdrawal_amount" value="{{ $settings['min_withdrawal'] }}" required min="1"
                                         class="w-full bg-[#0c0518] border border-white/10 focus:border-purple-600/50 rounded-2xl py-4 pl-14 pr-6 outline-none transition-all text-sm font-black font-whiskey tracking-tight text-white shadow-inner placeholder:text-gray-800" 
-                                        placeholder="1">
+                                        placeholder="100">
                                 </div>
+                                <p class="text-[8px] font-bold text-gray-700 uppercase tracking-widest pl-1">The minimum distance for user withdrawals.</p>
                             </div>
                         </div>
 
 
                         <div class="flex justify-end pt-4">
-                            <button type="submit" class="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 px-12 py-5 rounded-2xl font-black font-whiskey text-[11px] tracking-[0.3em] uppercase shadow-2xl shadow-purple-900/20 hover:scale-[1.02] active:scale-95 transition-all text-white italic">
-                                SYNCHRONIZE CORE GATEWAY
+                            <button type="submit" class="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 px-12 py-5 rounded-2xl font-black font-whiskey text-[11px] tracking-[0.2em] uppercase shadow-2xl shadow-purple-900/20 hover:scale-[1.02] active:scale-95 transition-all text-white italic">
+                                UPDATE WALLET SETTINGS
                             </button>
                         </div>
                     </div>

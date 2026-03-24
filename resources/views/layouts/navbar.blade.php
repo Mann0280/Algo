@@ -142,77 +142,60 @@
     </div>
 </nav>
 
-<!-- Mobile Menu Overlay -->
-<div id="mobile-menu" class="fixed inset-0 z-[95] lg:hidden invisible opacity-0 transition-all duration-300 overflow-hidden">
-    <!-- Backdrop — fully opaque dark background -->
-    <div class="absolute inset-0 bg-[#05020a]" id="mobile-menu-backdrop"></div>
+<!-- Mobile Menu Overlay - Main scroll container with solid background -->
+<div id="mobile-menu" class="fixed inset-0 z-[95] lg:hidden invisible opacity-0 transition-all duration-300 overflow-y-auto overscroll-contain bg-[#05020a] mobile-menu-scroll" style="touch-action: pan-y; -webkit-overflow-scrolling: touch;" data-lenis-prevent>
+    <!-- Ambient glow - keeping it for depth but background is now solid -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-purple-600/5 blur-[120px] rounded-full pointer-events-none"></div>
     
-    <!-- Ambient glow -->
-    <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-purple-600/10 blur-[120px] rounded-full pointer-events-none"></div>
-    
-    <!-- Menu Content -->
-    <div class="relative h-full flex flex-col pt-20 sm:pt-24 px-5 sm:px-8 pb-8 overflow-y-auto">
+    <!-- Menu Content - min-h-full allows growth for scrolling -->
+    <div class="relative min-h-full flex flex-col pt-24 px-6 pb-12 mobile-menu-panel" data-lenis-prevent>
         <!-- Navigation Section -->
         <div class="flex flex-col mb-6">
             <h3 class="text-gray-500 text-[9px] font-bold uppercase tracking-[0.3em] mb-4 px-1">Navigation</h3>
-            <div class="flex flex-col gap-2">
-                <a href="{{ url('/') }}" class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/10 transition-all">
-                    <div class="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
-                        <i data-lucide="home" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-bold text-xs text-white tracking-wide uppercase">Home</span>
+        <div class="flex flex-col gap-1.5">
+                <a href="{{ url('/') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] active:scale-[0.98] transition-all">
+                    <i data-lucide="home" class="w-4.5 h-4.5 text-purple-400"></i>
+                    <span class="font-bold text-[13px] text-white/90 tracking-wide uppercase">Home</span>
                 </a>
-                <a href="{{ url('/about') }}" class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/10 transition-all">
-                    <div class="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
-                        <i data-lucide="info" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-bold text-xs text-white tracking-wide uppercase">About Us</span>
+                <a href="{{ url('/about') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] active:scale-[0.98] transition-all">
+                    <i data-lucide="info" class="w-4.5 h-4.5 text-purple-400"></i>
+                    <span class="font-bold text-[13px] text-white/90 tracking-wide uppercase">About Us</span>
                 </a>
                 @if($isPremium)
-                <a href="{{ url('/account/notifications') }}" class="mobile-menu-item flex items-center justify-between py-3 px-4 rounded-xl bg-purple-500/10 border border-purple-500/20 hover:border-purple-500/40 hover:bg-purple-500/20 transition-all">
-                    <div class="flex items-center gap-3">
-                        <i data-lucide="bell" class="w-4 h-4 text-purple-400"></i>
-                        <span class="text-[10px] font-bold text-white uppercase tracking-widest">Notifications</span>
+                <a href="{{ url('/account/notifications') }}" class="mobile-menu-item flex items-center justify-between py-3.5 px-5 rounded-2xl bg-purple-500/5 border border-purple-500/10 active:scale-[0.98] transition-all">
+                    <div class="flex items-center gap-4">
+                        <i data-lucide="bell" class="w-4.5 h-4.5 text-purple-400"></i>
+                        <span class="text-[13px] font-bold text-white uppercase tracking-wide">Notifications</span>
                     </div>
-                    <span id="mobile-unread-badge" class="hidden px-2 py-0.5 rounded-lg bg-rose-500 text-white text-[8px] font-black tracking-tight shadow-[0_0_10px_rgba(244,63,94,0.4)]">0</span>
+                    <span id="mobile-unread-badge" class="hidden px-2 py-0.5 rounded-lg bg-rose-500 text-white text-[9px] font-black tracking-tighter">0</span>
                 </a>
                 @endif
-                <a href="{{ url('/contact') }}" class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/10 transition-all">
-                    <div class="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
-                        <i data-lucide="mail" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-bold text-xs text-white tracking-wide uppercase">Contact</span>
+                <a href="{{ url('/contact') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] active:scale-[0.98] transition-all">
+                    <i data-lucide="mail" class="w-4.5 h-4.5 text-purple-400"></i>
+                    <span class="font-bold text-[13px] text-white/90 tracking-wide uppercase">Contact</span>
                 </a>
-                <a href="{{ url('/signals') }}" class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-white/[0.03] border border-purple-500/30 hover:border-purple-500/30 hover:bg-purple-500/10 transition-all">
-                    <div class="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
-                        <i data-lucide="activity" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-bold text-xs text-white tracking-wide uppercase">Signals</span>
+                <a href="{{ url('/signals') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-purple-500/10 border border-purple-500/20 active:scale-[0.98] transition-all">
+                    <i data-lucide="activity" class="w-4.5 h-4.5 text-purple-400"></i>
+                    <span class="font-bold text-[13px] text-white tracking-wide uppercase">Signals</span>
                 </a>
-                <a href="{{ route('signals.past') }}" class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/10 transition-all">
-                    <div class="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
-                        <i data-lucide="history" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-bold text-xs text-white tracking-wide uppercase">Past Signals</span>
+                <a href="{{ route('signals.past') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] active:scale-[0.98] transition-all">
+                    <i data-lucide="history" class="w-4.5 h-4.5 text-purple-400"></i>
+                    <span class="font-bold text-[13px] text-white/90 tracking-wide uppercase">Past Signals</span>
                 </a>
-                <a href="{{ url('/pricing') }}" class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-white/[0.03] border border-amber-500/10 hover:border-amber-500/30 hover:bg-amber-500/10 transition-all">
-                    <div class="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">
-                        <i data-lucide="crown" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-bold text-xs text-amber-400 tracking-wide uppercase">Pricing</span>
+                <a href="{{ url('/pricing') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-amber-500/5 border border-amber-500/10 active:scale-[0.98] transition-all">
+                    <i data-lucide="crown" class="w-4.5 h-4.5 text-amber-500"></i>
+                    <span class="font-bold text-[13px] text-amber-500 tracking-wide uppercase">Pricing</span>
                 </a>
                 
                 {{-- WhatsApp Support Integration --}}
                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', App\Models\SiteSetting::getValue('whatsapp_number', '91XXXXXXXXXX')) }}" 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-[#25D366]/5 border border-[#25D366]/20 hover:border-[#25D366]/40 hover:bg-[#25D366]/10 transition-all">
-                    <div class="w-9 h-9 rounded-lg bg-[#25D366]/10 flex items-center justify-center text-[#25D366] shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" style="fill: #25D366 !important;" viewBox="0 0 24 24">
-                            <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.195 1.594 6.021L.188 23.813l5.885-1.547a11.968 11.968 0 0 0 5.958 1.594h.005c6.641 0 12.031-5.385 12.031-12.031 0-6.646-5.385-12.031-12.036-12.031zM19.042 16.927c-.292.818-1.464 1.563-2.026 1.636-.542.068-1.182.26-3.76-.807-3.13-1.296-5.141-4.526-5.292-4.729-.151-.203-1.266-1.688-1.266-3.219 0-1.531.792-2.286 1.078-2.589.286-.302.625-.375.833-.375s.417 0 .599.01c.193.01.448-.073.703.542.266.646.911 2.224.995 2.391.083.167.141.359.036.568-.104.208-.156.339-.313.526-.156.188-.328.396-.469.542-.156.167-.318.354-.135.672.182.318.813 1.349 1.745 2.177 1.203 1.073 2.193 1.406 2.516 1.563.323.156.51.135.703-.094.193-.229.833-.969 1.057-1.302.224-.333.443-.276.734-.167.292.109 1.844.87 2.156 1.026.313.156.521.234.599.365.078.13.078.755-.214 1.573z"/>
-                        </svg>
-                    </div>
-                    <span class="font-bold text-xs text-[#25D366] tracking-wide uppercase">Support / WhatsApp</span>
+                   class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-[#25D366]/5 border border-[#25D366]/10 active:scale-[0.98] transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-[#25D366]" viewBox="0 0 24 24">
+                        <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.195 1.594 6.021L.188 23.813l5.885-1.547a11.968 11.968 0 0 0 5.958 1.594h.005c6.641 0 12.031-5.385 12.031-12.031 0-6.646-5.385-12.031-12.036-12.031zM19.042 16.927c-.292.818-1.464 1.563-2.026 1.636-.542.068-1.182.26-3.76-.807-3.13-1.296-5.141-4.526-5.292-4.729-.151-.203-1.266-1.688-1.266-3.219 0-1.531.792-2.286 1.078-2.589.286-.302.625-.375.833-.375s.417 0 .599.01c.193.01.448-.073.703.542.266.646.911 2.224.995 2.391.083.167.141.359.036.568-.104.208-.156.339-.313.526-.156.188-.328.396-.469.542-.156.167-.318.354-.135.672.182.318.813 1.349 1.745 2.177 1.203 1.073 2.193 1.406 2.516 1.563.323.156.51.135.703-.094.193-.229.833-.969 1.057-1.302.224-.333.443-.276.734-.167.292.109 1.844.87 2.156 1.026.313.156.521.234.599.365.078.13.078.755-.214 1.573z"/>
+                    </svg>
+                    <span class="font-bold text-[13px] text-[#25D366] tracking-wide uppercase">Support / WhatsApp</span>
                 </a>
             </div>
         </div>
@@ -221,34 +204,43 @@
         <div class="flex-1"></div>
 
         <!-- User Section -->
-        <div class="flex flex-col gap-3 pt-5 border-t border-white/5">
-            <h3 class="text-gray-500 text-[9px] font-bold uppercase tracking-[0.3em] mb-1 px-1">Account</h3>
+        <div class="flex flex-col gap-3 py-6 border-t border-white/5">
+            <h3 class="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3 px-1">Account Terminal</h3>
             @if($user)
-                <a href="{{ url('/account/profile') }}" class="mobile-menu-item flex items-center gap-3 py-3 px-4 rounded-xl bg-purple-500/5 border border-purple-500/15 hover:bg-purple-500/10 transition-all">
-                    <div class="w-10 h-10 rounded-full border-2 border-purple-500/50 overflow-hidden shrink-0">
-                        @if($user->profile_photo)
-                            <img src="{{ asset('storage/' . $user->profile_photo) }}" class="w-full h-full object-cover">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center bg-purple-600 text-white">
-                                <i data-lucide="user" class="w-5 h-5"></i>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                        <span class="font-bold text-white text-sm uppercase truncate global-username">{{ $user->username }}</span>
-                        <span class="text-[8px] text-purple-400 font-bold uppercase tracking-widest">{{ $isPremium ? 'Premium Member' : 'Free Account' }}</span>
-                    </div>
-                </a>
-                <form method="POST" action="{{ route('logout') }}" class="w-full">
-                    @csrf
-                    <button type="submit" class="mobile-menu-item w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-rose-500/5 border border-rose-500/15 text-rose-400 font-whiskey font-bold uppercase text-xs hover:bg-rose-500/15 transition-all">
-                        <i data-lucide="log-out" class="w-4 h-4"></i> Logout
-                    </button>
-                </form>
+                <div class="mobile-menu-item flex flex-col gap-2">
+                    <a href="{{ url('/account/profile') }}" class="flex items-center gap-4 py-4 px-5 rounded-2xl bg-white/[0.03] border border-white/[0.05] transition-all">
+                        <div class="w-11 h-11 rounded-full border-2 border-purple-500/30 overflow-hidden shrink-0">
+                            @if($user->profile_photo)
+                                <img src="{{ asset('storage/' . $user->profile_photo) }}" class="w-full h-full object-cover">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center bg-purple-600 text-white font-bold text-lg">
+                                    {{ substr($user->username, 0, 1) }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="flex flex-col min-w-0">
+                            <span class="font-bold text-white text-[14px] uppercase truncate global-username">{{ $user->username }}</span>
+                            <span class="text-[9px] text-purple-400 font-bold uppercase tracking-widest">{{ $isPremium ? 'Premium Node Active' : 'Basic Sync' }}</span>
+                        </div>
+                    </a>
+                    
+                    @if(!$isPremium)
+                    <a href="{{ url('/pricing') }}" class="flex items-center justify-center gap-3 py-4 px-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold uppercase text-[11px] tracking-widest">
+                        <i data-lucide="zap" class="w-4 h-4"></i> Upgrade to Premium
+                    </a>
+                    @endif
+
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <button type="submit" class="w-full flex items-center justify-center gap-3 py-4 px-5 rounded-2xl bg-rose-500/5 border border-rose-500/10 text-rose-500/80 font-bold uppercase text-[11px] tracking-widest active:bg-rose-500/10 transition-all">
+                            <i data-lucide="log-out" class="w-4 h-4"></i> Terminate Session
+                        </button>
+                    </form>
+                </div>
             @else
-                <div class="flex gap-3">
-                    <a href="{{ url('/login') }}" class="mobile-menu-item flex-1 flex items-center justify-center py-3 px-4 rounded-xl border border-white/10 bg-white/[0.03] font-bold text-white text-xs uppercase hover:bg-white/10 transition-all">Login</a>
-                    <a href="{{ url('/register') }}" class="mobile-menu-item flex-1 flex items-center justify-center py-3 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 font-bold text-white text-xs uppercase shadow-lg shadow-purple-500/20 hover:scale-[1.02] transition-all">Register</a>
+                <div class="flex flex-col gap-2">
+                    <a href="{{ url('/login') }}" class="mobile-menu-item flex items-center justify-center py-4 px-5 rounded-2xl border border-white/10 bg-white/[0.03] font-bold text-white text-[11px] uppercase tracking-widest">Access Terminal</a>
+                    <a href="{{ url('/register') }}" class="mobile-menu-item flex items-center justify-center py-4 px-5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 font-bold text-white text-[11px] uppercase tracking-widest shadow-lg shadow-purple-500/20">Initialize Sync</a>
                 </div>
             @endif
         </div>
@@ -264,6 +256,15 @@
     /* Ensure mobile menu items default to visible */
     .mobile-menu-item {
         opacity: 1;
+    }
+
+    /* Ensure mobile menu works correctly with scrolling */
+    .mobile-menu-scroll {
+        height: 100%;
+        width: 100%;
+    }
+    .mobile-menu-panel {
+        width: 100%;
     }
 </style>
 
