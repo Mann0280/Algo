@@ -99,8 +99,8 @@
                     "sidebar main";
                 grid-template-columns: 280px 1fr;
             }
-            .dashboard-container.collapsed {
-                grid-template-columns: 88px 1fr;
+            .dashboard-container.sidebar-hidden {
+                grid-template-columns: 0px 1fr;
             }
         }
 
@@ -110,17 +110,17 @@
             top: 0;
             left: 0;
             bottom: 0;
-            width: 280px;
+            width: 300px;
+            max-width: 85vw;
             background: var(--bg-sidebar);
             backdrop-filter: blur(30px) saturate(180%);
             -webkit-backdrop-filter: blur(30px) saturate(180%);
             border-right: 1px solid var(--border-glass);
             display: flex;
             flex-direction: column;
-            z-index: 200;
+            z-index: 3000;
             transform: translateX(-100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                        width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 20px 0 50px rgba(0, 0, 0, 0.3);
         }
 
@@ -140,16 +140,25 @@
 
         @media (min-width: 1024px) {
             .sidebar {
-                position: sticky;
+                position: fixed;
                 top: 0;
-                height: 100vh;
+                left: 0;
+                bottom: 0;
+                width: 280px;
                 grid-area: sidebar;
                 transform: translateX(0);
                 box-shadow: none;
                 overflow-y: auto;
+                z-index: 3000;
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             }
-            .collapsed .sidebar {
-                width: 88px;
+            .sidebar-hidden .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar-hidden .header, 
+            .sidebar-hidden .main-content {
+                width: 100vw;
+                margin-left: 0;
             }
         }
 
@@ -157,9 +166,10 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            z-index: 150;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2500;
         }
 
         .mobile-sidebar-backdrop.active {
@@ -252,12 +262,7 @@
         ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb); filter: brightness(1.2); }
 
-        .sidebar-text { transition: opacity 0.3s ease; }
-        .collapsed .sidebar-text { opacity: 0; pointer-events: none; }
-
-        @media (max-width: 1023px) {
-            .collapsed .sidebar-text { opacity: 1; pointer-events: auto; }
-        }
+        /* Sidebar text visibility handled by sidebar translation */
 
         @keyframes whatsappPulse {
             0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
@@ -311,6 +316,11 @@
 
         <!-- SIDEBAR -->
         <aside class="sidebar py-10 px-6 flex flex-col gap-14 overflow-y-auto overscroll-contain">
+            <!-- Close Button (Inside Sidebar) -->
+            <button id="close-sidebar" class="absolute top-5 right-5 w-11 h-11 rounded-2xl border border-white/[0.08] flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all z-[3100] shadow-xl" style="background: rgba(255,255,255,0.03)">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
             <!-- Logo area -->
             <div class="px-8 flex items-center gap-3 mb-10">
                 <div class="w-10 h-10 bg-vibrant rounded-xl flex items-center justify-center text-white shadow-lg shadow-purple-500/20">
@@ -325,7 +335,8 @@
             <nav class="flex-1 flex flex-col gap-1">
                 @php
                     $navItems = [
-                        // ['icon' => 'layout-dashboard', 'label' => 'Terminal', 'url' => url('/terminal'), 'active' => Request::is('terminal*')],
+                        ['icon' => 'home', 'label' => 'Home', 'url' => url('/'), 'active' => Request::is('/')],
+                        ['icon' => 'layout-dashboard', 'label' => 'Dashboard', 'url' => route('account.profile'), 'active' => Request::is('account/profile*')],
                         ['icon' => 'activity', 'label' => 'Signals', 'url' => url('/signals'), 'active' => Request::is('signals*')],
                         ['icon' => 'wallet', 'label' => 'Algo Wallet', 'url' => route('account.wallet'), 'active' => Request::is('account/wallet*')],
                         ['icon' => 'gift', 'label' => 'Refer & Earn', 'url' => route('account.referral'), 'active' => Request::is('account/referral*')],
@@ -343,22 +354,13 @@
                 @endforeach
             </nav>
 
-            <!-- Bottom Action -->
-            <div class="px-2 mt-auto">
-                <button id="sidebar-toggle" class="w-full flex items-center gap-4 px-2 sm:px-4 py-3.5 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-purple-500/30 transition-all group overflow-hidden relative shadow-lg shadow-black/20" style="color: var(--nav-text)">
-                    <div class="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-purple-500/10 group-hover:text-purple-400 transition-colors">
-                        <i data-lucide="chevron-left" class="w-4 h-4" id="toggle-icon"></i>
-                    </div>
-                    <span class="text-[10px] font-black font-whiskey uppercase tracking-[0.2em] sidebar-text whitespace-nowrap">Collapse System</span>
-                </button>
-            </div>
+            <!-- Bottom Action Removed -->
         </aside>
 
         <!-- HEADER -->
         <header class="header px-4 sm:px-10 py-5 flex items-center justify-between sticky top-0 gap-4">
-            <!-- Mobile sidebar toggle -->
-            <button class="lg:hidden w-10 h-10 rounded-xl border border-white/[0.05] flex items-center justify-center text-gray-400 hover:text-[var(--text-white)] transition-all shrink-0" style="background: var(--input-bg)" id="mobile-sidebar-toggle">
+            <!-- Global sidebar toggle -->
+            <button class="w-10 h-10 rounded-xl border border-white/[0.05] flex items-center justify-center text-gray-400 hover:text-[var(--text-white)] transition-all shrink-0" style="background: var(--input-bg)" id="global-sidebar-toggle">
                 <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
             <div class="flex-1 flex items-center justify-start gap-10">
@@ -477,56 +479,54 @@
         localStorage.setItem('theme', 'dark');
 
 
-        // Desktop Sidebar Toggle
+        // Unified Sidebar Logic
         const dashLayout = document.getElementById('dash-layout');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const toggleIcon = document.getElementById('toggle-icon');
-
-        sidebarToggle.addEventListener('click', () => {
-            if (window.innerWidth >= 1024) {
-                dashLayout.classList.toggle('collapsed');
-                const isCollapsed = dashLayout.classList.contains('collapsed');
-                toggleIcon.setAttribute('data-lucide', isCollapsed ? 'chevron-right' : 'chevron-left');
-                lucide.createIcons();
-            } else {
-                // On mobile, close sidebar
-                const sidebar = document.querySelector('.sidebar');
-                const backdrop = document.getElementById('sidebar-backdrop');
-                sidebar.classList.remove('mobile-open');
-                backdrop.classList.remove('active');
-                document.body.style.overflow = '';
-                if (typeof lenis !== 'undefined') lenis.start();
-            }
-        });
-
-        // Mobile Sidebar Toggle
-        const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
         const sidebar = document.querySelector('.sidebar');
         const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+        const globalSidebarToggle = document.getElementById('global-sidebar-toggle');
+        const closeSidebarBtn = document.getElementById('close-sidebar');
 
-        function openMobileSidebar() {
-            document.body.classList.add('menu-open');
-            sidebar.classList.add('mobile-open');
-            sidebarBackdrop.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            if (typeof lenis !== 'undefined') lenis.stop();
+        function openSidebar() {
+            if (window.innerWidth < 1024) {
+                document.body.classList.add('menu-open');
+                sidebar.classList.add('mobile-open');
+                sidebarBackdrop.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                if (typeof lenis !== 'undefined') lenis.stop();
+            } else {
+                dashLayout.classList.remove('sidebar-hidden');
+            }
         }
 
-        function closeMobileSidebar() {
-            document.body.classList.remove('menu-open');
-            sidebar.classList.remove('mobile-open');
-            sidebarBackdrop.classList.remove('active');
-            document.body.style.overflow = '';
-            if (typeof lenis !== 'undefined') lenis.start();
+        function closeSidebar() {
+            if (window.innerWidth < 1024) {
+                document.body.classList.remove('menu-open');
+                sidebar.classList.remove('mobile-open');
+                sidebarBackdrop.classList.remove('active');
+                document.body.style.overflow = '';
+                if (typeof lenis !== 'undefined') lenis.start();
+            } else {
+                dashLayout.classList.add('sidebar-hidden');
+            }
         }
 
-        mobileSidebarToggle.addEventListener('click', openMobileSidebar);
-        sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+        function toggleSidebar() {
+            if (window.innerWidth < 1024) {
+                if (sidebar.classList.contains('mobile-open')) closeSidebar();
+                else openSidebar();
+            } else {
+                dashLayout.classList.toggle('sidebar-hidden');
+            }
+        }
+
+        globalSidebarToggle.addEventListener('click', toggleSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        sidebarBackdrop.addEventListener('click', closeSidebar);
 
         // Close mobile sidebar on nav link click
         document.querySelectorAll('.sidebar .nav-link').forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth < 1024) closeMobileSidebar();
+                if (window.innerWidth < 1024) closeSidebar();
             });
         });
 

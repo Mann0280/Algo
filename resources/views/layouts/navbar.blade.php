@@ -20,6 +20,9 @@
                 <a href="{{ url('/') }}" class="flex items-center gap-2 text-[11px] font-bold text-gray-400 hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
                 </a>
+                <a href="{{ route('account.profile') }}" class="flex items-center gap-2 text-[11px] font-bold {{ request()->is('account/profile*') ? 'text-white' : 'text-gray-400' }} hover:text-white transition-colors tracking-[0.1em] uppercase">
+                    <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i> Dashboard
+                </a>
                 <a href="{{ url('/about') }}" class="flex items-center gap-2 text-[11px] font-bold text-gray-400 hover:text-white transition-colors tracking-[0.1em] uppercase">
                     <i data-lucide="info" class="w-3.5 h-3.5"></i> About Us
                 </a>
@@ -156,6 +159,10 @@
                 <a href="{{ url('/') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] active:scale-[0.98] transition-all">
                     <i data-lucide="home" class="w-4.5 h-4.5 text-purple-400"></i>
                     <span class="font-bold text-[13px] text-white/90 tracking-wide uppercase">Home</span>
+                </a>
+                <a href="{{ route('account.profile') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] active:scale-[0.98] transition-all">
+                    <i data-lucide="layout-dashboard" class="w-4.5 h-4.5 text-purple-400"></i>
+                    <span class="font-bold text-[13px] text-white/90 tracking-wide uppercase">Dashboard</span>
                 </a>
                 <a href="{{ url('/about') }}" class="mobile-menu-item flex items-center gap-4 py-3.5 px-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] active:scale-[0.98] transition-all">
                     <i data-lucide="info" class="w-4.5 h-4.5 text-purple-400"></i>
