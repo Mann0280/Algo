@@ -400,7 +400,7 @@
 
                 <!-- Profile -->
                 <div class="relative group/user">
-                    <button class="flex items-center gap-4 py-1.5 pl-1.5 pr-5 rounded-2xl border border-white/[0.08] hover:bg-white/[0.08] hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(147,51,234,0.15)] transition-all duration-300 group-hover/user:scale-[1.02]" style="background: var(--input-bg)">
+                    <button id="profile-dropdown-btn" class="flex items-center gap-4 py-1.5 pl-1.5 pr-5 rounded-2xl border border-white/[0.08] hover:bg-white/[0.08] hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(147,51,234,0.15)] transition-all duration-300 group-hover/user:scale-[1.02]" style="background: var(--input-bg)">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-xs font-black font-whiskey text-white italic shadow-lg group-hover/user:shadow-purple-500/20 transition-all overflow-hidden relative">
                             <img src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : '' }}" 
                                  alt="User" 
@@ -417,7 +417,7 @@
                         <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-600 group-hover/user:text-white group-hover/user:rotate-180 transition-all duration-300"></i>
                     </button>
 
-                    <div class="absolute right-0 top-full mt-3 w-56 rounded-2xl border border-white/[0.08] overflow-hidden opacity-0 invisible group-hover/user:opacity-100 group-hover/user:visible transition-all translate-y-2 group-hover/user:translate-y-0 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_20px_rgba(147,51,234,0.1)] z-[2000]" style="background: var(--dropdown-bg)">
+                    <div id="profile-dropdown-menu" class="absolute right-0 top-full mt-3 w-56 rounded-2xl border border-white/[0.08] overflow-hidden opacity-0 invisible group-hover/user:opacity-100 group-hover/user:visible transition-all translate-y-2 group-hover/user:translate-y-0 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_20px_rgba(147,51,234,0.1)] z-[2000]" style="background: var(--dropdown-bg)">
                         <div class="p-4 border-b border-white/[0.05]">
                             <p class="text-[9px] font-black font-whiskey text-gray-500 uppercase tracking-widest">Signed in as</p>
                             <p class="text-[11px] font-bold mt-1" style="color: var(--text-white)">{{ Auth::user()->email }}</p>
@@ -529,6 +529,39 @@
                 if (window.innerWidth < 1024) closeSidebar();
             });
         });
+
+        // Profile Dropdown Logic
+        const profileBtn = document.getElementById('profile-dropdown-btn');
+        const profileMenu = document.getElementById('profile-dropdown-menu');
+        
+        if (profileBtn && profileMenu) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = !profileMenu.classList.contains('invisible');
+                
+                if (isOpen) {
+                    profileMenu.classList.add('invisible', 'opacity-0', 'translate-y-2');
+                    profileMenu.classList.remove('visible', 'opacity-100', 'translate-y-0');
+                } else {
+                    profileMenu.classList.remove('invisible', 'opacity-0', 'translate-y-2');
+                    profileMenu.classList.add('visible', 'opacity-100', 'translate-y-0');
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+                    profileMenu.classList.add('invisible', 'opacity-0', 'translate-y-2');
+                    profileMenu.classList.remove('visible', 'opacity-100', 'translate-y-0');
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    profileMenu.classList.add('invisible', 'opacity-0', 'translate-y-2');
+                    profileMenu.classList.remove('visible', 'opacity-100', 'translate-y-0');
+                }
+            });
+        }
 
         // Global scroll refresh on load
         window.addEventListener('load', () => {
