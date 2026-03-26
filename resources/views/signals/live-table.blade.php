@@ -278,7 +278,7 @@
         <h2 class="text-2xl font-professional text-white tracking-tighter mb-2">Market Day <span class="text-gradient">Complete</span></h2>
         <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">Daily Session Closed at 4:00 PM</p>
         <div class="flex flex-col gap-3">
-             <p class="text-xs text-gray-400 max-w-sm mb-4">All live signals from today have been archived to the history department for verification.</p>
+             <p class="text-xs text-gray-400 max-w-sm mb-4">All live signals from today have been saved to history for check.</p>
              <a href="{{ route('signals.past') }}" class="inline-flex items-center justify-center gap-2 px-8 py-3 bg-white/[0.03] border border-white/10 text-white font-bold text-[10px] uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all">
                 View Today's History
                 <i data-lucide="arrow-right" class="w-3 h-3"></i>

@@ -9,7 +9,7 @@
         <div>
             <div class="flex items-center gap-2 mb-3">
                 <span class="w-8 h-[1px] bg-amber-500"></span>
-                <span class="text-[10px] font-semibold font-whiskey text-amber-500 uppercase tracking-widest">PAYOUT VERIFICATION</span>
+                <span class="text-[10px] font-semibold font-whiskey text-amber-500 uppercase tracking-widest">PAYOUT CHECK</span>
             </div>
             <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
                 WITHDRAW <span class="text-amber-500 text-glow">REQUESTS</span>
@@ -20,7 +20,7 @@
         <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
             <div class="flex items-center gap-2.5">
                 <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse shadow-[0_0_10px_#f59e0b]"></span>
-                <span class="text-[10px] font-semibold font-whiskey text-amber-400 uppercase tracking-widest text-glow-sm">QUEUE ACTIVE</span>
+                <span class="text-[10px] font-semibold font-whiskey text-amber-400 uppercase tracking-widest text-glow-sm">WAITING</span>
             </div>
         </div>
     </div>

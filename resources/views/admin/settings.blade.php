@@ -9,12 +9,12 @@
         <div>
             <div class="flex items-center gap-2 mb-3">
                 <span class="w-8 h-[1px] bg-purple-500"></span>
-                <span class="text-[10px] font-semibold font-whiskey text-purple-500 uppercase tracking-widest">CONFIGURATION</span>
+                <span class="text-[10px] font-semibold font-whiskey text-purple-500 uppercase tracking-widest">SETTINGS</span>
             </div>
             <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
                 SITE <span class="text-purple-500 text-glow">SETTINGS</span>
             </h1>
-            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Manage Site Configuration and Global Parameters</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Manage Site Settings</p>
         </div>
         
         <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
@@ -43,7 +43,7 @@
                     </div>
                     <div>
                         <h2 class="font-whiskey text-sm font-black tracking-widest uppercase text-white leading-none">Site Identity</h2>
-                        <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Site Branding and Channels</p>
+                        <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Site Branding and Settings</p>
                     </div>
                 </div>
             </div>
@@ -83,8 +83,8 @@
                         <i data-lucide="zap" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <h2 class="font-whiskey text-sm font-black tracking-widest uppercase text-white leading-none">System Parameters</h2>
-                        <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Critical Thresholds and Calibration</p>
+                        <h2 class="font-whiskey text-sm font-black tracking-widest uppercase text-white leading-none">System Settings</h2>
+                        <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Core System Settings</p>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@
                         </div>
                         <div>
                             <div class="text-sm font-black text-white font-whiskey tracking-tight">Maintenance Mode</div>
-                            <div class="text-[9px] font-bold text-gray-600 font-whiskey uppercase tracking-widest mt-2 leading-none">Lockdown site for maintenance</div>
+                            <div class="text-[9px] font-bold text-gray-600 font-whiskey uppercase tracking-widest mt-2 leading-none">Turn off the site for maintenance</div>
                         </div>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">

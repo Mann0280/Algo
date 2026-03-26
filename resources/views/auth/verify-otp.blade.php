@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Verify Your Protocol')
+@section('title', 'Check Your Identity')
 
 @section('content')
 <div class="min-h-screen flex items-center justify-center py-20 px-4 relative overflow-hidden bg-[#05020a]">
@@ -20,7 +20,7 @@
                 </div>
                 
                 <h1 class="font-whiskey text-3xl font-black text-white italic uppercase tracking-tighter mb-4">
-                    Email Security <span class="text-purple-500 text-glow">Verification</span>
+                    Security <span class="text-purple-500 text-glow">Check</span>
                 </h1>
                 
                 <div class="flex items-center gap-2 mb-6">
@@ -32,7 +32,7 @@
 
             <div class="space-y-6">
                 <p class="text-gray-400 text-sm leading-relaxed max-w-sm mx-auto">
-                    We have sent a secure 6-digit verification code to your email. Please enter it below to authorize this session.
+                    We have sent a 6-digit check code to your email. Please enter it below to login.
                 </p>
 
                 @if (session('status'))
@@ -73,7 +73,7 @@
 
                 <button type="submit" id="otpSubmitBtn" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black font-whiskey uppercase tracking-[0.3em] text-[10px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-purple-900/40 italic flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
                     <i data-lucide="check-circle" class="w-4 h-4"></i>
-                    <span id="btnText">Verify Access Protocol</span>
+                    <span id="btnText">Confirm Login</span>
                 </button>
                 
             </form>
@@ -96,7 +96,7 @@
             
             <div class="pt-6 border-t border-white/5">
                 <p class="text-[8px] font-black font-whiskey text-gray-700 uppercase tracking-[0.3em]">
-                    Algorithmic Security Layer v5.1 Active
+                    Smart Security v5.1 Active
                 </p>
             </div>
         </div>
@@ -189,7 +189,7 @@
             }
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-50', 'cursor-not-allowed', 'animate-pulse');
-            btnText.textContent = 'Decrypting Sequence...';
+            btnText.textContent = 'Checking code...';
             
             // Add a subtle scan animation to inputs on submit
             inputs.forEach(input => {

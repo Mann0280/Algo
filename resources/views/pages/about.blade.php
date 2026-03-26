@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'About Us | Emperor Stock Predictor — Algorithmic Excellence')
+@section('title', 'About Us | Emperor Stock Predictor — Smart Trading')
 
 @section('content')
 <main class="relative pt-16 pb-12">
@@ -152,9 +152,9 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="mb-16 fade-in-up">
             <div class="text-center mb-16">
-                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">AI Process</span>
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">How It Works</span>
                 <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
-                    How Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">AI</span> Works
+                    How <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">It</span> Works
                 </h2>
             </div>
 
@@ -196,7 +196,7 @@
         {{-- ═══════════════════════════════════════════ --}}
         <div class="mb-16 fade-in-up">
             <div class="text-center mb-16">
-                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Protocol</span>
+                <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Our Core</span>
                 <h2 class="font-professional text-3xl md:text-5xl tracking-tighter text-white">
                     What We <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Stand For</span>
                 </h2>

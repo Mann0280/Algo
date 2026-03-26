@@ -47,7 +47,7 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Full day signal access</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Real-time AI alerts</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Entry, Target &amp; Stop Loss</li>
-                            <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-gray-600 shrink-0"></i> <span class="text-gray-600">Historical archive</span></li>
+                            <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-gray-600 shrink-0"></i> <span class="text-gray-600">Signal history</span></li>
                         </ul>
                         <a href="{{ $getLink($p1) }}" class="plan-button">Get Started</a>
                     </div>
@@ -102,7 +102,7 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> 30-day full signal access</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Real-time AI alerts</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Entry, Target &amp; Stop Loss</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Full historical archive</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Full signal history</li>
                         </ul>
                         <a href="{{ $getLink($p30) }}" class="plan-button">Get Started</a>
                     </div>
@@ -128,7 +128,7 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> 365-day full access</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Real-time AI alerts</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Entry, Target &amp; Stop Loss</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Full historical archive</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Full signal history</li>
                         </ul>
                         <a href="{{ $getLink($p365) }}" class="plan-button">Get Started</a>
                     </div>

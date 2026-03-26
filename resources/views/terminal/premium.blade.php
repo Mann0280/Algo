@@ -255,18 +255,18 @@
                 </div>
             </div>
 
-            {{-- How AI Signals Work --}}
+            {{-- How It Works --}}
             <div class="widget bg-gradient-to-br from-purple-900/10 to-indigo-900/10 border-purple-500/10">
-                <div class="widget-title flex items-center gap-2"><i data-lucide="cpu" class="w-3.5 h-3.5 text-purple-400"></i> How AI Signals Work</div>
+                <div class="widget-title flex items-center gap-2"><i data-lucide="cpu" class="w-3.5 h-3.5 text-purple-400"></i> How It Works</div>
                 <div class="space-y-3">
                     <div class="flex items-start gap-3">
                         <div class="w-7 h-7 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-purple-400">1</div>
-                        <div><div class="text-xs font-bold text-white mb-0.5">Data Collection</div><p class="text-[10px] text-gray-400 leading-snug">AI scans 500+ stocks across NSE/BSE, analyzing price, volume, OI, and 50+ technical indicators every 30 seconds.</p></div>
+                        <div><div class="text-xs font-bold text-white mb-0.5">Data Collection</div><p class="text-[10px] text-gray-400 leading-snug">AI scans various stocks across the market, analyzing price movements and key indicators every 30 seconds.</p></div>
                         </div>
             </div>
                     <div class="flex items-start gap-3">
                         <div class="w-7 h-7 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-purple-400">2</div>
-                        <div><div class="text-xs font-bold text-white mb-0.5">Pattern Recognition</div><p class="text-[10px] text-gray-400 leading-snug">Advanced algorithm v4.2 identifies candlestick patterns, Fibonacci levels, divergences, and support/resistance zones with 96.5% accuracy.</p></div>
+                        <div><div class="text-xs font-bold text-white mb-0.5">Pattern Recognition</div><p class="text-[10px] text-gray-400 leading-snug">Our Smart System identifies market trends and key price levels to ensure high accuracy.</p></div>
                         </div>
             </div>
                     <div class="flex items-start gap-3">

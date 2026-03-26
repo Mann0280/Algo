@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Institutional Settings | Emperor Stock Predictor')
+@section('title', 'Account Settings | Emperor Stock Predictor')
 
 @section('content')
 <style>
@@ -41,7 +41,7 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white tracking-tight">Profile</h3>
-                                <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-0.5">Identity Settings</p>
+                                <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-0.5">Profile Settings</p>
                             </div>
                         </div>
                         <button id="save-changes-btn" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all active:scale-95 shadow-xl shadow-purple-900/20">Save Changes</button>
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                         
-                        <button onclick="updatePassword()" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all shadow-xl shadow-purple-900/20 active:scale-95">Update Security Protocol</button>
+                        <button onclick="updatePassword()" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.3)] transition-all shadow-xl shadow-purple-900/20 active:scale-95">Update Password</button>
                     </div>
 
                     <!-- Requirements & Status -->
@@ -210,7 +210,7 @@
 
     {{-- COLUMN 2: SUBSCRIPTION & SESSIONS --}}
     <div class="space-y-8 xl:space-y-12">
-        <!-- SECTION 2 — SUBSCRIPTION PROTOCOL -->
+        <!-- SECTION 2 — SUBSCRIPTION DETAILS -->
         <div id="tab-subscription" class="tab-content active">
             <section class="glass-panel rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 border-white/[0.05] relative overflow-hidden group h-full">
                 <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
@@ -255,9 +255,9 @@
                             $isActive = $preciseExpiry && \Carbon\Carbon::parse($preciseExpiry)->isFuture();
                         @endphp
                         <div class="flex items-center justify-between">
-                            <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Active Protocol</span>
+                            <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Active Plan</span>
                             <span class="text-sm font-bold text-white">
-                                @if($user->role === 'admin') Institutional Admin @elseif($user->role === 'elite') Elite Signal Access @elseif($user->role === 'premium') Premium Protocol @else Basic Node @endif
+                                @if($user->role === 'admin') Institutional Admin @elseif($user->role === 'elite') Elite Signal Access @elseif($user->role === 'premium') Premium Plan @else Basic Node @endif
                             </span>
                         </div>
                         
@@ -280,7 +280,7 @@
                         @if(!$isActive)
                             <a href="{{ route('pricing') }}" class="group relative px-12 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl text-[10px] font-black font-whiskey uppercase tracking-[0.3em] overflow-hidden transition-all hover:scale-105 shadow-2xl">
                                 <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                <span class="relative z-10">Upgrade Protocol</span>
+                                <span class="relative z-10">Upgrade Plan</span>
                             </a>
                             <p class="text-xs text-gray-500 animate-pulse">Upgrade to access premium features.</p>
                         @else
@@ -321,7 +321,7 @@
                                 <div class="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3">
                                     <p class="text-xs font-black text-white uppercase tracking-wider truncate max-w-full">{{ $session->device }}</p>
                                     @if($session->is_current_device)
-                                        <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[7px] font-black uppercase tracking-widest border border-emerald-500/20 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.2)]">Primary Node</span>
+                                        <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[7px] font-black uppercase tracking-widest border border-emerald-500/20 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.2)]">Primary Device</span>
                                     @endif
                                 </div>
                                 <div class="flex items-center justify-center sm:justify-start gap-2">
@@ -335,9 +335,9 @@
                                 @if(!$session->is_current_device)
                                     <button onclick="terminateSession('{{ $session->id }}', this)" 
                                             class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 sm:px-4 sm:py-2.5 rounded-xl border border-white/5 bg-white/5 text-rose-500/60 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all group/btn shadow-xl" 
-                                            title="Terminate Secure Signal">
+                                            title="End Session">
                                         <i data-lucide="power" class="w-4 h-4 transition-transform group-hover/btn:scale-110"></i>
-                                        <span class="text-[9px] font-black uppercase tracking-widest">Terminate</span>
+                                        <span class="text-[9px] font-black uppercase tracking-widest">Logout</span>
                                     </button>
                                 @else
                                     <div class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
@@ -390,7 +390,7 @@
 
     // --- SESSION MANAGEMENT ---
     function terminateSession(sessionId, btn) {
-        if (!confirm('Permanently terminate this secure link?')) return;
+        if (!confirm('End this session?')) return;
         
         const container = btn.closest('.session-row');
         const originalContent = btn.innerHTML;
@@ -425,7 +425,7 @@
         })
         .catch(error => {
             console.error('Error:', error);
-            notify('Algo link error.', 'error');
+            notify('System error.', 'error');
             btn.disabled = false;
             btn.innerHTML = originalContent;
             if (window.lucide) lucide.createIcons();
@@ -464,7 +464,7 @@
             }
         })
         .catch(error => {
-            notify('System protocol error.', 'error');
+            notify('System error.', 'error');
         });
     }
     window.updatePassword = updatePassword;
@@ -499,7 +499,7 @@
             saveBtn.addEventListener('click', () => {
                 saveBtn.disabled = true;
                 const originalText = saveBtn.innerHTML;
-                saveBtn.innerHTML = '<span class="flex items-center gap-2 justify-center"><i data-lucide="loader-2" class="w-3 h-3 animate-spin"></i> SYNCING...</span>';
+                saveBtn.innerHTML = '<span class="flex items-center gap-2 justify-center"><i data-lucide="loader-2" class="w-3 h-3 animate-spin"></i> SAVING...</span>';
                 lucide.createIcons();
                 
                 const formData = new FormData();
@@ -554,7 +554,7 @@
                             });
                         }
                     } else {
-                        notify('Protocol sync failed. Please verify algo link.', 'error');
+                        notify('Failed to save. Please check your connection.', 'error');
                     }
                 })
                 .catch(error => {

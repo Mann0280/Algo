@@ -243,7 +243,7 @@
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
                         <button type="submit" class="w-full flex items-center justify-center gap-3 py-4 px-5 rounded-2xl bg-rose-500/5 border border-rose-500/10 text-rose-500/80 font-bold uppercase text-[11px] tracking-widest active:bg-rose-500/10 transition-all">
-                            <i data-lucide="log-out" class="w-4 h-4"></i> Terminate Session
+                            <i data-lucide="log-out" class="w-4 h-4"></i> Logout
                         </button>
                     </form>
                 </div>

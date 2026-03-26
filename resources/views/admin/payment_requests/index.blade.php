@@ -9,12 +9,12 @@
         <div>
             <div class="flex items-center gap-2 mb-3">
                 <span class="w-8 h-[1px] bg-purple-500"></span>
-                <span class="text-[10px] font-semibold font-whiskey text-purple-500 uppercase tracking-widest">VERIFICATION QUEUE</span>
+                <span class="text-[10px] font-semibold font-whiskey text-purple-500 uppercase tracking-widest">WAITING FOR CHECK</span>
             </div>
             <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
                 SUBSCRIPTION <span class="text-purple-500 text-glow">REQUESTS</span>
             </h1>
-            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Verify User Payment Proofs and Subscription Upgrades</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Check User Payments and Subscription Upgrades</p>
         </div>
     </div>
 

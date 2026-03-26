@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AlgoTra AI | Smart Algo Trading Signals')
+@section('title', 'AlgoTra AI | Smart Trading Signals')
 
 @push('styles')
 <style>
@@ -137,17 +137,17 @@
             <div class="relative z-20 space-y-8">
                 <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-panel border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-[0.2em] hero-stagger opacity-0">
                     <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
-                    Join 15k+ traders using AI Trading
+                    Join 15k+ traders using our system
                 </div>
                 
                 <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-professional text-white leading-tight">
                     <span class="block hero-stagger opacity-0">Trade</span>
                     <span class="block hero-stagger opacity-0">Smarter</span>
-                    <span class="block text-vibrant hero-stagger opacity-0">Not Harder</span>
+                    <span class="block text-vibrant hero-stagger opacity-0">With Ease</span>
                 </h1>
 
                 <p class="text-slate-400 text-sm sm:text-lg md:text-xl leading-relaxed max-w-xl hero-stagger opacity-0 font-medium">
-                    Real-time market insights with best entry points and smart risk control powered by AI price predictions.
+                    Real-time market insights with best entry points and smart risk control powered by smart price analysis.
                 </p>
 
                 <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8 hero-stagger opacity-0">
@@ -214,7 +214,7 @@
                         <div class="flex justify-between items-center mb-10 relative z-10">
                             <div class="flex items-center gap-2 text-purple-500">
                                 <i data-lucide="zap" class="w-5 h-5 fill-purple-500"></i>
-                                <span class="text-[9px] font-bold tracking-widest uppercase">SIGNAL PATHWAY</span>
+                                <span class="text-[9px] font-bold tracking-widest uppercase">SIGNAL PATH</span>
                             </div>
                             <div class="flex gap-2">
                                  <div class="w-2 h-2 rounded-full bg-rose-500/50"></div>
@@ -224,7 +224,7 @@
                         </div>
 
                         <div class="mb-10 relative z-10">
-                            <div class="text-slate-500 text-[9px] tracking-[0.3em] font-bold mb-2">SCANNING MARKET DEPTH</div>
+                            <div class="text-slate-500 text-[9px] tracking-[0.3em] font-bold mb-2">SCANNING MARKET</div>
                             <div class="flex items-end gap-3">
                                  <div class="text-5xl font-professional text-white tracking-tighter" id="accuracy-counter">98.4%</div>
                                  <div class="text-emerald-400 text-[10px] font-bold pb-2">+2.45%</div>
@@ -255,7 +255,7 @@
                             <span>Est 2024</span>
                             <div class="flex items-center gap-2">
                                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                 SYSTEM OPERATIONAL
+                                 SYSTEM ONLINE
                             </div>
                         </div>
                     </div>
@@ -272,7 +272,7 @@
     <div class="py-6 glass-panel border-y border-white/5 overflow-hidden z-20 relative mt-20">
         <div class="ticker-wrapper flex whitespace-nowrap animate-ticker">
             @php
-                $ticker_items = ['Trending Stocks', 'Market Movers', 'Breakout Opportunities', 'High Momentum Picks', 'AI Watchlist Signals'];
+                $ticker_items = ['Trending Stocks', 'Market Movers', 'Breakout Opportunities', 'High Momentum Picks', 'Watchlist Signals'];
                 $all_ticker = array_merge($ticker_items, $ticker_items, $ticker_items, $ticker_items);
             @endphp
             @foreach ($all_ticker as $item)
@@ -289,8 +289,8 @@
     <section id="signals" class="pt-16 sm:pt-32 pb-8 sm:pb-16 container mx-auto px-4 sm:px-6 relative z-10">
         <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div class="max-w-2xl">
-                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6"> <span class="text-vibrant">Market Signals</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-medium">Real-time intelligence streams providing validated entry and exit points for global assets.</p>
+                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6"> <span class="text-vibrant">Trading Signals</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-medium">Real-time signals providing clear entry and exit points for global assets.</p>
             </div>
             <a href="{{ url('/signals/past') }}" class="group flex items-center gap-3 text-white font-bold text-xs tracking-widest">
                 EXPLORE ALL SIGNALS 
@@ -365,7 +365,7 @@
                         <tr>
                             <td colspan="9" class="py-20 text-center">
                                 <i data-lucide="search-x" class="w-12 h-12 text-slate-700 mx-auto mb-4"></i>
-                                <p class="text-slate-500 text-xs uppercase font-bold">No AI signals detected right now.</p>
+                                <p class="text-slate-500 text-xs uppercase font-bold">No signals detected right now.</p>
                             </td>
                         </tr>
                         @endforelse
@@ -470,11 +470,11 @@
                 <div class="w-12 h-12 bg-amber-400 text-black rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl shadow-amber-400/20 animate-bounce">
                     <i data-lucide="lock" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-professional text-xl text-white mb-2 uppercase">Advanced Signal Stream Restricted</h3>
-                <p class="text-slate-400 text-sm mb-8 max-w-lg mx-auto italic">Full data terminal access is reserved for Premium King members only. Precision levels and real-time execution alerts currently blurred.</p>
+                <h3 class="font-professional text-xl text-white mb-2 uppercase">Signals Locked</h3>
+                <p class="text-slate-400 text-sm mb-8 max-w-lg mx-auto italic">Premium members only. Signal details and real-time alerts are currently locked.</p>
                 <div class="flex justify-center gap-4">
                     <a href="{{ url('/pricing') }}" class="bg-black text-white font-bold py-4 px-10 rounded-2xl text-[10px] hover:scale-105 transition-all shadow-lg shadow-white/20 uppercase">Unlock Terminal</a>
-                    <a href="{{ url('/register') }}" class="glass-panel text-white font-bold py-4 px-10 rounded-2xl text-[10px] hover:bg-white/10 transition-all uppercase">Initialize Terminal</a>
+                    <a href="{{ url('/register') }}" class="glass-panel text-white font-bold py-4 px-10 rounded-2xl text-[10px] hover:bg-white/10 transition-all uppercase">Get Started</a>
                 </div>
             </div>
             @endif
@@ -488,7 +488,7 @@
         <div class="container mx-auto px-4 sm:px-6">
             <div class="text-center mb-16">
                 <span class="font-whiskey text-[10px] font-black text-purple-500 tracking-[0.3em] uppercase mb-4 block">Choose Your Plan</span>
-                <h2 class="text-3xl md:text-5xl font-bold-tight text-white mb-6 uppercase">Powerful <span class="text-vibrant">AI Features</span></h2>
+                <h2 class="text-3xl md:text-5xl font-bold-tight text-white mb-6 uppercase">Powerful <span class="text-vibrant">Features</span></h2>
             <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-medium">Precision-engineered tools designed for modern market conditions, providing you with a definitive edge.</p>
             </div>
 
@@ -566,16 +566,16 @@
         <div class="container mx-auto px-6">
              <div class="text-center mb-20">
                 <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Core Advantages</span>
-                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6 uppercase">Why Our AI is <span class="text-vibrant">Powerful</span></h2>
-                <p class="text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed">Built on years of quantitative research and advanced machine learning, our algo engine delivers institutional-grade analysis to every trader.</p>
+                <h2 class="text-3xl md:text-5xl font-professional text-white mb-6 uppercase">Why It <span class="text-vibrant">Works</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed">Built on years of research, our system delivers professional analysis to every trader.</p>
              </div>
              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 @php 
                 $feats = [
-                    ['icon' => 'brain', 'title' => 'Advanced Accuracy', 'desc' => 'Multi-layered LSTM and transformer models trained on 15+ years of market microstructure data for pattern-level precision.', 'color' => 'purple'],
-                    ['icon' => 'shield-check', 'title' => 'Risk Governance', 'desc' => 'Automated stop-loss algorithms and position sizing models designed to protect your capital in volatile conditions.', 'color' => 'emerald'],
-                    ['icon' => 'bell-ring', 'title' => 'Real-time Alerts', 'desc' => 'Multi-channel delivery via dashboard, Telegram, and email ensures you never miss a high-probability trade entry.', 'color' => 'blue'],
-                    ['icon' => 'trending-up', 'title' => 'Market Intelligence', 'desc' => 'Sentiment analysis, volume profiling, and volatility metrics distilled into actionable, easy-to-read insights.', 'color' => 'amber']
+                    ['icon' => 'brain', 'title' => 'High Accuracy', 'desc' => 'Advanced models trained on years of market data for better results.', 'color' => 'purple'],
+                    ['icon' => 'shield-check', 'title' => 'Risk Control', 'desc' => 'Automated stop-loss and size limits designed to protect your capital in volatile conditions.', 'color' => 'emerald'],
+                    ['icon' => 'bell-ring', 'title' => 'Real-time Alerts', 'desc' => 'Multi-channel delivery ensures you never miss a trade entry.', 'color' => 'blue'],
+                    ['icon' => 'trending-up', 'title' => 'Market Intelligence', 'desc' => 'Market analysis and trends turned into easy-to-read insights.', 'color' => 'amber']
                 ];
                 @endphp
                 @foreach($feats as $f)
@@ -604,7 +604,7 @@
                             <span class="text-white block">Never Miss An</span>
                             <span class="text-vibrant block">Opportunity</span>
                         </h2>
-                        <p class="text-slate-400 text-sm sm:text-lg mb-8 sm:mb-12 max-w-md font-medium leading-relaxed">Our multi-channel alert system ensures you are always connected to the market pulse.</p>
+                        <p class="text-slate-400 text-sm sm:text-lg mb-8 sm:mb-12 max-w-md font-medium leading-relaxed">Our alert system ensures you never miss a market move.</p>
                         
                         <div class="space-y-5">
                             <div class="flex items-center gap-6 p-5 glass-panel rounded-2xl border border-white/5 border-l-4 border-l-emerald-500 group/item hover:bg-white/10 transition-all cursor-default">
@@ -643,8 +643,8 @@
                                     <i data-lucide="bell" class="w-6 h-6 text-white relative z-10"></i>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="text-purple-400 text-[8px] font-bold uppercase tracking-[0.4em] mb-1 leading-none">System Core</span>
-                                    <span class="font-professional text-[12px] tracking-[0.2em] text-white uppercase">NEW SIGNAL ALERT</span>
+                                    <span class="text-purple-400 text-[8px] font-bold uppercase tracking-[0.4em] mb-1 leading-none">System</span>
+                                    <span class="font-professional text-[12px] tracking-[0.2em] text-white uppercase">NEW SIGNAL</span>
                                 </div>
                             </div>
                             
@@ -695,9 +695,9 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
                     @php 
                     $steps = [
-                        ['n' => '01', 'icon' => 'link', 't' => 'Connect Terminal', 'd' => 'Create your account and access the advanced trading dashboard. Link your watchlist or follow signals manually in real-time.'],
-                        ['n' => '02', 'icon' => 'brain', 't' => 'AI Analysis', 'd' => 'Our engine scans 500+ data points per second using LSTM models to identify the highest-probability entry and exit zones.'],
-                        ['n' => '03', 'icon' => 'rocket', 't' => 'Execute & Profit', 'd' => 'Receive instant multi-channel alerts. Execute trades with precision entry levels, calculated stop losses, and multi-target exits.']
+                        ['n' => '01', 'icon' => 'link', 't' => 'Connect Terminal', 'd' => 'Create your account and access the trading dashboard. Follow signals in real-time.'],
+                        ['n' => '02', 'icon' => 'brain', 't' => 'Smart Analysis', 'd' => 'Our system scans 500+ data points per second to identify the best entry and exit zones.'],
+                        ['n' => '03', 'icon' => 'rocket', 't' => 'Execute & Profit', 'd' => 'Receive instant alerts. Execute trades with precision entry levels, stop losses, and targets.']
                     ];
                     @endphp
                     @foreach($steps as $s)
@@ -797,7 +797,7 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div>
-                        <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Live Telemetry</span>
+                        <span class="text-[10px] font-bold text-purple-500 tracking-[0.3em] uppercase mb-4 block">Live Status</span>
                         <h2 class="font-professional text-3xl md:text-4xl uppercase tracking-tighter text-white mb-6">
                             Platform <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">Performance</span>
                         </h2>

@@ -8,11 +8,11 @@
     <div class="flex items-center justify-between">
         <div>
             <h2 class="text-3xl font-bold uppercase tracking-wider text-white">Link History</h2>
-            <p class="text-[11px] font-bold text-gray-500 uppercase tracking-[0.3em] mt-1">Temporal Subscription Logs • Protocol v4.2</p>
+            <p class="text-[11px] font-bold text-gray-500 uppercase tracking-[0.3em] mt-1">Subscription History</p>
         </div>
         <div class="px-6 py-3 rounded-2xl bg-purple-500/5 border border-purple-500/10 flex items-center gap-4">
             <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_#9333ea]"></div>
-            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Algo Sync Active</span>
+            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">System Active</span>
         </div>
     </div>
 
@@ -33,9 +33,9 @@
                 <thead>
                     <tr class="bg-white/[0.02]">
                         <th class="px-8 py-5 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Purchase Date</th>
-                        <th class="px-8 py-5 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Protocol Plan</th>
+                        <th class="px-8 py-5 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Plan Name</th>
                         <th class="px-8 py-5 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Amount</th>
-                        <th class="px-8 py-5 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Termination</th>
+                        <th class="px-8 py-5 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Expires On</th>
                         <th class="px-8 py-5 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Status</th>
                         <th class="px-8 py-5 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Action</th>
                     </tr>
@@ -81,7 +81,7 @@
                         <td colspan="6" class="px-8 py-20 text-center">
                             <div class="flex flex-col items-center gap-4 opacity-30">
                                 <i data-lucide="ghost" class="w-12 h-12"></i>
-                                <span class="text-[11px] font-bold uppercase tracking-[0.3em]">No Temporal Records Identified</span>
+                                <span class="text-[11px] font-bold uppercase tracking-[0.3em]">No history found</span>
                             </div>
                         </td>
                     </tr>
@@ -98,9 +98,9 @@
                 <i data-lucide="shield-alert" class="w-10 h-10 text-amber-500"></i>
             </div>
             <div>
-                <h4 class="text-xl font-bold text-white uppercase tracking-tight">Security Protocol Advisory</h4>
+                <h4 class="text-xl font-bold text-white uppercase tracking-tight">Security Note</h4>
                 <p class="text-xs text-gray-500 mt-2 leading-relaxed">
-                    Transaction records are immutable once confirmed by the algo network. If you identify a synchronization error in your temporal logs, please initiate a support ticket immediately for manual verification.
+                    Transaction records are fixed once confirmed. If you identify a sync problem in your history, please contact support for a check.
                 </p>
             </div>
         </div>

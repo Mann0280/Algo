@@ -206,7 +206,7 @@
             }
         }
 
-        /* Institutional Components */
+        /* Core Components */
         .glass-panel {
             background: var(--card-glass);
             border: 1px solid var(--border-glass);
@@ -256,7 +256,7 @@
             box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
         }
 
-        /* Custom Scrollbar for Institutional Feel */
+        /* Custom Scrollbar for Professional Feel */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; }
@@ -385,7 +385,7 @@
             <div class="flex-1 hidden md:flex items-center justify-center">
                 <div class="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] shadow-[0_0_20px_rgba(147,51,234,0.05)]">
                     <div class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse shadow-[0_0_8px_#9333ea]"></div>
-                    <span class="text-[9px] font-black font-whiskey text-gray-400 uppercase tracking-[0.25em]">Algo Intelligence Active</span>
+                    <span class="text-[9px] font-black font-whiskey text-gray-400 uppercase tracking-[0.25em]">System Active</span>
                 </div>
             </div>
 

@@ -144,7 +144,7 @@
             // Immediate visual feedback to prevent double-click
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            btnText.textContent = 'Processing Protocol...';
+            btnText.textContent = 'Processing...';
         });
     });
 

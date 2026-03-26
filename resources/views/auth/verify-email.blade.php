@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Verify Your Protocol')
+@section('title', 'Check Your Identity')
 
 @section('content')
 <div class="min-h-screen flex items-center justify-center py-20 px-4 relative overflow-hidden bg-[#05020a]">
@@ -20,25 +20,25 @@
                 </div>
                 
                 <h1 class="font-whiskey text-3xl font-black text-white italic uppercase tracking-tighter mb-4">
-                    Identity <span class="text-purple-500 text-glow">Verification</span>
+                    Confirm <span class="text-purple-500 text-glow">Identity</span>
                 </h1>
                 
                 <div class="flex items-center gap-2 mb-6">
                     <span class="w-8 h-[1px] bg-purple-500/50"></span>
-                    <span class="text-[9px] font-black font-whiskey text-purple-500 uppercase tracking-[0.4em]">Protocol Authorization Required</span>
+                    <span class="text-[9px] font-black font-whiskey text-purple-500 uppercase tracking-[0.4em]">Login Check Required</span>
                     <span class="w-8 h-[1px] bg-purple-500/50"></span>
                 </div>
             </div>
 
             <div class="space-y-6">
                 <p class="text-gray-400 text-sm leading-relaxed max-w-sm mx-auto">
-                    A celestial handshake has been sent to your transmission relay. Please verify your email address to initialize your algo connection.
+                    We've sent a link to your email. Please click it to confirm your account and start using the system.
                 </p>
 
                 @if (session('status') == 'verification-link-sent')
                     <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 animate-in zoom-in duration-300">
                         <p class="text-[10px] font-black font-whiskey text-emerald-400 uppercase tracking-widest">
-                            New transmission link deployed successfully!
+                            New link sent successfully!
                         </p>
                     </div>
                 @endif
@@ -49,21 +49,21 @@
                     @csrf
                     <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white font-black font-whiskey uppercase tracking-[0.3em] text-[10px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-purple-900/40 italic flex items-center justify-center gap-3">
                         <i data-lucide="send" class="w-4 h-4"></i>
-                        Resend Verification Protocol
+                        Resend Link
                     </button>
                 </form>
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="text-[9px] font-black font-whiskey text-gray-600 hover:text-white uppercase tracking-[0.4em] transition-all">
-                        Terminate Session
+                        Logout
                     </button>
                 </form>
             </div>
             
             <div class="pt-6 border-t border-white/5">
                 <p class="text-[8px] font-black font-whiskey text-gray-700 uppercase tracking-[0.3em]">
-                    Algorithmic Security Layer v4.0 Active
+                    Smart Security Layer v4.0 Active
                 </p>
             </div>
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'WALLET CONFIGURATION')
+@section('title', 'WALLET SETTINGS')
 
 @section('content')
 <div class="space-y-12 max-w-[1200px] mx-auto pb-20 animate-in fade-in slide-in-from-bottom-6 duration-1000">
@@ -9,18 +9,18 @@
         <div>
             <div class="flex items-center gap-2 mb-3">
                 <span class="w-8 h-[1px] bg-purple-500"></span>
-                <span class="text-[10px] font-black font-whiskey text-purple-500 uppercase tracking-[0.3em]">WALLET CONFIGURATION</span>
+                <span class="text-[10px] font-black font-whiskey text-purple-500 uppercase tracking-[0.3em]">WALLET SETTINGS</span>
             </div>
             <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
-                FINANCIAL <span class="text-purple-500 text-glow">RECEPTION</span>
+                PAYMENT <span class="text-purple-500 text-glow">SETTINGS</span>
             </h1>
-            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Configure payment receive and withdrawal protocols.</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-[0.2em]">Configure payment receive and withdrawal systems.</p>
         </div>
         
         <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
             <div class="flex items-center gap-2.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]"></span>
-                <span class="text-[10px] font-black font-whiskey text-emerald-400 uppercase tracking-widest text-glow-sm">ENCRYPTION ACTIVE</span>
+                <span class="text-[10px] font-black font-whiskey text-emerald-400 uppercase tracking-widest text-glow-sm">SECURE</span>
             </div>
         </div>
     </div>
@@ -43,8 +43,8 @@
                                 <i data-lucide="credit-card" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h2 class="font-whiskey text-sm font-black tracking-[0.2em] uppercase text-white leading-none">Receiver Credentials</h2>
-                                <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Primary payment reception parameters</p>
+                                <h2 class="font-whiskey text-sm font-black tracking-[0.2em] uppercase text-white leading-none">Payment Info</h2>
+                                <p class="text-[9px] font-bold text-gray-600 uppercase tracking-widest mt-2 leading-none">Payment settings</p>
                             </div>
                         </div>
                     </div>
@@ -140,11 +140,11 @@
                         <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h4 class="text-[10px] font-black font-whiskey text-amber-500 uppercase tracking-widest">Global Override</h4>
+                        <h4 class="text-[10px] font-black font-whiskey text-amber-500 uppercase tracking-widest">Total Change</h4>
                     </div>
                 </div>
                 <p class="text-[9px] font-bold text-amber-500/60 uppercase tracking-[0.2em] leading-relaxed italic">
-                    Modifying these protocols will simultaneously broadcast new gateway credentials to every active node and package across the platform. Verification is mandatory.
+                    Changing these settings will update payments for everyone on the site. Please check carefully.
                 </p>
             </div>
         </div>

@@ -9,12 +9,12 @@
         <div>
             <div class="flex items-center gap-2 mb-3">
                 <span class="w-8 h-[1px] bg-purple-500"></span>
-                <span class="text-[10px] font-semibold font-whiskey text-purple-500 uppercase tracking-widest">ANALYTICS ENGINE</span>
+                <span class="text-[10px] font-semibold font-whiskey text-purple-500 uppercase tracking-widest">ANALYTICS</span>
             </div>
             <h1 class="text-4xl font-black font-whiskey italic uppercase tracking-tighter text-white">
                 PLATFORM <span class="text-purple-500 text-glow">ANALYTICS</span>
             </h1>
-            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">Visualizing Growth Metrics and System Performance</p>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">View Growth and Performance</p>
         </div>
         
         <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
@@ -34,7 +34,7 @@
             </div>
             <div class="flex justify-between items-start">
                 <div>
-                    <h3 class="font-whiskey text-xs font-semibold tracking-widest uppercase text-gray-400">User Population</h3>
+                    <h3 class="font-whiskey text-xs font-semibold tracking-widest uppercase text-gray-400">Total Users</h3>
                     <div class="text-4xl font-black font-whiskey text-white italic mt-2">{{ $total_users }} <span class="text-purple-500 text-xl font-bold not-italic font-sans tracking-tight ml-1">+12%</span></div>
                 </div>
                 <div class="bg-purple-600/10 border border-purple-500/20 px-3 py-1.5 rounded-xl text-[9px] font-semibold font-whiskey text-purple-400 uppercase tracking-widest leading-none mt-1">Growth Stats</div>
@@ -112,7 +112,7 @@
             </div>
 
             <p class="text-[10px] font-medium text-gray-400 uppercase tracking-widest max-w-[200px] leading-relaxed">
-                Platform operational efficiency is currently stabilized within optimal performance parameters.
+                System is running normally.
             </p>
 
             <div class="w-full grid grid-cols-2 gap-4 mt-4">
@@ -177,7 +177,7 @@
             }
         };
 
-        // Node Growth Chart
+        // User Growth Chart
         new Chart(ctxGrowth, {
             type: 'line',
             data: {
@@ -193,7 +193,7 @@
             options: commonOptions
         });
 
-        // Signal Ingress Chart
+        // Signal Activity Chart
         new Chart(ctxSignal, {
             type: 'line',
             data: {
@@ -209,7 +209,7 @@
             options: commonOptions
         });
 
-        // Financial Trajectory Chart
+        // Revenue Chart
         new Chart(ctxRevenue, {
             type: 'line',
             data: {

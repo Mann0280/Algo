@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security Verification</title>
+    <title>Security Check</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #030008; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #030008; padding: 40px 20px;">
@@ -25,10 +25,10 @@
                     <!-- Body Content -->
                     <tr>
                         <td align="center" style="padding: 0 40px 40px 40px;">
-                            <h1 style="color: #ffffff; font-size: 24px; font-weight: 800; margin: 0 0 12px 0; letter-spacing: -0.02em;">Security Verification</h1>
+                            <h1 style="color: #ffffff; font-size: 24px; font-weight: 800; margin: 0 0 12px 0; letter-spacing: -0.02em;">Security Check</h1>
                             <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin: 0 0 32px 0;">
                                 Hello <strong>{{ $name }}</strong>,<br>
-                                Use the following code to verify your account session.
+                                Use the following code to confirm your login.
                             </p>
 
                             <!-- OTP Code -->
@@ -38,7 +38,7 @@
 
                             <!-- Meta Info -->
                             <p style="color: #64748b; font-size: 13px; margin: 0 0 8px 0;">
-                                This secure protocol expires in <span style="color: #a855f7; font-weight: bold;">1 minutes</span>.
+                                This code expires in <span style="color: #a855f7; font-weight: bold;">1 minutes</span>.
                             </p>
                             <p style="color: #475569; font-size: 12px; margin: 0;">
                                 If you did not request this code, please secure your account.

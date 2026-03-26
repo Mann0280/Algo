@@ -13,13 +13,13 @@
         <div class="text-center mb-16 fade-in-up">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-black font-whiskey uppercase tracking-[0.3em] mb-6">
                 <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping"></span>
-                Live Intelligence Feed
+                Live Signal Feed
             </div>
             <h1 class="text-4xl md:text-6xl font-black font-whiskey italic text-white mb-6 uppercase tracking-tighter">
                 FREE <span class="text-gradient">FOREX</span> SIGNALS
             </h1>
             <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-                Experience the precision of our algo engine. Below are the top-tier algorithmic signals synchronized with global market volatility.
+                Experience the precision of our trading system. Below are accurate signals based on current market movements.
             </p>
         </div>
 
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <!-- AI Telemetry Grid -->
+        <!-- System Status Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 fade-in-up" style="animation-delay: 0.15s">
             <div class="glass-panel p-6 rounded-2xl border border-white/5 relative overflow-hidden group shadow-lg">
                 <div class="absolute top-0 right-0 w-24 h-24 bg-purple-600/5 blur-2xl -z-10"></div>
@@ -59,7 +59,7 @@
             </div>
             <div class="glass-panel p-6 rounded-2xl border border-white/5 relative overflow-hidden group shadow-lg">
                 <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-600/5 blur-2xl -z-10"></div>
-                <div class="text-[9px] font-black font-whiskey text-slate-500 uppercase tracking-widest mb-3">Algo Sync</div>
+                <div class="text-[9px] font-black font-whiskey text-slate-500 uppercase tracking-widest mb-3">System Sync</div>
                 <div class="text-2xl font-black text-white font-whiskey tracking-tighter">99.8<span class="text-xs text-slate-500 ml-1">%</span></div>
             </div>
             <div class="glass-panel p-6 rounded-2xl border border-white/5 relative overflow-hidden group shadow-lg">
@@ -98,7 +98,7 @@
                 </div>
                 <div class="lg:px-12 py-8 lg:py-0 flex-1">
                     <div class="flex items-center justify-between mb-6">
-                        <span class="text-[10px] font-black font-whiskey text-slate-500 uppercase tracking-[0.2em]">Algo Momentum</span>
+                        <span class="text-[10px] font-black font-whiskey text-slate-500 uppercase tracking-[0.2em]">Market Momentum</span>
                         <span class="text-[10px] font-black font-whiskey text-purple-400 uppercase tracking-widest">+4.2%</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
@@ -136,7 +136,7 @@
                         <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
                     </div>
                 </div>
-                <span class="text-[10px] font-black font-whiskey text-white uppercase tracking-[0.4em] opacity-60">Advanced Achievement Stream</span>
+                <span class="text-[10px] font-black font-whiskey text-white uppercase tracking-[0.4em] opacity-60">Recent Wins Feed</span>
             </div>
             <div class="flex gap-6 animate-ticker-slow">
                 @php
@@ -145,7 +145,7 @@
                         ['pair' => 'GBP/JPY', 'pnl' => '+112.0', 'msg' => 'High Alpha Signal', 'color' => 'emerald'],
                         ['pair' => 'GOLD', 'pnl' => '+28.5', 'msg' => 'Entry Sequence Complete', 'color' => 'purple'],
                         ['pair' => 'BTC/USDT', 'pnl' => '+845.0', 'msg' => 'Breakout Confirmed', 'color' => 'emerald'],
-                        ['pair' => 'TCS/NSE', 'pnl' => '+4.2%', 'msg' => 'Algo Match Found', 'color' => 'blue'],
+                        ['pair' => 'TCS/NSE', 'pnl' => '+4.2%', 'msg' => 'Signal Found', 'color' => 'blue'],
                     ];
                 @endphp
                 @foreach (array_merge($successes, $successes, $successes) as $s)
@@ -173,14 +173,14 @@
                     </div>
                     <div>
                         <h2 class="text-2xl md:text-3xl font-black font-whiskey text-white mb-2 uppercase italic tracking-tight">
-                            UPGRADE TO <span class="text-white">ELITE</span> INTERFACE
+                            UPGRADE TO <span class="text-white">PREMIUM</span> ACCESS
                         </h2>
                         <div class="flex flex-wrap justify-center md:justify-start gap-4 text-slate-400">
                              <span class="flex items-center gap-1.5 text-[10px] font-bold font-whiskey uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full border border-white/5">
                                  <i data-lucide="zap" class="w-3 h-3 text-white"></i> 20+ Daily Signals
                              </span>
                              <span class="flex items-center gap-1.5 text-[10px] font-bold font-whiskey uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full border border-white/5">
-                                 <i data-lucide="activity" class="w-3 h-3 text-emerald-500"></i> Real-time Telemetry
+                                 <i data-lucide="activity" class="w-3 h-3 text-emerald-500"></i> Real-time Updates
                              </span>
                              <span class="flex items-center gap-1.5 text-[10px] font-bold font-whiskey uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full border border-white/5">
                                  <i data-lucide="shield" class="w-3 h-3 text-blue-500"></i> Priority Support
@@ -191,7 +191,7 @@
                 
                 <div class="flex items-center gap-6">
                     <a href="{{ url('/pricing') }}" class="inline-flex items-center gap-4 px-10 py-4 bg-white text-black font-black font-whiskey text-[10px] tracking-widest rounded-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-all uppercase italic shadow-[0_15px_35px_rgba(255,255,255,0.15)]">
-                        Unlock Elite Access <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        Unlock Premium Access <i data-lucide="chevron-right" class="w-4 h-4"></i>
                     </a>
                 </div>
             </div>

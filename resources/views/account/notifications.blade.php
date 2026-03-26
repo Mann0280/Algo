@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Algo Notifications | System Protocol')
+@section('title', 'Algo Notifications | System Updates')
 
 @section('content')
 <div class="px-6 py-8">
@@ -12,7 +12,7 @@
                 <h1 class="text-3xl font-black text-white tracking-tight uppercase leading-none mb-2">
                     Algo <span class="text-purple-500">Alert Stream</span>
                 </h1>
-                <p class="text-gray-400 text-sm font-medium">Real-time intelligence and system protocol synchronization.</p>
+                <p class="text-gray-400 text-sm font-medium">Real-time intelligence and system updates.</p>
             </div>
             
             @if($isPremium && $notifications->isNotEmpty())
@@ -31,8 +31,8 @@
                     <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500 mb-4 border border-purple-500/20">
                         <i data-lucide="activity" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="text-white font-bold text-sm mb-1 uppercase tracking-wider">Stream Status</h3>
-                    <p class="text-gray-500 text-[11px] font-medium leading-relaxed mb-4">Algo node connection is active and monitoring signal patterns.</p>
+                    <h3 class="text-white font-bold text-sm mb-1 uppercase tracking-wider">Update Status</h3>
+                    <p class="text-gray-500 text-[11px] font-medium leading-relaxed mb-4">Connection is active and looking for signals.</p>
                     
                     <div class="space-y-3">
                         <div class="flex items-center justify-between text-[11px]">
@@ -55,8 +55,8 @@
                         <div class="flex gap-3">
                             <div class="w-1 h-8 rounded-full bg-emerald-500/40"></div>
                             <div>
-                                <p class="text-white text-[10px] font-bold">Protocol Sync</p>
-                                <p class="text-gray-500 text-[9px]">Authentication verified</p>
+                                <p class="text-white text-[10px] font-bold">System Check</p>
+                                <p class="text-gray-500 text-[9px]">Login successful</p>
                             </div>
                         </div>
                         <div class="flex gap-3">
@@ -80,10 +80,10 @@
                             <i data-lucide="lock" class="w-10 h-10"></i>
                         </div>
                     </div>
-                    <h3 class="text-3xl font-black text-white uppercase tracking-tight mb-4">Protocol Restricted</h3>
-                    <p class="text-gray-400 text-sm max-w-sm mx-auto mb-10 leading-relaxed font-medium uppercase tracking-tight">The Algo Notification Stream is exclusive to Premium Elite Nodes. Upgrade to initialize the high-frequency connection.</p>
+                    <h3 class="text-3xl font-black text-white uppercase tracking-tight mb-4">Access Limited</h3>
+                    <p class="text-gray-400 text-sm max-w-sm mx-auto mb-10 leading-relaxed font-medium uppercase tracking-tight">This section is for Premium members only. Upgrade to get live updates.</p>
                     <a href="{{ route('pricing') }}" class="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-amber-500 text-black font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-amber-500/20">
-                        <i data-lucide="zap" class="w-4 h-4"></i> Upgrade Algo Access
+                        <i data-lucide="zap" class="w-4 h-4"></i> Upgrade Now
                     </a>
                 </div>
                 @elseif($notifications->isEmpty())
@@ -149,14 +149,14 @@
         </div>
         <div class="p-10">
             <h2 id="detail-modal-title" class="text-xl font-black text-white uppercase tracking-tight mb-4">Notification Detail</h2>
-            <p id="detail-modal-time" class="text-[9px] font-black text-purple-500/50 uppercase tracking-[0.2em] mb-8">Synchronizing...</p>
+            <p id="detail-modal-time" class="text-[9px] font-black text-purple-500/50 uppercase tracking-[0.2em] mb-8">Loading...</p>
             <div class="prose prose-invert max-w-none">
-                <p id="detail-modal-message" class="text-gray-400 leading-[1.8] font-medium text-sm">Full protocol message will appear here.</p>
+                <p id="detail-modal-message" class="text-gray-400 leading-[1.8] font-medium text-sm">Full message will appear here.</p>
             </div>
         </div>
         <div class="p-8 border-t border-white/5 bg-white/[0.01] flex justify-end">
             <button onclick="closeNotificationDetail()" class="px-8 py-3.5 rounded-xl bg-purple-600 text-white font-black text-[10px] uppercase tracking-widest shadow-xl shadow-purple-600/20 hover:scale-105 active:scale-95 transition-all">
-                Dismiss Signal
+                Close
             </button>
         </div>
     </div>

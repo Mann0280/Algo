@@ -8,7 +8,7 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
             <h2 class="text-3xl font-bold text-white tracking-tighter uppercase">WITHDRAW <span class="text-purple-500">FUNDS</span></h2>
-            <p class="text-sm text-gray-500 mt-1 uppercase tracking-widest font-bold">Secure Payout Protocol</p>
+            <p class="text-sm text-gray-500 mt-1 uppercase tracking-widest font-bold">Secure Payout System</p>
         </div>
         <a href="{{ route('account.wallet') }}" class="flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-white transition-colors uppercase tracking-widest">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Wallet
@@ -29,7 +29,7 @@
                 <div class="px-6 py-3 bg-emerald-500/5 border border-emerald-500/10 rounded-2xl">
                     <div class="flex items-center gap-3">
                         <i data-lucide="shield-check" class="w-5 h-5 text-emerald-500"></i>
-                        <span class="text-[10px] font-bold text-emerald-400 uppercase">VERIFIED ASSETS</span>
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase">CONFIRMED BALANCE</span>
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                         Initiate Withdrawal
                     </button>
                     <p class="text-center text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-6">
-                        By initiating, you agree to our withdrawal protocol and security checks.
+                        By initiating, you agree to our withdrawal rules and security checks.
                     </p>
                 </div>
             </form>
@@ -112,7 +112,7 @@
         <!-- Sidebar Info -->
         <div class="space-y-6">
             <div class="glass-panel rounded-[2rem] p-8 border-white/[0.05] space-y-6">
-                <h4 class="text-xs font-bold text-white uppercase tracking-widest">Withdrawal Protocol</h4>
+                <h4 class="text-xs font-bold text-white uppercase tracking-widest">Withdrawal Rules</h4>
                 <div class="space-y-5">
                     <div class="flex gap-4">
                         <div class="shrink-0 w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">

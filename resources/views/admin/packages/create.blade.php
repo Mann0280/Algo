@@ -12,7 +12,7 @@
             <h1 class="text-3xl font-black font-whiskey italic uppercase tracking-tighter text-white">
                 INITIALIZE <span class="text-purple-500 text-glow">PACKAGE</span>
             </h1>
-            <p class="text-gray-400 text-sm font-medium mt-1 uppercase tracking-widest leading-none">Define new protocol parameters</p>
+            <p class="text-gray-400 text-sm font-medium mt-1 uppercase tracking-widest leading-none">Define new package settings</p>
         </div>
     </div>
 
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <button type="button" onclick="addTag()" class="px-6 py-2 rounded-xl border border-white/5 text-[8px] font-black font-whiskey text-gray-400 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest flex items-center gap-2 mt-2">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Append Protocol Tag
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Tag
                     </button>
                 </div>
 
@@ -48,15 +48,15 @@
                     <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Upgrade Button Color</label>
                     <div class="flex gap-4 items-center h-[58px]">
                         <input type="color" name="button_color" value="#fbbf24" class="w-12 h-12 bg-transparent border-none cursor-pointer">
-                        <span class="text-[10px] font-bold font-whiskey text-gray-500 uppercase tracking-widest">Select Visual Theme</span>
+                        <span class="text-[10px] font-bold font-whiskey text-gray-500 uppercase tracking-widest">Select Color</span>
                     </div>
                 </div>
                 <div class="space-y-2 md:col-span-2">
                     <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Payment Instructions</label>
-                    <textarea name="payment_info" rows="3" placeholder="Step-by-step payment protocol..." class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-medium text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700"></textarea>
+                    <textarea name="payment_info" rows="3" placeholder="Step-by-step payment instructions..." class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-medium text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700"></textarea>
                 </div>
                 <div class="space-y-2 md:col-span-2">
-                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Duration Protocol</label>
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Duration</label>
                     <div class="grid grid-cols-2 gap-4">
                         <input type="number" id="duration_val" required value="30" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-xs outline-none focus:border-purple-500/50 transition-all">
                         <select id="duration_unit" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-[10px] outline-none focus:border-purple-500/50 transition-all uppercase tracking-widest">
@@ -69,7 +69,7 @@
                     <p class="text-[9px] text-gray-500 mt-2 ml-1 uppercase tracking-widest">Calculated: <span id="days_preview" class="text-purple-400 font-black">30</span> Days</p>
                 </div>
                 <div class="space-y-2 md:col-span-2">
-                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Protocol Description</label>
+                    <label class="block text-[10px] font-black font-whiskey text-gray-500 uppercase tracking-widest ml-1">Description</label>
                     <input type="text" name="description" placeholder="Advanced algo analytics access" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold font-whiskey text-xs outline-none focus:border-purple-500/50 transition-all placeholder:text-gray-700">
                 </div>
             </div>
@@ -83,13 +83,13 @@
                     </div>
                 </div>
                 <button type="button" onclick="addFeature()" class="px-6 py-2.5 rounded-xl border border-white/5 text-[9px] font-black font-whiskey text-gray-500 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest flex items-center gap-2">
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Append Feature Row
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Feature
                 </button>
             </div>
         </div>
 
         <button type="submit" class="w-full py-5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-[2rem] text-white font-black font-whiskey uppercase tracking-[0.2em] text-xs hover:scale-[1.02] transition-all shadow-2xl shadow-purple-500/20 italic">
-            Finalize Initiation Sequence
+            Create Package
         </button>
     </form>
 </div>
