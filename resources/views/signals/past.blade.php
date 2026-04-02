@@ -3,9 +3,9 @@
 @section('title', 'Past Signals | Emperor Stock Predictor')
 
 @push('styles')
-<!-- Using custom emperor theme instead of tabulator_midnight -->
-<link href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator.min.css" rel="stylesheet">
 <style>
+    :root { color-scheme: dark; }
+    
     .glass-card {
         background: rgba(10, 5, 20, 0.6);
         backdrop-filter: blur(20px);
@@ -17,7 +17,7 @@
         border: 1px solid rgba(147, 51, 234, 0.2);
     }
     .input-cyber {
-        background: rgba(255, 255, 255, 0.03);
+        background: #160d2e;
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: white;
         border-radius: 0.75rem;
@@ -39,353 +39,163 @@
         padding-right: 2.5rem;
         cursor: pointer;
         width: 100% !important;
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
     select.input-cyber option {
-        background-color: #0d061a;
-        color: white;
-        padding: 12px !important;
-    }
-
-    /* Premium Status Badges (Match Live Tips) */
-    .status-badge {
-        padding: 4px 12px;
-        border-radius: 8px;
-        font-size: 9px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        position: relative;
-        overflow: hidden;
-        display: inline-block;
-    }
-    .status-win { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .status-loss { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-    .status-breakeven { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-
-    .glow-badge::after {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        background: inherit;
-        filter: blur(8px);
-        opacity: 0.4;
-        z-index: -1;
-    }
-
-    .tabulator {
-        width: 100% !important;
-        background-color: transparent !important;
-        background: transparent !important;
-        border: none !important;
-        font-family: inherit !important;
-    }
-    .tabulator-header {
-        position: sticky !important;
-        top: 0;
-        z-index: 10;
-        background-color: rgba(10, 11, 20, 0.95) !important;
-        font-family: 'Inter', sans-serif !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.1em !important;
-    }
-    .tabulator, .tabulator-table {
-        background-color: transparent !important;
-        background: transparent !important;
-    }
-    .tabulator-col {
-        background: transparent !important;
-        border: none !important;
-    }
-    .tabulator-row,
-    .tabulator-row.tabulator-row-even,
-    .tabulator-row.tabulator-row-odd,
-    .tabulator-row:nth-child(even),
-    .tabulator-row:nth-child(odd) {
-        background-color: transparent !important;
-        background: rgba(0,0,0,0) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-        min-height: auto !important;
-        padding: 0 !important;
-        transition: all 0.3s ease !important;
-    }
-    .tabulator-row.tabulator-row-even {
-        background-color: rgba(255, 255, 255, 0.01) !important;
-    }
-    .tabulator-row:hover {
-        background: rgba(140,90,255,0.08) !important;
-        background-color: rgba(140,90,255,0.08) !important;
-        transform: scale(1.002);
-    }
-    .tabulator-cell {
-        padding: 12px 16px !important;
-        border: none !important;
-        font-size: 12px !important;
-    }
-    .tabulator-footer {
-        background: transparent !important;
-        border: none !important;
-        padding: 32px 0 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 20px !important;
-        width: 100% !important;
-    }
-
-    /* Target the container that holds BOTH page-size and paginator */
-    .tabulator-footer > div:first-child {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 20px !important;
-        width: 100% !important;
-    }
-
-    /* Style the select box within footer */
-    .tabulator-footer select {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        color: white !important;
-        border-radius: 8px !important;
-        padding: 6px 32px 6px 12px !important;
-        font-family: 'Inter', sans-serif !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
-        outline: none !important;
-        transition: all 0.3s ease !important;
-        color-scheme: dark;
-        width: 100px !important;
-        cursor: pointer !important;
-        appearance: none !important;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
-        background-repeat: no-repeat !important;
-        background-position: right 10px center !important;
-    }
-
-    .tabulator-footer select option {
         background-color: #0d061a !important;
         color: white !important;
-        padding: 10px !important;
+        padding: 12px;
     }
 
-    .tabulator-footer select:focus {
-        border-color: #9333ea !important;
-        box-shadow: 0 0 10px rgba(147, 51, 234, 0.2) !important;
+    /* Global Select Style for Dark Mode */
+    select {
+        color-scheme: dark;
+        background-color: #160d2e !important;
     }
-
-    /* Target the Page Size label */
-    .tabulator-page-size {
-        color: #64748b !important;
-        font-size: 10px !important;
-        font-weight: 800 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.1em !important;
-        margin-right: 8px !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    .tabulator-page {
-        background: rgba(255, 255, 255, 0.02) !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        color: #94a3b8 !important;
-        min-width: 36px !important;
-        height: 36px !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        border-radius: 10px !important;
-        margin: 0 3px !important;
-        font-family: 'Inter', sans-serif !important;
-        font-size: 11px !important;
-        font-weight: 800 !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-
-    @media (max-width: 640px) {
-        .tabulator-footer {
-            padding: 30px 10px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            gap: 20px !important;
-        }
-
-        /* Group Page Size and Pagination sections to stack them vertically */
-        .tabulator-footer .tabulator-page-size,
-        .tabulator-footer .tabulator-paginator {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            gap: 12px !important;
-            width: 100% !important;
-            margin: 0 !important;
-            float: none !important;
-        }
-
-        /* Keep the internal navigation elements (Prev, Numbers, Next) HORIZONTAL */
-        .tabulator-footer .tabulator-pages {
-            display: flex !important;
-            flex-direction: row !important;
-            flex-wrap: wrap !important;
-            justify-content: center !important;
-            gap: 4px !important;
-            width: auto !important;
-            margin: 0 auto !important;
-        }
-
-        /* Ensure PREV, Numbers, and NEXT stay in a HORIZONTAL ROW */
-        .tabulator-paginator {
-            flex-direction: row !important;
-            flex-wrap: wrap !important;
-            justify-content: center !important;
-            gap: 6px !important;
-        }
-
-        .tabulator-page {
-            min-width: 32px !important;
-            height: 32px !important;
-            margin: 2px !important;
-            font-size: 10px !important;
-            display: inline-flex !important;
-            padding: 0 8px !important;
-        }
-        
-        .tabulator-page-size {
-            margin-bottom: 5px !important;
-        }
-
-        /* Hide First/Last on mobile to save space */
-        .tabulator-page[data-page="first"],
-        .tabulator-page[data-page="last"] {
-            display: none !important;
-        }
-        
-        .tabulator-page-counter {
-            display: none !important;
-        }
-    }
-
-    .tabulator-page:hover:not(.disabled) {
-        background: rgba(147, 51, 234, 0.1) !important;
+    option {
+        background-color: #160d2e !important;
         color: white !important;
-        border-color: rgba(147, 51, 234, 0.3) !important;
-        transform: translateY(-2px) !important;
     }
 
-    .tabulator-page.active {
-        background: linear-gradient(135deg, #9333ea, #6366f1) !important;
-        color: white !important;
-        border-color: transparent !important;
-        box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3) !important;
+    .mini-select {
+        appearance: none;
+        background-color: rgba(255, 255, 255, 0.03);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.5rem center;
+        background-size: 0.7rem;
+        padding: 0.25rem 1.75rem 0.25rem 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.5rem;
+        color: white;
+        font-weight: 700;
+        font-size: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .mini-select:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-color: rgba(147, 51, 234, 0.3);
+    }
+    .mini-select:focus {
+        outline: none;
+        border-color: #9333ea;
+        box-shadow: 0 0 10px rgba(147, 51, 234, 0.2);
     }
 
-    .tabulator-page.disabled {
-        opacity: 0.3 !important;
-        cursor: not-allowed !important;
+    /* Premium Status Badges */
+    .status-badge {
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        display: inline-block;
+    }
+    .status-win { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+    .status-loss { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+    .status-breakeven { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
+
+    /* Custom Table Styles */
+    .custom-table-container {
+        overflow-x: auto;
+        border-radius: 1.5rem;
+        background: rgba(10, 5, 20, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .custom-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 13px;
+    }
+    .custom-table th {
+        background: rgba(15, 10, 30, 0.8);
+        padding: 16px;
+        text-align: left;
+        color: #94a3b8;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        white-space: nowrap;
+    }
+    .custom-table td {
+        padding: 14px 16px;
+        color: #e2e8f0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        transition: all 0.2s ease;
+    }
+    .custom-table tr:last-child td {
+        border-bottom: none;
+    }
+    .custom-table tr:hover td {
+        background: rgba(147, 51, 234, 0.05);
     }
 
-    /* Hide the default buttons if we want just numbers, but keeping them for now */
-    .tabulator-page[data-page="first"],
-    .tabulator-page[data-page="prev"],
-    .tabulator-page[data-page="next"],
-    .tabulator-page[data-page="last"] {
-        padding: 0 12px !important;
-        font-size: 9px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
+    /* Modal Styles */
+    .modal-backdrop {
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(8px);
+        transition: opacity 0.3s ease;
+    }
+    .modal-content {
+        background: #0d061a;
+        border: 1px solid rgba(147, 51, 234, 0.3);
+        box-shadow: 0 0 40px rgba(147, 51, 234, 0.2);
+        transform: translateY(20px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #details-modal.modal-open .modal-content {
+        transform: translateY(0);
     }
 
-    @media (max-width: 480px) {
-        .tabulator-page[data-page="prev"],
-        .tabulator-page[data-page="next"] {
-            padding: 0 8px !important;
-            font-size: 8px !important;
-        }
-    }
-    
-    /* Strict Tabulator Background Override */
-    div.tabulator-row {
-        background-color: transparent !important;
-    }
-    div.tabulator-row.tabulator-row-even {
-        background-color: rgba(255, 255, 255, 0.01) !important;
-    }
-
-    /* Custom Sleek Scrollbars */
-    ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-        background: rgba(10, 5, 20, 0.5);
-    }
-    ::-webkit-scrollbar-thumb {
-        background: rgba(147, 51, 234, 0.3);
-        border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: rgba(147, 51, 234, 0.6);
-    }
-    .tabulator .tabulator-tableholder::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-    }
-
-    /* Laravel Pagination Cyber Styles */
-    .pagination-cyber nav {
-        background: transparent;
-    }
-    .pagination-cyber .relative.inline-flex.items-center {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 4px;
-        gap: 4px;
-    }
-    .pagination-cyber a, .pagination-cyber span[aria-current="page"] > span {
+    /* Pagination Styles */
+    .page-btn {
         min-width: 36px;
         height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
-        font-size: 11px;
-        font-weight: 800;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid transparent;
-    }
-    .pagination-cyber a {
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         color: #94a3b8;
-        background: transparent;
+        font-weight: 700;
+        font-size: 11px;
+        transition: all 0.2s ease;
     }
-    .pagination-cyber a:hover {
+    .page-btn:hover:not(:disabled) {
         background: rgba(147, 51, 234, 0.1);
-        color: #c084fc;
-        border-color: rgba(147, 51, 234, 0.2);
-    }
-    .pagination-cyber span[aria-current="page"] > span {
-        background: linear-gradient(135deg, #7c3aed, #4f46e5);
         color: white;
-        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        border-color: rgba(147, 51, 234, 0.3);
     }
-    .pagination-cyber .hidden.flex-1.flex.items-center.justify-between {
-        display: flex !important;
-        flex-direction: column;
-        gap: 16px;
-        align-items: center;
+    .page-btn.active {
+        background: linear-gradient(135deg, #9333ea, #6366f1);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
     }
-    @media (min-width: 640px) {
-        .pagination-cyber .hidden.flex-1.flex.items-center.justify-between {
-            flex-direction: row;
-        }
+    .page-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    /* Custom Scrollbar */
+    .custom-table-container::-webkit-scrollbar {
+        height: 6px;
+    }
+    .custom-table-container::-webkit-scrollbar-track {
+        background: rgba(10, 5, 20, 0.5);
+    }
+    .custom-table-container::-webkit-scrollbar-thumb {
+        background: rgba(147, 51, 234, 0.3);
+        border-radius: 4px;
+    }
+
+    @media (max-width: 767px) {
+        .desktop-only { display: none !important; }
     }
 </style>
 @endpush
@@ -443,7 +253,9 @@
         <div id="stat-pnl-card" class="stats-card p-4 rounded-3xl relative overflow-hidden group" style="border-color: {{ ($totalPnl ?? 0) >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)' }}">
             <p id="stat-pnl-label" class="text-[10px] font-bold uppercase tracking-widest mb-1 relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">TOTAL PNL</p>
             <h3 id="stat-total-pnl-top" class="text-xl font-bold relative z-10" style="color: {{ ($totalPnl ?? 0) >= 0 ? '#34d399' : '#fb7185' }}">
-                {{ ($totalPnl ?? 0) >= 0 ? '+' : '' }}₹{{ number_format($totalPnl ?? 0, 0) }}
+                <span class="inline-flex items-center gap-[1px]">
+                    {{ ($totalPnl ?? 0) >= 0 ? '+' : '-' }}₹{{ number_format(abs($totalPnl ?? 0), 0) }}
+                </span>
             </h3>
         </div>
     </div>
@@ -502,7 +314,7 @@
                 </div>
                 <div class="space-y-2">
                     <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Type</label>
-                    <select name="signal_type" class="input-cyber w-full">
+                    <select name="signal_type" class="input-cyber w-full" style="color-scheme: dark;">
                         <option value="">ALL TYPES</option>
                         <option value="BUY" {{ request('signal_type') == 'BUY' ? 'selected' : '' }}>BUY</option>
                         <option value="SELL" {{ request('signal_type') == 'SELL' ? 'selected' : '' }}>SELL</option>
@@ -510,7 +322,7 @@
                 </div>
                 <div class="space-y-2">
                     <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Signal Result</label>
-                    <select name="result" class="input-cyber w-full">
+                    <select name="result" class="input-cyber w-full" style="color-scheme: dark;">
                         <option value="">ALL RESULTS</option>
                         <option value="WIN" {{ request('result') == 'WIN' ? 'selected' : '' }}>WIN</option>
                         <option value="LOSS" {{ request('result') == 'LOSS' ? 'selected' : '' }}>LOSS</option>
@@ -531,34 +343,147 @@
         </form>
     </div>
 
-    <!-- Tabulator Table Section -->
-    <div class="max-w-7xl mx-auto px-4 md:px-0">
-        <div class="flex items-center justify-between mb-6">
-            <div id="data-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hidden">
+    <!-- Custom Table Section -->
+    <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-6 px-4 md:px-0">
+            <div id="data-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span id="data-status-text" class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">History Update Successful</span>
+                <span id="data-status-text" class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Loading Records...</span>
             </div>
-            <div class="flex items-center gap-2 text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] hidden md:flex">
-                <i data-lucide="info" class="w-3 h-3"></i> Use scroll for more data
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Show</span>
+                    <select id="page-size-selector" class="mini-select">
+                        <option value="10">10</option>
+                        <option value="20" selected>20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
             </div>
         </div>
 
-        <div class="table-wrapper">
-            <div id="signals-table" class="whiskey-table"></div>
+        <div class="custom-table-container">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Stock</th>
+                        <th class="desktop-only text-center">Type</th>
+                        <th class="desktop-only text-right">Entry</th>
+                        <th class="desktop-only text-right">Exit</th>
+                        <th class="desktop-only text-right">Target</th>
+                        <th class="desktop-only text-right">Stop Loss</th>
+                        <th class="desktop-only text-right">Breakeven</th>
+                        <th class="desktop-only text-center">Date</th>
+                        <th class="text-center">Result</th>
+                        <th class="desktop-only text-right">Points</th>
+                        <th class="desktop-only text-center">Qty</th>
+                        <th class="desktop-only text-right">PNL</th>
+                        <th class="text-center md:hidden">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="signals-table-body">
+                    <!-- Rows rendered via JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 mt-8 px-4 md:px-0 text-center md:text-left">
+            <div id="pagination-info" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                Showing 0 to 0 of 0 records
+            </div>
+            <div id="pagination-controls" class="flex items-center justify-center gap-2">
+                <!-- Buttons rendered via JS -->
+            </div>
         </div>
     </div>
 </main>
+
+<!-- Mobile Details Modal -->
+<div id="details-modal" class="fixed inset-0 z-[100] flex items-center justify-center px-6 hidden opacity-0 transition-all duration-300">
+    <div class="absolute inset-0 modal-backdrop" onclick="closeModal()"></div>
+    <div class="modal-content w-full max-w-lg rounded-[2.5rem] p-8 relative z-10 overflow-hidden">
+        <div class="flex items-start justify-between mb-8">
+            <div>
+                <h2 id="modal-stock-name" class="text-3xl font-professional text-white tracking-tighter uppercase">STOCK NAME</h2>
+                <p id="modal-date" class="text-gray-400 text-[10px] font-bold uppercase tracking-widest mt-1">DATE & TIME</p>
+            </div>
+            <button onclick="closeModal()" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-y-6 gap-x-8">
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Signal Type</p>
+                <p id="modal-type" class="text-sm font-black uppercase tracking-wider">BUY</p>
+            </div>
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Result Status</p>
+                <div id="modal-result-container"></div>
+            </div>
+            
+            <div class="col-span-2 h-px bg-white/5 my-2"></div>
+
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Entry Price</p>
+                <p id="modal-entry" class="text-lg font-bold text-white tracking-tight">₹0.00</p>
+            </div>
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Exit Price</p>
+                <p id="modal-exit" class="text-lg font-bold text-gray-400 tracking-tight">₹0.00</p>
+            </div>
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Target Price</p>
+                <p id="modal-target" class="text-lg font-bold text-emerald-500 tracking-tight">₹0.00</p>
+            </div>
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Stop Loss</p>
+                <p id="modal-sl" class="text-lg font-bold text-rose-500 tracking-tight">₹0.00</p>
+            </div>
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Breakeven</p>
+                <p id="modal-breakeven" class="text-lg font-bold text-blue-500 tracking-tight">₹0.00</p>
+            </div>
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Points (P/L)</p>
+                <p id="modal-points" class="text-lg font-bold tracking-tight">0.00</p>
+            </div>
+
+            <div class="col-span-2 h-px bg-white/5 my-2"></div>
+
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Calculated Qty</p>
+                <p id="modal-qty" class="text-xl font-black text-white">0</p>
+            </div>
+            <div class="space-y-1">
+                <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Net Profit/Loss</p>
+                <p id="modal-pnl" class="text-xl font-black">₹0.00</p>
+            </div>
+        </div>
+
+        <div class="mt-10">
+            <button onclick="closeModal()" class="w-full py-4 bg-white/5 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
+                Close Details
+            </button>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
 <script>
+    // State Management
+    let signalsData = [];
+    let currentPage = 1;
+    let pageSize = 20;
+    let currentModalId = null;
+
     window.addEventListener('load', function() {
-        // Initialize Lucide Icons
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
         @php
             $defaultCapital = 100000;
             $tableData = $signals->map(function($s) use ($defaultCapital) {
@@ -581,204 +506,250 @@
             });
         @endphp
         
-        const rawData = @json($tableData);
-
-        // UI Update for record count
-        const statusBadge = document.getElementById('data-status-badge');
-        const statusText = document.getElementById('data-status-text');
-        if (statusBadge && statusText) {
-            statusBadge.classList.remove('hidden');
-            statusText.textContent = `${rawData.length} HISTORICAL RECORDS`;
-        }
-
-        try {
-            window.signalsTable = new Tabulator("#signals-table", {
-                data: rawData,
-                layout: "fitDataStretch",
-                responsiveLayout: false,
-                pagination: "local",
-                paginationSize: 20,
-                paginationSizeSelector: [10, 20, 50, 100],
-                placeholder: "<div class='text-gray-600 py-16 text-[10px] font-bold uppercase tracking-[0.4em]'>NO HISTORY FOUND</div>",
-                resizableColumns: true,
-                columnHeaderVertAlign: "bottom",
-                columns: [
-                    {title: "Stock", field: "stock", hozAlign: "left", minWidth: 120, formatter: function(cell){
-                        return "<span style='font-weight:bold; color:white;'>" + cell.getValue() + "</span>";
-                    }},
-                    {title: "Type", field: "type", hozAlign: "center", minWidth: 90, formatter: function(cell){
-                        let val = cell.getValue().toUpperCase();
-                        let color = val === 'BUY' ? '#10b981' : (val === 'SELL' ? '#ef4444' : '#94a3b8');
-                        return `<span style="color:${color}; font-weight:900; font-size:10px;">${val}</span>`;
-                    }},
-                    {title: "Entry", field: "entry", hozAlign: "right", minWidth: 110, formatter: function(cell){
-                        return "<span style='color:white;'>₹" + cell.getValue().toLocaleString() + "</span>";
-                    }},
-                    {title: "Exit", field: "exit", hozAlign: "right", minWidth: 110, formatter: function(cell){
-                        return "<span style='color:#94a3b8'>₹" + (cell.getValue() || 0).toLocaleString() + "</span>";
-                    }},
-                    {title: "Target", field: "target", hozAlign: "right", minWidth: 110, formatter: function(cell){
-                        return "<span style='color:#10b981'>₹" + cell.getValue().toLocaleString() + "</span>";
-                    }},
-                    {title: "Stop Loss", field: "sl", hozAlign: "right", minWidth: 100, formatter: function(cell){
-                        return "<span style='color:#ef4444'>₹" + cell.getValue().toLocaleString() + "</span>";
-                    }},
-                    {title: "Breakeven", field: "breakeven", hozAlign: "right", minWidth: 100, formatter: function(cell){
-                        return "<span style='color:#3b82f6'>₹" + cell.getValue().toLocaleString() + "</span>";
-                    }},
-                    {title: "Date", field: "date", hozAlign: "center", minWidth: 160, formatter: function(cell) {
-                        let time = cell.getData().time || '';
-                        return `<div class="flex flex-col items-center">
-                            <span class="text-white font-bold">${cell.getValue()}</span>
-                            ${time ? `<span class="text-[9px] text-gray-500 font-medium">${time}</span>` : ''}
-                        </div>`;
-                    }},
-                    {title: "Result", field: "result", hozAlign: "center", minWidth: 110, formatter: function(cell){
-                        let val = (cell.getValue() || '').toUpperCase();
-                        let pnl = cell.getData().pnl;
-                        
-                        // Fallback logic if result is empty
-                        if (!val || val === '---') {
-                            if (pnl > 0) val = 'WIN';
-                            else if (pnl < 0) val = 'LOSS';
-                            else val = '---';
-                        }
-
-                        let cls = '';
-                        if (['WIN', 'TP HIT'].includes(val)) cls = 'status-win';
-                        else if (['LOSS', 'SL HIT'].includes(val)) cls = 'status-loss';
-                        else if (['BREAKEVEN', 'EOD'].includes(val)) cls = 'status-breakeven';
-                        
-                        return val !== '---' ? `<span class="status-badge ${cls}">${val}</span>` : '---';
-                    }},
-                    {title: "Points", field: "pnl", hozAlign: "right", minWidth: 100, formatter: function(cell){
-                        let val = cell.getValue();
-                        let color = val > 0 ? '#10b981' : (val < 0 ? '#ef4444' : '#94a3b8');
-                        return `<span style="color:${color}; font-weight:bold;">${val > 0 ? '+' : ''}${val}</span>`;
-                    }},
-                    {title: "Qty", field: "quantity", hozAlign: "center", minWidth: 110, formatter: function(cell){
-                        let val = cell.getValue();
-                        let display = val && val > 0 ? Math.floor(val).toLocaleString() : "---";
-                        return `<span style="color:white;">${display}</span>`;
-                    }},
-                    {title: "PNL", field: "sim_pnl", hozAlign: "right", minWidth: 120, formatter: function(cell){
-                        let value = cell.getValue();
-                        if(value > 0){
-                            return "<span style='color:#10b981; font-weight:bold;'>+₹" + value.toLocaleString() + "</span>";
-                        } else if(value < 0){
-                            return "<span style='color:#ef4444; font-weight:bold;'>-₹" + Math.abs(value).toLocaleString() + "</span>";
-                        } else {
-                            return "₹" + value;
-                        }
-                    }}
-                ],
-            });
-
-            // Bind Custom Page Size Selector
-            document.getElementById("page-size-selector").addEventListener("change", function() {
-                window.signalsTable.setPageSize(this.value);
-            });
-
-            // Initial simulation check
-            const capitalInput = document.getElementById("capital-input");
-            if (capitalInput) {
-                capitalInput.value = 100000;
-            }
-            calculateSignals(); // unified calculation function
-
-        } catch (err) {
-            console.error("Initialization Failure:", err);
-            document.getElementById('signals-table').innerHTML = `<div class='p-10 text-rose-500 font-bold text-[10px]'>SYSTEM OVERLOAD: ${err.message}</div>`;
-        }
-
-        // Store original stats state
-        const statPnlTop = document.getElementById('stat-total-pnl-top');
-        if (statPnlTop) {
-            window.originalPnlState = {
-                text: statPnlTop.textContent,
-                color: statPnlTop.style.color,
-                borderColor: document.getElementById('stat-pnl-card').style.borderColor,
-                labelColor: document.getElementById('stat-pnl-label').style.color
-            };
-        }
-
-        // Recalculate When Capital Changes
-        const capInput = document.getElementById("capital-input");
-        if (capInput) {
-            capInput.addEventListener("input", calculateSignals);
-            
-            // Sync with stat card
-            capInput.addEventListener('input', function() {
-                const val = parseFloat(this.value);
-                const statCapital = document.getElementById('stat-total-capital');
-                if (statCapital) {
-                    if (!isNaN(val) && val >= 0) {
-                        let display = '';
-                        if (val >= 1000) {
-                            display = `₹${(val / 1000).toFixed(1).replace(/\.0$/, '')}K`;
-                        } else {
-                            display = `₹${val}`;
-                        }
-                        statCapital.textContent = display;
-                    } else if (this.value === '') {
-                        statCapital.textContent = '₹0';
-                    }
-                }
-            });
-        }
+        signalsData = @json($tableData);
+        initializeUI();
+        calculateSignals();
     });
 
-    function calculateSignals() {
-        if(!window.signalsTable) return;
-        const capitalInput = document.getElementById('capital-input');
-        const capital = parseFloat(capitalInput.value) || 100000;
-        const effectiveCapital = capital * 5; // 5x Leverage as per user formula
+    function initializeUI() {
+        const statusText = document.getElementById('data-status-text');
+        if (statusText) statusText.textContent = `${signalsData.length} HISTORICAL RECORDS`;
 
-        let totalNetPnl = 0;
-        const tableData = window.signalsTable.getData();
-
-        tableData.forEach(row => {
-            const entry = parseFloat(row.entry);
-            const pnlPerUnit = parseFloat(row.pnl);
-
-            if (!entry || entry <= 0) {
-                row.quantity = 0;
-                row.sim_pnl = 0;
-                return;
-            }
-
-            // Formula: Quantity = (Capital * 5) / Entry
-            row.quantity = Math.floor(effectiveCapital / entry);
-            // Formula: PNL = Points * Quantity
-            row.sim_pnl = row.quantity * pnlPerUnit;
-            totalNetPnl += row.sim_pnl;
+        document.getElementById('page-size-selector').addEventListener('change', (e) => {
+            pageSize = parseInt(e.target.value);
+            currentPage = 1;
+            renderTable();
         });
 
-        window.signalsTable.replaceData(tableData);
-
-        // Update UI Summary Result (Simulator Container)
-        const summaryVal = document.getElementById('sim-total-pnl');
-        if (summaryVal) {
-            summaryVal.textContent = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-            summaryVal.className = `text-2xl font-bold ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-            document.getElementById('sim-result-container').classList.remove('hidden');
+        const capInput = document.getElementById("capital-input");
+        if (capInput) {
+            capInput.addEventListener("input", () => {
+                calculateSignals();
+                updateStatCards();
+            });
         }
+    }
 
-        // Update Top Stat Cards
-        const topPnl = document.getElementById('stat-total-pnl-top');
-        if (topPnl) {
-            const pnlColor = totalNetPnl >= 0 ? '#34d399' : '#fb7185';
-            topPnl.textContent = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 0})}`;
-            topPnl.style.color = pnlColor;
-            
-            const pnlCard = document.getElementById('stat-pnl-card');
-            const pnlLabel = document.getElementById('stat-pnl-label');
-            if (pnlCard) pnlCard.style.borderColor = totalNetPnl >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)';
-            if (pnlLabel) {
-                pnlLabel.textContent = 'TOTAL PNL';
-                pnlLabel.style.color = pnlColor;
+    function calculateSignals() {
+        const capitalInput = document.getElementById('capital-input');
+        const capital = parseFloat(capitalInput.value) || 100000;
+        const effectiveCapital = capital * 5;
+
+        signalsData.forEach(row => {
+            if (!row.entry || row.entry <= 0) {
+                row.quantity = 0;
+                row.sim_pnl = 0;
+            } else {
+                row.quantity = Math.floor(effectiveCapital / row.entry);
+                row.sim_pnl = row.quantity * row.pnl;
             }
+        });
+
+        renderTable();
+        if (currentModalId) updateModal(currentModalId);
+    }
+
+    function updateStatCards() {
+        const capitalInput = document.getElementById('capital-input');
+        const capital = parseFloat(capitalInput.value) || 100000;
+        
+        const statCapital = document.getElementById('stat-total-capital');
+        if (statCapital) {
+            statCapital.textContent = capital >= 1000 ? `₹${(capital / 1000).toFixed(1).replace(/\.0$/, '')}K` : `₹${capital}`;
         }
+
+        const totalNetPnl = signalsData.reduce((acc, row) => acc + (row.sim_pnl || 0), 0);
+        
+        const topPnl = document.getElementById('stat-total-pnl-top');
+        const pnlCard = document.getElementById('stat-pnl-card');
+        const pnlLabel = document.getElementById('stat-pnl-label');
+        const simResultVal = document.getElementById('sim-total-pnl');
+        const simResultContainer = document.getElementById('sim-result-container');
+
+        const pnlColor = totalNetPnl >= 0 ? '#34d399' : '#fb7185';
+        const formattedPnl = (totalNetPnl >= 0 ? '+' : '-') + `₹${Math.abs(totalNetPnl).toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+
+        if (topPnl) {
+            const pnlPrefix = totalNetPnl >= 0 ? '+' : '-';
+            const pnlValue = Math.abs(totalNetPnl).toLocaleString(undefined, {maximumFractionDigits: 0});
+            topPnl.innerHTML = `<span class="inline-flex items-center gap-[1px]">${pnlPrefix}₹${pnlValue}</span>`;
+            topPnl.style.color = pnlColor;
+        }
+        if (pnlCard) pnlCard.style.borderColor = totalNetPnl >= 0 ? 'rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.3)';
+        if (pnlLabel) {
+            pnlLabel.style.color = pnlColor;
+            pnlLabel.textContent = 'TOTAL PNL';
+        }
+        if (simResultVal) {
+            const simPrefix = totalNetPnl >= 0 ? '+' : '-';
+            const simValue = Math.abs(totalNetPnl).toLocaleString(undefined, {minimumFractionDigits: 2});
+            simResultVal.innerHTML = `<span class="inline-flex items-center gap-[1px]">${simPrefix}₹${simValue}</span>`;
+            simResultVal.className = `text-2xl font-bold ${totalNetPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+        }
+        if (simResultContainer) simResultContainer.classList.remove('hidden');
+    }
+
+    function renderTable() {
+        const start = (currentPage - 1) * pageSize;
+        const end = start + pageSize;
+        const paginatedData = signalsData.slice(start, end);
+        const tbody = document.getElementById('signals-table-body');
+        
+        tbody.innerHTML = paginatedData.length ? '' : `<tr><td colspan="13" class="text-center py-20 text-gray-500 font-bold uppercase tracking-[0.3em] text-[10px]">No Records Found</td></tr>`;
+
+        paginatedData.forEach(row => {
+            const resultBadge = getResultBadge(row.result, row.pnl);
+            const tr = document.createElement('tr');
+            
+            tr.innerHTML = `
+                <td class="font-bold text-white uppercase">${row.stock}</td>
+                <td class="desktop-only text-center font-black text-[10px]" style="color: ${row.type === 'BUY' ? '#10b981' : '#ef4444'}">${row.type}</td>
+                <td class="desktop-only text-right text-white">₹${row.entry.toLocaleString()}</td>
+                <td class="desktop-only text-right text-gray-500">₹${row.exit.toLocaleString()}</td>
+                <td class="desktop-only text-right text-emerald-500">₹${row.target.toLocaleString()}</td>
+                <td class="desktop-only text-right text-rose-500">₹${row.sl.toLocaleString()}</td>
+                <td class="desktop-only text-right text-blue-500">₹${row.breakeven.toLocaleString()}</td>
+                <td class="desktop-only text-center">
+                    <div class="flex flex-col">
+                        <span class="text-white font-bold text-[11px]">${row.date}</span>
+                        <span class="text-gray-500 text-[9px]">${row.time}</span>
+                    </div>
+                </td>
+                <td class="text-center">${resultBadge}</td>
+                <td class="desktop-only text-right font-bold" style="color: ${row.pnl > 0 ? '#10b981' : (row.pnl < 0 ? '#ef4444' : '#94a3b8')}">
+                    <span class="inline-flex items-center gap-[1px] whitespace-nowrap">
+                        ${row.pnl > 0 ? '+' : ''}${row.pnl}
+                    </span>
+                </td>
+                <td class="desktop-only text-center text-white">${Math.floor(row.quantity).toLocaleString()}</td>
+                <td class="desktop-only text-right font-bold" style="color: ${row.sim_pnl > 0 ? '#10b981' : (row.sim_pnl < 0 ? '#ef4444' : '#94a3b8')}">
+                    <span class="inline-flex items-center gap-[1px] whitespace-nowrap">
+                        ${row.sim_pnl >= 0 ? '+' : '-'}₹${Math.abs(row.sim_pnl).toLocaleString(undefined, {maximumFractionDigits: 0})}
+                    </span>
+                </td>
+                <td class="text-center md:hidden">
+                    <button onclick="openModal(${row.id})" class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-purple-400 font-bold text-[10px] uppercase tracking-wider hover:bg-white/10 active:scale-95 transition-all">
+                        Details
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        renderPaginationControls();
+    }
+
+    function renderPaginationControls() {
+        const totalPages = Math.ceil(signalsData.length / pageSize);
+        const controls = document.getElementById('pagination-controls');
+        const info = document.getElementById('pagination-info');
+        
+        info.textContent = `Showing ${(currentPage-1)*pageSize + 1} to ${Math.min(currentPage*pageSize, signalsData.length)} of ${signalsData.length} records`;
+        
+        controls.innerHTML = '';
+        
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'page-btn';
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.innerHTML = '<i data-lucide="chevron-left" class="w-4 h-4"></i>';
+        prevBtn.onclick = () => { currentPage--; renderTable(); };
+        controls.appendChild(prevBtn);
+
+        let startPage = Math.max(1, currentPage - 1);
+        let endPage = Math.min(totalPages, startPage + 2);
+        if (endPage - startPage < 2) startPage = Math.max(1, endPage - 2);
+
+        for (let i = startPage; i <= endPage; i++) {
+            const btn = document.createElement('button');
+            btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+            btn.textContent = i;
+            btn.onclick = () => { currentPage = i; renderTable(); };
+            controls.appendChild(btn);
+        }
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'page-btn';
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.innerHTML = '<i data-lucide="chevron-right" class="w-4 h-4"></i>';
+        nextBtn.onclick = () => { currentPage++; renderTable(); };
+        controls.appendChild(nextBtn);
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function getResultBadge(res, pnl) {
+        let val = (res || '').toUpperCase();
+        if (!val || val === '---') {
+            if (pnl > 0) val = 'WIN';
+            else if (pnl < 0) val = 'LOSS';
+            else return '<span class="text-gray-600 font-bold">---</span>';
+        }
+
+        let cls = '';
+        if (['WIN', 'TP HIT'].includes(val)) cls = 'status-win';
+        else if (['LOSS', 'SL HIT'].includes(val)) cls = 'status-loss';
+        else if (['BREAKEVEN', 'EOD'].includes(val)) cls = 'status-breakeven';
+        
+        return `<span class="status-badge ${cls}">${val}</span>`;
+    }
+
+    function openModal(id) {
+        currentModalId = id;
+        const row = signalsData.find(r => r.id === id);
+        if (!row) return;
+
+        updateModalData(row);
+        
+        const modal = document.getElementById('details-modal');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.add('opacity-100', 'modal-open');
+        }, 10);
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function updateModal(id) {
+        const row = signalsData.find(r => r.id === id);
+        if (row) updateModalData(row);
+    }
+
+    function updateModalData(row) {
+        document.getElementById('modal-stock-name').textContent = row.stock;
+        document.getElementById('modal-date').textContent = `${row.date} @ ${row.time}`;
+        
+        const typeEl = document.getElementById('modal-type');
+        typeEl.textContent = row.type;
+        typeEl.style.color = row.type === 'BUY' ? '#10b981' : '#ef4444';
+        
+        document.getElementById('modal-result-container').innerHTML = getResultBadge(row.result, row.pnl);
+        document.getElementById('modal-entry').textContent = `₹${row.entry.toLocaleString()}`;
+        document.getElementById('modal-exit').textContent = `₹${row.exit.toLocaleString()}`;
+        document.getElementById('modal-target').textContent = `₹${row.target.toLocaleString()}`;
+        document.getElementById('modal-sl').textContent = `₹${row.sl.toLocaleString()}`;
+        document.getElementById('modal-breakeven').textContent = `₹${row.breakeven.toLocaleString()}`;
+        
+        const pointsEl = document.getElementById('modal-points');
+        const pointsPrefix = row.pnl > 0 ? '+' : '';
+        pointsEl.innerHTML = `<span class="inline-flex items-center gap-[1px]">${pointsPrefix}${row.pnl}</span>`;
+        pointsEl.style.color = row.pnl > 0 ? '#10b981' : (row.pnl < 0 ? '#ef4444' : '#94a3b8');
+        
+        document.getElementById('modal-qty').textContent = Math.floor(row.quantity).toLocaleString();
+        
+        const pnlEl = document.getElementById('modal-pnl');
+        const pnlPrefix = row.sim_pnl >= 0 ? '+' : '-';
+        const pnlValue = Math.abs(row.sim_pnl).toLocaleString(undefined, {maximumFractionDigits: 0});
+        pnlEl.innerHTML = `<span class="inline-flex items-center gap-[1px]">${pnlPrefix}₹${pnlValue}</span>`;
+        pnlEl.className = `text-xl font-black ${row.sim_pnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('details-modal');
+        modal.classList.remove('opacity-100', 'modal-open');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            currentModalId = null;
+        }, 300);
+        document.body.classList.remove('overflow-hidden');
     }
 
     function calculateSimulation() {
@@ -786,20 +757,11 @@
     }
 
     function resetSimulation() {
-        if(!window.signalsTable) return;
         document.getElementById('sim-result-container').classList.add('hidden');
         const capInput = document.getElementById('capital-input');
-        if (capInput) capInput.value = '';
-        document.getElementById('stat-total-capital').textContent = '₹0';
-        window.signalsTable.updateData(window.signalsTable.getData().map(row => ({ ...row, quantity: 0, sim_pnl: row.pnl })));
-        
-        if (window.originalPnlState) {
-            const topPnl = document.getElementById('stat-total-pnl-top');
-            topPnl.textContent = window.originalPnlState.text;
-            topPnl.style.color = window.originalPnlState.color;
-            document.getElementById('stat-pnl-card').style.borderColor = window.originalPnlState.borderColor;
-            document.getElementById('stat-pnl-label').style.color = window.originalPnlState.labelColor;
-        }
+        if (capInput) capInput.value = '100000';
+        calculateSignals();
+        updateStatCards();
     }
 </script>
 @endpush
