@@ -81,14 +81,9 @@
     }
 
     @media (max-width: 800px) {
-        #table-container {
-            display: none;
-        }
+        .desktop-only { display: none !important; }
         #mobile-cards-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-            padding: 4px;
+            display: none;
         }
     }
 
@@ -291,14 +286,15 @@
             <table class="cyber-table">
                 <thead>
                     <tr>
-                        <th style="width: 25%">Stock</th>
-                        <th style="width: 10%; text-align: center;">Signal</th>
-                        <th style="width: 12%; text-align: right;">Entry</th>
-                        <th style="width: 12%; text-align: right;">Stop Loss</th>
-                        <th style="width: 12%; text-align: right;">Target</th>
-                        <th style="width: 10%; text-align: right;">Breakeven</th>
-                        <th style="width: 10%; text-align: center;">Date</th>
-                        <th style="width: 9%; text-align: center;">Time</th>
+                        <th>Stock</th>
+                        <th class="desktop-only" style="text-align: center;">Signal</th>
+                        <th class="desktop-only" style="text-align: right;">Entry</th>
+                        <th class="desktop-only" style="text-align: right;">Stop Loss</th>
+                        <th class="desktop-only" style="text-align: right;">Target</th>
+                        <th class="desktop-only" style="text-align: right;">Breakeven</th>
+                        <th style="text-align: center;">Date</th>
+                        <th class="desktop-only" style="text-align: center;">Result</th>
+                        <th style="text-align: center;">Action</th>
                     </tr>
                 </thead>
                 <tbody id="signals-tbody">
@@ -308,9 +304,61 @@
         </div>
     </div>
 
-    {{-- Mobile Cards Container --}}
-    <div id="mobile-cards-container">
+    {{-- Mobile Cards Container (HIDDEN - Using Table) --}}
+    <div id="mobile-cards-container" class="hidden">
         {{-- Dynamic Cards --}}
+    </div>
+
+    <!-- Mobile Details Modal -->
+    <div id="details-modal" class="fixed inset-0 z-[100] flex items-center justify-center px-6 hidden opacity-0 transition-all duration-300">
+        <div class="absolute inset-0 modal-backdrop bg-black/80 backdrop-blur-md" onclick="closeModal()"></div>
+        <div class="modal-content w-full max-w-lg rounded-[2.5rem] p-8 relative z-10 overflow-hidden bg-[#0d061a] border border-purple-500/30 shadow-2xl">
+            <div class="flex items-start justify-between mb-8">
+                <div>
+                    <h2 id="modal-stock-name" class="text-3xl font-professional text-white tracking-tighter uppercase">STOCK NAME</h2>
+                    <p id="modal-date" class="text-gray-400 text-[10px] font-bold uppercase tracking-widest mt-1">DATE & TIME</p>
+                </div>
+                <button onclick="closeModal()" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-y-6 gap-x-8">
+                <div class="space-y-1">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Signal Type</p>
+                    <p id="modal-type" class="text-sm font-black uppercase tracking-wider">BUY</p>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Current Status</p>
+                    <div id="modal-status-container"></div>
+                </div>
+                
+                <div class="col-span-2 h-px bg-white/5 my-2"></div>
+
+                <div class="space-y-1">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Entry Price</p>
+                    <p id="modal-entry" class="text-lg font-bold text-white tracking-tight">₹0.00</p>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Stop Loss</p>
+                    <p id="modal-sl" class="text-lg font-bold text-rose-500 tracking-tight">₹0.00</p>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Target Price (T1)</p>
+                    <p id="modal-target" class="text-lg font-bold text-emerald-500 tracking-tight">₹0.00</p>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Breakeven (BE)</p>
+                    <p id="modal-breakeven" class="text-lg font-bold text-blue-500 tracking-tight">₹0.00</p>
+                </div>
+            </div>
+
+            <div class="mt-10">
+                <button onclick="closeModal()" class="w-full py-4 bg-white/5 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
+                    Close Details
+                </button>
+            </div>
+        </div>
     </div>
 
     {{-- Video Modal --}}
@@ -327,6 +375,54 @@
 
 @push('scripts')
 <script>
+    let currentSignals = [];
+
+    function openModal(id) {
+        const item = currentSignals.find(s => s.id == id);
+        if(!item) return;
+
+        const isBuy = (item.signal_type || '').toUpperCase() === 'BUY';
+        const signalColor = isBuy ? '#34d399' : '#f87171';
+        
+        const status = (item.status || 'LIVE').toUpperCase().replace(/\s+/g, '_');
+        const statusMap = {
+            'LIVE': { bg: 'rgba(59,130,246,0.1)', clr: '#60a5fa', bdr: 'rgba(59,130,246,0.2)', label: 'LIVE' },
+            'RUNNING': { bg: 'rgba(16,185,129,0.1)', clr: '#34d399', bdr: 'rgba(16,185,129,0.2)', label: 'RUNNING' },
+            'HIT_TARGET': { bg: 'rgba(234,179,8,0.1)', clr: '#fbbf24', bdr: 'rgba(234,179,8,0.2)', label: 'HIT TARGET' },
+            'SL_HIT': { bg: 'rgba(239,68,68,0.1)', clr: '#f87171', bdr: 'rgba(239,68,68,0.2)', label: 'SL HIT' },
+            'TP_HIT': { bg: 'rgba(168,85,247,0.1)', clr: '#a855f7', bdr: 'rgba(168,85,247,0.2)', label: 'TP HIT' },
+            'EOD': { bg: 'rgba(148,163,184,0.1)', clr: '#94a3b8', bdr: 'rgba(148,163,184,0.2)', label: 'EOD' },
+            'BREAKEVEN': { bg: 'rgba(59,130,246,0.1)', clr: '#60a5fa', bdr: 'rgba(59,130,246,0.2)', label: 'BREAKEVEN' },
+        };
+        const s = statusMap[status] || statusMap['LIVE'];
+
+        document.getElementById('modal-stock-name').textContent = item.stock_symbol || '---';
+        document.getElementById('modal-date').textContent = `${item.date || ''} @ ${item.time || ''}`;
+        
+        const typeEl = document.getElementById('modal-type');
+        typeEl.textContent = (item.signal_type || '').toUpperCase();
+        typeEl.style.color = signalColor;
+        
+        document.getElementById('modal-status-container').innerHTML = `<span style="display:inline-block;padding:4px 14px;border-radius:8px;font-family:'Inter',sans-serif;font-size:9px;font-weight:900;background:${s.bg};color:${s.clr};border:1px solid ${s.bdr};">${s.label}</span>`;
+        
+        document.getElementById('modal-entry').textContent = `₹${parseFloat(item.entry_price || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        document.getElementById('modal-sl').textContent = `₹${parseFloat(item.stop_loss || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        document.getElementById('modal-target').textContent = `₹${parseFloat(item.target_price || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        document.getElementById('modal-breakeven').textContent = item.target_2 ? `₹${parseFloat(item.target_2).toLocaleString(undefined, {minimumFractionDigits: 2})}` : '---';
+
+        const modal = document.getElementById('details-modal');
+        modal.classList.remove('hidden');
+        setTimeout(() => { modal.classList.add('opacity-100'); }, 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('details-modal');
+        modal.classList.remove('opacity-100');
+        setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        document.body.style.overflow = '';
+    }
+
     function openVideoModal(url) {
         const modal = document.getElementById('video-modal');
         const iframe = document.getElementById('video-iframe');
@@ -382,90 +478,45 @@
             };
             const s = statusMap[status] || statusMap['LIVE'];
 
-            // 1. RENDER TABLE ROW (Desktop)
-            // The trick is to have the border-anim-wrapper *in* the first cell but stretch it across the row.
-            // However, a better way is to simply use positional values that stretch 100% of the closest relative parent (the TR).
+            // 1. RENDER TABLE ROW
             const mainRow = document.createElement('tr');
             mainRow.className = 'row-border-anim group';
             mainRow.innerHTML = `
                 <td>
-                    <!-- Place the animation wrapper inside the first TD, but make it absolute to the TR (since TR is relative and has transform) -->
                     <div class="border-anim-wrapper">
                         <span></span><span></span><span></span><span></span>
                     </div>
                     <div class="flex flex-col gap-0.5 relative z-20">
                         <span style="font-weight:900;color:#fff;font-size:15px;letter-spacing:-0.02em;line-height:1.2;">${item.stock_symbol || '—'}</span>
-                        <span style="font-size:10px;color:#64748b;font-family:monospace;font-weight:600;">${item.date || '—'}</span>
+                        <span class="desktop-only" style="font-size:10px;color:#64748b;font-family:monospace;font-weight:600;">${item.date || '—'}</span>
+                    </div>
+                </td>
+                <td class="desktop-only" style="text-align: center; position: relative; z-index: 10;">
+                    <span style="display:inline-block;padding:4px 14px;border-radius:8px;font-family:'Inter',sans-serif;font-size:9px;font-weight:900;background:${signalBg};color:${signalColor};border:1px solid ${signalBdr};">${(item.signal_type || '').toUpperCase()}</span>
+                </td>
+                <td class="desktop-only" style="text-align: right; color:#d1d5db; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.entry_price || 0).toFixed(2)}</td>
+                <td class="desktop-only" style="text-align: right; color:#f87171; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.stop_loss || 0).toFixed(2)}</td>
+                <td class="desktop-only" style="text-align: right; color:#34d399; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.target_price || 0).toFixed(2)}</td>
+                <td class="desktop-only" style="text-align: right; color:#60a5fa; font-weight:600; position: relative; z-index: 10;">${item.target_2 ? '₹' + parseFloat(item.target_2).toFixed(2) : '—'}</td>
+                <td style="text-align: center; color:#94a3b8; font-size:11px; font-family:monospace; position: relative; z-index: 10;">
+                    <div class="flex flex-col items-center">
+                        <span style="font-weight:700;color:#fff;">${item.date || '—'}</span>
+                        <span class="desktop-only" style="font-size:9px;">${item.time || '—'}</span>
+                    </div>
+                </td>
+                <td class="desktop-only" style="text-align: center; position: relative; z-index: 10;">
+                    <div class="flex items-center justify-center gap-2">
+                        <span class="w-1 h-1 rounded-full" style="background: ${s.clr}; box-shadow: 0 0 8px ${s.clr};"></span>
+                        <span style="display:inline-block;padding:4px 10px;border-radius:8px;font-family:'Inter',sans-serif;font-size:9px;font-weight:900;background:${s.bg};color:${s.clr};border:1px solid ${s.bdr};">${s.label}</span>
                     </div>
                 </td>
                 <td style="text-align: center; position: relative; z-index: 10;">
-                    <span style="display:inline-block;padding:4px 14px;border-radius:8px;font-family:'Inter',sans-serif;font-size:9px;font-weight:900;background:${signalBg};color:${signalColor};border:1px solid ${signalBdr};">${(item.signal_type || '').toUpperCase()}</span>
+                    <button onclick="openModal(${item.id})" class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-purple-400 font-bold text-[9px] uppercase tracking-wider hover:bg-purple-500/20 hover:text-white transition-all active:scale-95">
+                        Details
+                    </button>
                 </td>
-                <td style="text-align: right; color:#d1d5db; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.entry_price || 0).toFixed(2)}</td>
-                <td style="text-align: right; color:#f87171; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.stop_loss || 0).toFixed(2)}</td>
-                <td style="text-align: right; color:#34d399; font-weight:600; position: relative; z-index: 10;">₹${parseFloat(item.target_price || 0).toFixed(2)}</td>
-                <td style="text-align: right; color:#60a5fa; font-weight:600; position: relative; z-index: 10;">${item.target_2 ? '₹' + parseFloat(item.target_2).toFixed(2) : '—'}</td>
-                <td style="text-align: center; color:#94a3b8; font-size:11px; font-family:monospace; position: relative; z-index: 10;">${item.date || '—'}</td>
-                <td style="text-align: center; color:#6b7280; font-size:11px; font-family:monospace; position: relative; z-index: 10;">${item.time || '—'}</td>
             `;
             tbody.appendChild(mainRow);
-
-            // 2. RENDER CARD (Mobile)
-            const card = document.createElement('div');
-            card.className = 'signal-card row-border-anim group';
-            card.innerHTML = `
-                <div class="border-anim-wrapper">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="flex items-center gap-3 mb-8 relative z-10">
-                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                        <span class="text-purple-500 font-black text-xs">${(item.stock_symbol || 'S').charAt(0)}</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <h3 class="text-white font-bold text-lg leading-tight uppercase tracking-tight">${item.stock_symbol || '—'}</h3>
-                        <span class="text-[9px] text-gray-500 font-bold uppercase tracking-widest">${item.signal_type || '—'} SIGNAL</span>
-                    </div>
-                </div>
-                
-                <button class="btn-copy-stock" onclick="copyStock(this, '${(item.stock_symbol || '').replace(/'/g, "\\'")}')" title="Copy Stock Name">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>COPY</span>
-                </button>
-
-                <div class="grid grid-cols-2 gap-y-6">
-                    <div>
-                        <p class="card-label">Entry Price</p>
-                        <p class="card-value">₹${parseFloat(item.entry_price || 0).toLocaleString()}</p>
-                    </div>
-                    <div>
-                        <p class="card-label">Stop Loss</p>
-                        <p class="card-value" style="color: #f87171;">₹${parseFloat(item.stop_loss || 0).toLocaleString()}</p>
-                    </div>
-                    <div>
-                        <p class="card-label">Targets</p>
-                        <p class="card-value" style="color: #34d399; font-size: 14px;">T1: ₹${parseFloat(item.target_price || 0).toLocaleString()}</p>
-                        ${item.target_2 ? `<p class="card-value" style="color: #60a5fa; font-size: 14px; margin-top:2px;">BE: ₹${parseFloat(item.target_2).toLocaleString()}</p>` : ''}
-                    </div>
-                    <div>
-                        <p class="card-label">Status</p>
-                        <div class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full" style="background: ${s.clr}; box-shadow: 0 0 8px ${s.clr};"></span>
-                            <span style="color: ${s.clr}; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;">${s.label}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-footer">
-                    <div class="flex flex-col">
-                        <span class="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Entry Time</span>
-                        <span class="text-[11px] font-mono text-gray-400 mt-0.5">${item.time || '—'}</span>
-                    </div>
-                    <div class="status-btn" style="background: ${s.bg}; color: ${s.clr}; border: 1px solid ${s.bdr};">
-                        ${s.label === 'LIVE' ? 'ACTIVE' : (s.label === 'SL HIT' ? 'STOPPED' : s.label)}
-                    </div>
-                </div>
-            `;
-            cardsContainer.appendChild(card);
         });
     }
 
@@ -503,6 +554,7 @@
             }
 
             if (json.success && json.data) {
+                currentSignals = json.data;
                 renderTable(json.data);
                 document.getElementById('signal-count').textContent = `${json.count || json.data.length} signals`;
                 document.getElementById('last-update').textContent = new Date().toLocaleTimeString('en-IN', { hour12: false });

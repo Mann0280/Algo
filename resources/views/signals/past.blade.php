@@ -374,8 +374,8 @@
                         <th class="desktop-only text-right">Target</th>
                         <th class="desktop-only text-right">Stop Loss</th>
                         <th class="desktop-only text-right">Breakeven</th>
-                        <th class="desktop-only text-center">Date</th>
-                        <th class="text-center">Result</th>
+                        <th class="text-center">Date</th>
+                        <th class="desktop-only text-center">Result</th>
                         <th class="desktop-only text-right">Points</th>
                         <th class="desktop-only text-center">Qty</th>
                         <th class="desktop-only text-right">PNL</th>
@@ -609,13 +609,13 @@
                 <td class="desktop-only text-right text-emerald-500">₹${row.target.toLocaleString()}</td>
                 <td class="desktop-only text-right text-rose-500">₹${row.sl.toLocaleString()}</td>
                 <td class="desktop-only text-right text-blue-500">₹${row.breakeven.toLocaleString()}</td>
-                <td class="desktop-only text-center">
-                    <div class="flex flex-col">
+                <td class="text-center">
+                    <div class="flex flex-col items-center">
                         <span class="text-white font-bold text-[11px]">${row.date}</span>
-                        <span class="text-gray-500 text-[9px]">${row.time}</span>
+                        <span class="desktop-only text-gray-500 text-[9px]">${row.time}</span>
                     </div>
                 </td>
-                <td class="text-center">${resultBadge}</td>
+                <td class="desktop-only text-center">${resultBadge}</td>
                 <td class="desktop-only text-right font-bold" style="color: ${row.pnl > 0 ? '#10b981' : (row.pnl < 0 ? '#ef4444' : '#94a3b8')}">
                     <span class="inline-flex items-center gap-[1px] whitespace-nowrap">
                         ${row.pnl > 0 ? '+' : ''}${row.pnl}
