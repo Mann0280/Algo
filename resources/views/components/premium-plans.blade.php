@@ -24,12 +24,12 @@
 
 
         <!-- Pricing Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <div id="pricing-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
 
             @if(!isset($mode) || $mode !== 'dynamic' || (isset($packages) && $packages->isEmpty()))
                 <!-- Fixed/Hardcoded plans (Fallback) -->
                 <!-- 1 Day -->
-                <div class="relative group">
+                <div class="relative group pricing-card-appear">
                     <div class="absolute -inset-px rounded-3xl bg-gradient-to-r from-purple-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]"></div>
                     <div class="relative h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:#6a5bf6; --accent-to:#9a4dff; --accent-border:rgba(138,92,246,0.42); background: rgba(10, 5, 20, 0.95); backdrop-filter: blur(10px);">
                         <div class="mb-6">
@@ -54,7 +54,7 @@
                 </div>
 
                 <!-- 1 Week -->
-                <div class="relative group">
+                <div class="relative group pricing-card-appear">
                     <div class="absolute -inset-px rounded-3xl bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]"></div>
                     <div class="relative h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:#5f7cf6; --accent-to:#b04dff; --accent-border:rgba(135,92,255,0.46); background: rgba(10, 5, 20, 0.95); backdrop-filter: blur(10px);">
                         <div class="mb-6">
@@ -79,7 +79,7 @@
                 </div>
 
                 <!-- 1 Month — Most Popular -->
-                <div class="relative group">
+                <div class="relative group pricing-card-appear">
                     <!-- Glow ring -->
                     <div class="absolute -inset-px rounded-3xl transition-opacity duration-500 opacity-70 group-hover:opacity-100 blur-[1px]" style="background: linear-gradient(135deg, #7c3aed, #6366f1);"></div>
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
@@ -109,7 +109,7 @@
                 </div>
 
                 <!-- 1 Year -->
-                <div class="relative group">
+                <div class="relative group pricing-card-appear">
                     <div class="absolute -inset-px rounded-3xl bg-gradient-to-r from-amber-500 to-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]"></div>
                     <div class="relative h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:#f59e0b; --accent-to:#fbbf24; --accent-border:rgba(245,158,11,0.5); background: rgba(10, 5, 20, 0.95); backdrop-filter: blur(10px);">
                         <div class="mb-6">
@@ -155,7 +155,7 @@
                         ];
                         $glowClass = $glowColors[$style['color']] ?? 'from-purple-500 to-indigo-600';
                     @endphp
-                    <div class="relative group">
+                    <div class="relative group pricing-card-appear">
                         <div class="absolute -inset-px rounded-3xl bg-gradient-to-r {{ $glowClass }} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]"></div>
                         <div class="relative h-full rounded-3xl border border-white/10 p-8 flex flex-col transition-all duration-300 transform" style="--accent-from:{{ $style['from'] }}; --accent-to:{{ $style['to'] }}; --accent-border:{{ $style['border'] }}; background: rgba(10, 5, 20, 0.95); backdrop-filter: blur(10px);">
                             <div class="mb-6">
@@ -205,12 +205,60 @@
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
+
+        // Pricing Card Staggered Entrance Animation
+        const grid = document.getElementById('pricing-grid');
+        const cards = document.querySelectorAll('.pricing-card-appear');
+
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('is-visible');
+                        }, index * 100); // 100ms stagger between cards
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        if (grid) observer.observe(grid);
     });
 </script>
 @endpush
 
 @push('styles')
 <style>
+    /* Pricing Card Entrance Animation */
+    @keyframes card-pop {
+        0% { 
+            opacity: 0; 
+            transform: scale(0.92) translateY(20px);
+            filter: blur(5px);
+        }
+        100% { 
+            opacity: 1; 
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+        }
+    }
+
+    .pricing-card-appear {
+        opacity: 0;
+        transform: scale(0.92) translateY(20px);
+        will-change: transform, opacity;
+    }
+
+    .pricing-card-appear.is-visible {
+        animation: card-pop 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
     /* Card outline glow without flood fill */
     .relative.group > .absolute {
         pointer-events: none;
